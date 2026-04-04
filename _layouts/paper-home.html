@@ -2,9 +2,9 @@
 layout: page
 ---
 {% assign latest_post = site.posts | sort: 'date' | reverse | first %}
-{% assign paper_posts = site.categories.papers | sort: 'date' | reverse %}
-{% assign project_posts = site.categories.projects | sort: 'date' | reverse %}
-{% assign subproject_posts = site.categories.subprojects | sort: 'date' | reverse %}
+{% assign paper_posts = site.posts | where_exp: "post", "post.categories contains 'papers'" | sort: 'date' | reverse %}
+{% assign project_posts = site.posts | where_exp: "post", "post.categories contains 'projects'" | sort: 'date' | reverse %}
+{% assign subproject_posts = site.posts | where_exp: "post", "post.categories contains 'subprojects'" | sort: 'date' | reverse %}
 <div id="paper-home">
   <section class="journal-hero">
     <p class="eyebrow">Kkubuck</p>
