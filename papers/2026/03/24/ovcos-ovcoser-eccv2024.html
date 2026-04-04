@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Open-Vocabulary Camouflaged Object Segmentation | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Open-Vocabulary Camouflaged Object Segmentation" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다." />
+<meta property="og:description" content="이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/24/ovcos-ovcoser-eccv2024.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/24/ovcos-ovcoser-eccv2024.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-24T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Open-Vocabulary Camouflaged Object Segmentation" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-24T00:00:00+00:00","datePublished":"2026-03-24T00:00:00+00:00","description":"이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다.","headline":"Open-Vocabulary Camouflaged Object Segmentation","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/24/ovcos-ovcoser-eccv2024.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/24/ovcos-ovcoser-eccv2024.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">Open-Vocabulary Camouflaged Object Segmentation</h1>
+    
+    <p class="subtitle">이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.24</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>ovcos</li>
+        
+        <li>eccv2024</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>open-vocabulary COD는 기존 OVSIS benchmark로는 충분히 평가되지 않는다.</li>
+  <li>OVCamo는 11,483장 규모로 위장 장면과 클래스 정보를 함께 담은 전용 benchmark다.</li>
+  <li>OVCoser는 iterative semantic guidance와 edge/depth 구조 단서를 결합해 OVCamo에서 이전 open-vocabulary segmentation baselines를 크게 앞선다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>저자들은 CLIP 같은 VLM이 open-world perception을 넓혔지만, 기존 open-vocabulary dense prediction 데이터는 복잡한 위장 장면과 세밀한 객체 인식을 거의 포함하지 못한다고 지적합니다. 이를 보완하기 위해 OVCOS라는 새 과제를 정의하고, OVCamo 데이터셋과 OVCoser baseline을 제안합니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>이 논문의 포인트는 모델 하나보다 문제 정의를 다시 세운 데 있습니다. 위장 장면은 원래도 어렵지만, 여기에 novel class까지 들어오면 텍스트 의미와 시각 단서를 같이 맞춰야 해서 난도가 더 커집니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>OVCamo는 단순히 이미지 수를 늘린 데이터셋이 아니라, open-vocabulary setting에서 camouflage를 본격적으로 다루도록 설계된 benchmark입니다. 그래서 이후 open-vocabulary COD 연구의 기준점 역할을 합니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>OVCoser는 CLIP을 고정한 채 semantic guidance를 반복적으로 보정하고, edge와 depth에서 얻는 구조 단서를 더해 segmentation을 끌어올립니다. 핵심은 텍스트 의미만으로는 약한 장면에서 구조 힌트를 같이 쓰는 것입니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<p>이 논문은 새 benchmark 제안 논문답게, 대표 실험도 OVCamo에서 기존 open-vocabulary segmentation baselines와의 격차를 보여주는 데 집중합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OVCamo</td>
+      <td>11,483장 규모의 open-vocabulary camouflaged object segmentation benchmark로, novel class generalization과 위장 장면 인식을 함께 본다.</td>
+    </tr>
+    <tr>
+      <td>기존 OVSIS baselines</td>
+      <td>OVCoser는 OVCamo에서 이전 open-vocabulary segmentation 방법을 큰 폭으로 앞선다고 보고한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="결론">결론</h2>
+
+<p>OVCOS는 COD를 텍스트 조건과 일반화 문제까지 확장한 기준 작업입니다. 이후 open-vocabulary camouflage 연구를 볼 때 거의 출발점처럼 읽히는 논문입니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>지금 봐도 의미가 큰 이유는, 단순히 성능을 올렸다기보다 어떤 benchmark가 있어야 이 문제를 제대로 측정할 수 있는지를 정리해 줬기 때문입니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>논문 페이지: https://eccv.ecva.net/virtual/2024/poster/786</li>
+  <li>원문 PDF: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06409.pdf</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>

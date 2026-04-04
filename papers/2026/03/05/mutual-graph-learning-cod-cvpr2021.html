@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Mutual Graph Learning for Camouflaged Object Detection | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Mutual Graph Learning for Camouflaged Object Detection" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다." />
+<meta property="og:description" content="Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Mutual Graph Learning for Camouflaged Object Detection" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-05T00:00:00+00:00","datePublished":"2026-03-05T00:00:00+00:00","description":"Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다.","headline":"Mutual Graph Learning for Camouflaged Object Detection","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">Mutual Graph Learning for Camouflaged Object Detection</h1>
+    
+    <p class="subtitle">Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.05</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>graph</li>
+        
+        <li>cvpr2021</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>COD에서는 픽셀이나 feature만 따로 보는 것보다 관계 구조를 그래프로 학습하는 편이 유리하다.</li>
+  <li>mutual graph learning이 foreground-background interaction을 더 정교하게 표현한다.</li>
+  <li>CVPR 2021 시점 기준 strong COD baseline으로 자리잡으며 이후 graph/transformer reasoning 계열의 출발점이 된다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>이 논문은 camouflage detection에서 상호관계 modeling의 중요성을 강조하며, mutual graph learning framework를 제안합니다. 관계 기반 reasoning으로 subtle difference를 더 잘 찾는 방향입니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>2021년 COD 논문들을 다시 보면 relation modeling이 본격화되는 시점이 바로 이 부근입니다. Mutual Graph Learning은 그런 흐름의 대표적인 예입니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>그래프 기반 reasoning은 픽셀 자체보다 관계를 중심으로 본다는 장점이 있습니다. camouflage처럼 절대 차이가 약한 문제에서는 특히 그 장점이 드러납니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>저자들은 foreground와 background 간 상호작용을 graph structure로 만들고, mutual learning으로 중요한 relation을 강조합니다. relation-centric decoding이라고 볼 수 있습니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<p>이 논문은 당시 COD benchmark에서 strong baseline 성능을 보이며, relation modeling의 효과를 정량적으로 보여주는 데 초점을 둡니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>초기 주류 COD benchmarks</td>
+      <td>graph-based relation modeling이 당시 strong CNN baselines보다 더 좋은 COD 성능을 보인다고 보고한다.</td>
+    </tr>
+    <tr>
+      <td>relation ablation</td>
+      <td>foreground-background interaction을 구조적으로 모델링할 때 성능 이득이 생긴다는 점을 강조한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="결론">결론</h2>
+
+<p>Mutual Graph Learning은 transformer reasoning이 대세가 되기 전, relation modeling이 왜 COD에서 중요한지 보여준 논문입니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>지금 보면 구조는 이전 세대지만, relation을 어떻게 볼 것인가라는 질문은 여전히 남아 있어서 다시 읽을 가치가 있습니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2021/html/Zhai_Mutual_Graph_Learning_for_Camouflaged_Object_Detection_CVPR_2021_paper.html</li>
+  <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2021/papers/Zhai_Mutual_Graph_Learning_for_Camouflaged_Object_Detection_CVPR_2021_paper.pdf</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>

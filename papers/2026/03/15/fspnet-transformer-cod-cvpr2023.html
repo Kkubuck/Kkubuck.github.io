@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다." />
+<meta property="og:description" content="FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-15T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-15T00:00:00+00:00","datePublished":"2026-03-15T00:00:00+00:00","description":"FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다.","headline":"Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers</h1>
+    
+    <p class="subtitle">FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.15</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>transformer</li>
+        
+        <li>cvpr2023</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>ViT 계열의 global context만으로는 COD의 subtle local cue를 충분히 살리기 어렵다.</li>
+  <li>NL-TEM이 neighboring tokens 간 상호작용과 고차 관계를 통해 locality를 강화한다.</li>
+  <li>feature shrinkage pyramid decoder가 transformer feature를 점진적으로 압축하며 더 좋은 decoding을 만든다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>이 논문은 transformer 기반 COD에서 locality modeling과 decoder aggregation 부족을 핵심 병목으로 봅니다. 그래서 non-local token enhancement와 feature shrinkage pyramid를 결합해 locality-enhanced neighboring transformer feature를 계층적으로 decode합니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>2023년 시점의 COD에서는 CNN과 transformer의 장단점이 비교적 명확해졌고, FSPNet은 transformer의 빈틈을 메우려는 설계로 읽힙니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>FSPNet은 큰 구조 혁신보다, transformer가 놓치는 local relation을 어떻게 보강할지를 세밀하게 다듬습니다. COD처럼 경계와 미세한 texture가 중요한 문제에서 이런 접근이 잘 맞습니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>NL-TEM이 non-local mechanism과 graph-based high-order relation으로 token locality를 높이고, feature shrinkage pyramid가 이를 progressive shrinking으로 decode합니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<p>실험의 메시지는 transformer backbone을 COD에 맞게 손보면 local cue와 decoding 문제를 줄일 수 있다는 것입니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>대표 COD benchmarks</td>
+      <td>transformer 기반 기존 방법보다 더 안정적인 segmentation 성능을 보고한다.</td>
+    </tr>
+    <tr>
+      <td>transformer ablation</td>
+      <td>NL-TEM과 shrinkage pyramid가 locality와 aggregation 병목을 줄이는 데 기여한다고 분석한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="결론">결론</h2>
+
+<p>FSPNet은 transformer 기반 COD의 약점을 정면으로 고친 실전형 논문입니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>지금 보면 더 큰 foundation model이 많지만, local cue를 어떻게 붙이느냐는 여전히 남아 있는 문제라서 읽을 가치가 있습니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2023/html/Huang_Feature_Shrinkage_Pyramid_for_Camouflaged_Object_Detection_With_Transformers_CVPR_2023_paper.html</li>
+  <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_Feature_Shrinkage_Pyramid_for_Camouflaged_Object_Detection_With_Transformers_CVPR_2023_paper.pdf</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>

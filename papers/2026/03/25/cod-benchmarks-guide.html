@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>COD 벤치마크 정리 | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="COD 벤치마크 정리" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다." />
+<meta property="og:description" content="정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/25/cod-benchmarks-guide.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/25/cod-benchmarks-guide.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-25T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="COD 벤치마크 정리" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-25T00:00:00+00:00","datePublished":"2026-03-25T00:00:00+00:00","description":"정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다.","headline":"COD 벤치마크 정리","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/25/cod-benchmarks-guide.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/25/cod-benchmarks-guide.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">COD 벤치마크 정리</h1>
+    
+    <p class="subtitle">정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.25</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>benchmark</li>
+        
+        <li>survey</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>COD 논문을 읽다 보면 표는 많아지는데, 어떤 벤치마크가 무엇을 검증하는지는 오히려 흐려질 때가 많습니다. 이번 글은 최근 위장 객체 연구를 읽을 때 자주 만나는 대표 데이터셋과 평가축을 빠르게 다시 잡기 위한 정리입니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>정적 RGB COD만 보면 최근 연구의 방향을 절반만 보는 셈이고, 이제는 비디오, open-vocabulary, unconstrained scene, multispectral setting까지 함께 봐야 한다.</li>
+  <li>같은 수치라도 어떤 벤치마크에서 얻은 결과인지에 따라 의미가 달라진다.</li>
+  <li>논문을 읽을 때는 절대 점수보다도 데이터셋의 성격, supervision 조건, task setting을 같이 확인해야 한다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>이 글은 한 편의 논문 리뷰라기보다, 최근 COD 관련 논문을 읽을 때 기준점이 되는 벤치마크를 묶어서 보는 메모에 가깝습니다. 특히 2024~2025년 논문들은 기존 RGB 정적 분할만 다루지 않고, 비디오 VCOD, open-vocabulary OVCOS, salient/camouflaged coexistence, multispectral benchmark까지 확장하고 있습니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>초기 COD 비교는 CHAMELEON, CAMO, COD10K, NC4K 같은 정적 RGB 이미지 중심이었습니다. 하지만 최근 논문은 같은 위장 객체 문제라도 입력 조건과 평가 목표가 꽤 다르기 때문에, 어느 벤치마크에서 성능이 올랐는지 먼저 이해해야 방법의 진짜 의미가 보입니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>예를 들어 CHAMELEON이나 CAMO에서 좋은 모델이 반드시 비디오 VCOD나 open-vocabulary setting에서도 강하다고 볼 수는 없습니다. 반대로 OVCamo에서 의미 정렬을 잘하는 모델이 전통적인 RGB COD에서 항상 가장 좋은 경계 품질을 내는 것도 아닙니다. 결국 벤치마크는 성능표를 읽기 위한 맥락입니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>이번 정리는 벤치마크를 네 갈래로 나눠 봅니다. 첫째, 정적 RGB COD. 둘째, 비디오 COD. 셋째, open-vocabulary 및 scene-level 확장. 넷째, 멀티모달·멀티스펙트럴 확장입니다. 각 벤치마크가 검증하는 능력이 다르기 때문에, 이후 논문 리뷰도 이 분류를 기준으로 같이 읽는 편이 좋습니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHAMELEON</td>
+      <td>초기 정적 RGB COD 비교에 자주 쓰이는 소규모 테스트셋이다. 빠르게 qualitative gap을 확인할 때 자주 등장한다.</td>
+    </tr>
+    <tr>
+      <td>CAMO</td>
+      <td>위장 정도가 강하고 경계가 까다로운 정적 RGB 설정을 점검할 때 중요하다. 최근까지도 주요 표에 빠지지 않는다.</td>
+    </tr>
+    <tr>
+      <td>COD10K</td>
+      <td>가장 널리 쓰이는 정적 RGB COD 범용 benchmark다. 최근 방법들의 기본 비교축으로 보면 된다.</td>
+    </tr>
+    <tr>
+      <td>NC4K</td>
+      <td>복잡한 자연 장면에서의 일반화 성능을 확인할 때 자주 쓰인다. COD10K와 함께 묶여 나오는 경우가 많다.</td>
+    </tr>
+    <tr>
+      <td>MoCA-Mask</td>
+      <td>비디오 camouflaged object detection의 대표 benchmark다. 움직임과 temporal consistency를 함께 본다.</td>
+    </tr>
+    <tr>
+      <td>OVCamo</td>
+      <td>ECCV 2024 OVCOS 논문이 제안한 open-vocabulary camouflaged object segmentation benchmark다. 텍스트-비전 정렬과 novel class generalization을 본다.</td>
+    </tr>
+    <tr>
+      <td>USC12K</td>
+      <td>ICCV 2025 USCNet이 제안한 unconstrained scene benchmark다. salient object와 camouflaged object가 함께 존재하는 장면까지 평가한다.</td>
+    </tr>
+    <tr>
+      <td>MCOD</td>
+      <td>멀티스펙트럴 COD benchmark로, RGB 한계 밖의 단서를 활용하는 설정을 본다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>표를 읽을 때는 데이터셋 이름만 보기보다, 이 벤치마크가 정적/비디오인지, close-set/open-vocabulary인지, fully supervised인지 약한 supervision인지까지 같이 확인하는 편이 좋습니다.</p>
+
+<h2 id="결론">결론</h2>
+
+<p>최근 COD 논문 흐름은 단순히 분할 성능을 올리는 경쟁에서 벗어나, 어떤 조건의 위장 장면을 다루는가로 빠르게 확장되고 있습니다. 그래서 이제는 단일 리더보드보다 벤치마크 맥락을 먼저 이해하는 것이 더 중요해졌습니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>개인적으로는 앞으로 COD 논문을 읽을 때 <code class="language-plaintext highlighter-rouge">COD10K/CAMO에서 강한가</code>, <code class="language-plaintext highlighter-rouge">비디오에서도 버티는가</code>, <code class="language-plaintext highlighter-rouge">텍스트 조건이나 scene-level ambiguity까지 다루는가</code>를 나눠 보는 습관이 중요해 보입니다. 같은 SOTA라도 무엇을 더 어렵게 만들었는지에 따라 의미가 꽤 다르기 때문입니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>CAMO/랭킹 기반 COD: https://openaccess.thecvf.com/content/CVPR2021/html/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.html</li>
+  <li>OVCamo/OVCOS: https://eccv.ecva.net/virtual/2024/poster/786</li>
+  <li>MoCA-Mask/VCOD benchmark: https://openaccess.thecvf.com/content/CVPR2022/html/Cheng_Implicit_Motion_Handling_for_Video_Camouflaged_Object_Detection_CVPR_2022_paper.html</li>
+  <li>USC12K: https://openaccess.thecvf.com/content/ICCV2025/html/Zhou_Rethinking_Detecting_Salient_and_Camouflaged_Objects_in_Unconstrained_Scenes_ICCV_2025_paper.html</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Implicit Motion Handling for Video Camouflaged Object Detection | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Implicit Motion Handling for Video Camouflaged Object Detection" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다." />
+<meta property="og:description" content="이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Implicit Motion Handling for Video Camouflaged Object Detection" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-10T00:00:00+00:00","datePublished":"2026-03-10T00:00:00+00:00","description":"이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다.","headline":"Implicit Motion Handling for Video Camouflaged Object Detection","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">Implicit Motion Handling for Video Camouflaged Object Detection</h1>
+    
+    <p class="subtitle">이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.10</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>vcod</li>
+        
+        <li>cvpr2022</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>VCOD의 핵심은 short-term dynamics와 long-term temporal consistency를 함께 다루는 것이다.</li>
+  <li>explicit motion representation은 motion error와 segmentation error를 함께 누적시킨다.</li>
+  <li>implicit motion handling과 spatio-temporal transformer를 결합하고, 대규모 VCOD dataset MoCA-Mask를 함께 제공한다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>저자들은 dense correlation volume으로 인접 프레임 간 motion을 implicit하게 잡고, segmentation supervision으로 motion estimation과 segmentation을 joint optimization합니다. 여기에 spatio-temporal transformer를 더해 시간 일관성을 보강합니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>VCOD는 움직임이 camouflage를 깨뜨릴 수 있기 때문에 정적 COD와 아예 다른 난점을 가집니다. 이 논문은 그 차이를 가장 본격적으로 다루는 초창기 기준점 중 하나입니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>핵심은 motion을 별도 전처리로 다루지 않는다는 점입니다. segmentation objective가 motion representation까지 같이 교정하게 만들어, error accumulation을 줄이려 합니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>dense correlation volume이 short-term motion을 implicit하게 표현하고, spatio-temporal transformer가 long-term temporal consistency를 강화합니다. 전체 구조는 motion and segmentation joint optimization에 맞춰져 있습니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<p>논문은 방법 제안뿐 아니라 MoCA-Mask와 comprehensive VCOD benchmark를 함께 제시해, 이후 비디오 camouflage 연구의 기반을 깔았습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MoCA-Mask</td>
+      <td>pixel-level handcrafted masks를 갖춘 대규모 VCOD dataset으로 제안되며, 이후 video camouflage benchmark의 중심축이 된다.</td>
+    </tr>
+    <tr>
+      <td>VCOD benchmarks</td>
+      <td>implicit motion handling이 기존 explicit motion approaches보다 더 안정적인 성능을 낸다고 보고한다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="결론">결론</h2>
+
+<p>VCOD를 논문 단위로 본격화한 대표 작업이라서, 비디오 camouflage 계열을 읽을 때 거의 반드시 지나가게 되는 논문입니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>최근 SAM 기반 VCOD나 memory-based video model을 볼 때도, motion을 explicit하게 볼지 implicit하게 볼지의 기준은 여전히 이 논문과 연결됩니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2022/html/Cheng_Implicit_Motion_Handling_for_Video_Camouflaged_Object_Detection_CVPR_2022_paper.html</li>
+  <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2022/papers/Cheng_Implicit_Motion_Handling_for_Video_Camouflaged_Object_Detection_CVPR_2022_paper.pdf</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Detecting Camouflaged Object in Frequency Domain | Kkubuck</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Detecting Camouflaged Object in Frequency Domain" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다." />
+<meta property="og:description" content="FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/2026/03/13/fdcod-cvpr2022.html" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/2026/03/13/fdcod-cvpr2022.html" />
+<meta property="og:site_name" content="Kkubuck" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-13T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Detecting Camouflaged Object in Frequency Domain" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-03-13T00:00:00+00:00","datePublished":"2026-03-13T00:00:00+00:00","description":"FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다.","headline":"Detecting Camouflaged Object in Frequency Domain","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/papers/2026/03/13/fdcod-cvpr2022.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/2026/03/13/fdcod-cvpr2022.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    <section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav">홈</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav">글</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문 리뷰</li>
+        </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
+        <a href="/about/">
+          <li class="btn-nav">소개</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+
+<div id="post">
+  <section class="post-header">
+    <p class="eyebrow">Paper Review</p>
+    <h1 class="title">Detecting Camouflaged Object in Frequency Domain</h1>
+    
+    <p class="subtitle">FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다.</p>
+    
+    <div class="post-meta-row">
+      <p class="meta">2026.03.13</p>
+      
+      <ul class="post-tags">
+        
+        <li>paper</li>
+        
+        <li>cod</li>
+        
+        <li>frequency</li>
+        
+        <li>cvpr2022</li>
+        
+      </ul>
+      
+    </div>
+  </section>
+
+  
+
+  <section class="post-content">
+    <h2 id="오버뷰">오버뷰</h2>
+
+<p>FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다.</p>
+
+<h2 id="핵심-주장">핵심 주장</h2>
+
+<ul>
+  <li>COD는 RGB spatial domain만으로 풀기 어렵고 frequency clue가 필요하다.</li>
+  <li>FEM, feature alignment, HOR module로 RGB와 frequency 정보를 강하게 결합한다.</li>
+  <li>세 개의 널리 쓰이는 COD benchmarks에서 큰 폭의 성능 향상을 보인다.</li>
+</ul>
+
+<h2 id="초록">초록</h2>
+
+<p>저자들은 camouflage detection이 인간 시각을 단순 모사하는 수준을 넘어서야 한다고 주장하며, DCT 기반 frequency enhancement와 feature alignment, high-order relation modeling을 갖춘 네트워크를 제안합니다.</p>
+
+<h2 id="서론">서론</h2>
+
+<p>frequency domain이 COD에서 중요한 이유는 spatial appearance가 거의 같더라도 주파수 패턴에서 subtle difference가 드러날 수 있기 때문입니다. 이 논문은 그 직관을 메인스트림으로 밀어 넣었습니다.</p>
+
+<h2 id="본론">본론</h2>
+
+<p>이전에도 주파수 정보를 보조적으로 쓰려는 시도는 있었지만, FDCOD는 frequency branch를 더 적극적으로 중심 구조로 둡니다. 그래서 이후 frequency-aware COD 논문 대부분이 이 작업을 참조합니다.</p>
+
+<h2 id="제안방법">제안방법</h2>
+
+<p>FEM이 DCT 뒤에 learnable enhancement를 붙여 frequency clue를 강조하고, feature alignment와 HOR module이 RGB-frequency fusion을 안정화합니다.</p>
+
+<h2 id="실험">실험</h2>
+
+<p>실험은 세 개의 widely-used COD datasets에서 frequency clue가 실제로 성능을 크게 끌어올린다는 메시지에 집중합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>벤치마크</th>
+      <th>핵심 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>세 개의 대표 COD benchmarks</td>
+      <td>주파수 단서를 쓰지 않는 기존 방법 대비 큰 폭의 성능 향상을 보고한다.</td>
+    </tr>
+    <tr>
+      <td>frequency ablation</td>
+      <td>frequency branch와 고차 관계 모델링이 각각 의미 있는 기여를 한다고 보인다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="결론">결론</h2>
+
+<p>FDCOD는 이후 frequency 기반 COD 설계의 출발점으로 남아 있습니다. 지금 읽어도 왜 frequency가 중요한지 이해하기 좋은 논문입니다.</p>
+
+<h2 id="논의">논의</h2>
+
+<p>개인적으로는 COD에서 modality 확장이나 signal-domain 확장이 본격화된 지점이 이 논문이라고 느껴집니다.</p>
+
+<h2 id="출처">출처</h2>
+<ul>
+  <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2022/html/Zhong_Detecting_Camouflaged_Object_in_Frequency_Domain_CVPR_2022_paper.html</li>
+  <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2022/papers/Zhong_Detecting_Camouflaged_Object_in_Frequency_Domain_CVPR_2022_paper.pdf</li>
+</ul>
+
+  </section>
+</div>
+
+<div id="top" class="top-btn" onclick="moveTop()">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var st = document.body.scrollTop || document.documentElement.scrollTop;
+    if (st > 250) {
+      document.getElementById("top").style.display = "block"
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.opacity = 0
+      } else {
+        document.getElementById("top").style.opacity = 1
+      }
+    } else {
+      document.getElementById("top").style.opacity = 0
+      if (st > lastScrollTop) {
+        document.getElementById("top").style.display = "none"
+      }
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+  function moveTop() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
+</script>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line footer-main">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 리뷰</a>
+      <span class="footer-sep">·</span>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <div class="footer-note">
+      Notes on vision, multimodal systems, papers, and building.
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>
