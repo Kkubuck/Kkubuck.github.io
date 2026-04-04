@@ -1,14 +1,32 @@
 ---
 layout: page
 ---
+{% assign primary_category = page.categories | first %}
 <div id="post">
   <section class="post-header">
+    <p class="eyebrow">{% if primary_category == 'papers' %}Paper Review{% else %}Journal{% endif %}</p>
     <h1 class="title">{{ page.title }}</h1>
+    {% if page.subtitle %}
     <p class="subtitle">{{ page.subtitle }}</p>
-    <p class="meta">
-      {{ page.date | date: "%B %-d, %Y" }}
-    </p>
+    {% endif %}
+    <div class="post-meta-row">
+      <p class="meta">{{ page.date | date: "%Y.%m.%d" }}</p>
+      {% if page.tags and page.tags.size > 0 %}
+      <ul class="post-tags">
+        {% for tag in page.tags %}
+        <li>{{ tag }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
   </section>
+
+  {% if page.image %}
+  <figure class="post-cover">
+    <img src="{{ page.image }}" alt="{{ page.title }}">
+  </figure>
+  {% endif %}
+
   <section class="post-content">
     {{ content }}
   </section>

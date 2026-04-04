@@ -1,95 +1,136 @@
 ---
 layout: page
 ---
+{% assign latest_post = site.posts | sort: 'date' | reverse | first %}
+{% assign papers = site.categories.papers | sort: 'date' | reverse %}
 <div id="paper-home">
-  <section class="paper-hero">
+  <section class="journal-hero">
     <div class="hero-copy">
-      <p class="eyebrow">Paper Reviews</p>
+      <p class="eyebrow">Personal Blog</p>
       <h1>{{ page.title }}</h1>
       <p class="lede">{{ page.lead }}</p>
+      <div class="hero-topics">
+        <span>Computer Vision</span>
+        <span>Multimodal</span>
+        <span>Papers</span>
+        <span>Build Notes</span>
+      </div>
       <div class="hero-actions">
-        <a class="hero-btn primary" href="{{ '/papers/' | relative_url }}">논문 리뷰 보기</a>
-        <a class="hero-btn" href="{{ '/blog/' | relative_url }}">전체 블로그</a>
+        <a class="hero-btn primary" href="{{ '/blog/' | relative_url }}">전체 글 보기</a>
+        <a class="hero-btn" href="{{ '/papers/' | relative_url }}">논문 리뷰 보기</a>
       </div>
     </div>
 
-    <div class="hero-panel">
-      <p class="panel-title">About This Blog</p>
-      <p class="panel-copy">
-        논문을 읽고 끝내지 않고, 나중에 다시 참고할 수 있도록 한국어 리뷰와 핵심 시각 자료 중심으로 정리해 두는 개인 연구 아카이브입니다.
-      </p>
-      <div class="panel-meta">
-        <span>논문 리뷰</span>
-        <span>핵심 그림</span>
-        <span>메인 실험 표</span>
-      </div>
-      <a class="panel-link" href="{{ '/papers/review/' | relative_url }}">정리 기준 보기</a>
-    </div>
-  </section>
-
-  {% assign featured_post = site.categories.papers | sort: 'date' | reverse | first %}
-  {% if featured_post %}
-  <section class="featured-paper">
-    <div class="section-head">
-      <h2>Featured Review</h2>
-      <a href="{{ featured_post.url | relative_url }}">글 바로 읽기</a>
-    </div>
-    <article class="featured-card">
-      {% if featured_post.image %}
-      <a class="featured-thumb" href="{{ featured_post.url | relative_url }}">
-        <img src="{{ featured_post.image }}" alt="{{ featured_post.title }}">
-      </a>
-      {% endif %}
-      <div class="featured-body">
-        <p class="featured-meta">{{ featured_post.date | date: "%Y.%m.%d" }} · 논문 리뷰</p>
-        <h3><a href="{{ featured_post.url | relative_url }}">{{ featured_post.title }}</a></h3>
-        <p class="featured-summary">
-          {% if featured_post.summary %}
-            {{ featured_post.summary | strip_html }}
-          {% else %}
-            {{ featured_post.excerpt | strip_html | truncatewords: 36, '...' }}
-          {% endif %}
-        </p>
-        <div class="featured-actions">
-          <a class="text-link" href="{{ featured_post.url | relative_url }}">리뷰 읽기</a>
-          <a class="text-link" href="{{ '/papers/' | relative_url }}">아카이브 보기</a>
+    <article class="hero-feature">
+      <p class="panel-title">Latest Post</p>
+      {% if latest_post %}
+      <a class="feature-link" href="{{ latest_post.url | relative_url }}">
+        {% if latest_post.image %}
+        <div class="feature-thumb">
+          <img src="{{ latest_post.image }}" alt="{{ latest_post.title }}">
         </div>
+        {% endif %}
+        <div class="feature-body">
+          <p class="feature-meta">{{ latest_post.date | date: "%Y.%m.%d" }} · {% if latest_post.categories contains 'papers' %}논문 리뷰{% else %}글{% endif %}</p>
+          <h2>{{ latest_post.title }}</h2>
+          <p>
+            {% if latest_post.summary %}
+              {{ latest_post.summary | strip_html | truncatewords: 30, '...' }}
+            {% else %}
+              {{ latest_post.excerpt | strip_html | truncatewords: 30, '...' }}
+            {% endif %}
+          </p>
+        </div>
+      </a>
+      {% else %}
+      <div class="feature-body empty-state">
+        <h2>첫 글을 준비 중입니다.</h2>
+        <p>새 글이 올라오면 이 카드에 가장 먼저 보여줍니다.</p>
       </div>
+      {% endif %}
     </article>
   </section>
-  {% endif %}
 
-  <section class="editorial-focus">
-    <div class="section-head">
-      <h2>이 블로그에서 다루는 것</h2>
-      <a href="{{ '/papers/review/' | relative_url }}">리뷰 기준</a>
+  <section class="home-intro-grid">
+    <article class="intro-card">
+      <p class="intro-label">Writing</p>
+      <h3>글은 전체 아카이브에서 시간순으로 읽습니다</h3>
+      <p>짧은 메모, 작업 기록, 논문 리뷰를 한 흐름으로 쌓아두고 나중에 다시 찾기 쉽게 정리합니다.</p>
+    </article>
+    <article class="intro-card">
+      <p class="intro-label">Paper Reviews</p>
+      <h3>논문 리뷰는 별도 탭에서 모아봅니다</h3>
+      <p>블로그 전체 흐름과는 분리해, 논문 리뷰만 따로 보고 싶을 때 바로 들어갈 수 있게 섹션을 나눴습니다.</p>
+    </article>
+    <article class="intro-card">
+      <p class="intro-label">Style</p>
+      <h3>복잡한 소개보다 실제 글을 먼저 보여줍니다</h3>
+      <p>홈은 도구 소개나 설명 문서가 아니라, 최근에 쓴 글을 중심으로 보는 일반 블로그 인상에 맞춰 구성했습니다.</p>
+    </article>
+  </section>
+
+  <section class="home-columns">
+    <div class="content-panel latest-writing">
+      <div class="section-head">
+        <h2>Latest Writing</h2>
+        <a href="{{ '/blog/' | relative_url }}">전체 글</a>
+      </div>
+      <div class="story-list">
+        {% for post in site.posts limit: 4 %}
+        <article class="story-item">
+          <a href="{{ post.url | relative_url }}">
+            <div class="story-copy">
+              <p class="story-meta">{{ post.date | date: "%Y.%m.%d" }} · {% if post.categories contains 'papers' %}논문 리뷰{% else %}글{% endif %}</p>
+              <h3>{{ post.title }}</h3>
+              <p>
+                {% if post.summary %}
+                  {{ post.summary | strip_html | truncatewords: 24, '...' }}
+                {% else %}
+                  {{ post.excerpt | strip_html | truncatewords: 24, '...' }}
+                {% endif %}
+              </p>
+            </div>
+            {% if post.image %}
+            <div class="story-thumb">
+              <img src="{{ post.image }}" alt="{{ post.title }}">
+            </div>
+            {% endif %}
+          </a>
+        </article>
+        {% endfor %}
+      </div>
     </div>
-    <div class="focus-grid">
-      <article class="focus-card">
-        <p class="focus-label">Paper Review</p>
-        <h3>논문의 주장과 설계를 먼저 본다</h3>
-        <p>논문이 실제로 무엇을 해결하려는지, 기존 방법과 무엇이 다른지를 먼저 정리합니다.</p>
+
+    <div class="side-stack">
+      <article class="content-panel about-panel">
+        <div class="section-head">
+          <h2>About</h2>
+          <a href="{{ '/about/' | relative_url }}">자세히</a>
+        </div>
+        <p>이 블로그는 컴퓨터비전과 멀티모달을 중심으로, 읽은 논문과 작업 중 얻은 메모를 한국어로 기록하는 개인 아카이브입니다.</p>
       </article>
-      <article class="focus-card">
-        <p class="focus-label">Visual Reading</p>
-        <h3>대표 그림과 메인 실험 표를 같이 남긴다</h3>
-        <p>한 장으로 구조를 보여주는 그림과 대표 실험 표를 함께 두어 다시 읽기 쉽게 만듭니다.</p>
-      </article>
-      <article class="focus-card">
-        <p class="focus-label">Reading Notes</p>
-        <h3>정리 기준과 읽는 흐름을 따로 남긴다</h3>
-        <p>홈에서는 실제 리뷰 글을 먼저 보여주고, 정리 방식과 기준은 별도 페이지에서 확인할 수 있게 구성했습니다.</p>
+
+      <article class="content-panel topic-panel">
+        <div class="section-head">
+          <h2>Browse Topics</h2>
+          <a href="{{ '/tags/' | relative_url }}">태그</a>
+        </div>
+        <div class="topic-cloud">
+          {% for tag in site.tags limit: 8 %}
+          {% capture tagurl %}/tags#{{ tag | first | cgi_encode }}{% endcapture %}
+          <a href="{{ tagurl | relative_url }}"><span>{{ tag | first }}</span></a>
+          {% endfor %}
+        </div>
       </article>
     </div>
   </section>
 
-  <section class="latest-papers">
+  <section class="paper-shelf">
     <div class="section-head">
-      <h2>최근 논문 리뷰</h2>
-      <a href="{{ '/papers/' | relative_url }}">아카이브 전체</a>
+      <h2>Paper Reviews</h2>
+      <a href="{{ '/papers/' | relative_url }}">논문 리뷰 전체</a>
     </div>
     <div class="paper-grid">
-      {% assign papers = site.categories.papers | sort: 'date' | reverse %}
       {% if papers and papers.size > 0 %}
         {% for post in papers limit: 3 %}
         <article class="paper-card">
@@ -117,32 +158,11 @@ layout: page
         <article class="paper-card empty">
           <div class="paper-body">
             <p class="paper-meta">준비 중</p>
-            <h3>아직 생성된 논문 리뷰가 없습니다.</h3>
-            <p class="paper-excerpt">첫 논문 리뷰를 올리면 이 섹션이 자동으로 채워집니다.</p>
+            <h3>아직 공개된 논문 리뷰가 없습니다.</h3>
+            <p class="paper-excerpt">첫 리뷰가 올라오면 이 섹션에 나타납니다.</p>
           </div>
         </article>
       {% endif %}
-    </div>
-  </section>
-
-  <section class="home-notes">
-    <div class="section-head">
-      <h2>블로그 안내</h2>
-      <a href="{{ '/blog/' | relative_url }}">전체 글 보기</a>
-    </div>
-    <div class="notes-grid">
-      <article class="note-card">
-        <p class="note-title">논문 리뷰</p>
-        <p>핵심 주장, 제안 방법, 실험 결과를 빠르게 복기할 수 있도록 정리합니다.</p>
-      </article>
-      <article class="note-card">
-        <p class="note-title">정리 기준</p>
-        <p>글을 어떤 순서로 읽고 어떤 그림을 남기는지는 리뷰 방법 페이지에 따로 정리해 두었습니다.</p>
-      </article>
-      <article class="note-card">
-        <p class="note-title">개인 아카이브</p>
-        <p>이 블로그는 읽은 논문을 계속 쌓아두는 개인 `.github.io` 연구 노트로 운영합니다.</p>
-      </article>
     </div>
   </section>
 </div>

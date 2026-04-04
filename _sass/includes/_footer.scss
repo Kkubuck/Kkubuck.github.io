@@ -1,34 +1,41 @@
-footer{
+footer {
     @extend %page-padding;
-    margin-top: 10px;
+    margin-top: 40px;
+
     .footer {
-        text-align: center;
-        font-size: 0.8rem;
-        padding-top: 30px!important;
-        padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 1.5rem 0 2.1rem;
         border-top: 1px solid $divider-color;
-        a {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: $theme-color!important;
-        }
     }
+
     .footer-line {
         display: flex;
-        justify-content: center;
         flex-wrap: wrap;
         gap: 0.45rem;
+        align-items: center;
         line-height: 1.6;
+        color: $text-gray;
+        font-size: 0.82rem;
     }
-    .footer-links {
-        margin-top: 0.35rem;
+
+    .footer-links a {
+        color: $theme-dark !important;
+        font-size: 0.82rem;
+        font-weight: 700;
     }
+
+    .footer-links a:hover {
+        color: $theme-color !important;
+    }
+
     .footer-note {
-        margin-top: 0.5rem;
         color: $text-gray;
-        font-size: 0.75rem;
+        font-size: 0.78rem;
     }
+
     .footer-sep {
-        color: $text-gray;
+        color: rgba(15, 23, 42, 0.34);
     }
 }

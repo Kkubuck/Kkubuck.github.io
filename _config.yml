@@ -11,9 +11,9 @@ blog: True
 lang: ko
 
 # Search engine optimization settings
-title: Kkubuck Papers
-tagline: 논문을 한국어로 정리하는 개인 연구 노트
-description: 컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고 핵심 그림과 실험 결과를 함께 정리하는 개인 연구 블로그입니다.
+title: Kkubuck
+tagline: 연구, 논문, 작업 메모를 기록하는 개인 블로그
+description: 컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다.
 author: Kkubuck
 twitter:
   username: Kkubuck
@@ -27,10 +27,10 @@ locale: ko_KR
 
 # Page Settings
 theme_settings:
-  title: Kkubuck Papers
-  home_title: 연구 블로그
+  title: Kkubuck
+  home_title: 블로그
   papers_title: 논문 리뷰
-  blog_title: 전체 블로그
+  blog_title: 글
   tags_title: 태그
   recentpubs_title: RECENT PAPERS
 

@@ -1,5 +1,5 @@
 {% assign profile = site.data.profile %}
-{% assign papers = site.categories.papers %}
+{% assign papers = site.categories.papers | sort: 'date' | reverse %}
 {% assign urlstart = profile.image | split: '/' %}
 {% if urlstart == 'https:' %}
   {% assign imgurl = profile.image %}
@@ -7,7 +7,7 @@
   {% assign imgurl = profile.image | relative_url %}
 {% endif %}
 
-<div id="profile">
+<div id="profile" class="sidebar-card profile-card">
   <a href="{{ '/' | relative_url }}">
     <div class="img-wrap">
       <img src="{{ imgurl }}" alt="profile-image">
@@ -15,19 +15,16 @@
   </a>
   <p class="username">{{ profile.username }}</p>
   <div class="description">{{ profile.description | markdownify }}</div>
-
   <ul id="icons">
     {% include social.html %}
   </ul>
 </div>
 
-<div id="review-wrap" class="sidebar-card">
-  <a href="{{ '/papers/review/' | relative_url }}">
-    <p class="title">리뷰 방법</p>
-  </a>
-  <p class="workflow-note">
-    이 블로그에서 논문을 어떤 순서로 읽고, 어떤 기준으로 그림과 실험 표를 고르는지 정리해 둔 페이지입니다.
-  </p>
+<div class="sidebar-card nav-card">
+  <p class="title">둘러보기</p>
+  <a class="mini-link" href="{{ '/blog/' | relative_url }}">전체 글 보기</a>
+  <a class="mini-link" href="{{ '/papers/' | relative_url }}">논문 리뷰 보기</a>
+  <a class="mini-link" href="{{ '/about/' | relative_url }}">블로그 소개</a>
 </div>
 
 <div id="paper-wrap" class="sidebar-card">
@@ -42,13 +39,13 @@
       </a>
     {% endfor %}
   {% else %}
-    <p class="paper-empty">아직 생성된 논문 리뷰가 없습니다.</p>
+    <p class="paper-empty">아직 공개된 논문 리뷰가 없습니다.</p>
   {% endif %}
 </div>
 
-<div id="tag-wrap">
+<div id="tag-wrap" class="sidebar-card">
   <a href="{{ '/tags/' | relative_url }}">
-    <p class="title">{{ site.theme_settings.tags_title }}</p>
+    <p class="title">태그</p>
   </a>
   {% for tag in site.tags %}
   {% capture tagurl %}/tags#{{ tag | first | cgi_encode }}{% endcapture %}

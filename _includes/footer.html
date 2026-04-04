@@ -1,19 +1,23 @@
 <footer>
   <div class="footer">
-    <div class="footer-line">
+    <div class="footer-line footer-main">
       <span>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }}</span>
       <span class="footer-sep">·</span>
       <span>{{ site.title }}</span>
     </div>
     <div class="footer-line footer-links">
-      <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="{{ '/' | relative_url }}">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="{{ '/blog/' | relative_url }}">글</a>
       <span class="footer-sep">·</span>
       <a href="{{ '/papers/' | relative_url }}">논문 리뷰</a>
       <span class="footer-sep">·</span>
-      <a href="{{ '/blog/' | relative_url }}">전체 블로그</a>
+      <a href="{{ '/about/' | relative_url }}">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub</a>
     </div>
     <div class="footer-note">
-      Personal research notes on papers, experiments, and visual reading.
+      Notes on vision, multimodal systems, papers, and building.
     </div>
   </div>
 </footer>

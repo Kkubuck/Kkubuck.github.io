@@ -1,12 +1,12 @@
 #paper-home,
-#paper-archive,
-#paper-review {
+#paper-archive {
   @extend %page-padding;
 
   .eyebrow {
-    display: inline-block;
-    margin-bottom: 0.9rem;
-    padding: 0.32rem 0.68rem;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0.95rem;
+    padding: 0.32rem 0.7rem;
     border-radius: 999px;
     background: rgba(15, 118, 110, 0.08);
     color: $theme-dark;
@@ -38,10 +38,10 @@
 }
 
 #paper-home {
-  .paper-hero {
+  .journal-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.72fr);
-    gap: 1.2rem;
+    grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
+    gap: 1.15rem;
     align-items: stretch;
 
     @media (max-width: 991px) {
@@ -50,31 +50,30 @@
   }
 
   .hero-copy,
-  .hero-panel,
-  .focus-card,
-  .paper-card,
-  .note-card,
-  .featured-card {
+  .hero-feature,
+  .intro-card,
+  .content-panel,
+  .paper-card {
     border: 1px solid $divider-color;
-    border-radius: 24px;
-    background: #fff;
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.06);
   }
 
   .hero-copy {
-    padding: 2rem 2rem 2.1rem;
+    padding: 2.1rem 2rem 2.15rem;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.95)),
-      linear-gradient(135deg, #f7fbfa 0%, #f5f4ee 100%);
+      radial-gradient(circle at top right, rgba(15, 118, 110, 0.1), transparent 34%),
+      linear-gradient(135deg, #f8fbfa 0%, #f7f4ed 100%);
 
     h1 {
       margin: 0;
       color: $theme-dark;
-      font-size: 2.9rem;
-      max-width: 10ch;
+      font-size: 3.1rem;
+      max-width: 8ch;
 
       @media (max-width: 767px) {
-        font-size: 2.25rem;
+        font-size: 2.3rem;
       }
     }
 
@@ -84,6 +83,28 @@
       color: $text-gray;
       font-size: 1.02rem;
       line-height: 1.85;
+    }
+  }
+
+  .hero-topics,
+  .topic-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .hero-topics {
+    margin-top: 1.15rem;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.42rem 0.74rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.05);
+      color: $theme-dark;
+      font-size: 0.79rem;
+      font-weight: 700;
     }
   }
 
@@ -98,13 +119,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.82rem 1.18rem;
+    padding: 0.84rem 1.2rem;
     border-radius: 999px;
     border: 1px solid $divider-color;
     background: #fff;
     color: $theme-dark;
     font-weight: 700;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
 
     &:hover {
       transform: translateY(-1px);
@@ -114,8 +135,8 @@
   }
 
   .hero-btn.primary {
-    border-color: transparent;
     background: $theme-dark;
+    border-color: $theme-dark;
     color: #fff;
 
     &:hover {
@@ -124,89 +145,17 @@
     }
   }
 
-  .hero-panel {
-    padding: 1.45rem 1.35rem;
+  .hero-feature {
+    padding: 1.2rem;
   }
 
-  .panel-title {
-    margin-bottom: 0.75rem;
-    color: $text-gray;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .panel-copy {
-    margin: 0;
-    color: $text-gray;
-    line-height: 1.8;
-  }
-
-  .panel-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    margin-top: 1rem;
-
-    span {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.42rem 0.7rem;
-      border-radius: 999px;
-      background: $theme-bright;
-      color: $theme-dark;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-  }
-
-  .panel-link {
-    display: inline-flex;
-    margin-top: 1rem;
-    color: $theme-color;
-    font-size: 0.92rem;
-    font-weight: 700;
-  }
-
-  .featured-paper,
-  .editorial-focus,
-  .latest-papers,
-  .home-notes {
-    margin-top: 2.15rem;
-  }
-
-  .featured-card {
-    display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr);
-    overflow: hidden;
-
-    @media (max-width: 991px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .featured-thumb {
-    display: block;
-    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
-
-    img {
-      width: 100%;
-      height: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      margin: 0;
-      box-shadow: none;
-    }
-  }
-
-  .featured-body {
-    padding: 1.5rem;
-  }
-
-  .featured-meta,
-  .paper-meta {
-    margin: 0 0 0.35rem;
+  .panel-title,
+  .intro-label,
+  .paper-meta,
+  .story-meta,
+  .feature-meta,
+  .note-title,
+  .archive-meta {
     color: $text-gray;
     font-size: 0.76rem;
     font-weight: 800;
@@ -214,28 +163,164 @@
     text-transform: uppercase;
   }
 
-  .featured-summary,
-  .paper-excerpt {
-    margin-top: 0.65rem;
+  .feature-link {
+    display: block;
+    color: inherit;
+  }
+
+  .feature-thumb {
+    overflow: hidden;
+    border-radius: 20px;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+
+  .feature-body {
+    padding-top: 1rem;
+
+    h2 {
+      margin: 0.45rem 0 0;
+      color: $theme-dark;
+      line-height: 1.2;
+    }
+
+    p:last-child {
+      margin-top: 0.7rem;
+      color: $text-gray;
+      line-height: 1.8;
+    }
+  }
+
+  .home-intro-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-card {
+    padding: 1.2rem 1.2rem 1.3rem;
+
+    h3 {
+      margin: 0.3rem 0 0.45rem;
+    }
+
+    p:last-child {
+      color: $text-gray;
+      line-height: 1.76;
+    }
+  }
+
+  .home-columns,
+  .paper-shelf {
+    margin-top: 2.2rem;
+  }
+
+  .home-columns {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.28fr) minmax(280px, 0.72fr);
+
+    @media (max-width: 991px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .content-panel {
+    padding: 1.2rem 1.2rem 1.25rem;
+  }
+
+  .story-list {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .story-item {
+    border-top: 1px dashed rgba(15, 23, 42, 0.14);
+    padding-top: 0.9rem;
+
+    &:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    a {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      color: inherit;
+
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    h3 {
+      margin: 0.25rem 0 0;
+      line-height: 1.28;
+    }
+
+    p:last-child {
+      margin-top: 0.55rem;
+      color: $text-gray;
+      line-height: 1.78;
+    }
+  }
+
+  .story-thumb,
+  .paper-thumb,
+  .archive-thumb {
+    overflow: hidden;
+    border-radius: 20px;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+
+  .side-stack {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .about-panel p,
+  .topic-panel p,
+  .paper-excerpt,
+  .archive-summary {
     color: $text-gray;
     line-height: 1.78;
   }
 
-  .featured-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .text-link {
-    color: $theme-color;
-    font-size: 0.92rem;
+  .topic-cloud span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.68rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.06);
+    color: $theme-dark;
+    font-size: 0.8rem;
     font-weight: 700;
   }
 
-  .focus-grid,
-  .notes-grid,
   .paper-grid {
     display: grid;
     gap: 1rem;
@@ -248,27 +333,6 @@
     @media (max-width: 767px) {
       grid-template-columns: 1fr;
     }
-  }
-
-  .focus-card,
-  .note-card {
-    padding: 1.2rem 1.2rem 1.28rem;
-  }
-
-  .focus-label,
-  .note-title {
-    margin: 0 0 0.45rem;
-    color: $theme-color;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .focus-card p:last-child,
-  .note-card p:last-child {
-    color: $text-gray;
-    line-height: 1.75;
   }
 
   .paper-card {
@@ -286,25 +350,13 @@
     }
   }
 
-  .paper-thumb,
-  .archive-thumb {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 16 / 10;
-    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      margin: 0;
-      box-shadow: none;
-    }
-  }
-
-  .paper-body,
-  .archive-body {
+  .paper-body {
     padding: 1rem 1.08rem 1.2rem;
+
+    h3 {
+      margin-top: 0.35rem;
+      line-height: 1.28;
+    }
   }
 
   .paper-card.empty {
@@ -314,14 +366,14 @@
 
 #paper-archive {
   .archive-hero {
-    padding: 1.7rem 1.75rem;
-    margin-bottom: 1.5rem;
-    border-radius: 28px;
+    padding: 1.8rem 1.8rem 1.9rem;
+    margin-bottom: 1.4rem;
+    border-radius: 30px;
     border: 1px solid $divider-color;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.98)),
-      linear-gradient(135deg, #f6faf9 0%, #f7f6ef 100%);
-    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+      radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 34%),
+      linear-gradient(135deg, #f8fbfa 0%, #f7f4ed 100%);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
 
     h1 {
       margin: 0;
@@ -332,7 +384,7 @@
       margin-top: 0.8rem;
       max-width: 60ch;
       color: $text-gray;
-      line-height: 1.8;
+      line-height: 1.82;
     }
   }
 
@@ -340,7 +392,7 @@
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.2rem;
 
     @media (max-width: 991px) {
       grid-template-columns: 1fr;
@@ -351,36 +403,22 @@
     margin-bottom: 1rem;
     color: $text-gray;
     line-height: 1.8;
-
-    a {
-      color: $theme-color;
-      font-weight: 700;
-    }
   }
 
   .note-card,
   .archive-card {
     border: 1px solid $divider-color;
-    border-radius: 22px;
-    background: #fff;
-    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
   }
 
   .note-card {
-    padding: 1.15rem 1.2rem;
-
-    .note-title {
-      margin: 0 0 0.4rem;
-      color: $theme-dark;
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    padding: 1.2rem 1.2rem 1.25rem;
 
     p:last-child {
       color: $text-gray;
-      line-height: 1.75;
+      line-height: 1.76;
     }
   }
 
@@ -409,165 +447,21 @@
     }
   }
 
-  .archive-meta {
-    margin: 0 0 0.35rem;
-    color: $text-gray;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
+  .archive-body {
+    padding: 1rem 1.08rem 1.2rem;
 
-  .archive-summary {
-    margin-top: 0.45rem;
-    color: $text-gray;
-    line-height: 1.76;
+    h3 {
+      margin-top: 0.35rem;
+      line-height: 1.28;
+    }
   }
 
   .archive-empty {
     grid-column: 1 / -1;
     padding: 1.5rem;
     border: 1px dashed $divider-color;
-    border-radius: 22px;
+    border-radius: 24px;
     background: rgba(255, 255, 255, 0.9);
-  }
-}
-
-#paper-review {
-  .review-hero {
-    padding: 1.7rem 1.75rem;
-    margin-bottom: 1.5rem;
-    border-radius: 28px;
-    border: 1px solid $divider-color;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.98)),
-      linear-gradient(135deg, #f6faf9 0%, #f7f6ef 100%);
-    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
-
-    h1 {
-      margin: 0;
-      color: $theme-dark;
-    }
-
-    .lead {
-      margin-top: 0.8rem;
-      max-width: 64ch;
-      color: $text-gray;
-      line-height: 1.8;
-    }
-  }
-
-  .review-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-bottom: 1.5rem;
-
-    @media (max-width: 991px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .review-card {
-    padding: 1.18rem 1.24rem;
-    border: 1px solid $divider-color;
-    border-radius: 22px;
-    background: #fff;
-    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
-
-    p:last-child {
-      color: $text-gray;
-      line-height: 1.76;
-    }
-  }
-
-  .review-title {
-    margin: 0 0 0.45rem;
-    color: $theme-dark;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .review-section {
-    margin-top: 1.75rem;
-
-    h2 {
-      margin-bottom: 0.7rem;
-      color: $theme-dark;
-    }
-
-    p,
-    li {
-      color: $text-gray;
-      line-height: 1.85;
-    }
-
-    code {
-      padding: 0.06rem 0.36rem;
-      border-radius: 999px;
-      background: $theme-bright;
-      color: $theme-dark;
-    }
-  }
-}
-
-#aside {
-  .sidebar-card {
-    margin-bottom: 1.4rem;
-    padding: 1rem 1rem 1.1rem;
-    text-align: left;
-    border: 1px solid $divider-color;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
-  }
-
-  #paper-wrap .paper-mini {
-    display: block;
-    margin-top: 0.7rem;
-    padding-top: 0.7rem;
-    border-top: 1px dashed $divider-color;
-  }
-
-  #paper-wrap .paper-date {
-    display: block;
-    margin-bottom: 0.2rem;
-    color: $text-gray;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  #paper-wrap .paper-title {
-    display: block;
-    color: $theme-dark;
-    font-size: 0.92rem;
-    line-height: 1.55;
-    font-weight: 600;
-  }
-
-  #paper-wrap .paper-empty {
-    color: $text-gray;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
-
-  .workflow-note {
-    color: $text-gray;
-    font-size: 0.9rem;
-    line-height: 1.7;
-  }
-}
-
-#blog {
-  .blog-lead {
-    margin-top: 0.75rem;
-    color: rgba(255, 255, 255, 0.88);
-    font-size: 0.98rem;
-    max-width: 56ch;
   }
 }
 
@@ -589,7 +483,7 @@
   .visual-card {
     padding: 1rem;
     border: 1px solid $divider-color;
-    border-radius: 20px;
+    border-radius: 22px;
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
 
@@ -619,16 +513,5 @@
   .paper-caption strong,
   .figure-card strong {
     color: $theme-dark;
-  }
-
-  .visual-card .badge,
-  .figure-card .badge {
-    display: inline-block;
-    padding: 0.28rem 0.55rem;
-    border-radius: 999px;
-    background: $theme-bright;
-    color: $theme-dark;
-    font-size: 0.78rem;
-    font-weight: 700;
   }
 }
