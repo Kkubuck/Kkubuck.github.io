@@ -1,23 +1,18 @@
-{% assign current_url = page.url | downcase %}
-{% assign is_home = current_url == '/' or current_url == '/index.html' %}
-{% assign is_papers = current_url contains '/papers' %}
-{% assign is_blog = current_url contains '/blog' %}
-{% assign is_about = current_url contains '/about' %}
 <section id="header-nav">
   <header>
     <nav>
       <ul>
         <a href="{{ '/' | relative_url }}">
-          <li class="btn-nav{% if is_home %} current{% endif %}">홈</li>
+          <li class="btn-nav{% if page.url == '/' or page.url == '/index.html' %} current{% endif %}">홈</li>
         </a>
         <a href="{{ '/blog/' | relative_url }}">
-          <li class="btn-nav{% if is_blog %} current{% endif %}">글</li>
+          <li class="btn-nav{% if page.url contains '/blog/' %} current{% endif %}">글</li>
         </a>
         <a href="{{ '/papers/' | relative_url }}">
-          <li class="btn-nav{% if is_papers %} current{% endif %}">논문 리뷰</li>
+          <li class="btn-nav{% if page.url contains '/papers/' %} current{% endif %}">논문 리뷰</li>
         </a>
         <a href="{{ '/about/' | relative_url }}">
-          <li class="btn-nav{% if is_about %} current{% endif %}">소개</li>
+          <li class="btn-nav{% if page.url contains '/about/' %} current{% endif %}">소개</li>
         </a>
         <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">
           <li class="btn-nav">GitHub</li>
