@@ -21,26 +21,18 @@
   </ul>
 </div>
 
-<div id="workflow-wrap" class="sidebar-card">
-  <a href="{{ '/papers/' | relative_url }}">
-    <p class="title">{{ site.theme_settings.workflow_title }}</p>
+<div id="review-wrap" class="sidebar-card">
+  <a href="{{ '/papers/review/' | relative_url }}">
+    <p class="title">리뷰 방법</p>
   </a>
-  <ol class="workflow-list">
-    <li>PDF 또는 arXiv URL 입력</li>
-    <li>텍스트와 그림 추출</li>
-    <li>초안 작성</li>
-    <li>1차 / 2차 검수</li>
-    <li>Jekyll Markdown 출력</li>
-  </ol>
   <p class="workflow-note">
-    기본 모델: <strong>Qwen3-14B</strong><br>
-    fallback: <strong>Qwen3-8B</strong>
+    이 블로그에서 논문을 어떤 순서로 읽고, 어떤 기준으로 그림과 실험 표를 고르는지 정리해 둔 페이지입니다.
   </p>
 </div>
 
 <div id="paper-wrap" class="sidebar-card">
   <a href="{{ '/papers/' | relative_url }}">
-    <p class="title">{{ site.theme_settings.papers_title }}</p>
+    <p class="title">최근 논문 리뷰</p>
   </a>
   {% if papers and papers.size > 0 %}
     {% for post in papers limit: 3 %}
@@ -50,7 +42,7 @@
       </a>
     {% endfor %}
   {% else %}
-    <p class="paper-empty">아직 생성된 논문 포스트가 없습니다.</p>
+    <p class="paper-empty">아직 생성된 논문 리뷰가 없습니다.</p>
   {% endif %}
 </div>
 

@@ -3,7 +3,6 @@ baseurl: ""
 url: "https://kkubuck.github.io"
 
 # Features Setting
-# Turn subpages on or off
 publications: False
 presentations: False
 blog: True
@@ -13,8 +12,8 @@ lang: ko
 
 # Search engine optimization settings
 title: Kkubuck Papers
-tagline: 논문을 한국어 블로그로 정리하는 개인 연구 노트
-description: 논문 PDF와 arXiv 자료를 추출, 요약, 검수해서 Jekyll 블로그로 자동 정리하는 개인 페이지입니다.
+tagline: 논문을 한국어로 정리하는 개인 연구 노트
+description: 컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고 핵심 그림과 실험 결과를 함께 정리하는 개인 연구 블로그입니다.
 author: Kkubuck
 twitter:
   username: Kkubuck
@@ -29,12 +28,10 @@ locale: ko_KR
 # Page Settings
 theme_settings:
   title: Kkubuck Papers
-  home_title: 논문 요약 블로그
-  papers_title: 논문 포스트
+  home_title: 연구 블로그
+  papers_title: 논문 리뷰
   blog_title: 전체 블로그
   tags_title: 태그
-  workflow_title: 자동화 흐름
-  featured_title: 상단 시각자료 규칙
   recentpubs_title: RECENT PAPERS
 
 # Pagination
@@ -55,14 +52,7 @@ exclude:
   - .mypy_cache
   - .ruff_cache
   - downloads
-  - paper_blog
-  - paper_blog.egg-info
   - UNKNOWN.egg-info
-  - skills
-  - scripts
-  - tests
-  - pyproject.toml
-  - setup.py
   - README.md
   - site
 
@@ -77,7 +67,7 @@ scholar:
   sort_by: year,month
   order: descending,ascending
 
-filtered_bibtex_keywords: [abbr, abstract, arxiv, bibtex_show, html, pdf, selected, supp, blog, code, poster, slides, website] # Filter out certain bibtex entry keywords used internally from the bib output
+filtered_bibtex_keywords: [abbr, abstract, arxiv, bibtex_show, html, pdf, selected, supp, blog, code, poster, slides, website]
 
 academicons:
   version: "1.9.1"

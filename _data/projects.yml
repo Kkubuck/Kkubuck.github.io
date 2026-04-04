@@ -6,6 +6,6 @@
       path: "portfolio.png"
       alt: "논문 블로그 예시"
     date: 2026 &ndash; now
-    title: Paper Blog Automation
-    summary: 논문 PDF를 한국어 블로그 포스트로 바꾸는 자동화 툴킷.
-    description: Jekyll 포스트 생성, 그림과 메인 테이블 선택, 2회 검수까지 포함하는 논문 정리 파이프라인입니다.
+    title: Paper Reviews
+    summary: 읽은 논문을 한국어 리뷰와 시각 자료 중심으로 정리하는 개인 아카이브.
+    description: 읽은 논문을 한국어 리뷰와 시각 자료 중심으로 차곡차곡 정리하는 개인 블로그입니다.

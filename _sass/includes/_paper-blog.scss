@@ -1,16 +1,17 @@
 #paper-home,
-#paper-archive {
+#paper-archive,
+#paper-review {
   @extend %page-padding;
 
   .eyebrow {
     display: inline-block;
-    margin-bottom: 0.8rem;
-    padding: 0.35rem 0.7rem;
+    margin-bottom: 0.9rem;
+    padding: 0.32rem 0.68rem;
     border-radius: 999px;
-    background: rgba(91, 33, 182, 0.08);
+    background: rgba(15, 118, 110, 0.08);
     color: $theme-dark;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -19,7 +20,7 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.8rem;
     margin-bottom: 1rem;
 
     h2 {
@@ -29,7 +30,8 @@
 
     a {
       color: $theme-color;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 700;
       white-space: nowrap;
     }
   }
@@ -38,8 +40,8 @@
 #paper-home {
   .paper-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
-    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.72fr);
+    gap: 1.2rem;
     align-items: stretch;
 
     @media (max-width: 991px) {
@@ -47,29 +49,41 @@
     }
   }
 
+  .hero-copy,
+  .hero-panel,
+  .focus-card,
+  .paper-card,
+  .note-card,
+  .featured-card {
+    border: 1px solid $divider-color;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
+  }
+
   .hero-copy {
-    padding: 2rem;
-    border-radius: 28px;
+    padding: 2rem 2rem 2.1rem;
     background:
-      radial-gradient(circle at top right, rgba(255, 255, 255, 0.14), transparent 38%),
-      linear-gradient(135deg, #0f172a 0%, #1e293b 54%, #334155 100%);
-    color: #f8fafc;
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+      linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.95)),
+      linear-gradient(135deg, #f7fbfa 0%, #f5f4ee 100%);
 
     h1 {
       margin: 0;
-      color: #fff;
-      line-height: 1.2;
-      font-size: 2.4rem;
-      letter-spacing: -0.03em;
-      max-width: 12ch;
+      color: $theme-dark;
+      font-size: 2.9rem;
+      max-width: 10ch;
+
+      @media (max-width: 767px) {
+        font-size: 2.25rem;
+      }
     }
 
     .lede {
       margin-top: 1rem;
-      max-width: 58ch;
-      color: rgba(248, 250, 252, 0.84);
-      font-size: 1rem;
+      max-width: 56ch;
+      color: $text-gray;
+      font-size: 1.02rem;
+      line-height: 1.85;
     }
   }
 
@@ -77,71 +91,56 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 1.5rem;
+    margin-top: 1.6rem;
   }
 
   .hero-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.8rem 1.15rem;
+    padding: 0.82rem 1.18rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    border: 1px solid $divider-color;
+    background: #fff;
+    color: $theme-dark;
     font-weight: 700;
-    transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 
     &:hover {
       transform: translateY(-1px);
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      color: $theme-dark;
     }
   }
 
   .hero-btn.primary {
-    background: #f59e0b;
-    color: #111827;
     border-color: transparent;
+    background: $theme-dark;
+    color: #fff;
 
     &:hover {
-      color: #111827;
-      background: #fbbf24;
+      color: #fff;
+      background: $theme-dark2;
     }
-  }
-
-  .hero-panel,
-  .rule-card,
-  .paper-card,
-  .archive-card,
-  .note-card {
-    border: 1px solid $divider-color;
-    border-radius: 22px;
-    background: #fff;
-    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
   }
 
   .hero-panel {
-    padding: 1.4rem 1.35rem;
+    padding: 1.45rem 1.35rem;
   }
 
   .panel-title {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.75rem;
     color: $text-gray;
     font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
-  .workflow-list {
-    margin: 0.25rem 0 0;
-    padding-left: 1rem;
-
-    li {
-      margin: 0.45rem 0;
-      color: rgba(0, 0, 0, 0.78);
-    }
+  .panel-copy {
+    margin: 0;
+    color: $text-gray;
+    line-height: 1.8;
   }
 
   .panel-meta {
@@ -155,41 +154,94 @@
       align-items: center;
       padding: 0.42rem 0.7rem;
       border-radius: 999px;
-      background: rgba(91, 33, 182, 0.08);
+      background: $theme-bright;
       color: $theme-dark;
       font-size: 0.78rem;
       font-weight: 700;
     }
-
-    code {
-      padding: 0.1rem 0.35rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.08);
-      color: inherit;
-      font-size: 0.78rem;
-    }
   }
 
-  .paper-rules,
-  .latest-papers {
-    margin-top: 2rem;
+  .panel-link {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: $theme-color;
+    font-size: 0.92rem;
+    font-weight: 700;
   }
 
-  .rules-grid,
-  .paper-grid {
+  .featured-paper,
+  .editorial-focus,
+  .latest-papers,
+  .home-notes {
+    margin-top: 2.15rem;
+  }
+
+  .featured-card {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr);
+    overflow: hidden;
 
     @media (max-width: 991px) {
       grid-template-columns: 1fr;
     }
   }
 
+  .featured-thumb {
+    display: block;
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
+
+    img {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+
+  .featured-body {
+    padding: 1.5rem;
+  }
+
+  .featured-meta,
+  .paper-meta {
+    margin: 0 0 0.35rem;
+    color: $text-gray;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .featured-summary,
+  .paper-excerpt {
+    margin-top: 0.65rem;
+    color: $text-gray;
+    line-height: 1.78;
+  }
+
+  .featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .text-link {
+    color: $theme-color;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .focus-grid,
+  .notes-grid,
   .paper-grid {
+    display: grid;
+    gap: 1rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1100px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -198,27 +250,25 @@
     }
   }
 
-  .rule-card {
-    padding: 1.25rem;
-    min-height: 170px;
-
-    h3 {
-      margin-top: 0.35rem;
-      margin-bottom: 0.5rem;
-      color: $theme-dark;
-    }
-
-    p {
-      color: $text-gray;
-    }
+  .focus-card,
+  .note-card {
+    padding: 1.2rem 1.2rem 1.28rem;
   }
 
-  .rule-index {
-    margin: 0;
+  .focus-label,
+  .note-title {
+    margin: 0 0 0.45rem;
     color: $theme-color;
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 800;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .focus-card p:last-child,
+  .note-card p:last-child {
+    color: $text-gray;
+    line-height: 1.75;
   }
 
   .paper-card {
@@ -227,7 +277,7 @@
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 20px 34px rgba(15, 23, 42, 0.1);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
     }
 
     a {
@@ -241,7 +291,7 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 16 / 10;
-    background: linear-gradient(135deg, rgba(91, 33, 182, 0.12), rgba(245, 158, 11, 0.12));
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
 
     img {
       width: 100%;
@@ -254,24 +304,7 @@
 
   .paper-body,
   .archive-body {
-    padding: 1rem 1.1rem 1.15rem;
-  }
-
-  .paper-meta,
-  .archive-meta {
-    margin: 0 0 0.35rem;
-    color: $text-gray;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .paper-excerpt,
-  .archive-summary {
-    margin-top: 0.45rem;
-    color: $text-gray;
-    font-size: 0.92rem;
+    padding: 1rem 1.08rem 1.2rem;
   }
 
   .paper-card.empty {
@@ -281,25 +314,25 @@
 
 #paper-archive {
   .archive-hero {
-    padding: 1.6rem 1.65rem;
+    padding: 1.7rem 1.75rem;
     margin-bottom: 1.5rem;
     border-radius: 28px;
-    color: #fff;
+    border: 1px solid $divider-color;
     background:
-      radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 34%),
-      linear-gradient(135deg, #0f172a 0%, #1d4ed8 58%, #0f766e 100%);
-    box-shadow: 0 24px 52px rgba(15, 23, 42, 0.22);
+      linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.98)),
+      linear-gradient(135deg, #f6faf9 0%, #f7f6ef 100%);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
 
     h1 {
       margin: 0;
-      color: #fff;
-      letter-spacing: -0.03em;
+      color: $theme-dark;
     }
 
     .lead {
       margin-top: 0.8rem;
       max-width: 60ch;
-      color: rgba(255, 255, 255, 0.84);
+      color: $text-gray;
+      line-height: 1.8;
     }
   }
 
@@ -307,7 +340,7 @@
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.4rem;
 
     @media (max-width: 991px) {
       grid-template-columns: 1fr;
@@ -317,17 +350,24 @@
   .archive-intro {
     margin-bottom: 1rem;
     color: $text-gray;
+    line-height: 1.8;
 
-    code {
-      padding: 0.05rem 0.35rem;
-      border-radius: 999px;
-      background: rgba(91, 33, 182, 0.08);
-      color: $theme-dark;
+    a {
+      color: $theme-color;
+      font-weight: 700;
     }
   }
 
+  .note-card,
+  .archive-card {
+    border: 1px solid $divider-color;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+  }
+
   .note-card {
-    padding: 1.1rem 1.15rem;
+    padding: 1.15rem 1.2rem;
 
     .note-title {
       margin: 0 0 0.4rem;
@@ -340,6 +380,7 @@
 
     p:last-child {
       color: $text-gray;
+      line-height: 1.75;
     }
   }
 
@@ -359,7 +400,7 @@
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 20px 34px rgba(15, 23, 42, 0.1);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
     }
 
     a {
@@ -368,12 +409,107 @@
     }
   }
 
+  .archive-meta {
+    margin: 0 0 0.35rem;
+    color: $text-gray;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .archive-summary {
+    margin-top: 0.45rem;
+    color: $text-gray;
+    line-height: 1.76;
+  }
+
   .archive-empty {
     grid-column: 1 / -1;
     padding: 1.5rem;
     border: 1px dashed $divider-color;
     border-radius: 22px;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+#paper-review {
+  .review-hero {
+    padding: 1.7rem 1.75rem;
+    margin-bottom: 1.5rem;
+    border-radius: 28px;
+    border: 1px solid $divider-color;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.98)),
+      linear-gradient(135deg, #f6faf9 0%, #f7f6ef 100%);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+
+    h1 {
+      margin: 0;
+      color: $theme-dark;
+    }
+
+    .lead {
+      margin-top: 0.8rem;
+      max-width: 64ch;
+      color: $text-gray;
+      line-height: 1.8;
+    }
+  }
+
+  .review-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 991px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .review-card {
+    padding: 1.18rem 1.24rem;
+    border: 1px solid $divider-color;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+
+    p:last-child {
+      color: $text-gray;
+      line-height: 1.76;
+    }
+  }
+
+  .review-title {
+    margin: 0 0 0.45rem;
+    color: $theme-dark;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .review-section {
+    margin-top: 1.75rem;
+
+    h2 {
+      margin-bottom: 0.7rem;
+      color: $theme-dark;
+    }
+
+    p,
+    li {
+      color: $text-gray;
+      line-height: 1.85;
+    }
+
+    code {
+      padding: 0.06rem 0.36rem;
+      border-radius: 999px;
+      background: $theme-bright;
+      color: $theme-dark;
+    }
   }
 }
 
@@ -384,13 +520,8 @@
     text-align: left;
     border: 1px solid $divider-color;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.94);
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
-  }
-
-  #workflow-wrap .workflow-list {
-    margin-top: 0.35rem;
-    padding-left: 1rem;
   }
 
   #paper-wrap .paper-mini {
@@ -405,7 +536,7 @@
     margin-bottom: 0.2rem;
     color: $text-gray;
     font-size: 0.74rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -414,7 +545,7 @@
     display: block;
     color: $theme-dark;
     font-size: 0.92rem;
-    line-height: 1.45;
+    line-height: 1.55;
     font-weight: 600;
   }
 
@@ -425,9 +556,9 @@
   }
 
   .workflow-note {
-    margin-top: 0.85rem;
     color: $text-gray;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
   }
 }
 
@@ -459,7 +590,7 @@
     padding: 1rem;
     border: 1px solid $divider-color;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
 
     img {
@@ -495,66 +626,9 @@
     display: inline-block;
     padding: 0.28rem 0.55rem;
     border-radius: 999px;
-    background: rgba(91, 33, 182, 0.08);
+    background: $theme-bright;
     color: $theme-dark;
     font-size: 0.78rem;
     font-weight: 700;
-  }
-
-  .verification-box {
-    margin-top: 1.75rem;
-    padding: 1rem 1.1rem;
-    border-radius: 20px;
-    background: #0f172a;
-    color: #e2e8f0;
-
-    strong {
-      display: block;
-      margin-top: 0.9rem;
-      color: #fff;
-    }
-
-    strong:first-child {
-      margin-top: 0;
-    }
-
-    ul,
-    ol {
-      margin-top: 0.45rem;
-      padding-left: 1rem;
-    }
-
-    li {
-      margin: 0.25rem 0;
-      color: #cbd5e1;
-    }
-  }
-
-  .source-grid {
-    display: grid;
-    gap: 0.85rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    @media (max-width: 767px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .source-card {
-    padding: 0.9rem 1rem;
-    border: 1px solid $divider-color;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.98);
-
-    .title {
-      color: $theme-dark;
-      font-weight: 700;
-    }
-
-    .meta {
-      margin-top: 0.35rem;
-      color: $text-gray;
-      font-size: 0.86rem;
-    }
   }
 }

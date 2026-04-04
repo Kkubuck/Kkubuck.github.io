@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
 //Bootstrap
 @import 'bootstrap/bootstrap-grid';
 
-// Base 
+// Base
 @import 'base/variable';
 @import 'base/global';
 @import 'base/utility';
 @import 'base/highlight';
 @import 'base/bibliography';
 
-// Layout 
+// Layout
 @import 'layouts/hub';
 @import 'layouts/blog';
 @import 'layouts/post';
@@ -17,7 +19,7 @@
 @import 'layouts/publications';
 @import 'layouts/presentations';
 
-// Include 
+// Include
 @import 'includes/header';
 @import 'includes/aside';
 @import 'includes/footer';
