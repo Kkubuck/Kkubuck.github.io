@@ -3,6 +3,8 @@ layout: page
 ---
 {% assign latest_post = site.posts | sort: 'date' | reverse | first %}
 {% assign paper_posts = site.categories.papers | sort: 'date' | reverse %}
+{% assign project_posts = site.categories.projects | sort: 'date' | reverse %}
+{% assign subproject_posts = site.categories.subprojects | sort: 'date' | reverse %}
 <div id="paper-home">
   <section class="journal-hero">
     <p class="eyebrow">Kkubuck</p>
@@ -14,22 +16,22 @@ layout: page
     </div>
   </section>
 
-  <section class="home-stack">
+  <section class="home-grid primary-grid">
     <section class="stack-panel feature-panel">
       <div class="section-head">
-        <h2>Latest Post</h2>
+        <h2>최신 글</h2>
         <a href="{{ '/blog/' | relative_url }}">전체 글</a>
       </div>
       {% if latest_post %}
       <article class="feature-entry">
         <a href="{{ latest_post.url | relative_url }}">
-          <p class="entry-meta">{{ latest_post.date | date: "%Y.%m.%d" }} · {% if latest_post.categories contains 'papers' %}논문 리뷰{% else %}글{% endif %}</p>
+          <p class="entry-meta">{{ latest_post.date | date: "%Y.%m.%d" }} · {% if latest_post.categories contains 'papers' %}논문 리뷰{% elsif latest_post.categories contains 'projects' %}프로젝트{% else %}글{% endif %}</p>
           <h3>{{ latest_post.title }}</h3>
           <p>
             {% if latest_post.summary %}
-              {{ latest_post.summary | strip_html | truncatewords: 36, '...' }}
+              {{ latest_post.summary | strip_html | truncatewords: 34, '...' }}
             {% else %}
-              {{ latest_post.excerpt | strip_html | truncatewords: 36, '...' }}
+              {{ latest_post.excerpt | strip_html | truncatewords: 34, '...' }}
             {% endif %}
           </p>
         </a>
@@ -42,22 +44,68 @@ layout: page
       {% endif %}
     </section>
 
+    <div class="side-stack">
+      <section class="stack-panel compact-panel">
+        <div class="section-head compact-head">
+          <h2>프로젝트</h2>
+          <a href="{{ '/projects/' | relative_url }}">전체 보기</a>
+        </div>
+        {% assign latest_project = project_posts | first %}
+        {% if latest_project %}
+        <article class="compact-entry">
+          <a href="{{ latest_project.url | relative_url }}">
+            <p class="entry-meta">{{ latest_project.date | date: "%Y.%m.%d" }}</p>
+            <h3>{{ latest_project.title }}</h3>
+            <p>{{ latest_project.summary | strip_html | truncatewords: 24, '...' }}</p>
+          </a>
+        </article>
+        {% else %}
+        <div class="empty-state">
+          <p>아직 공개된 프로젝트 글이 없습니다.</p>
+        </div>
+        {% endif %}
+      </section>
+
+      <section class="stack-panel compact-panel">
+        <div class="section-head compact-head">
+          <h2>서브 프로젝트</h2>
+          <a href="{{ '/subprojects/' | relative_url }}">전체 보기</a>
+        </div>
+        {% assign latest_subproject = subproject_posts | first %}
+        {% if latest_subproject %}
+        <article class="compact-entry">
+          <a href="{{ latest_subproject.url | relative_url }}">
+            <p class="entry-meta">{{ latest_subproject.date | date: "%Y.%m.%d" }}</p>
+            <h3>{{ latest_subproject.title }}</h3>
+            <p>{{ latest_subproject.summary | strip_html | truncatewords: 24, '...' }}</p>
+          </a>
+        </article>
+        {% else %}
+        <div class="empty-state">
+          <p>아직 공개된 서브 프로젝트 글이 없습니다.</p>
+        </div>
+        {% endif %}
+      </section>
+    </div>
+  </section>
+
+  <section class="home-grid secondary-grid">
     <section class="stack-panel list-panel">
       <div class="section-head">
-        <h2>Recent Writing</h2>
+        <h2>최근 글</h2>
         <a href="{{ '/blog/' | relative_url }}">아카이브</a>
       </div>
       <div class="vertical-list">
-        {% for post in site.posts limit: 8 %}
+        {% for post in site.posts limit: 6 %}
         <article class="list-entry">
           <a href="{{ post.url | relative_url }}">
-            <p class="entry-meta">{{ post.date | date: "%Y.%m.%d" }} · {% if post.categories contains 'papers' %}논문 리뷰{% else %}글{% endif %}</p>
+            <p class="entry-meta">{{ post.date | date: "%Y.%m.%d" }} · {% if post.categories contains 'papers' %}논문 리뷰{% elsif post.categories contains 'projects' %}프로젝트{% else %}글{% endif %}</p>
             <h3>{{ post.title }}</h3>
             <p>
               {% if post.summary %}
-                {{ post.summary | strip_html | truncatewords: 30, '...' }}
+                {{ post.summary | strip_html | truncatewords: 26, '...' }}
               {% else %}
-                {{ post.excerpt | strip_html | truncatewords: 30, '...' }}
+                {{ post.excerpt | strip_html | truncatewords: 26, '...' }}
               {% endif %}
             </p>
           </a>
@@ -68,21 +116,21 @@ layout: page
 
     <section class="stack-panel list-panel">
       <div class="section-head">
-        <h2>Paper Reviews</h2>
+        <h2>논문 리뷰</h2>
         <a href="{{ '/papers/' | relative_url }}">논문 리뷰 전체</a>
       </div>
       {% if paper_posts and paper_posts.size > 0 %}
       <div class="vertical-list">
-        {% for post in paper_posts limit: 10 %}
+        {% for post in paper_posts limit: 6 %}
         <article class="list-entry">
           <a href="{{ post.url | relative_url }}">
             <p class="entry-meta">{{ post.date | date: "%Y.%m.%d" }} · {{ post.venue | default: 'Paper Review' }}</p>
             <h3>{{ post.title }}</h3>
             <p>
               {% if post.summary %}
-                {{ post.summary | strip_html | truncatewords: 30, '...' }}
+                {{ post.summary | strip_html | truncatewords: 26, '...' }}
               {% else %}
-                {{ post.excerpt | strip_html | truncatewords: 30, '...' }}
+                {{ post.excerpt | strip_html | truncatewords: 26, '...' }}
               {% endif %}
             </p>
           </a>
