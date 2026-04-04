@@ -142,25 +142,96 @@
 
 <p>대표 결과는 small camouflaged objects에서의 성능 차이입니다. 작은 객체와 fine edge를 얼마나 잘 다루는지가 이 논문의 핵심 검증 포인트입니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 1. Comparison with state-of-the-art COD methods on three benchmarks.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>COD10K-Test (Sα↑ αE↑ wF↑ M↓)</th>
+      <th>CAMO-Test (Sα↑ αE↑ wF↑ M↓)</th>
+      <th>CHAMELEON-Test (Sα↑ αE↑ wF↑ M↓)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>small camouflaged objects setting</td>
-      <td>두 경쟁 방법 대비 평균 지표가 7.4%, 20.0% 더 높다고 보고한다.</td>
+      <td>CPD [43]</td>
+      <td>0.752 0.820 0.557 0.049</td>
+      <td>0.712 0.813 0.561 0.108</td>
+      <td>0.860 0.908 0.753 0.044</td>
     </tr>
     <tr>
-      <td>standard COD benchmarks</td>
-      <td>iterative magnify-and-refine가 전반적인 COD 성능 향상에도 기여한다고 보인다.</td>
+      <td>PraNet [9]</td>
+      <td>0.768 0.836 0.599 0.047</td>
+      <td>0.738 0.814 0.613 0.098</td>
+      <td>0.864 0.918 0.784 0.038</td>
+    </tr>
+    <tr>
+      <td>MINet-R [31]</td>
+      <td>0.759 0.832 0.580 0.045</td>
+      <td>0.749 0.835 0.635 0.090</td>
+      <td>0.844 0.919 0.746 0.040</td>
+    </tr>
+    <tr>
+      <td>SINet [8]</td>
+      <td>0.771 0.807 0.565 0.048</td>
+      <td>0.742 0.834 0.601 0.101</td>
+      <td>0.869 0.903 0.749 0.041</td>
+    </tr>
+    <tr>
+      <td>LSR [25]</td>
+      <td>0.767 0.861 0.611 0.045</td>
+      <td>0.712 0.791 0.583 0.104</td>
+      <td>0.846 0.913 0.767 0.046</td>
+    </tr>
+    <tr>
+      <td>PFNet [28]</td>
+      <td>0.800 0.868 0.660 0.040</td>
+      <td>0.782 0.852 0.695 0.085</td>
+      <td>0.882 0.942 0.810 0.033</td>
+    </tr>
+    <tr>
+      <td>C2F-Net [39]</td>
+      <td>0.810 0.875 0.674 0.038</td>
+      <td>0.791 0.863 0.706 0.083</td>
+      <td>0.886 0.931 0.824 0.032</td>
+    </tr>
+    <tr>
+      <td>MGL [49]</td>
+      <td>0.811 0.865 0.666 0.037</td>
+      <td>0.775 0.847 0.673 0.088</td>
+      <td>0.893 0.923 0.813 0.030</td>
+    </tr>
+    <tr>
+      <td>SegMaR (Stage-1)</td>
+      <td>0.813 0.880 0.682 0.035</td>
+      <td>0.805 0.864 0.724 0.072</td>
+      <td>0.892 0.937 0.823 0.028</td>
+    </tr>
+    <tr>
+      <td>SegMaR (Stage-2)</td>
+      <td>0.830 0.890 0.718 0.034</td>
+      <td>0.808 0.863 0.739 0.074</td>
+      <td>0.902 0.944 0.851 0.027</td>
+    </tr>
+    <tr>
+      <td>SegMaR (Stage-3)</td>
+      <td>0.833 0.892 0.725 0.034</td>
+      <td>0.810 0.870 0.745 0.073</td>
+      <td>0.905 0.947 0.858 0.027</td>
+    </tr>
+    <tr>
+      <td>SegMaR (Stage-4)</td>
+      <td>0.833 0.895 0.724 0.033</td>
+      <td>0.815 0.872 0.742 0.071</td>
+      <td>0.906 0.954 0.860 0.025</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>SegMaR는 COD에서 coarse-to-fine iteration이 아직 유효하다는 점을 보여주는 논문입니다.</p>

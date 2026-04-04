@@ -142,25 +142,96 @@
 
 <p>대표 메시지는 breadth입니다. 단일 COD benchmark에서 소폭 이기는 것이 아니라, 26 datasets across six tasks와 zero-shot generalization을 함께 보여줍니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>Params (M)</th>
+      <th>NJUD (Sm↑ Fm↑ Em↑)</th>
+      <th>NLPR (Sm↑ Fm↑ Em↑)</th>
+      <th>DUTLF-Depth (Sm↑ Fm↑ Em↑)</th>
+      <th>ReDWeb-S (Sm↑ Fm↑ Em↑)</th>
+      <th>STERE (Sm↑ Fm↑ Em↑)</th>
+      <th>SIP (Sm↑ Fm↑ Em↑)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>26 datasets / 6 tasks</td>
-      <td>RGB SOD, RGB-D SOD, video SOD, RGB COD, RGB-D COD 등 다수의 binary mapping task에서 generalist 성능을 보인다.</td>
+      <td>CMINet[103]</td>
+      <td>188.12</td>
+      <td>.929 .934 .957</td>
+      <td>.932 .922 .963</td>
+      <td>.912 .913 .938</td>
+      <td>.725 .726 .800</td>
+      <td>.918 .916 .951</td>
+      <td>.899 .910 .939</td>
     </tr>
     <tr>
-      <td>zero-shot unseen tasks</td>
-      <td>학습하지 않은 task 조합에서도 2D prompts 결합으로 reasonable generalization을 보인다고 보고한다.</td>
+      <td>VST[54]</td>
+      <td>53.83</td>
+      <td>.922 .920 .951</td>
+      <td>.932 .920 .962</td>
+      <td>.943 .948 .969</td>
+      <td>.759 .763 .826</td>
+      <td>.913 .907 .951</td>
+      <td>.904 .915 .944</td>
+    </tr>
+    <tr>
+      <td>VST-T++ [50]</td>
+      <td>100.51</td>
+      <td>.928 .929 .958</td>
+      <td>.933 .921 .964</td>
+      <td>.944 .948 .969</td>
+      <td>.756 .757 .819</td>
+      <td>.916 .911 .950</td>
+      <td>.903 .914 .944</td>
+    </tr>
+    <tr>
+      <td>SPSN[38]</td>
+      <td>-</td>
+      <td>- - -</td>
+      <td>.923 .912 .960</td>
+      <td>- - -</td>
+      <td>- - -</td>
+      <td>.907 .902 .945</td>
+      <td>.892 .900 .936</td>
+    </tr>
+    <tr>
+      <td>CAVER[68]</td>
+      <td>55.79</td>
+      <td>.920 .924 .953</td>
+      <td>.929 .921 .964</td>
+      <td>.931 .939 .962</td>
+      <td>.730 .724 .802</td>
+      <td>.914 .911 .951</td>
+      <td>.893 .906 .934</td>
+    </tr>
+    <tr>
+      <td>VSCode-T</td>
+      <td>54.09</td>
+      <td>.941 .945 .967</td>
+      <td>.938 .930 .966</td>
+      <td>.952 .959 .974</td>
+      <td>.766 .771 .831</td>
+      <td>.928 .926 .957</td>
+      <td>.917 .936 .955</td>
+    </tr>
+    <tr>
+      <td>VSCode-S</td>
+      <td>74.72</td>
+      <td>.944 .949 .970</td>
+      <td>.941 .932 .968</td>
+      <td>.960 .967 .980</td>
+      <td>.777 .776 .829</td>
+      <td>.931 .928 .958</td>
+      <td>.924 .942 .958</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>VSCode는 COD를 단독 작업으로만 보지 않고, broader visual pop-out 문제의 한 축으로 묶어 읽게 만드는 논문입니다.</p>

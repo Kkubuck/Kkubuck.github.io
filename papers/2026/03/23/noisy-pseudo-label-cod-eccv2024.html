@@ -142,25 +142,70 @@
 
 <p>대표 포인트는 full annotation을 다 쓰지 않아도 성능 격차가 크게 줄어든다는 점입니다. 논문은 20% fully labeled setting에서도 강한 결과를 강조합니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>백본</th>
+      <th>학습 설정</th>
+      <th>CAMO</th>
+      <th>CHAMELEON</th>
+      <th>COD10K</th>
+      <th>NC4K</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>20% fully labeled setting</td>
-      <td>상당히 제한된 fully labeled data만으로도 기존 weakly/semi-supervised COD 방법보다 더 강한 성능을 보고한다.</td>
+      <td>• PNetF1</td>
+      <td>PVTv2-B4</td>
+      <td>F 1% + B 99%</td>
+      <td>0.051 0.922 0.835 0.852</td>
+      <td>0.038 0.921 0.812 0.847</td>
+      <td>0.031 0.903 0.745 0.828</td>
+      <td>0.037 0.926 0.831 0.864</td>
     </tr>
     <tr>
-      <td>주류 COD benchmarks</td>
-      <td>세 개의 mainstream COD benchmarks에서 annotation budget 대비 효율이 좋다는 점을 강조한다.</td>
+      <td>• PNetF5</td>
+      <td>PVTv2-B4</td>
+      <td>F 5% + B 95%</td>
+      <td>0.050 0.924 0.845 0.857</td>
+      <td>0.032 0.943 0.821 0.865</td>
+      <td>0.027 0.921 0.771 0.845</td>
+      <td>0.034 0.934 0.844 0.874</td>
+    </tr>
+    <tr>
+      <td>• PNetF10</td>
+      <td>PVTv2-B4</td>
+      <td>F 10% + B 90%</td>
+      <td>0.048 0.925 0.841 0.861</td>
+      <td>0.028 0.949 0.830 0.878</td>
+      <td>0.024 0.927 0.782 0.855</td>
+      <td>0.032 0.937 0.848 0.880</td>
+    </tr>
+    <tr>
+      <td>• PNetF20</td>
+      <td>PVTv2-B4</td>
+      <td>F 20% + B 80%</td>
+      <td>0.043 0.934 0.856 0.872</td>
+      <td>0.024 0.954 0.861 0.892</td>
+      <td>0.023 0.932 0.792 0.860</td>
+      <td>0.031 0.940 0.857 0.885</td>
+    </tr>
+    <tr>
+      <td>• PNet† F20</td>
+      <td>PVTv2-B4</td>
+      <td>F 20% + B 240%</td>
+      <td>0.039 0.942 0.870 0.882</td>
+      <td>0.021 0.964 0.886 0.908</td>
+      <td>0.016 0.960 0.857 0.901</td>
+      <td>0.024 0.958 0.888 0.906</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>이 논문은 supervision 효율성이라는 현실적인 축을 COD 안으로 끌고 들어왔습니다. 데이터가 비싸다는 COD의 구조적 한계를 줄이는 방향이라는 점에서 의미가 큽니다.</p>

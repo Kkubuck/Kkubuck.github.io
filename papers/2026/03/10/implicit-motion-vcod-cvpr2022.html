@@ -142,25 +142,117 @@
 
 <p>논문은 방법 제안뿐 아니라 MoCA-Mask와 comprehensive VCOD benchmark를 함께 제시해, 이후 비디오 camouflage 연구의 기반을 깔았습니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 2. Quantitative results on CAD dataset.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>Sα↑</th>
+      <th>Fwβ↑</th>
+      <th>Eφ↑</th>
+      <th>M↓</th>
+      <th>mDice</th>
+      <th>mIoU</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>MoCA-Mask</td>
-      <td>pixel-level handcrafted masks를 갖춘 대규모 VCOD dataset으로 제안되며, 이후 video camouflage benchmark의 중심축이 된다.</td>
+      <td>EGNet [50]</td>
+      <td>0.619</td>
+      <td>0.298</td>
+      <td>0.666</td>
+      <td>0.044</td>
+      <td>0.324</td>
+      <td>0.243</td>
     </tr>
     <tr>
-      <td>VCOD benchmarks</td>
-      <td>implicit motion handling이 기존 explicit motion approaches보다 더 안정적인 성능을 낸다고 보고한다.</td>
+      <td>BASNet [30]</td>
+      <td>0.639</td>
+      <td>0.349</td>
+      <td>0.773</td>
+      <td>0.054</td>
+      <td>0.393</td>
+      <td>0.293</td>
+    </tr>
+    <tr>
+      <td>CPD [43]</td>
+      <td>0.622</td>
+      <td>0.289</td>
+      <td>0.667</td>
+      <td>0.049</td>
+      <td>0.330</td>
+      <td>0.239</td>
+    </tr>
+    <tr>
+      <td>PraNet [11]</td>
+      <td>0.629</td>
+      <td>0.352</td>
+      <td>0.763</td>
+      <td>0.042</td>
+      <td>0.378</td>
+      <td>0.290</td>
+    </tr>
+    <tr>
+      <td>SINet [10]</td>
+      <td>0.636</td>
+      <td>0.346</td>
+      <td>0.775</td>
+      <td>0.041</td>
+      <td>0.381</td>
+      <td>0.283</td>
+    </tr>
+    <tr>
+      <td>SINet-v2 [8]</td>
+      <td>0.653</td>
+      <td>0.382</td>
+      <td>0.762</td>
+      <td>0.039</td>
+      <td>0.413</td>
+      <td>0.318</td>
+    </tr>
+    <tr>
+      <td>PNS-Net [14]</td>
+      <td>0.655</td>
+      <td>0.325</td>
+      <td>0.673</td>
+      <td>0.048</td>
+      <td>0.384</td>
+      <td>0.290</td>
+    </tr>
+    <tr>
+      <td>RCRNet [45]</td>
+      <td>0.627</td>
+      <td>0.287</td>
+      <td>0.666</td>
+      <td>0.048</td>
+      <td>0.309</td>
+      <td>0.229</td>
+    </tr>
+    <tr>
+      <td>MG [46]</td>
+      <td>0.594</td>
+      <td>0.336</td>
+      <td>0.691</td>
+      <td>0.059</td>
+      <td>0.368</td>
+      <td>0.268</td>
+    </tr>
+    <tr>
+      <td>SLT-Net (Ours)</td>
+      <td>0.696</td>
+      <td>0.481</td>
+      <td>0.845</td>
+      <td>0.030</td>
+      <td>0.493</td>
+      <td>0.401</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>VCOD를 논문 단위로 본격화한 대표 작업이라서, 비디오 camouflage 계열을 읽을 때 거의 반드시 지나가게 되는 논문입니다.</p>

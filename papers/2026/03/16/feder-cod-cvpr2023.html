@@ -142,25 +142,198 @@
 
 <p>논문은 quantitative 성능뿐 아니라 cheaper computational and memory costs도 함께 강조합니다. 고성능과 효율을 같이 보겠다는 메시지입니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 1. Quantitative comparisons of the proposed FEDER and other state-of-the-art methods on four benchmarks.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>설정</th>
+      <th>모델</th>
+      <th>연도/학회</th>
+      <th>백본</th>
+      <th>CHAMELEON (M↓ Fβ↑ Eφ↑ Sα↑)</th>
+      <th>CAMO (M↓ Fβ↑ Eφ↑ Sα↑)</th>
+      <th>COD10K (M↓ Fβ↑ Eφ↑ Sα↑)</th>
+      <th>NC4K (M↓ Fβ↑ Eφ↑ Sα↑)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>대표 정적 COD benchmarks</td>
-      <td>기존 state-of-the-art를 능가하는 정량 성능을 보고하면서도 계산량과 메모리 비용이 더 낮다고 주장한다.</td>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>CPD [47]</td>
+      <td>CVPR19</td>
+      <td>ResNet50</td>
+      <td>0.048 0.775 0.874 0.857</td>
+      <td>0.113 0.675 0.723 0.716</td>
+      <td>0.053 0.578 0.776 0.750</td>
+      <td>0.072 0.719 0.808 0.787</td>
     </tr>
     <tr>
-      <td>edge quality</td>
-      <td>auxiliary edge reconstruction이 prediction map의 경계 정확도를 높인다고 ablation으로 보여준다.</td>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>SINet [6]</td>
+      <td>CVPR20</td>
+      <td>ResNet50</td>
+      <td>0.034 0.823 0.936 0.872</td>
+      <td>0.092 0.712 0.804 0.745</td>
+      <td>0.043 0.667 0.864 0.776</td>
+      <td>0.058 0.768 0.871 0.808</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>PFNet [28]</td>
+      <td>CVPR21</td>
+      <td>ResNet50</td>
+      <td>0.033 0.820 0.931 0.882</td>
+      <td>0.085 0.751 0.841 0.782</td>
+      <td>0.040 0.676 0.877 0.800</td>
+      <td>0.053 0.779 0.887 0.829</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>MGL-R [50]</td>
+      <td>CVPR21</td>
+      <td>ResNet50</td>
+      <td>0.031 0.825 0.917 0.891</td>
+      <td>0.088 0.738 0.812 0.775</td>
+      <td>0.035 0.680 0.851 0.814</td>
+      <td>0.053 0.778 0.867 0.833</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>LSR [25]</td>
+      <td>CVPR21</td>
+      <td>ResNet50</td>
+      <td>0.030 0.835 0.935 0.890</td>
+      <td>0.080 0.756 0.838 0.787</td>
+      <td>0.037 0.699 0.880 0.804</td>
+      <td>0.048 0.802 0.890 0.834</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>UGTR [48]</td>
+      <td>ICCV21</td>
+      <td>ResNet50</td>
+      <td>0.031 0.805 0.910 0.888</td>
+      <td>0.086 0.747 0.821 0.784</td>
+      <td>0.036 0.670 0.852 0.817</td>
+      <td>0.052 0.778 0.874 0.839</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>SLT-Net [2]</td>
+      <td>CVPR22</td>
+      <td>ResNet50</td>
+      <td>0.030 0.835 0.940 0.887</td>
+      <td>0.082 0.763 0.848 0.792</td>
+      <td>0.036 0.681 0.875 0.804</td>
+      <td>0.049 0.787 0.886 0.830</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>SegMaR-1 [14]</td>
+      <td>CVPR22</td>
+      <td>ResNet50</td>
+      <td>0.028 0.828 0.944 0.892</td>
+      <td>0.072 0.772 0.861 0.805</td>
+      <td>0.035 0.699 0.890 0.813</td>
+      <td>0.052 0.767 0.885 0.835</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>OSFormer [32]</td>
+      <td>ECCV22</td>
+      <td>ResNet50</td>
+      <td>0.028 0.836 0.939 0.891</td>
+      <td>0.073 0.767 0.858 0.799</td>
+      <td>0.034 0.701 0.881 0.811</td>
+      <td>0.049 0.790 0.891 0.832</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>FEDER-R50</td>
+      <td>—</td>
+      <td>ResNet50</td>
+      <td>0.028 0.855 0.947 0.894</td>
+      <td>0.069 0.785 0.873 0.807</td>
+      <td>0.032 0.740 0.900 0.823</td>
+      <td>0.045 0.817 0.905 0.846</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>SINet V2 [4]</td>
+      <td>TPAMI22</td>
+      <td>Res2Net50</td>
+      <td>0.030 0.816 0.942 0.888</td>
+      <td>0.070 0.779 0.882 0.822</td>
+      <td>0.037 0.682 0.887 0.815</td>
+      <td>0.048 0.792 0.903 0.847</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>BSA-Net [52]</td>
+      <td>AAAI22</td>
+      <td>Res2Net50</td>
+      <td>0.027 0.851 0.946 0.895</td>
+      <td>0.079 0.768 0.851 0.796</td>
+      <td>0.034 0.723 0.891 0.818</td>
+      <td>0.048 0.805 0.897 0.841</td>
+    </tr>
+    <tr>
+      <td>Common Setting: Single Input Scale and Single Stage</td>
+      <td>FEDER-R2N</td>
+      <td>—</td>
+      <td>Res2Net50</td>
+      <td>0.026 0.856 0.947 0.903</td>
+      <td>0.066 0.807 0.897 0.836</td>
+      <td>0.029 0.748 0.911 0.844</td>
+      <td>0.042 0.824 0.913 0.862</td>
+    </tr>
+    <tr>
+      <td>Other Setting: Multiple Input Scales (MIS)</td>
+      <td>ZoomNet [31]</td>
+      <td>CVPR22</td>
+      <td>ResNet50</td>
+      <td>0.024 0.858 0.943 0.902</td>
+      <td>0.066 0.792 0.877 0.820</td>
+      <td>0.029 0.740 0.888 0.838</td>
+      <td>0.043 0.814 0.896 0.853</td>
+    </tr>
+    <tr>
+      <td>Other Setting: Multiple Input Scales (MIS)</td>
+      <td>FEDER-MIS</td>
+      <td>—</td>
+      <td>ResNet50</td>
+      <td>0.023 0.869 0.959 0.906</td>
+      <td>0.064 0.801 0.893 0.827</td>
+      <td>0.028 0.756 0.913 0.837</td>
+      <td>0.041 0.832 0.915 0.859</td>
+    </tr>
+    <tr>
+      <td>Other Setting: Multiple Stages (MS)</td>
+      <td>SegMaR-4 [14]</td>
+      <td>CVPR22</td>
+      <td>ResNet50</td>
+      <td>0.025 0.855 0.955 0.906</td>
+      <td>0.071 0.779 0.865 0.815</td>
+      <td>0.033 0.737 0.896 0.833</td>
+      <td>0.047 0.793 0.892 0.845</td>
+    </tr>
+    <tr>
+      <td>Other Setting: Multiple Stages (MS)</td>
+      <td>FEDER-MS-4</td>
+      <td>—</td>
+      <td>ResNet50</td>
+      <td>0.025 0.874 0.964 0.907</td>
+      <td>0.067 0.809 0.886 0.822</td>
+      <td>0.028 0.752 0.917 0.851</td>
+      <td>0.042 0.827 0.917 0.863</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>FEDER는 COD의 주파수 단서와 경계 보정을 균형 있게 묶은 구조로 기억할 만합니다.</p>

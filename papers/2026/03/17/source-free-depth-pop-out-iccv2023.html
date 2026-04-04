@@ -142,25 +142,171 @@
 
 <p>이 논문은 여덟 개 데이터셋에 걸친 breadth를 강조합니다. COD 하나의 benchmark에 특화했다기보다, pop-out prior가 여러 related tasks에 통한다는 점을 보여줍니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 2. Quantitative comparison on COD datasets.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>깊이 사용</th>
+      <th>학회</th>
+      <th>모델</th>
+      <th>CAMO (M↓ Fm↑ Sm↑ Em↑)</th>
+      <th>CHAMELEON (M↓ Fm↑ Sm↑ Em↑)</th>
+      <th>COD10K (M↓ Fm↑ Sm↑ Em↑)</th>
+      <th>NC4K (M↓ Fm↑ Sm↑ Em↑)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>8 datasets / 2 tasks</td>
-      <td>salient object detection과 camouflaged object detection을 합친 넓은 설정에서 성능과 generalizability 향상을 보고한다.</td>
+      <td>RGB</td>
+      <td>CVPR20 [9]</td>
+      <td>SINet</td>
+      <td>.099 .762 .751 .790</td>
+      <td>.044 .845 .868 .908</td>
+      <td>.051 .708 .771 .832</td>
+      <td>.058 .804 .808 .873</td>
     </tr>
     <tr>
-      <td>source-free depth setting</td>
-      <td>source dataset 접근 없이 depth model만 활용해 practical한 adaptation이 가능하다고 주장한다.</td>
+      <td>RGB</td>
+      <td>CVPR21 [42]</td>
+      <td>SLSR</td>
+      <td>.080 .791 .787 .843</td>
+      <td>.030 .866 .889 .938</td>
+      <td>.037 .756 .804 .854</td>
+      <td>.048 .836 .839 .898</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>CVPR21 [78]</td>
+      <td>MGL-R</td>
+      <td>.088 .791 .775 .820</td>
+      <td>.031 .868 .893 .932</td>
+      <td>.035 .767 .813 .874</td>
+      <td>.053 .828 .832 .876</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>CVPR21 [44]</td>
+      <td>PFNet</td>
+      <td>.085 .793 .782 .845</td>
+      <td>.033 .859 .882 .927</td>
+      <td>.040 .747 .800 .880</td>
+      <td>.053 .820 .829 .891</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>CVPR21 [32]</td>
+      <td>UJSC</td>
+      <td>.072 .812 .800 .861</td>
+      <td>.030 .874 .891 .948</td>
+      <td>.035 .761 .808 .886</td>
+      <td>.047 .838 .841 .900</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>IJCAI21 [59]</td>
+      <td>C2FNet</td>
+      <td>.079 .802 .796 .856</td>
+      <td>.032 .871 .888 .936</td>
+      <td>.036 .764 .813 .894</td>
+      <td>.049 .831 .838 .898</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>ICCV21 [74]</td>
+      <td>UGTR</td>
+      <td>.086 .800 .783 .829</td>
+      <td>.031 .862 .887 .926</td>
+      <td>.036 .769 .816 .873</td>
+      <td>.052 .831 .839 .884</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>CVPR22 [21]</td>
+      <td>SegMAR</td>
+      <td>.080 .799 .794 .857</td>
+      <td>.032 .871 .887 .935</td>
+      <td>.039 .750 .799 .876</td>
+      <td>.050 .828 .836 .893</td>
+    </tr>
+    <tr>
+      <td>RGB</td>
+      <td>CVPR22 [47]</td>
+      <td>ZoomNet</td>
+      <td>.074 .818 .801 .858</td>
+      <td>.033 .829 .859 .915</td>
+      <td>.034 .771 .808 .872</td>
+      <td>.045 .841 .843 .893</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>MM21 [80]</td>
+      <td>CDINet</td>
+      <td>.100 .638 .732 .766</td>
+      <td>.036 .787 .879 .903</td>
+      <td>.044 .610 .778 .821</td>
+      <td>.067 .697 .793 .830</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>CVPR21 [19]</td>
+      <td>DCF</td>
+      <td>.089 .724 .749 .834</td>
+      <td>.037 .821 .850 .923</td>
+      <td>.040 .685 .766 .864</td>
+      <td>.061 .765 .791 .878</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>ICCV21 [81]</td>
+      <td>CMINet</td>
+      <td>.087 .798 .782 .827</td>
+      <td>.032 .881 .891 .930</td>
+      <td>.039 .768 .811 .868</td>
+      <td>.053 .832 .839 .888</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>ICCV21 [92]</td>
+      <td>SPNet</td>
+      <td>.083 .807 .783 .831</td>
+      <td>.033 .872 .888 .930</td>
+      <td>.037 .776 .808 .869</td>
+      <td>.054 .828 .825 .874</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>TIP22 [63]</td>
+      <td>DCMF</td>
+      <td>.115 .737 .728 .757</td>
+      <td>.059 .807 .830 .853</td>
+      <td>.063 .679 .748 .776</td>
+      <td>.077 .782 .794 .820</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>ECCV22 [31]</td>
+      <td>SPSN</td>
+      <td>.084 .782 .773 .829</td>
+      <td>.032 .866 .887 .932</td>
+      <td>.042 .727 .789 .854</td>
+      <td>.059 .803 .813 .867</td>
+    </tr>
+    <tr>
+      <td>Source-free RGB-D</td>
+      <td>Ours</td>
+      <td>PopNet</td>
+      <td>.073 .821 .806 .869</td>
+      <td>.022 .893 .910 .962</td>
+      <td>.031 .789 .827 .897</td>
+      <td>.043 .852 .852 .908</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>이 논문은 depth를 보조 input이 아니라, segmentation reasoning을 재구성하는 prior로 다룹니다. COD를 더 넓은 pop-out 문제로 보는 데 도움이 됩니다.</p>

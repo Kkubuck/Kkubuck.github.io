@@ -144,25 +144,114 @@
 
 <p>논문은 두 개의 VCOD benchmark에서 큰 mIoU 상승폭을 제시하며, foundation model adaptation이 비디오 camouflage에도 통할 수 있음을 보여줍니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>연도/학회</th>
+      <th>Input</th>
+      <th>MoCA (M↓ mIoU↑)</th>
+      <th>CAD (M↓ mIoU↑)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>VCOD benchmark A</td>
-      <td>mIoU 기준으로 기존 SOTA 대비 7.8% 향상을 보고한다.</td>
+      <td>SINet[10]</td>
+      <td>2020-CVPR</td>
+      <td>Image</td>
+      <td>0.574 0.185 0.655 0.030 0.221 0.156</td>
+      <td>0.601 0.204 0.589 0.089 0.289 0.209</td>
     </tr>
     <tr>
-      <td>VCOD benchmark B</td>
-      <td>두 번째 benchmark에서도 mIoU 9.6% 향상을 보고하며 temporal prompt learning의 효과를 강조한다.</td>
+      <td>SINet-v2[12]</td>
+      <td>2021-TPAMI</td>
+      <td>Image</td>
+      <td>0.571 0.175 0.608 0.035 0.211 0.153</td>
+      <td>0.544 0.181 0.546 0.049 0.170 0.110</td>
+    </tr>
+    <tr>
+      <td>ZoomNet[32]</td>
+      <td>2022-CVPR</td>
+      <td>Image</td>
+      <td>0.582 0.211 0.536 0.033 0.224 0.167</td>
+      <td>0.587 0.225 0.594 0.063 0.246 0.166</td>
+    </tr>
+    <tr>
+      <td>BGNet [36]</td>
+      <td>2022-IJCAI</td>
+      <td>Image</td>
+      <td>0.590 0.203 0.647 0.023 0.225 0.167</td>
+      <td>0.607 0.203 0.666 0.089 0.345 0.256</td>
+    </tr>
+    <tr>
+      <td>FEDERNet[16]</td>
+      <td>2023-CVPR</td>
+      <td>Image</td>
+      <td>0.555 0.158 0.542 0.049 0.192 0.132</td>
+      <td>0.607 0.246 0.725 0.061 0.361 0.257</td>
+    </tr>
+    <tr>
+      <td>FSPNet[19]</td>
+      <td>2023-CVPR</td>
+      <td>Image</td>
+      <td>0.594 0.182 0.608 0.044 0.238 0.167</td>
+      <td>0.539 0.220 0.553 0.145 0.309 0.212</td>
+    </tr>
+    <tr>
+      <td>PUENet[44]</td>
+      <td>2023-TIP</td>
+      <td>Image</td>
+      <td>0.594 0.204 0.619 0.037 0.302 0.212</td>
+      <td>0.673 0.427 0.803 0.034 0.499 0.389</td>
+    </tr>
+    <tr>
+      <td>RCRNet[42]</td>
+      <td>2019-ICCV</td>
+      <td>Video</td>
+      <td>0.597 0.174 0.583 0.025 0.194 0.137</td>
+      <td>- - - - - -</td>
+    </tr>
+    <tr>
+      <td>PNS-Net[20]</td>
+      <td>2021-MICCAI</td>
+      <td>Video</td>
+      <td>0.576 0.134 0.562 0.038 0.189 0.133</td>
+      <td>0.678 0.369 0.720 0.043 0.409 0.308</td>
+    </tr>
+    <tr>
+      <td>MG[43]</td>
+      <td>2021-ICCV</td>
+      <td>Video</td>
+      <td>0.547 0.165 0.537 0.095 0.197 0.141</td>
+      <td>0.484 0.314 0.558 0.370 0.351 0.260</td>
+    </tr>
+    <tr>
+      <td>SLT-Net[5]</td>
+      <td>2022-CVPR</td>
+      <td>Video</td>
+      <td>0.656 0.357 0.785 0.021 0.387 0.310</td>
+      <td>0.679 0.420 0.805 0.033 0.445 0.342</td>
+    </tr>
+    <tr>
+      <td>TSP-SAM(M+P)</td>
+      <td>Ours</td>
+      <td>Video</td>
+      <td>0.673 0.400 0.766 0.012 0.421 0.345</td>
+      <td>0.681 0.500 0.853 0.031 0.496 0.393</td>
+    </tr>
+    <tr>
+      <td>TSP-SAM(M+B)</td>
+      <td>Ours</td>
+      <td>Video</td>
+      <td>0.689 0.444 0.808 0.008 0.458 0.388</td>
+      <td>0.704 0.524 0.912 0.028 0.543 0.438</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>TSP-SAM은 SAM을 단순 fine-tuning하는 대신, 위장 비디오에서 필요한 prompt와 시간 일관성을 다시 설계한 논문입니다.</p>

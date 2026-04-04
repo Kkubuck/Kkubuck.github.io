@@ -142,25 +142,72 @@
 
 <p>이 논문은 새 benchmark 제안 논문답게, 대표 실험도 OVCamo에서 기존 open-vocabulary segmentation baselines와의 격차를 보여주는 데 집중합니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>텍스트 백본</th>
+      <th>비전 백본</th>
+      <th>프롬프트</th>
+      <th>OVCamo (cSm↑ cFωβ↑ cMAE↓ cFβ↑ cEm↑ cIoU↑)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>OVCamo</td>
-      <td>11,483장 규모의 open-vocabulary camouflaged object segmentation benchmark로, novel class generalization과 위장 장면 인식을 함께 본다.</td>
+      <td>SimSeg21 [60]</td>
+      <td>CLIP-ViT-B/16 [47]</td>
+      <td>ResNet-101 [20]</td>
+      <td>Learnable [82]</td>
+      <td>0.053 0.049 0.921 0.056 0.098 0.047</td>
     </tr>
     <tr>
-      <td>기존 OVSIS baselines</td>
-      <td>OVCoser는 OVCamo에서 이전 open-vocabulary segmentation 방법을 큰 폭으로 앞선다고 보고한다.</td>
+      <td>OVSeg22 [33]</td>
+      <td>CLIP-ViT-L/14 [47]</td>
+      <td>Swin-B [36]</td>
+      <td>[18]</td>
+      <td>0.024 0.046 0.954 0.056 0.130 0.046</td>
+    </tr>
+    <tr>
+      <td>ODISE23 [58]</td>
+      <td>CLIP-ViT-L/14 [47]</td>
+      <td>StableDiffusionv1.3 [50]</td>
+      <td>[17]</td>
+      <td>0.187 0.119 0.700 0.211 0.298 0.167</td>
+    </tr>
+    <tr>
+      <td>SAN23 [59]</td>
+      <td>CLIP-ViT-L/14 [47]</td>
+      <td>ViT Adapter</td>
+      <td>[18]</td>
+      <td>0.275 0.202 0.612 0.220 0.318 0.189</td>
+    </tr>
+    <tr>
+      <td>CAT-Seg23 [10]</td>
+      <td>CLIP-ViT-L/14 [47]</td>
+      <td>Swin-B [36]</td>
+      <td>[47]</td>
+      <td>0.181 0.106 0.719 0.123 0.196 0.094</td>
+    </tr>
+    <tr>
+      <td>FC-CLIP23 [64]</td>
+      <td>CLIP-ConvNeXt-L [9]</td>
+      <td>—</td>
+      <td>[18]</td>
+      <td>0.080 0.076 0.872 0.090 0.191 0.072</td>
+    </tr>
+    <tr>
+      <td>Ours</td>
+      <td>CLIP-ConvNeXt-L [9]</td>
+      <td>—</td>
+      <td>CamoPrompts</td>
+      <td>0.579 0.490 0.336 0.520 0.616 0.443</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>OVCOS는 COD를 텍스트 조건과 일반화 문제까지 확장한 기준 작업입니다. 이후 open-vocabulary camouflage 연구를 볼 때 거의 출발점처럼 읽히는 논문입니다.</p>

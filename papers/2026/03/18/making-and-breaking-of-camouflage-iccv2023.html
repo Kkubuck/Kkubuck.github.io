@@ -142,25 +142,122 @@
 
 <p>대표 결과는 public MoCA-Mask benchmark에서의 state-of-the-art camouflage breaking 성능입니다. score 기반 synthetic data가 실제 benchmark generalization에 도움을 준다는 점이 핵심입니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 1. Results of the proposed camouflage scores on natural and synthetic datasets.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>데이터셋</th>
+      <th>유형</th>
+      <th>SRf↑</th>
+      <th>Sb↑</th>
+      <th>Sα↑</th>
+      <th>d²F↓</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>MoCA-Mask</td>
-      <td>synthetic camouflage generation을 활용한 학습으로 public video camouflage benchmark에서 SOTA를 달성한다고 보고한다.</td>
+      <td>CHAMELEON [32]</td>
+      <td>Image</td>
+      <td>0.694</td>
+      <td>0.445</td>
+      <td>0.607</td>
+      <td>0.70</td>
     </tr>
     <tr>
-      <td>camouflage dataset comparison</td>
-      <td>제안한 score로 기존 camouflage datasets의 난도와 camouflage quality를 정량 비교한다.</td>
+      <td>CAMO Train [20]</td>
+      <td>Image</td>
+      <td>0.672</td>
+      <td>0.451</td>
+      <td>0.595</td>
+      <td>1.01</td>
+    </tr>
+    <tr>
+      <td>CAMO Test [20]</td>
+      <td>Image</td>
+      <td>0.683</td>
+      <td>0.470</td>
+      <td>0.608</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <td>COD10K Train [9]</td>
+      <td>Image</td>
+      <td>0.655</td>
+      <td>0.433</td>
+      <td>0.577</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <td>COD10K Test [9]</td>
+      <td>Image</td>
+      <td>0.657</td>
+      <td>0.431</td>
+      <td>0.578</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Animals [1]</td>
+      <td>Video</td>
+      <td>0.674</td>
+      <td>0.536</td>
+      <td>0.626</td>
+      <td>1.60</td>
+    </tr>
+    <tr>
+      <td>MoCA-Mask Train [5, 19]</td>
+      <td>Video</td>
+      <td>0.850</td>
+      <td>0.443</td>
+      <td>0.707</td>
+      <td>1.14</td>
+    </tr>
+    <tr>
+      <td>MoCA-Mask Test [5, 19]</td>
+      <td>Video</td>
+      <td>0.733</td>
+      <td>0.464</td>
+      <td>0.639</td>
+      <td>2.51</td>
+    </tr>
+    <tr>
+      <td>Camouflaged cuboids[12, 27]</td>
+      <td>Multi-view</td>
+      <td>0.894</td>
+      <td>0.433</td>
+      <td>0.733</td>
+      <td>6.2</td>
+    </tr>
+    <tr>
+      <td>Syn. Camouflage w.o. LF</td>
+      <td>Image</td>
+      <td>0.608</td>
+      <td>0.432</td>
+      <td>0.546</td>
+      <td>1.36</td>
+    </tr>
+    <tr>
+      <td>Syn. Camouflage w. LF</td>
+      <td>Image</td>
+      <td>0.679</td>
+      <td>0.447</td>
+      <td>0.598</td>
+      <td>1.13</td>
+    </tr>
+    <tr>
+      <td>Syn. Camouflage Video</td>
+      <td>Video</td>
+      <td>0.658</td>
+      <td>0.430</td>
+      <td>0.578</td>
+      <td>1.18</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>이 논문은 COD를 단순 segmentation task가 아니라, camouflage quality 자체를 분석하고 조절하는 문제로 확장합니다.</p>

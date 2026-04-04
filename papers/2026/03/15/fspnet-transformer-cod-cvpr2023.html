@@ -142,25 +142,200 @@
 
 <p>실험의 메시지는 transformer backbone을 COD에 맞게 손보면 local cue와 decoding 문제를 줄일 수 있다는 것입니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 1. Quantitative comparison with 24 SOTA methods on three benchmark datasets.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>구분</th>
+      <th>모델</th>
+      <th>CAMO (Sm↑ Fωβ↑ Fmβ↑ Emϕ↑ Exϕ↑ M↓)</th>
+      <th>COD10K (Sm↑ Fωβ↑ Fmβ↑ Emϕ↑ Exϕ↑ M↓)</th>
+      <th>NC4K (Sm↑ Fωβ↑ Fmβ↑ Emϕ↑ Exϕ↑ M↓)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>대표 COD benchmarks</td>
-      <td>transformer 기반 기존 방법보다 더 안정적인 segmentation 성능을 보고한다.</td>
+      <td>Salient Object Detection</td>
+      <td>BASNet19</td>
+      <td>.618 .413 .475 .661 .708 .159</td>
+      <td>.634 .365 .417 .678 .735 .105</td>
+      <td>.695 .546 .610 .762 .786 .095</td>
     </tr>
     <tr>
-      <td>transformer ablation</td>
-      <td>NL-TEM과 shrinkage pyramid가 locality와 aggregation 병목을 줄이는 데 기여한다고 분석한다.</td>
+      <td>Salient Object Detection</td>
+      <td>CPD19</td>
+      <td>.716 .556 .618 .723 .796 .113</td>
+      <td>.750 .531 .595 .776 .853 .053</td>
+      <td>.717 .551 .597 .724 .793 .092</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>EGNet19</td>
+      <td>.662 .495 .567 .683 .780 .125</td>
+      <td>.733 .519 .583 .761 .836 .055</td>
+      <td>.767 .626 .689 .793 .850 .077</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>SCRN19</td>
+      <td>.779 .643 .705 .797 .850 .090</td>
+      <td>.789 .575 .651 .817 .880 .047</td>
+      <td>.830 .698 .757 .854 .897 .059</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>F3Net20</td>
+      <td>.711 .564 .616 .741 .780 .109</td>
+      <td>.739 .544 .593 .795 .819 .051</td>
+      <td>.780 .656 .705 .824 .848 .070</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>CSNet20</td>
+      <td>.771 .642 .705 .795 .849 .092</td>
+      <td>.778 .569 .635 .810 .871 .047</td>
+      <td>.750 .603 .655 .773 .793 .088</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>SSAL20</td>
+      <td>.644 .493 .579 .721 .780 .126</td>
+      <td>.668 .454 .527 .768 .789 .066</td>
+      <td>.699 .561 .644 .780 .812 .093</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>ITSD20</td>
+      <td>.750 .610 .663 .780 .830 .102</td>
+      <td>.767 .557 .615 .808 .861 .051</td>
+      <td>.811 .680 .729 .845 .883 .064</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>UCNet20</td>
+      <td>.739 .640 .700 .787 .820 .094</td>
+      <td>.776 .633 .681 .857 .867 .042</td>
+      <td>.811 .729 .775 .871 .886 .055</td>
+    </tr>
+    <tr>
+      <td>Salient Object Detection</td>
+      <td>VST21</td>
+      <td>.787 .691 .738 .838 .866 .076</td>
+      <td>.781 .604 .653 .837 .877 .042</td>
+      <td>.831 .732 .771 .877 .901 .050</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>SINet20</td>
+      <td>.751 .606 .675 .771 .831 .100</td>
+      <td>.771 .551 .634 .806 .868 .051</td>
+      <td>.808 .723 .769 .871 .883 .058</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>SLSR21</td>
+      <td>.787 .696 .744 .838 .854 .080</td>
+      <td>.804 .673 .715 .880 .892 .037</td>
+      <td>.840 .766 .804 .895 .907 .048</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>PFNet21</td>
+      <td>.782 .695 .746 .842 .855 .085</td>
+      <td>.800 .660 .701 .877 .890 .040</td>
+      <td>.829 .745 .784 .888 .898 .053</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>MGL-R21</td>
+      <td>.775 .673 .726 .812 .842 .088</td>
+      <td>.814 .666 .711 .852 .890 .035</td>
+      <td>.833 .740 .782 .867 .893 .052</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>UJSC21</td>
+      <td>.800 .728 .772 .859 .873 .073</td>
+      <td>.809 .684 .721 .884 .891 .035</td>
+      <td>.842 .771 .806 .898 .907 .047</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>C2FNet21</td>
+      <td>.796 .719 .762 .854 .864 .080</td>
+      <td>.813 .686 .723 .890 .900 .036</td>
+      <td>.838 .762 .795 .897 .904 .049</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>UGTR21</td>
+      <td>.784 .684 .735 .822 .851 .086</td>
+      <td>.817 .666 .712 .853 .890 .036</td>
+      <td>.839 .747 .787 .875 .899 .052</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>PreyNet22</td>
+      <td>.790 .708 .757 .842 .857 .077</td>
+      <td>.813 .697 .736 .881 .891 .034</td>
+      <td>– – – – – –</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>BSA-Net22</td>
+      <td>.794 .717 .763 .851 .867 .079</td>
+      <td>.818 .699 .738 .891 .901 .034</td>
+      <td>.841 .771 .808 .897 .907 .048</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>OCE-Net22</td>
+      <td>.802 .723 .766 .852 .865 .080</td>
+      <td>.827 .707 .741 .894 .905 .033</td>
+      <td>.853 .785 .818 .903 .913 .045</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>BGNet22</td>
+      <td>.812 .749 .789 .870 .882 .073</td>
+      <td>.831 .722 .753 .901 .911 .033</td>
+      <td>.851 .788 .820 .907 .916 .044</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>SegMaR22</td>
+      <td>.815 .753 .795 .874 .884 .071</td>
+      <td>.833 .724 .757 .899 .906 .034</td>
+      <td>.841 .781 .820 .896 .907 .046</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>ZoomNet22</td>
+      <td>.820 .752 .794 .878 .892 .066</td>
+      <td>.838 .729 .766 .888 .911 .029</td>
+      <td>.853 .784 .818 .896 .912 .043</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>SINet-v222</td>
+      <td>.820 .743 .782 .882 .895 .070</td>
+      <td>.815 .680 .718 .887 .906 .037</td>
+      <td>.847 .770 .805 .903 .914 .048</td>
+    </tr>
+    <tr>
+      <td>Camouflaged Object Detection</td>
+      <td>Ours</td>
+      <td>.856 .799 .830 .899 .928 .050</td>
+      <td>.851 .735 .769 .895 .930 .026</td>
+      <td>.879 .816 .843 .915 .937 .035</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>FSPNet은 transformer 기반 COD의 약점을 정면으로 고친 실전형 논문입니다.</p>

@@ -142,25 +142,67 @@
 
 <p>실험에서는 새로운 large COD testing set과 함께, 단순 segmentation score뿐 아니라 interpretability 측면의 이점을 강조합니다.</p>
 
+<h3 id="메인-실험-결과">메인 실험 결과</h3>
+
+<p>Table 1. Performance of baseline models trained with CAM-FR on benchmark testing sets.</p>
+
 <table>
   <thead>
     <tr>
-      <th>벤치마크</th>
-      <th>핵심 포인트</th>
+      <th>모델</th>
+      <th>CAMO (Sα↑ Fmeanβ↑ Emeanξ↑ M↓)</th>
+      <th>CHAMELEON (Sα↑ Fmeanβ↑ Emeanξ↑ M↓)</th>
+      <th>COD10K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓)</th>
+      <th>NC4K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>large COD testing set</td>
-      <td>기존보다 generalization을 더 엄격하게 확인할 수 있는 테스트셋을 함께 제공한다.</td>
+      <td>SCRN [55]</td>
+      <td>0.702 0.632 0.731 0.106</td>
+      <td>0.822 0.726 0.833 0.060</td>
+      <td>0.756 0.623 0.793 0.052</td>
+      <td>0.793 0.729 0.823 0.068</td>
     </tr>
     <tr>
-      <td>localize + segment + rank</td>
-      <td>단순 binary COD보다 해석력이 높은 multi-branch framework라는 점을 강조한다.</td>
+      <td>CSNet[14]</td>
+      <td>0.704 0.633 0.753 0.106</td>
+      <td>0.819 0.759 0.859 0.051</td>
+      <td>0.745 0.615 0.808 0.048</td>
+      <td>0.785 0.729 0.834 0.065</td>
+    </tr>
+    <tr>
+      <td>UCNet [63]</td>
+      <td>0.703 0.640 0.740 0.107</td>
+      <td>0.833 0.781 0.890 0.049</td>
+      <td>0.756 0.650 0.823 0.047</td>
+      <td>0.792 0.751 0.854 0.065</td>
+    </tr>
+    <tr>
+      <td>BASNet [38]</td>
+      <td>0.644 0.578 0.588 0.143</td>
+      <td>0.761 0.657 0.797 0.080</td>
+      <td>0.640 0.579 0.713 0.072</td>
+      <td>0.724 0.648 0.780 0.089</td>
+    </tr>
+    <tr>
+      <td>SINet [10]</td>
+      <td>0.697 0.579 0.693 0.130</td>
+      <td>0.820 0.731 0.835 0.069</td>
+      <td>0.733 0.588 0.768 0.069</td>
+      <td>0.779 0.696 0.800 0.086</td>
+    </tr>
+    <tr>
+      <td>Ours cod new</td>
+      <td>0.708 0.645 0.755 0.105</td>
+      <td>0.842 0.794 0.896 0.046</td>
+      <td>0.760 0.658 0.831 0.045</td>
+      <td>0.797 0.758 0.854 0.061</td>
     </tr>
   </tbody>
 </table>
 
+<p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
 <h2 id="결론">결론</h2>
 
 <p>이 논문은 COD를 더 해석 가능하게 만들려는 초창기 중요한 시도입니다.</p>
