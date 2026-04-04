@@ -50,11 +50,26 @@ pdf_url: "https://openaccess.thecvf.com/content/ICCV2023/papers/Lamdouar_The_Mak
 
 대표 결과는 public MoCA-Mask benchmark에서의 state-of-the-art camouflage breaking 성능입니다. score 기반 synthetic data가 실제 benchmark generalization에 도움을 준다는 점이 핵심입니다.
 
-| 벤치마크 | 핵심 포인트 |
-| --- | --- |
-| MoCA-Mask | synthetic camouflage generation을 활용한 학습으로 public video camouflage benchmark에서 SOTA를 달성한다고 보고한다. |
-| camouflage dataset comparison | 제안한 score로 기존 camouflage datasets의 난도와 camouflage quality를 정량 비교한다. |
+### 메인 실험 결과
 
+Table 1. Results of the proposed camouflage scores on natural and synthetic datasets.
+
+| 데이터셋 | 유형 | SRf↑ | Sb↑ | Sα↑ | d²F↓ |
+| --- | --- | --- | --- | --- | --- |
+| CHAMELEON [32] | Image | 0.694 | 0.445 | 0.607 | 0.70 |
+| CAMO Train [20] | Image | 0.672 | 0.451 | 0.595 | 1.01 |
+| CAMO Test [20] | Image | 0.683 | 0.470 | 0.608 | 1.00 |
+| COD10K Train [9] | Image | 0.655 | 0.433 | 0.577 | 0.90 |
+| COD10K Test [9] | Image | 0.657 | 0.431 | 0.578 | 0.90 |
+| Camouflaged Animals [1] | Video | 0.674 | 0.536 | 0.626 | 1.60 |
+| MoCA-Mask Train [5, 19] | Video | 0.850 | 0.443 | 0.707 | 1.14 |
+| MoCA-Mask Test [5, 19] | Video | 0.733 | 0.464 | 0.639 | 2.51 |
+| Camouflaged cuboids[12, 27] | Multi-view | 0.894 | 0.433 | 0.733 | 6.2 |
+| Syn. Camouflage w.o. LF | Image | 0.608 | 0.432 | 0.546 | 1.36 |
+| Syn. Camouflage w. LF | Image | 0.679 | 0.447 | 0.598 | 1.13 |
+| Syn. Camouflage Video | Video | 0.658 | 0.430 | 0.578 | 1.18 |
+
+표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
 ## 결론
 
 이 논문은 COD를 단순 segmentation task가 아니라, camouflage quality 자체를 분석하고 조절하는 문제로 확장합니다.

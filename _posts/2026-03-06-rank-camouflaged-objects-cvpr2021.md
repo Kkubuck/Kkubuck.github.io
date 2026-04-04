@@ -50,11 +50,20 @@ localization branch가 discriminative region을 찾고, segmentation branch가 f
 
 실험에서는 새로운 large COD testing set과 함께, 단순 segmentation score뿐 아니라 interpretability 측면의 이점을 강조합니다.
 
-| 벤치마크 | 핵심 포인트 |
-| --- | --- |
-| large COD testing set | 기존보다 generalization을 더 엄격하게 확인할 수 있는 테스트셋을 함께 제공한다. |
-| localize + segment + rank | 단순 binary COD보다 해석력이 높은 multi-branch framework라는 점을 강조한다. |
+### 메인 실험 결과
 
+Table 1. Performance of baseline models trained with CAM-FR on benchmark testing sets.
+
+| 모델 | CAMO (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | CHAMELEON (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | COD10K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | NC4K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) |
+| --- | --- | --- | --- | --- |
+| SCRN [55] | 0.702 0.632 0.731 0.106 | 0.822 0.726 0.833 0.060 | 0.756 0.623 0.793 0.052 | 0.793 0.729 0.823 0.068 |
+| CSNet[14] | 0.704 0.633 0.753 0.106 | 0.819 0.759 0.859 0.051 | 0.745 0.615 0.808 0.048 | 0.785 0.729 0.834 0.065 |
+| UCNet [63] | 0.703 0.640 0.740 0.107 | 0.833 0.781 0.890 0.049 | 0.756 0.650 0.823 0.047 | 0.792 0.751 0.854 0.065 |
+| BASNet [38] | 0.644 0.578 0.588 0.143 | 0.761 0.657 0.797 0.080 | 0.640 0.579 0.713 0.072 | 0.724 0.648 0.780 0.089 |
+| SINet [10] | 0.697 0.579 0.693 0.130 | 0.820 0.731 0.835 0.069 | 0.733 0.588 0.768 0.069 | 0.779 0.696 0.800 0.086 |
+| Ours cod new | 0.708 0.645 0.755 0.105 | 0.842 0.794 0.896 0.046 | 0.760 0.658 0.831 0.045 | 0.797 0.758 0.854 0.061 |
+
+표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
 ## 결론
 
 이 논문은 COD를 더 해석 가능하게 만들려는 초창기 중요한 시도입니다.
