@@ -63,6 +63,12 @@
         <a href="/papers/">
           <li class="btn-nav">논문 리뷰</li>
         </a>
+        <a href="/projects/">
+          <li class="btn-nav">프로젝트</li>
+        </a>
+        <a href="/subprojects/">
+          <li class="btn-nav">서브 프로젝트</li>
+        </a>
         <a href="/about/">
           <li class="btn-nav">소개</li>
         </a>
@@ -73,6 +79,8 @@
     </nav>
   </header>
 </section>
+
+
 
 
 
@@ -87,10 +95,10 @@
     </div>
   </section>
 
-  <section class="home-stack">
+  <section class="home-grid primary-grid">
     <section class="stack-panel feature-panel">
       <div class="section-head">
-        <h2>Latest Post</h2>
+        <h2>최신 글</h2>
         <a href="/blog/">전체 글</a>
       </div>
       
@@ -108,9 +116,43 @@
       
     </section>
 
+    <div class="side-stack">
+      <section class="stack-panel compact-panel">
+        <div class="section-head compact-head">
+          <h2>프로젝트</h2>
+          <a href="/projects/">전체 보기</a>
+        </div>
+        
+        
+        <div class="empty-state">
+          <p>아직 공개된 프로젝트 글이 없습니다.</p>
+        </div>
+        
+      </section>
+
+      <section class="stack-panel compact-panel">
+        <div class="section-head compact-head">
+          <h2>서브 프로젝트</h2>
+          <a href="/subprojects/">전체 보기</a>
+        </div>
+        
+        
+        <article class="compact-entry">
+          <a href="/subprojects/2026/04/03/paper-review-toolkit-build-notes.html">
+            <p class="entry-meta">2026.04.03</p>
+            <h3>논문 리뷰 툴킷을 만든 방식</h3>
+            <p>PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다.</p>
+          </a>
+        </article>
+        
+      </section>
+    </div>
+  </section>
+
+  <section class="home-grid secondary-grid">
     <section class="stack-panel list-panel">
       <div class="section-head">
-        <h2>Recent Writing</h2>
+        <h2>최근 글</h2>
         <a href="/blog/">아카이브</a>
       </div>
       <div class="vertical-list">
@@ -122,6 +164,18 @@
             <p>
               
                 SuCLIP은 개방어휘 위장 객체 분할에서 텍스트-비전 정렬을 다시 맞춰 OVCoser보다 안정적으로 성능을 끌어올린다.
+              
+            </p>
+          </a>
+        </article>
+        
+        <article class="list-entry">
+          <a href="/subprojects/2026/04/03/paper-review-toolkit-build-notes.html">
+            <p class="entry-meta">2026.04.03 · 글</p>
+            <h3>논문 리뷰 툴킷을 만든 방식</h3>
+            <p>
+              
+                PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다.
               
             </p>
           </a>
@@ -175,48 +229,12 @@
           </a>
         </article>
         
-        <article class="list-entry">
-          <a href="/papers/2026/03/30/escnet-edge-semantic-cod.html">
-            <p class="entry-meta">2026.03.30 · 논문 리뷰</p>
-            <h3>ESCNet: Edge-Semantic Collaborative Network for Camouflaged Object Detection</h3>
-            <p>
-              
-                ESCNet은 위장 객체 탐지의 병목을 경계와 텍스처의 공동 추론 문제로 보고, edge-semantic feedback loop를 설계한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/29/mm-sam-camouflaged-scene-segmentation.html">
-            <p class="entry-meta">2026.03.29 · 논문 리뷰</p>
-            <h3>Multi-modal Segment Anything Model for Camouflaged Scene Segmentation</h3>
-            <p>
-              
-                MM-SAM은 BLIP에서 만든 텍스트·비전 임베딩을 SAM prompt로 넣어 수동 프롬프트 없이 위장 장면 분할을 개선한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/28/srrnet-video-camouflaged-objects.html">
-            <p class="entry-meta">2026.03.28 · 논문 리뷰</p>
-            <h3>Scoring, Remember, and Reference: Catching Camouflaged Objects in Videos</h3>
-            <p>
-              
-                SRRNet은 위장 객체 비디오에서 reference frame을 점수 기반으로 고르고, 기억 정보와 motion cue를 함께 써서 단일 패스로 성능을 높인다.
-              
-            </p>
-          </a>
-        </article>
-        
       </div>
     </section>
 
     <section class="stack-panel list-panel">
       <div class="section-head">
-        <h2>Paper Reviews</h2>
+        <h2>논문 리뷰</h2>
         <a href="/papers/">논문 리뷰 전체</a>
       </div>
       
@@ -289,54 +307,6 @@
             <p>
               
                 ESCNet은 위장 객체 탐지의 병목을 경계와 텍스처의 공동 추론 문제로 보고, edge-semantic feedback loop를 설계한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/29/mm-sam-camouflaged-scene-segmentation.html">
-            <p class="entry-meta">2026.03.29 · ICCV 2025</p>
-            <h3>Multi-modal Segment Anything Model for Camouflaged Scene Segmentation</h3>
-            <p>
-              
-                MM-SAM은 BLIP에서 만든 텍스트·비전 임베딩을 SAM prompt로 넣어 수동 프롬프트 없이 위장 장면 분할을 개선한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/28/srrnet-video-camouflaged-objects.html">
-            <p class="entry-meta">2026.03.28 · ICCV 2025</p>
-            <h3>Scoring, Remember, and Reference: Catching Camouflaged Objects in Videos</h3>
-            <p>
-              
-                SRRNet은 위장 객체 비디오에서 reference frame을 점수 기반으로 고르고, 기억 정보와 motion cue를 함께 써서 단일 패스로 성능을 높인다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/27/ease-environment-aware-unsupervised-cod.html">
-            <p class="entry-meta">2026.03.27 · CVPR 2025</p>
-            <h3>Shift the Lens: Environment-Aware Unsupervised Camouflaged Object Detection</h3>
-            <p>
-              
-                EASE는 위장 객체를 직접 찾기보다 환경을 먼저 식별한 뒤 반전시키는 방식으로 비지도 COD를 다시 정의한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/26/ucod-dpl-dynamic-pseudo-label-learning.html">
-            <p class="entry-meta">2026.03.26 · CVPR 2025</p>
-            <h3>UCOD-DPL: Unsupervised Camouflaged Object Detection via Dynamic Pseudo-label Learning</h3>
-            <p>
-              
-                UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다.
               
             </p>
           </a>
