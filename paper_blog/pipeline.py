@@ -13,6 +13,16 @@ from .models import Claim, DraftSection, FeaturedVisual, PaperExtraction, Pipeli
 from .render import render_post_markdown, write_papers_index
 
 
+def _backend_label(backend) -> str:
+    name = backend.__class__.__name__.replace("Backend", "")
+    label = []
+    for index, char in enumerate(name):
+        if char.isupper() and index > 0 and not name[index - 1].isupper():
+            label.append("_")
+        label.append(char.lower())
+    return "".join(label) or "heuristic"
+
+
 def _build_draft_sections(extraction: PaperExtraction, draft_payload: Dict) -> list[DraftSection]:
     sections: list[DraftSection] = []
     for section_data in draft_payload.get("sections", []):
@@ -114,6 +124,7 @@ def run_pipeline(config: PipelineConfig) -> PipelineResult:
 
     backend_config = LLMConfig(backend=config.backend, model_name=config.model_name, model_path=config.model_path)
     backend = resolve_backend(backend_config)
+    resolved_backend = _backend_label(backend)
     draft_payload = backend.draft(extraction)
     if not draft_payload:
         draft_payload = build_heuristic_draft(extraction)
@@ -162,7 +173,7 @@ def run_pipeline(config: PipelineConfig) -> PipelineResult:
         license_text=config.license,
         model_name=config.model_name,
         model_path=config.model_path,
-        backend=config.backend,
+        backend=resolved_backend,
         one_line_summary=one_line_summary,
         key_claims=key_claims,
         sections=draft_sections,
@@ -199,6 +210,7 @@ def run_pipeline(config: PipelineConfig) -> PipelineResult:
         model_name=config.model_name,
         model_path=config.model_path,
         backend=config.backend,
+        resolved_backend=resolved_backend,
         source_pdf=source_pdf_display,
         source_url=config.source_url,
         pdf_url=config.pdf_url,

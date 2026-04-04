@@ -157,6 +157,7 @@ class PipelineResult:
     model_name: str
     model_path: str
     backend: str
+    resolved_backend: str
     source_pdf: str
     source_url: str
     pdf_url: str
@@ -183,6 +184,7 @@ class PipelineResult:
             "model_name": self.model_name,
             "model_path": self.model_path,
             "backend": self.backend,
+            "resolved_backend": self.resolved_backend,
             "source_pdf": self.source_pdf,
             "source_url": self.source_url,
             "pdf_url": self.pdf_url,

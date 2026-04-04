@@ -5,6 +5,7 @@ subtitle: "{{ one_line_summary | replace('"', "'") }}"
 summary: "{{ one_line_summary | replace('"', "'") }}"
 date: "{{ date }}"
 slug: "{{ slug }}"
+lang: "ko"
 paper: true
 categories: papers
 tags:
@@ -39,9 +40,6 @@ featured_table_image: "{{ '/' ~ featured_visuals[1].rel_path if featured_visuals
     <figcaption>
       <strong>{{ visual.title }}</strong>
       <span class="paper-caption">{{ visual.caption or visual.alt }}</span>
-      {% if visual.selection_reason %}
-      <span class="paper-reason">선정 이유: {{ visual.selection_reason }}</span>
-      {% endif %}
       {% if visual.source_note %}
       <span class="paper-source">출처: {{ visual.source_note }}</span>
       {% endif %}
@@ -77,35 +75,12 @@ featured_table_image: "{{ '/' ~ featured_visuals[1].rel_path if featured_visuals
 {% endif %}
 {% endfor %}
 
-## 검수 로그
-<div class="verification-box">
-<strong>1차 팩트체크</strong>: {{ review_pass_1.status }}
-{% if review_pass_1.findings %}
-<ul>
-{% for finding in review_pass_1.findings %}
-  <li>{{ finding }}</li>
-{% endfor %}
-</ul>
-{% else %}
-- 통과
-{% endif %}
-
-<strong>2차 팩트체크</strong>: {{ review_pass_2.status }}
-{% if review_pass_2.findings %}
-<ul>
-{% for finding in review_pass_2.findings %}
-  <li>{{ finding }}</li>
-{% endfor %}
-</ul>
-{% else %}
-- 통과
-{% endif %}
-</div>
-
 ## 출처
-- 원문 PDF: {{ source_pdf }}
 - 논문 페이지: {{ source_url }}
+- 원문 PDF: {{ source_pdf }}
+{% if pdf_url and pdf_url != source_pdf %}
 - PDF URL: {{ pdf_url }}
+{% endif %}
+{% if license and license != "unknown" %}
 - 라이선스: {{ license }}
-- 모델: {{ model_name }}
-- 백엔드: {{ backend }}
+{% endif %}

@@ -61,7 +61,8 @@ def test_render_post_has_featured_visuals(tmp_path: Path):
     assert "categories: papers" in markdown
     assert "## 오버뷰" in markdown
     assert "메인 실험 테이블" in markdown
-    assert "## 검수 로그" in markdown
+    assert "## 검수 로그" not in markdown
+    assert 'lang: "ko"' in markdown
 
 
 def test_build_papers_index(tmp_path: Path):

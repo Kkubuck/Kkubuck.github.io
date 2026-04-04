@@ -9,6 +9,7 @@ from pathlib import Path
 from .arxiv import download_arxiv_pdf, search_arxiv
 from .models import PipelineConfig
 from .pipeline import run_pipeline
+from .publish import publish_paths
 from .render import write_papers_index
 
 DEFAULT_SITE_DIR = Path(".")
@@ -46,6 +47,11 @@ def build_parser() -> argparse.ArgumentParser:
     draft.add_argument("--model-path", default="")
     draft.add_argument("--max-results", type=int, default=5)
     draft.add_argument("--keep-pdf-copy", action="store_true")
+    draft.add_argument("--publish", action="store_true", help="Commit and push the generated post after drafting.")
+    draft.add_argument("--allow-heuristic-publish", action="store_true", help="Allow publishing even when the draft fell back to the heuristic backend.")
+    draft.add_argument("--remote", default="origin")
+    draft.add_argument("--branch", default="")
+    draft.add_argument("--commit-message", default="")
     draft.set_defaults(func=cmd_draft)
 
     sample = subparsers.add_parser("sample-paper", help="Fetch and draft a sample arXiv paper.")
@@ -55,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
     sample.add_argument("--backend", default="auto", choices=["auto", "heuristic", "transformers", "llama", "llama_cpp", "gguf", "mlx"])
     sample.add_argument("--model-name", default=DEFAULT_MODEL_NAME)
     sample.add_argument("--model-path", default="")
+    sample.add_argument("--publish", action="store_true", help="Commit and push the generated sample post after drafting.")
+    sample.add_argument("--allow-heuristic-publish", action="store_true", help="Allow publishing even when the draft fell back to the heuristic backend.")
+    sample.add_argument("--remote", default="origin")
+    sample.add_argument("--branch", default="")
+    sample.add_argument("--commit-message", default="")
     sample.set_defaults(func=cmd_sample_paper)
 
     build_index = subparsers.add_parser("build-index", help="Rebuild papers/index.md.")
@@ -151,6 +162,26 @@ def _resolve_pdf_for_draft(args: argparse.Namespace) -> tuple[Path, str, str, st
     raise SystemExit("Provide --pdf, --arxiv-id, --arxiv-url, or --topic.")
 
 
+def _maybe_publish_result(args: argparse.Namespace, result) -> None:
+    if not getattr(args, "publish", False):
+        return
+    if result.resolved_backend == "heuristic" and not getattr(args, "allow_heuristic_publish", False):
+        raise SystemExit(
+            "Refusing to auto-publish a heuristic-only draft. "
+            "Install a local Qwen runtime and rerun with --backend mlx/transformers/llama, "
+            "or pass --allow-heuristic-publish if you want to publish the fallback draft."
+        )
+    commit_message = args.commit_message or f"Publish paper post: {result.slug}"
+    target_branch = publish_paths(
+        repo_dir=args.site_dir,
+        paths=[result.post_path, result.assets_dir, args.site_dir / "papers" / "index.md"],
+        commit_message=commit_message,
+        remote=args.remote,
+        branch=args.branch,
+    )
+    print(f"published:{target_branch}")
+
+
 def cmd_draft(args: argparse.Namespace) -> int:
     pdf_path, source_url, pdf_url, arxiv_id, license_text = _resolve_pdf_for_draft(args)
     config = PipelineConfig(
@@ -175,6 +206,7 @@ def cmd_draft(args: argparse.Namespace) -> int:
     if result.featured_visuals:
         for visual in result.featured_visuals:
             print(f"{visual.role}: {visual.rel_path}")
+    _maybe_publish_result(args, result)
     return 0
 
 
@@ -203,6 +235,7 @@ def cmd_sample_paper(args: argparse.Namespace) -> int:
         if result.featured_visuals:
             for visual in result.featured_visuals:
                 print(f"{visual.role}: {visual.rel_path}")
+        _maybe_publish_result(args, result)
         return 0
 
 
