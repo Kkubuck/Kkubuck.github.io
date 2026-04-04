@@ -26,23 +26,23 @@
   <link rel="stylesheet" href="/assets/css/main.css">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>전체 블로그 | Kkubuck Papers</title>
+<title>글 | Kkubuck</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="전체 블로그" />
+<meta property="og:title" content="글" />
 <meta name="author" content="Kkubuck" />
 <meta property="og:locale" content="ko_KR" />
-<meta name="description" content="컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고 핵심 그림과 실험 결과를 함께 정리하는 개인 연구 블로그입니다." />
-<meta property="og:description" content="컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고 핵심 그림과 실험 결과를 함께 정리하는 개인 연구 블로그입니다." />
+<meta name="description" content="컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다." />
+<meta property="og:description" content="컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다." />
 <link rel="canonical" href="https://kkubuck.github.io/blog/" />
 <meta property="og:url" content="https://kkubuck.github.io/blog/" />
-<meta property="og:site_name" content="Kkubuck Papers" />
+<meta property="og:site_name" content="Kkubuck" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="전체 블로그" />
+<meta property="twitter:title" content="글" />
 <meta name="twitter:site" content="@Kkubuck" />
 <meta name="twitter:creator" content="@Kkubuck" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Kkubuck"},"description":"컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고 핵심 그림과 실험 결과를 함께 정리하는 개인 연구 블로그입니다.","headline":"전체 블로그","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/blog/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Kkubuck"},"description":"컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다.","headline":"글","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/blog/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -62,14 +62,14 @@
         <a href="/">
           <li class="btn-nav current">홈</li>
         </a>
+        <a href="/blog/">
+          <li class="btn-nav current">글</li>
+        </a>
         <a href="/papers/">
           <li class="btn-nav current">논문 리뷰</li>
         </a>
-        <a href="/blog/">
-          <li class="btn-nav current">블로그</li>
-        </a>
-        <a href="/tags/">
-          <li class="btn-nav current">태그</li>
+        <a href="/about/">
+          <li class="btn-nav current">소개</li>
         </a>
         <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
           <li class="btn-nav">GitHub</li>
@@ -82,9 +82,9 @@
 <div id="blog">
   <!-- Responsive Header -->
   <section id="header-content">
-    <h1>전체 블로그</h1>
+    <h1>글</h1>
     
-    <p class="blog-lead">논문 리뷰와 개인 메모를 시간순으로 정리합니다.</p>
+    <p class="blog-lead">메모, 리뷰, 작업 기록을 시간순으로 모아둔 아카이브입니다.</p>
     
   </section>
   <section class="bg"></section>
@@ -96,16 +96,15 @@
 
 
 
-<div id="profile">
+<div id="profile" class="sidebar-card profile-card">
   <a href="/">
     <div class="img-wrap">
       <img src="/assets/img/kkubuck-avatar.svg" alt="profile-image">
     </div>
   </a>
   <p class="username">Kkubuck</p>
-  <div class="description"><p>컴퓨터비전과 멀티모달 논문을 한국어로 리뷰하고, 중요한 그림과 실험 결과를 함께 정리하는 개인 연구 노트입니다.</p>
+  <div class="description"><p>컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 정리하는 개인 블로그입니다.</p>
 </div>
-
   <ul id="icons">
     
 
@@ -148,13 +147,11 @@
   </ul>
 </div>
 
-<div id="review-wrap" class="sidebar-card">
-  <a href="/papers/review/">
-    <p class="title">리뷰 방법</p>
-  </a>
-  <p class="workflow-note">
-    이 블로그에서 논문을 어떤 순서로 읽고, 어떤 기준으로 그림과 실험 표를 고르는지 정리해 둔 페이지입니다.
-  </p>
+<div class="sidebar-card nav-card">
+  <p class="title">둘러보기</p>
+  <a class="mini-link" href="/blog/">전체 글 보기</a>
+  <a class="mini-link" href="/papers/">논문 리뷰 보기</a>
+  <a class="mini-link" href="/about/">블로그 소개</a>
 </div>
 
 <div id="paper-wrap" class="sidebar-card">
@@ -171,24 +168,9 @@
   
 </div>
 
-<div id="tag-wrap">
+<div id="tag-wrap" class="sidebar-card">
   <a href="/tags/">
     <p class="title">태그</p>
-  </a>
-  
-  
-  <a href="/tags#Sample%20Post">
-    <span class="tag">Sample Post</span>
-  </a>
-  
-  
-  <a href="/tags#Demo">
-    <span class="tag">Demo</span>
-  </a>
-  
-  
-  <a href="/tags#Welcome%20to%20the%20Grape%20Theme!">
-    <span class="tag">Welcome to the Grape Theme!</span>
   </a>
   
   
@@ -252,70 +234,6 @@
         </a>
       </div>
       
-      <div class="post">
-        <a href="/2019/06/09/grape-theme-style.html">
-          <div class="post-wrap">
-            <div class="text-warp">
-              <h3 class="title">Sample Post with Grape-Theme style</h3>
-              <p class="excerpt">
-                
-                This is an example of a post which includes code, quotes and backtick.
-                
-              </p>
-              <div>
-                <span class="meta">
-                  June 9, 2019
-                </span>
-                <ul class="tag-wrap">
-                  
-                  <a href="/tags#Sample+Post">
-                    <li class="tag-sm">Sample Post</li>
-                  </a>
-                  
-                  <a href="/tags#Welcome+to+the+Grape+Theme%21">
-                    <li class="tag-sm">Welcome to the Grape Theme!</li>
-                  </a>
-                  
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-        </a>
-      </div>
-      
-      <div class="post">
-        <a href="/2019/06/08/markdown-and-html.html">
-          <div class="post-wrap">
-            <div class="text-warp">
-              <h3 class="title">Sample Post with Markdown</h3>
-              <p class="excerpt">
-                
-                This post show result from awesome Markdown techniques like jekyll. Jekyll supports to transform your plain text into static websites and blogs.
-                
-              </p>
-              <div>
-                <span class="meta">
-                  June 8, 2019
-                </span>
-                <ul class="tag-wrap">
-                  
-                  <a href="/tags#Sample+Post">
-                    <li class="tag-sm">Sample Post</li>
-                  </a>
-                  
-                  <a href="/tags#Demo">
-                    <li class="tag-sm">Demo</li>
-                  </a>
-                  
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-        </a>
-      </div>
-      
       <!-- Pagination -->
       
     </section>
@@ -326,20 +244,24 @@
 <!-- Footer -->
 <footer>
   <div class="footer">
-    <div class="footer-line">
+    <div class="footer-line footer-main">
       <span>© 2026 Kkubuck</span>
       <span class="footer-sep">·</span>
-      <span>Kkubuck Papers</span>
+      <span>Kkubuck</span>
     </div>
     <div class="footer-line footer-links">
-      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="/">홈</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">글</a>
       <span class="footer-sep">·</span>
       <a href="/papers/">논문 리뷰</a>
       <span class="footer-sep">·</span>
-      <a href="/blog/">전체 블로그</a>
+      <a href="/about/">소개</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
     </div>
     <div class="footer-note">
-      Personal research notes on papers, experiments, and visual reading.
+      Notes on vision, multimodal systems, papers, and building.
     </div>
   </div>
 </footer>
