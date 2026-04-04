@@ -3,14 +3,32 @@ footer{
     margin-top: 10px;
     .footer {
         text-align: center;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         padding-top: 30px!important;
         padding-bottom: 30px;
         border-top: 1px solid $divider-color;
         a {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: $theme-color!important;
         }
+    }
+    .footer-line {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        line-height: 1.6;
+    }
+    .footer-links {
+        margin-top: 0.35rem;
+    }
+    .footer-note {
+        margin-top: 0.5rem;
+        color: $text-gray;
+        font-size: 0.75rem;
+    }
+    .footer-sep {
+        color: $text-gray;
     }
 }

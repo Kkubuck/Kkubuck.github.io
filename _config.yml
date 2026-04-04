@@ -1,41 +1,41 @@
 # Site Settings
-baseurl: "/Grape-Academic-Theme"
+baseurl: ""
+url: "https://kkubuck.github.io"
 
 # Features Setting
 # Turn subpages on or off
-publications: True
-presentations: True
+publications: False
+presentations: False
 blog: True
 
 # Language of the website
-lang: en
+lang: ko
 
 # Search engine optimization settings
-title: Kkubuck github.io
-tagline: A jekyll theme for academic portfolios
-description: The demonstration page for the Grape Academic Theme, a jekyll theme for academic portfolios based on the Grape Theme.
-author: Christoph Jabs (chrjabs)
+title: Kkubuck Papers
+tagline: 논문을 한국어 블로그로 정리하는 개인 연구 노트
+description: 논문 PDF와 arXiv 자료를 추출, 요약, 검수해서 Jekyll 블로그로 자동 정리하는 개인 페이지입니다.
+author: Kkubuck
 twitter:
-  username: chrjabs
-  card: A jekyll theme for academic portfolios
-logo: /assets/img/smile.png
+  username: Kkubuck
+  card: summary
+logo: /assets/img/kkubuck-avatar.svg
 social:
-  name: Christoph Jabs
+  name: Kkubuck
   links:
-    - https://twitter.com/chrjabs
-    - https://github.com/chrjabs
-locale: en_GB
+    - https://github.com/Kkubuck
+locale: ko_KR
 
 # Page Settings
 theme_settings:
-  title: Grape Academic Theme
-
-  experience_title: EXPERIENCE
-  interests_title: RESEARCH INTERESTS
-  skills_title: SKILLS
-  awards_title: AWARDS
-  projects_title: PROJECTS
-  recentpubs_title: RECENT PUBLICATIONS
+  title: Kkubuck Papers
+  home_title: 논문 요약 블로그
+  papers_title: 논문 포스트
+  blog_title: 전체 블로그
+  tags_title: 태그
+  workflow_title: 자동화 흐름
+  featured_title: 상단 시각자료 규칙
+  recentpubs_title: RECENT PAPERS
 
 # Pagination
 paginate: 5
@@ -48,6 +48,23 @@ sass:
 plugins: ['jekyll-paginate', 'jekyll/scholar', 'jekyll-seo-tag']
 bootstrap:
   assets: true
+
+exclude:
+  - .venv
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - downloads
+  - paper_blog
+  - paper_blog.egg-info
+  - UNKNOWN.egg-info
+  - skills
+  - scripts
+  - tests
+  - pyproject.toml
+  - setup.py
+  - README.md
+  - site
 
 # Bibliography settings
 scholar:

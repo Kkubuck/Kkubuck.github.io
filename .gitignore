@@ -4,3 +4,11 @@
 _site
 Gemfile.lock
 .jekyll-cache/
+downloads/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+.DS_Store

@@ -1,0 +1,58 @@
+---
+layout: page
+---
+<div id="paper-archive">
+  <section class="archive-hero">
+    <p class="eyebrow">Paper Archive</p>
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.lead }}</p>
+  </section>
+
+  <section class="archive-note">
+    <div class="note-card">
+      <p class="note-title">선택 규칙</p>
+      <p>상단에는 대표 오버뷰 피규어와 메인 실험 테이블을 우선 넣고, 모든 수치와 주장은 원문 페이지와 함께 남깁니다.</p>
+    </div>
+    <div class="note-card">
+      <p class="note-title">로컬 모델</p>
+      <p>Apple Silicon에서는 Qwen3-14B를 우선 시도하고, 메모리나 속도가 부족하면 Qwen3-8B로 내려갑니다.</p>
+    </div>
+  </section>
+
+  <section class="archive-intro">
+    {{ content }}
+  </section>
+
+  <section class="archive-list">
+    {% assign papers = site.categories.papers | sort: 'date' | reverse %}
+    {% if papers and papers.size > 0 %}
+      {% for post in papers %}
+      <article class="archive-card">
+        <a href="{{ post.url | relative_url }}">
+          {% if post.image %}
+          <div class="archive-thumb">
+            <img src="{{ post.image }}" alt="{{ post.title }}">
+          </div>
+          {% endif %}
+          <div class="archive-body">
+            <p class="archive-meta">{{ post.date | date: "%Y.%m.%d" }}</p>
+            <h3>{{ post.title }}</h3>
+            <p class="archive-summary">
+              {% if post.summary %}
+                {{ post.summary | strip_html | truncatewords: 28, '...' }}
+              {% else %}
+                {{ post.excerpt | strip_html | truncatewords: 28, '...' }}
+              {% endif %}
+            </p>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    {% else %}
+      <article class="archive-empty">
+        <h3>논문 포스트가 아직 없습니다.</h3>
+        <p>첫 PDF를 넣어 생성하면 이 페이지가 자동으로 채워집니다.</p>
+      </article>
+    {% endif %}
+  </section>
+</div>

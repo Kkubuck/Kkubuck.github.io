@@ -1,0 +1,93 @@
+---
+layout: page
+---
+<div id="paper-home">
+  <section class="paper-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Paper Blog Automation</p>
+      <h1>{{ page.title }}</h1>
+      <p class="lede">{{ page.lead }}</p>
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="{{ '/papers/' | relative_url }}">논문 포스트 보기</a>
+        <a class="hero-btn" href="{{ '/blog/' | relative_url }}">전체 블로그</a>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <p class="panel-title">{{ site.theme_settings.workflow_title }}</p>
+      <ol class="workflow-list">
+        <li>PDF 또는 arXiv URL 입력</li>
+        <li>텍스트와 그림 추출</li>
+        <li>오버뷰 피규어와 메인 테이블 선택</li>
+        <li>초안 생성 후 2회 검수</li>
+        <li>Jekyll Markdown으로 저장</li>
+      </ol>
+      <div class="panel-meta">
+        <span>Default: Qwen3-14B</span>
+        <span>Fallback: Qwen3-8B</span>
+        <span>Output: <code>_posts/</code> + <code>assets/papers/</code></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-rules">
+    <div class="section-head">
+      <h2>{{ site.theme_settings.featured_title }}</h2>
+      <a href="{{ '/papers/' | relative_url }}">선택 규칙 자세히 보기</a>
+    </div>
+    <div class="rules-grid">
+      <article class="rule-card">
+        <p class="rule-index">01</p>
+        <h3>대표 오버뷰 피규어</h3>
+        <p>overview, architecture, framework, pipeline, proposed 같은 캡션을 우선한다.</p>
+      </article>
+      <article class="rule-card">
+        <p class="rule-index">02</p>
+        <h3>메인 실험 테이블</h3>
+        <p>main results, comparison, ablation, quantitative, performance 키워드가 들어간 표를 찾는다.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="latest-papers">
+    <div class="section-head">
+      <h2>최근 논문 포스트</h2>
+      <a href="{{ '/papers/' | relative_url }}">아카이브 전체</a>
+    </div>
+    <div class="paper-grid">
+      {% assign papers = site.categories.papers %}
+      {% if papers and papers.size > 0 %}
+        {% for post in papers limit: 3 %}
+        <article class="paper-card">
+          <a href="{{ post.url | relative_url }}">
+            {% if post.image %}
+            <div class="paper-thumb">
+              <img src="{{ post.image }}" alt="{{ post.title }}">
+            </div>
+            {% endif %}
+            <div class="paper-body">
+              <p class="paper-meta">{{ post.date | date: "%Y.%m.%d" }}</p>
+              <h3>{{ post.title }}</h3>
+              <p class="paper-excerpt">
+                {% if post.summary %}
+                  {{ post.summary | strip_html | truncatewords: 24, '...' }}
+                {% else %}
+                  {{ post.excerpt | strip_html | truncatewords: 24, '...' }}
+                {% endif %}
+              </p>
+            </div>
+          </a>
+        </article>
+        {% endfor %}
+      {% else %}
+        <article class="paper-card empty">
+          <div class="paper-body">
+            <p class="paper-meta">준비 중</p>
+            <h3>아직 생성된 논문 포스트가 없습니다.</h3>
+            <p class="paper-excerpt">`paper-blog` CLI로 첫 논문을 넣으면 여기와 `/papers`에 자동으로 쌓입니다.</p>
+          </div>
+        </article>
+      {% endif %}
+    </div>
+  </section>
+</div>

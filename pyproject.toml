@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-blog"
+version = "0.1.0"
+description = "Paper-to-blog drafting toolkit for the Kkubuck Jekyll site."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "jinja2>=3.1.4",
+  "pymupdf>=1.24.0",
+]
+
+[project.optional-dependencies]
+llm = [
+  "transformers>=4.45.0",
+  "accelerate>=0.33.0",
+  "torch>=2.3.0",
+  "llama-cpp-python>=0.3.0",
+  "mlx-lm>=0.22.0",
+]
+dev = [
+  "pytest>=8.0.0",
+]
+
+[project.scripts]
+paper-blog = "paper_blog.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["paper_blog*"]
+
+[tool.setuptools.package-data]
+paper_blog = ["templates/*.j2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["_site", ".venv", "downloads", "paper_blog.egg-info", "UNKNOWN.egg-info"]
+addopts = "--import-mode=importlib"

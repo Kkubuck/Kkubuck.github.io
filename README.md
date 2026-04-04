@@ -1,232 +1,55 @@
-# Grape-Academic-Theme
+# Kkubuck Papers
 
-<a href="https://jekyll-themes.com">
-    <img src="https://img.shields.io/badge/featured%20on-JekyllThemes-red.svg" height="20" alt="Jekyll Themes Shield" loading="lazy">
-</a>
+`Kkubuck.github.io`를 논문 요약 블로그로 쓰기 위한 Jekyll + Python 모노레포입니다.
 
----
+## What this repo does
 
-![home](https://chrjabs.github.io/Grape-Academic-Theme/assets/img/portfolio.png)
+- GitHub Pages에서 돌아가는 Jekyll 블로그를 유지합니다.
+- 논문 PDF 또는 arXiv URL을 받아 `_posts/YYYY-MM-DD-*.md` 포스트를 생성합니다.
+- 상단에는 대표 오버뷰 피규어 1개와 메인 실험 테이블 1개를 우선 넣습니다.
+- 그림 선택은 캡션 키워드 기준으로 점수화합니다.
+- 팩트체크를 2회 돌리고 evidence와 검수 로그를 같이 저장합니다.
 
-Welcome to Grape Academic Theme!
-This theme is based on [Grape Theme](https://github.com/naye0ng/Grape-Theme) and modifies it to be more directly applicable as an academic portfolio page.
-It can still include a blog, but that is optional.
+## Local setup
 
-[Demo](https://chrjabs.github.io/Grape-Academic-Theme)
-
-## Features
-
-Some of these features are optional and can be turned on or off in the `_config.yml` file.
-
-### [Portfolio Homepage](https://chrjabs.github.io/Grape-Academic-Theme)
-
-Portfolio page giving an overview of your research.
-
-### [Publications List](https://chrjabs.github.io/Grape-Academic-Theme/publications)
-
-A optional list of your publications auto-generated from a BibTeX file.
-Additional information can be linked to from the BibTeX file.
-
-### [Presentations List](https://chrjabs.github.io/Grape-Academic-Theme/presentations)
-
-A optional list of your presentations auto-generated for a data file.
-
-### [Blog](https://chrjabs.github.io/Grape-Academic-Theme/blog)
-
-An optional blog for any posts you want to publish.
-
-### [Hub Pages](https://chrjabs.github.io/Grape-Academic-Theme/example-hub)
-
-Hub pages are intended for easy linking in your presentations.
-They collect links and additional information related to your presentation so that you only have to put one link on your slides.
-They can be manually generated or automatically from one of your publication entries.
-
-## Installation and Serving Local Version for Testing
-
-1. Fork and clone the Grape Academic Theme repo
-
-   ```
-   git clone https://github.com/chrjabs/Grape-Academic-Theme.git
-   ```
-
-2. Install Jekyll 
-
-   ```
-   gem install jekyll
-   ```
-
-3. Install the theme's dependencies
-
-   ```
-   bundle install
-   ```
-
-4. Update `_config.yml`, `_data/projects.yml`, `_data/projects.yml` and `_bibliography/publications.bib` with your own settings.
-
-5. Run the Jekyll server
-
-   ```
-   bundle exec jekyll serve
-   ```
-
-## Publishing
-
-Grape-Academic-Theme uses jekyll-scholar and therefore needs to manually be published to GitHub pages.
-A script for publishing on a `gh-pages` branch is included.
-Run `_scripts/publish.sh` from the main project directory and the page will be built, copied to the `gh-pages` branch and published.
-Make sure that GitHub pages is set up to publish that branch.
-If additional scripts should be executed in the HTML root, they can be placed in `_scripts/publish.d` and will be automatically executed.
-
-These are step-by-step instructions for forking and publishing the theme at your `<username>.github.io` github pages website:
-
-1. For the repository to a repository named `<username>/<username>.github.io`
-2. Go to the settings of the new repository and navigate to the "Pages" tab.
-  There, change the source for github pages to the `gh-pages` branch of the repository.
-3. Clone the repository and go through the installation steps listed above
-4. In `_config.yml`, change the `baseurl` option to an empty string (`""`) to host the webpage in the root of your `github.io` page
-5. Commit the change and (with a working jekyll install) run `_scripts/publish.sh`
-6. _Wait a couple of minutes_ and the demo content will show up at `<username>.github.io`
-
-## Customizing
-
-Grape-Theme has two great features: the profile section and the project section of the portfolio page. Just by changing `_config.yml` and `projects.yml`, you can use all of these features.
-
-### Feature Settings
-
-The blog, publications, and presentations pages are optional and can be turned on or off in the config file.
-
-### Favicon
-
-Generate your favicons with [realfavicongenerator.net](https://realfavicongenerator.net/) and place them in the root directory.
-The code to include them is already set up in the template.
-
-### Site configuration
-
-```
-baseurl: "{subpath}"
-
-theme_settings :
-  title: {blog title}
+```bash
+python3 -m pip install -e '.[dev,llm]'
+bundle install
 ```
 
-### Profile Settings
+## Paper draft workflow
 
-Profile is displayed on the index page, and also experience and skills are displayed on the portfolio page.
-The profile is configured in `_data/profile.yml`.
-
-```
-image: assets/img/smile.png
-username: Christoph Jabs
-description: creator of the Grape-Academic-Theme! Grape-Academic-Theme is a modification of the Grape-Theme by naye0ng, making it more suitable as an academic portfolio.
-webpage: https://chrjabs.github.io
-experience:
-  - start: 2017-05-03
-    end: 2018-05-06
-    experience : company name, title
-interests:
-  - Interest 1
-  - Interest 2
-skills: 
-  - skill: HTML5 & CSS
-    value: 85  # Percent value
+```bash
+paper-blog doctor
+paper-blog draft --arxiv-id 2509.15753 --site-dir .
+bundle exec jekyll serve
 ```
 
-### Presentations
+`--backend` 는 다음 중 하나를 선택할 수 있습니다.
 
-The data for the presentations page can be defined in `data/presentations.yml`.
+- `auto`: 가능한 로컬 런타임을 순서대로 시도
+- `llama` or `llama_cpp` or `gguf`: 로컬 GGUF 파일 기반 llama.cpp
+- `mlx`: Apple Silicon에서 MLX backend 시도
+- `transformers`: Hugging Face + torch 기반
+- `heuristic`: 규칙 기반 안전망
 
-```
-- presentation:
-    title: A nice presentation
-    event: Fancy conference
-    date: 05/2022
-    comment: This is some comment text that can do _Markdown_
-    slides: https://www.google.com # potential link to slides
-- presentation:
-    title: A second presentation
-    event: Another conference
-    date: 03/2022
-```
+## Recommended models
 
-### Hub Pages
+- 기본값: `Qwen/Qwen3-14B-Instruct-2507`
+- fallback: `Qwen/Qwen3-8B-Instruct-2507`
 
-For an example on how to configure a hub page, see the `example-hub.md` file.
+M1 Max 32GB에서는 GGUF 또는 MLX 쪽이 가장 편하고, 환경이 없을 때는 `transformers` 또는 heuristic fallback으로 내려갑니다.
 
-### Pagination
+## Output contract
 
-Defines the number of posts to be shown on one page.
+생성기는 다음을 만듭니다.
 
-```
-paginate: 5
-```
+- `/_posts/YYYY-MM-DD-<slug>.md`
+- `/assets/papers/<slug>/figures/`
+- `/assets/papers/<slug>/evidence.json`
+- `/assets/papers/<slug>/verification-pass-1.md`
+- `/assets/papers/<slug>/verification-pass-2.md`
 
-### Portfolio Settings
+## GitHub Pages
 
-![home](https://chrjabs.github.io/Grape-Academic-Theme/assets/img/portfolio.png)
-
-The Project configuration is available in `_data/projects.yml`.
-
-The portfolio page provides projects and detailed views by modal.
-If `modal : False` is selected, modal will not be displayed on site. 
-
-- **print** : 
-  
-  - If `print: True` is selected, it will be displayed on landing page
-  
-- **modal** 
-  
-  - If `modal: True` is selected, modal will be displayed on the Portfolio page
-  
-    ![home](https://chrjabs.github.io/Grape-Academic-Theme/assets/img/modal.png)
-
-```
-print: True
-modal: True  
-```
-
-Add details(link, description) about your projects
-
-```
-url: https://github.com/naye0ng/Grape-Theme # Full URL
-image: "portfolio.png" # path: assets/project/
-date: 2019.06.09 - 2019.07.11
-title: 
-summary: 
-description:  
-# modal contents
-contents:
-  - title:
-    image:      	    
-    description: 
-```
-
-### Colors
-
-You can change colors at once. colors are in `_sass/base/_variable.scss`
-
-## Posts in Grape theme
-
-You can confirm how to draw tags at [here](https://grape-theme.netlify.com/2019/06/08/markdown-and-html.html) and [here](https://grape-theme.netlify.com/2019/06/09/grape-theme-style.html)
-
-### Create a new post
-
-1. Create a `.md` inside `_posts` folder
-   ```
-   2019-07-11-grape-theme.md
-   ```
-
-2. Write the [Front Matter](https://jekyllrb.com/docs/front-matter/) and content in the file.
-   ```
-   ---
-   layout: post
-   title: title
-   subtitle : subtitle
-   tags: [tag1, tag2]
-   author: 
-   comments : 
-   ---
-   ```
-
-## Licence
-
-The theme is available as open source under the terms of the [MIT Licence](https://opensource.org/licenses/MIT).
+`.github/workflows/pages.yml` 이 `main` 푸시 시 Jekyll을 빌드하고 `gh-pages` 브랜치로 배포합니다.

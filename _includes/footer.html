@@ -1,8 +1,19 @@
 <footer>
   <div class="footer">
-    Copyright © 2022
-    <a href="{{ site.theme_settings.profile.webpage }}">{{ site.theme_settings.profile.username }}</a>.
-    Powered by Jekyll with
-    <a href="https://github.com/chrjabs/Grape-Academic-Theme">Grape Academic Theme</a>.
+    <div class="footer-line">
+      <span>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }}</span>
+      <span class="footer-sep">·</span>
+      <span>{{ site.title }}</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub</a>
+      <span class="footer-sep">·</span>
+      <a href="{{ '/papers/' | relative_url }}">논문 포스트</a>
+      <span class="footer-sep">·</span>
+      <a href="{{ '/blog/' | relative_url }}">전체 블로그</a>
+    </div>
+    <div class="footer-note">
+      Jekyll + Grape Academic Theme + Paper Blog Generator
+    </div>
   </div>
 </footer>
