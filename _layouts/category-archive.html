@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-{% assign archive_posts = site.categories[page.archive_category] | sort: 'date' | reverse %}
+{% assign archive_posts = site.posts | where_exp: "post", "post.categories contains page.archive_category" | sort: 'date' | reverse %}
 <div id="category-archive">
   <section class="archive-hero">
     <p class="eyebrow">{{ page.archive_label | default: 'Archive' }}</p>
@@ -18,7 +18,7 @@ layout: page
   <section class="stack-panel archive-list-panel">
     <div class="section-head">
       <h2>{{ page.list_title | default: 'Posts' }}</h2>
-      <span class="archive-count">{{ archive_posts | size }} posts</span>
+      <span class="archive-count">{{ archive_posts | size }}개의 글</span>
     </div>
     {% if archive_posts and archive_posts.size > 0 %}
     <div class="vertical-list">
