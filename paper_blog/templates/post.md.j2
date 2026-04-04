@@ -77,24 +77,6 @@ featured_table_image: "{{ '/' ~ featured_visuals[1].rel_path if featured_visuals
 {% endif %}
 {% endfor %}
 
-{% if figures %}
-## 그림 전체
-<div class="figure-grid">
-{% for figure in figures %}
-  <figure class="figure-card">
-    <img src="{{ '/' ~ figure.rel_path }}" alt="{{ figure.alt }}">
-    <figcaption>
-      <strong>Figure {{ figure.index }}</strong>
-      <span class="paper-caption">{{ figure.caption or figure.alt }}</span>
-      {% if figure.source_note %}
-      <span class="paper-source">출처: {{ figure.source_note }}</span>
-      {% endif %}
-    </figcaption>
-  </figure>
-{% endfor %}
-</div>
-{% endif %}
-
 ## 검수 로그
 <div class="verification-box">
 <strong>1차 팩트체크</strong>: {{ review_pass_1.status }}
