@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Favicon code from realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
+<meta name="msapplication-TileColor" content="#563d7c">
+<meta name="theme-color" content="#ffffff">
+
+  <!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>논문 포스트 | Kkubuck Papers</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="논문 포스트" />
+<meta name="author" content="Kkubuck" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="description" content="논문 PDF와 arXiv 자료를 추출, 요약, 검수해서 Jekyll 블로그로 자동 정리하는 개인 페이지입니다." />
+<meta property="og:description" content="논문 PDF와 arXiv 자료를 추출, 요약, 검수해서 Jekyll 블로그로 자동 정리하는 개인 페이지입니다." />
+<link rel="canonical" href="https://kkubuck.github.io/papers/" />
+<meta property="og:url" content="https://kkubuck.github.io/papers/" />
+<meta property="og:site_name" content="Kkubuck Papers" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="논문 포스트" />
+<meta name="twitter:site" content="@Kkubuck" />
+<meta name="twitter:creator" content="@Kkubuck" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Kkubuck"},"description":"논문 PDF와 arXiv 자료를 추출, 요약, 검수해서 Jekyll 블로그로 자동 정리하는 개인 페이지입니다.","headline":"논문 포스트","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<!--jQuery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<body>
+  <div class="container">
+    
+
+
+
+
+<section id="header-nav">
+  <header>
+    <nav>
+      <ul>
+        <a href="/">
+          <li class="btn-nav current">홈</li>
+        </a>
+        <a href="/papers/">
+          <li class="btn-nav current">논문</li>
+        </a>
+        <a href="/blog/">
+          <li class="btn-nav current">블로그</li>
+        </a>
+        <a href="/tags/">
+          <li class="btn-nav current">태그</li>
+        </a>
+        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
+          <li class="btn-nav">GitHub</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+</section>
+
+<div id="paper-archive">
+  <section class="archive-hero">
+    <p class="eyebrow">Paper Archive</p>
+    <h1>논문 포스트</h1>
+    <p class="lead">생성기가 만든 논문 포스트를 한눈에 볼 수 있는 아카이브입니다.</p>
+  </section>
+
+  <section class="archive-note">
+    <div class="note-card">
+      <p class="note-title">선택 규칙</p>
+      <p>상단에는 대표 오버뷰 피규어와 메인 실험 테이블을 우선 넣고, 모든 수치와 주장은 원문 페이지와 함께 남깁니다.</p>
+    </div>
+    <div class="note-card">
+      <p class="note-title">로컬 모델</p>
+      <p>Apple Silicon에서는 Qwen3-14B를 우선 시도하고, 메모리나 속도가 부족하면 Qwen3-8B로 내려갑니다.</p>
+    </div>
+  </section>
+
+  <section class="archive-intro">
+    <p>Jekyll <code class="language-plaintext highlighter-rouge">_posts</code>에 쌓인 논문 요약 1편을 모았습니다.</p>
+
+<p>이 페이지는 <code class="language-plaintext highlighter-rouge">paper-blog build-index</code> 실행 시 갱신됩니다.</p>
+
+
+  </section>
+
+  <section class="archive-list">
+    
+    
+      
+      <article class="archive-card">
+        <a href="/papers/2026/04/04/mcod-the-first-challenging-benchmark-for-multispectral-camouflaged-object-detection.html">
+          
+          <div class="archive-thumb">
+            <img src="/assets/papers/mcod-the-first-challenging-benchmark-for-multispectral-camouflaged-object-detection/figures/figure-15.png" alt="MCOD: The First Challenging Benchmark for Multispectral Camouflaged Object Detection">
+          </div>
+          
+          <div class="archive-body">
+            <p class="archive-meta">2026.04.04</p>
+            <h3>MCOD: The First Challenging Benchmark for Multispectral Camouflaged Object Detection</h3>
+            <p class="archive-summary">
+              
+                멀티스펙트럴 위장 객체 탐지(MS-COD)를 위한 첫 공개 벤치마크를 제안하고, RGB 기반 COD 방법들이 더 어려운 조건에서 얼마나 크게 흔들리는지 보여주는 논문이다.
+              
+            </p>
+          </div>
+        </a>
+      </article>
+      
+    
+  </section>
+</div>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="footer-line">
+      <span>© 2026 Kkubuck</span>
+      <span class="footer-sep">·</span>
+      <span>Kkubuck Papers</span>
+    </div>
+    <div class="footer-line footer-links">
+      <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
+      <span class="footer-sep">·</span>
+      <a href="/papers/">논문 포스트</a>
+      <span class="footer-sep">·</span>
+      <a href="/blog/">전체 블로그</a>
+    </div>
+    <div class="footer-note">
+      Jekyll + Grape Academic Theme + Paper Blog Generator
+    </div>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+</html>
