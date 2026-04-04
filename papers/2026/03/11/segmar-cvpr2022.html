@@ -126,9 +126,13 @@
 
 <p>저자들은 COD가 coarse-to-fine detection strategy와 attention을 결합해야 한다고 보고, Segment, Magnify, Reiterate라는 iterative refinement framework를 제안합니다. attention-based sampler로 object region을 점점 확대하며 재정제하는 방식입니다.</p>
 
+<p>초록을 조금 더 풀어보면, 매우 유사한 주변 환경에서 위장된 물체를 정확하게 탐지하는 것은 어렵습니다. 기존 방법은 주로 단일 단계 감지 방식을 활용하는 반면, 해상도가 낮은 미세한 가장자리가 있는 작은 물체를 무시하면 큰 물체보다 더 많은 작업이 필요합니다. 위장 객체 감지(COD)를 해결하기 위해 우리는 대략적인 감지 전략과 결합된 인간의 관심에서 영감을 얻어 SegMaR이라는 이름의 반복적 개선 프레임워크를 제안합니다. SegMaR은 다단계 감지 방식으로 Segment, Magnify 및 Reiterate를 통합합니다. 구체적으로, 우리는 모델이 고정 및 가장자리 영역에 주의를 기울이게 만드는 새로운 식별 마스크를 설계합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>이 논문은 복잡한 대형 backbone보다 detection process를 더 세밀하게 설계하는 쪽에 가깝습니다. 작은 객체를 놓치지 않기 위한 인간형 관찰 전략이 핵심입니다.</p>
+
+<p>서론에서는 특히, 위장 물체 탐지(COD)는 배경에 숨겨진 물체를 식별하는 것을 목표로 하는 작업입니다. 농업(예: 침입 방지를 위한 메뚜기 탐지), 예술(예: 사실적인 혼합 및 레크리에이션 예술) 및 의료 진단(예: 폴립 분할)을 포함한 다양한 분야의 많은 응용 분야에 일반적으로 유용했습니다. 불행하게도 기존 COD 방법은 위장된 작은 물체를 정확하게 감지하지 못합니다. 이 작업의 기여는 세 가지입니다. • 프레임워크 기여: 우리는 위장된 객체 탐지를 위해 반복적 개선 프레임워크를 활용하는 최초의 SegMaR을 제안합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>discriminative mask가 fixation과 edge region을 강조하고, attention-based sampler가 object region을 progressively magnify합니다. 이후 여러 stage를 거치며 prediction을 refine합니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 이러한 실측 정보는 분할 네트워크에서 판별 디코더를 훈련하는 데 사용되는 반면, 이진 디코더는 이전 작업과의 일관된 비교를 위해 항상 이진 마스크를 사용하여 훈련됩니다. 우리의 방법은 세 가지 지표에 걸쳐 평균적으로 Sα에서 SINet 8.0%, αE에서 16.8%, wF에서 35.4%, MGL 7.4%를 능가하는 등 소규모 테스트 세트에서 두 가지 방법에 비해 눈에 띄게 개선되었습니다. 우리는 SegMaR이 다른 위장된 분할 네트워크에 적용할 수 있는 통합되고 일반적인 프레임워크라고 말합니다. 대안으로 우리는 신경망을 활용하여 확대 모듈을 구현하는 것을 고려했습니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>대표 결과는 small camouflaged objects에서의 성능 차이입니다. 작은 객체와 fine edge를 얼마나 잘 다루는지가 이 논문의 핵심 검증 포인트입니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 또한, 우리는 네트워크가 가장 중요한 개체 영역에 참석할 수 있도록 새로운 식별 마스크를 제시합니다. • 경험적 기여: 당사의 SegMaR은 특히 위장된 작은 물체에 대해 세 가지 COD 벤치마크에서 새로운 최첨단 성능을 달성했습니다. 특히 SegMaR은 αE에서 MGL 3.5%, wF에서 8.7%를 능가하는 등 가장 까다로운 데이터세트 COD10K에서 이전 방법보다 큰 차이로 성능을 발휘합니다. 우리는 CAMO 데이터세트의 모든 지표에 대해 평균 2.0%, CHAMELEON 데이터세트에서 평균 2.4% MGL을 능가합니다. 우리의 방법은 세 가지 지표에 걸쳐 평균적으로 Sα에서 SINet 8.0%, αE에서 16.8%, wF에서 35.4%, MGL 7.4%를 능가하는 등 소규모 테스트 세트에서 두 가지 방법에 비해 눈에 띄게 개선되었습니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -232,6 +240,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>SegMaR는 COD에서 coarse-to-fine iteration이 아직 유효하다는 점을 보여주는 논문입니다.</p>
@@ -241,6 +250,7 @@
 <p>지금도 작은 객체가 많은 장면에서는 이런 iterative focus 계열의 아이디어가 꽤 설득력 있게 남아 있습니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2022/html/Jia_Segment_Magnify_and_Reiterate_Detecting_Camouflaged_Objects_the_Hard_Way_CVPR_2022_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2022/papers/Jia_Segment_Magnify_and_Reiterate_Detecting_Camouflaged_Objects_the_Hard_Way_CVPR_2022_paper.pdf</li>

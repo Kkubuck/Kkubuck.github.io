@@ -126,9 +126,13 @@
 
 <p>이 논문은 camouflage detection에서 상호관계 modeling의 중요성을 강조하며, mutual graph learning framework를 제안합니다. 관계 기반 reasoning으로 subtle difference를 더 잘 찾는 방향입니다.</p>
 
+<p>초록을 조금 더 풀어보면, 현재 모델에서는 주변 환경과 조화를 이루는 객체를 자동으로 감지/분할하는 것이 어렵습니다. 주요 과제는 전경 객체와 배경 주변 사이의 본질적인 유사성으로 인해 심층 모델에서 추출된 특징을 구별할 수 없게 만든다는 것입니다. 이러한 문제를 극복하려면 이상적인 모델은 주어진 장면에서 가치 있고 추가적인 단서를 찾고 이를 표현 공동 강화를 위한 공동 학습 프레임워크에 통합할 수 있어야 합니다. 이러한 영감을 받아 우리는 일반 그리드에서 그래프 도메인까지 기존 상호 학습 아이디어를 일반화하는 새로운 MGL(상호 그래프 학습) 모델을 설계했습니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>2021년 COD 논문들을 다시 보면 relation modeling이 본격화되는 시점이 바로 이 부근입니다. Mutual Graph Learning은 그런 흐름의 대표적인 예입니다.</p>
+
+<p>서론에서는 특히, 위장은 자연에서 중요한 기술입니다. 특정 동물이 주변 환경과 조화를 이루어 포식자로부터 숨는 데 도움이 되기 때문입니다. 인간의 인식이 작동하는 방식과 밀접한 관련이 있는 위장 능력은 지난 수십 년 동안 점점 더 많은 연구 관심을 불러일으켰습니다. 그러나 기존 심층 모델은 여전히 전경 객체와 배경 주변 사이의 본질적인 시각적 유사성을 완전히 해결할 수 없습니다. 실험 결과는 위장물체 탐지를 위한 상호유도 정보 마이닝에 있어 기존 방법보다 우월함을 분명히 보여줍니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>저자들은 foreground와 background 간 상호작용을 graph structure로 만들고, mutual learning으로 중요한 relation을 강조합니다. relation-centric decoding이라고 볼 수 있습니다.</p>
 
+<p>방법을 조금 더 자세히 보면, MGL은 foreground와 edge 단서를 각각 그래프 형태로 구성한 뒤 두 그래프가 서로를 보완하도록 상호 학습을 시킵니다. 즉 객체 중심 표현만 따로 보는 것이 아니라, 경계가 어디에서 깨지고 어디에서 이어지는지까지 함께 추론하게 만드는 구조입니다. 학습 단계에서는 각 출력 맵을 원래 해상도로 복원해 supervision을 주고, edge branch와 camouflage branch를 동시에 최적화해 relation-aware representation을 안정화합니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>이 논문은 당시 COD benchmark에서 strong baseline 성능을 보이며, relation modeling의 효과를 정량적으로 보여주는 데 초점을 둡니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 실험 설정 데이터 세트: 우리는 다음 공개 벤치마크에 대해 광범위한 실험을 수행합니다. • CHAMELEON에는 픽셀 수준 레이블로 세밀하게 주석이 달린 76개의 고해상도 이미지가 포함되어 있습니다. 최첨단 기준선/SOTA와의 비교: 와 유사하게 먼저 밀접하게 관련된 분야, 즉 GOD 및 SOD에서 SOTA 성능을 달성하는 강력한 기준 모델을 선택합니다. 요약하면, 우리는 우리의 방법(S-MGL 및 R-MGL)을 16개의 SOTA와 비교합니다. 이는 우리와 동일한 열차 세트를 사용하여 권장 설정에 따라 훈련되었습니다. 최첨단 SINet과 비교했을 때 S-MGL은 MAE를 27.3% 크게 낮추고 F w β를 8.5% 향상시켰습니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -266,6 +274,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>Mutual Graph Learning은 transformer reasoning이 대세가 되기 전, relation modeling이 왜 COD에서 중요한지 보여준 논문입니다.</p>
@@ -275,6 +284,7 @@
 <p>지금 보면 구조는 이전 세대지만, relation을 어떻게 볼 것인가라는 질문은 여전히 남아 있어서 다시 읽을 가치가 있습니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2021/html/Zhai_Mutual_Graph_Learning_for_Camouflaged_Object_Detection_CVPR_2021_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2021/papers/Zhai_Mutual_Graph_Learning_for_Camouflaged_Object_Detection_CVPR_2021_paper.pdf</li>

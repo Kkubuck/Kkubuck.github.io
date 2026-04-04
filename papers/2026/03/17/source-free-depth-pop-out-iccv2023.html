@@ -126,9 +126,13 @@
 
 <p>이 논문은 depth cue가 useful하지만 직접 depth를 구하기 어렵다는 현실에서 출발합니다. 저자들은 inferred depth map을 object pop-out prior와 결합해 3D space에서 객체를 reasoning하고, segmentation mask의 약한 supervision으로 contact surface를 학습합니다.</p>
 
+<p>초록을 조금 더 풀어보면, 깊이 단서는 시각적 인식에 유용한 것으로 알려져 있습니다. 그러나 깊이를 직접 측정하는 것은 종종 불가능합니다. 하지만 다행히도 최신 학습 기반 방법은 실제 추론을 통해 유망한 깊이 지도를 제공합니다. 이 작업에서 우리는 3D에서 사전에 객체의 “팝아웃”을 사용하여 객체 분할을 위한 깊이 추론 모델을 적용합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>COD에서 depth는 종종 보조 modality처럼 다뤄지지만, 이 논문은 RGB-D sensor가 없어도 얻을 수 있는 inferred depth를 적극 활용합니다. 그래서 source-free라는 표현이 붙습니다.</p>
+
+<p>서론에서는 특히, 장면에 대한 3D 지식은 시각적 인식 작업을 보완하는 것으로 오랫동안 알려져 왔습니다. 그러나 실제로는 시각적 인식이 2D 이미지만을 사용하여 수행되어야 하는 경우가 많습니다. 또한 우리는 작업 전문화에도 불구하고 최첨단 결과를 제공하는 24가지 방법(•)을 비교합니다. 제안된 방법은 소스가 없는 깊이를 활용하여 깊이 있는 객체가 배경에 비해 더 잘 보이는 공간으로 매핑합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>저자들은 inferred depth map을 adaptation하고, contact surface intermediate representation을 학습해 purely 3D reasoning으로 object localization을 수행합니다. 이후 이 정보를 semantics와 연결해 segmentation 성능을 높입니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 소스가 없는 깊이 맵의 도메인 격차를 해결하기 위해 우리는 자체 감독 손실과 약한 의미 감독을 모두 사용하여 엔드 투 엔드 방식으로 의미 네트워크와 소스 없는 깊이를 공동으로 미세 조정할 것을 제안합니다. Local Depth Smoothing: 의사 깊이 감독 외에도 의미론적으로 깊이를 제한하는 두 가지 손실을 제안합니다. 따라서 우리는 기하학적 사전확률과 함께 약한 의미론적 단서를 활용할 것을 제안합니다. 제안된 각 손실이 적절하게 동작하는 것을 볼 수 있습니다. 즉, 기준선에 비해 성능이 향상됩니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>이 논문은 여덟 개 데이터셋에 걸친 breadth를 강조합니다. COD 하나의 benchmark에 특화했다기보다, pop-out prior가 여러 related tasks에 통한다는 점을 보여줍니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 또한 우리는 작업 전문화에도 불구하고 최첨단 결과를 제공하는 24가지 방법(•)을 비교합니다. GT 깊이를 사용하는 우리의 방법은 SOTA 방법보다 성능이 뛰어납니다. 소스가 없는 깊이를 사용하는 방법은 SOTA COD 모델에 비해 훨씬 더 잘 일반화됩니다. 마찬가지로 SOTA RGB-D 모델 중 하나인 SPNet의 경우에도 RGB 전용 입력을 사용하는 NC4K 데이터 세트의 성능은 소스가 없는 추가 깊이를 사용하는 것보다 더 좋습니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -307,6 +315,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>이 논문은 depth를 보조 input이 아니라, segmentation reasoning을 재구성하는 prior로 다룹니다. COD를 더 넓은 pop-out 문제로 보는 데 도움이 됩니다.</p>
@@ -316,6 +325,7 @@
 <p>최근 COD가 multimodal로 확장되는 흐름에서, 실제 센서가 없어도 쓸 수 있는 inferred depth prior라는 점이 꽤 매력적입니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/ICCV2023/html/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/ICCV2023/papers/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.pdf</li>

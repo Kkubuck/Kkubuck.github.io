@@ -126,9 +126,13 @@
 
 <p>저자들은 COD를 predation process에 비유해, positioning module과 focus module을 갖춘 PFNet을 제안합니다. focus module 내부의 distraction mining이 방해 영역을 발견하고 제거해 segmentation 품질을 높입니다.</p>
 
+<p>초록을 조금 더 풀어보면, COS(위장된 객체 분할)는 주변 환경에 “완벽하게” 동화되는 객체를 식별하는 것을 목표로 하며, 이는 다양한 가치 있는 응용 분야를 가지고 있습니다. COS의 주요 과제는 후보 물체와 잡음 배경 사이에 본질적인 유사성이 높다는 것입니다. 이 논문에서 우리는 효과적이고 효율적인 COS를 향한 과제를 수용하기 위해 노력합니다. 이를 위해 자연의 포식 과정을 모방하는 PFNet(Positioning and Focus Network)이라는 생체 영감 프레임워크를 개발합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>지금의 복잡한 foundation model 이전 시점에서, PFNet은 COD의 기본 설계 감각을 만든 작업 중 하나입니다. global-local 분해가 특히 중요합니다.</p>
+
+<p>서론에서는 특히, 위장은 대상 물체를 보기 어렵게 만들거나(크립시스) 다른 것으로 위장하기 위해(미메시스) 재료, 색상 또는 조명의 조합으로 동물이나 물체를 숨기는 것입니다. 그러나 COS는 위장 전략이 관찰자의 시지각 체계를 속이는 방식으로 작동하므로 대상 물체와 배경 간의 높은 본질적 유사성으로 인한 모호성을 제거하기 위해 상당한 양의 시지각 지식이 필요하기 때문에 근본적으로 어려운 작업입니다. 그러나 이러한 기능은 위장된 개체와 위장되지 않은 개체를 구별하는 기능이 제한되어 있으므로 이를 기반으로 한 접근 방식은 복잡한 장면에서 실패하는 경우가 많습니다. 본 논문에서는 기존 위장 객체 분할 성능을 크게 향상시키는 위치 추적 및 초점 네트워크(PFNet)를 제안합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>positioning module이 잠재 영역을 잡고, focus module이 progressive refinement를 수행합니다. 이 안에서 distraction mining이 방해 영역을 제거하는 역할을 맡습니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 위의 방법과 달리 우리는 두 가지 유형의 방해 요소를 모두 탐색하고 이러한 방해 요소를 먼저 발견하고 제거하기 위해 잘 설계된 초점 모듈(FM)을 제안합니다. 주의 산만 인식 섀도우(DS) 모듈도 두 가지 주의 산만한 요소를 모두 활용하지만 제안된 FM(초점 모듈)은 다음 세 가지 측면에서 본질적으로 DS 모듈과 다릅니다. 둘째, DS 모듈의 특징 추출기에는 2개의 3×3 컨볼루션이 포함되어 있고 컨텍스트 탐색(CE) 블록은 4개의 분기로 구성되어 있어 더 나은 방해 요소 발견을 위해 다중 규모 컨텍스트를 캡처할 수 있습니다. 손실 함수 PFNet에는 4개의 출력 예측이 있습니다. 즉, 위치 지정 모듈(PM)에서 하나, 초점 모듈(FM)에서 3개입니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>논문은 세 개의 challenging benchmark와 네 가지 standard metrics에서 strong baseline 성능을 보이고, 동시에 real-time 속도도 강조합니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 우리는 CHAMELEON, CAMO 및 COD10K의 세 가지 벤치마크 데이터 세트에 대한 방법을 평가합니다. 우리의 방법은 세 가지 벤치마크 데이터 세트 모두에 대한 네 가지 표준 평가 지표에서 큰 마진으로 다른 방법보다 성능이 뛰어납니다. 주석이 달린 객체 수준의 실측 정보. 세 가지 벤치마크 데이터 세트에 대한 기타 18가지 최첨단 방법과의 비교. 예를 들어, 최첨단 COS 방법인 SINet과 비교하여 우리의 방법은 CHAMELEON, CAMO 및 COD10K 데이터 세트에서 F w β를 각각 7.0%, 8.9% 및 10.9% 향상시킵니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -292,6 +300,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>PFNet은 COD 초창기 대표 기준선으로, 지금 봐도 문제를 어떻게 나누어 볼지 감을 주는 논문입니다.</p>
@@ -301,6 +310,7 @@
 <p>초기 COD 논문들을 다시 읽을 때 PFNet을 함께 보면, 이후 모델들이 무엇을 더 세밀하게 고치려 했는지가 잘 보입니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2021/html/Mei_Camouflaged_Object_Segmentation_With_Distraction_Mining_CVPR_2021_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2021/papers/Mei_Camouflaged_Object_Segmentation_With_Distraction_Mining_CVPR_2021_paper.pdf</li>

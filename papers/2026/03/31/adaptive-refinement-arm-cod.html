@@ -126,9 +126,13 @@
 
 <p>논문은 Segment Anything Model이 일반 분할에는 강하지만 COD 같은 다운스트림 태스크에서는 여전히 한계가 있다고 본다. 기존 연구는 다른 foundation model에서 온 멀티모달 정보를 결합해 성능을 높이려 했지만, 이 논문은 그 정보가 그대로 들어오면 domain shift로 편향이 생길 수 있다고 지적한다. 이를 위해 ARM과 auxiliary embedding을 제안한다.</p>
 
+<p>초록을 조금 더 풀어보면, SAM(Segment Anything Model)과 같은 기초 모델은 주로 대규모 데이터 세트에 대한 교육으로 인해 기존 분할 작업에서 놀라운 성능을 보여왔습니다. 그럼에도 불구하고 COD(위장 물체 탐지)와 같은 특정 다운스트림 작업에는 여전히 과제가 남아 있습니다. 기존 연구는 주로 다른 기초 모델에서 파생된 추가 다중 모드 정보를 통합하여 성능을 향상시키는 것을 목표로 합니다. 그러나 이러한 모델에서 생성된 정보를 직접 활용하면 영역 이동으로 인해 추가적인 편향이 발생할 수 있습니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>이 논문이 짚는 지점은 꽤 중요하다. foundation model을 많이 붙일수록 좋아질 것처럼 보이지만, 실제로는 분포가 다른 정보가 prompt를 흐릴 수 있다. COD는 객체와 배경이 원래 비슷해서, 작은 편향도 최종 마스크 품질에 크게 영향을 준다.</p>
+
+<p>서론에서는 특히, 위장 개체 감지(COD)는 주변 환경과 거의 동일한 개체를 분할하는 까다로운 컴퓨터 비전 작업입니다. 물체 감지, 저고도 경제, 동물학 연구, 의료 영상 분할 등 광범위한 실제 적용으로 인해 해당 분야에서 중요한 역할을 합니다. 또한, 다른 양식의 데이터가 부족하면 모델이 의미 있는 특징을 획득하는 능력이 더욱 제한되어 배경에 매우 민감해지고 위장된 물체를 정확하게 감지할 수 없게 됩니다. 한편, 배경의 시각적 노이즈는 작업의 복잡성을 증가시켜 객체 경계가 모호해지고 특징 학습이 약화됩니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,53 +142,13 @@
 
 <p>논문은 ARM이 멀티모달 feature를 효율적으로 처리하면서 동시에 mask prompt를 refine한다고 설명한다. 또 ARM 내부 중간 정보를 auxiliary embedding으로 구성해 SAM 쪽으로 넘겨 richer feature representation을 만든다. 구조가 과하게 복잡하기보다는, foundation model 정보를 COD 목적에 맞게 다듬는 모듈 설계에 집중한 형태다.</p>
 
+<p>방법을 조금 더 자세히 보면, ARM은 처음 생성된 마스크 프롬프트가 객체의 일부만 덮거나 배경을 많이 끌어오는 문제를 먼저 해결하려고 합니다. 이를 위해 어댑터가 모아 둔 멀티모달 정보를 이용해 attention을 다시 조정하고, 초기 프롬프트를 더 넓고 안정적인 형태로 재구성합니다. 동시에 refinement 과정에서 나온 중간 표현을 auxiliary embedding으로 넘겨, SAM 쪽이 더 풍부한 문맥 정보를 가지고 최종 마스크를 예측하도록 만든다는 점이 핵심입니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>아래 표는 COMPrompter와 제안 방법을 dataset별 Sm, M 기준으로 다시 정리한 것이다.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>데이터셋</th>
-      <th style="text-align: right">COMPrompter Sm↑</th>
-      <th style="text-align: right">Ours Sm↑</th>
-      <th style="text-align: right">COMPrompter M↓</th>
-      <th style="text-align: right">Ours M↓</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>CHAMELEON</td>
-      <td style="text-align: right">0.885</td>
-      <td style="text-align: right"><strong>0.932</strong></td>
-      <td style="text-align: right">0.030</td>
-      <td style="text-align: right"><strong>0.023</strong></td>
-    </tr>
-    <tr>
-      <td>CAMO</td>
-      <td style="text-align: right">0.853</td>
-      <td style="text-align: right"><strong>0.887</strong></td>
-      <td style="text-align: right">0.054</td>
-      <td style="text-align: right"><strong>0.046</strong></td>
-    </tr>
-    <tr>
-      <td>COD10K</td>
-      <td style="text-align: right">0.860</td>
-      <td style="text-align: right"><strong>0.909</strong></td>
-      <td style="text-align: right">0.027</td>
-      <td style="text-align: right"><strong>0.020</strong></td>
-    </tr>
-    <tr>
-      <td>NC4K</td>
-      <td style="text-align: right">0.880</td>
-      <td style="text-align: right"><strong>0.906</strong></td>
-      <td style="text-align: right">0.036</td>
-      <td style="text-align: right"><strong>0.033</strong></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>특히 structured target segmentation에서 강하다는 초록의 설명과 맞물려, COD10K와 NC4K에서 개선 폭이 꽤 분명하다.</p>
+<p>실험 파트를 조금 더 자세히 보면, 최첨단 방법과의 비교 COD 작업의 성과를 효과적으로 평가하기 위해 먼저 현재의 최첨단(SOTA) 모델과 비교 분석을 수행했습니다. 1은 4개의 서로 다른 데이터 세트에 대한 우리 작업과 다른 SOTA 모델의 평가 결과를 비교합니다. 4에서 우리의 방법(빨간색 실선)은 세 가지 데이터 세트 모두에서 뛰어난 성능을 나타내며 특히 COD10K 데이터 세트에서 놀라운 결과를 나타냄이 분명합니다. 2에서 제안된 ARM은 COD 작업에서 SAM의 성능을 크게 향상시켜 세 가지 데이터 세트에 대한 모든 평가 지표에서 상당한 개선을 달성했습니다.</p>
 
 <h2 id="결론">결론</h2>
 
@@ -195,6 +159,7 @@
 <p>SAM 기반 COD 논문이 쌓이는 흐름 안에서 보면, ARM은 멀티모달 정보를 ‘붙이는 방법’보다 ‘거르는 방법’을 강조한 점이 인상적이다. foundation model integration이 언제나 정답이 아니라는 점을 차분히 보여주는 논문이다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/ICCV2025/html/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/ICCV2025/papers/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.pdf</li>

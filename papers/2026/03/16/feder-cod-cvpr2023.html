@@ -126,9 +126,13 @@
 
 <p>저자들은 주파수 대역별로 feature를 분해해 foreground와 background를 구분하는 subtle cue를 찾고, 동시에 ODE-inspired edge reconstruction module로 보다 정확한 경계를 생성합니다. 두 문제를 분리해 푸는 구조입니다.</p>
 
+<p>초록을 조금 더 풀어보면, 위장 개체 감지(COD)는 주변 배경과 시각적으로 혼합된 위장 개체를 식별하는 어려운 문제를 해결하는 것을 목표로 합니다. COD는 위장된 물체가 배경과 본질적으로 유사하고 경계가 모호하기 때문에 어려운 작업입니다. 이 문제에 대한 기존 접근 방식은 인간의 시각 시스템을 모방하는 다양한 기술을 개발했습니다. 많은 경우에 효과적임에도 불구하고 이러한 방법은 위장된 물체가 비전 시스템을 기만하는 경우 여전히 어려움을 겪습니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>COD 논문 가운데서도 이 작업은 문제 분해가 명확합니다. similarity와 edge ambiguity를 따로 보고, 각 문제에 맞는 모듈을 배치합니다.</p>
+
+<p>서론에서는 특히, 위장 객체 감지(COD)는 주변 IS+ED(a) Origin(b) GT(c) SegMaR(d) FEDER 고유 유사성(IS) 및 에지 중단(ED) 과제에 통합된 객체를 “원활하게” 감지하고 분할하는 것을 목표로 합니다. 우리의 방법은 객체의 위치를 더 잘 파악하고 더 선명한 가장자리를 생성합니다. 환경. 첫 번째는 위장된 물체가 배경과 비슷한 색상과 패턴을 공유할 때 발생하는 본질적 유사성(IS) 문제입니다. ED 챌린지의 모호한 경계 문제를 해결하기 위해 우리는 네트워크가 에지 세부 사항을 발굴하도록 장려하는 보조 에지 재구성 작업을 학습할 것을 제안합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>FEDER는 frequency attention module, guidance-based feature aggregation module, 그리고 auxiliary edge reconstruction module로 구성됩니다. segmentation과 edge를 같이 학습해 boundary quality를 보완합니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 이 연구에서 영감을 받아 우리는 추출된 특징 {f r k}4 k=1에 대해 심층 웨이블릿 유사 분해(DWD)를 수행하고 추가 개선을 위해 가장 유익한 HF 및 LF 구성 요소를 선택할 것을 제안합니다. 3.2.2 주파수 주의 모듈 분해된 특징으로부터 식별 정보를 추출하기 위해 우리는 각각 HF 및 LF 대역에 해당하는 HFA(High-Frequency Attention) 모듈과 LFA(Low-Frequency Attention) 모듈을 제안합니다. 3에서는 다중 규모로 분해된 특징을 통합하기 위한 GFA(Guidance-Based Feature Aggregation) 모듈을 제안합니다. 무시할 수 없는 절단 오류가 있는 ODE의 1차 오일러 이산화 근사로 볼 수 있는 기존 잔여 네트워크 구조와 비교하여 제안된 OER 모듈은 고차 ODE 솔버, 특히 2차 Runge-Kutta(RK2)를 사용하여 에지 정보 처리에서 보다 정확한 수치 솔루션을 제공합니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>논문은 quantitative 성능뿐 아니라 cheaper computational and memory costs도 함께 강조합니다. 고성능과 효율을 같이 보겠다는 메시지입니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 1, 우리의 방법은 모든 설정과 백본에서 최상의 결과를 달성하며 이는 우리 FEDER의 우수성을 종합적으로 보여줍니다. 공통 설정에서 제안된 FEDER는 COD10K 데이터 세트의 모든 메트릭에 대해 평균 3.6%, NC4K 데이터 세트에서 평균 2.6%를 초과하여 두 번째로 좋은 결과를 능가합니다. 6에서 제안한 FEDER는 다른 최첨단 딥러닝 기반 COD 기술에 비해 가장 작은 FLOP 및 매개변수를 달성합니다. 특히 RK2의 COD 결과는 RB의 COD 결과보다 훨씬 뛰어나며 RK4의 COD 결과보다 약간 낮습니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -334,6 +342,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>FEDER는 COD의 주파수 단서와 경계 보정을 균형 있게 묶은 구조로 기억할 만합니다.</p>
@@ -343,6 +352,7 @@
 <p>frequency 계열과 boundary 계열을 따로 보지 않고 한 구조 안에 넣은 점이 좋아서, 이후 frequency-aware COD를 볼 때 자주 비교하게 됩니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2023/html/He_Camouflaged_Object_Detection_With_Feature_Decomposition_and_Edge_Reconstruction_CVPR_2023_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2023/papers/He_Camouflaged_Object_Detection_With_Feature_Decomposition_and_Edge_Reconstruction_CVPR_2023_paper.pdf</li>

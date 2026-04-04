@@ -126,9 +126,13 @@
 
 <p>이 논문은 위장 객체가 다양한 scale, fuzzy appearance, 심한 occlusion까지 가지는 현실 장면을 강조합니다. 이를 위해 mixed-scale triplet network인 ZoomNet을 제안하고, scale integration unit과 hierarchical mixed-scale unit으로 zoom in/out 전략을 구현합니다.</p>
 
+<p>초록을 조금 더 풀어보면, 최근 제안된 위장 객체 감지(COD)는 주변 환경과 시각적으로 혼합된 객체를 분할하려고 시도하는데, 이는 실제 시나리오에서 매우 복잡하고 어렵습니다. 위장된 물체와 배경 사이의 높은 본질적 유사성 외에도 물체는 일반적으로 규모가 다양하고 모양이 흐릿하며 심지어 심하게 가려져 있습니다. 이러한 문제를 해결하기 위해 우리는 모호한 이미지를 관찰할 때 인간의 행동, 즉 확대/축소를 모방하는 혼합 규모 삼중항 네트워크인 ZoomNet을 제안합니다. 특히 ZoomNet은 후보 객체와 배경 주변 사이의 감지할 수 없는 단서를 완전히 탐색하는 설계된 스케일 통합 유닛과 계층적 혼합 스케일 유닛을 통해 차별적인 혼합 스케일 의미론을 학습하기 위해 줌 전략을 사용합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>ZoomNet은 이름 그대로 scale을 핵심 난점으로 보는 논문입니다. COD에서 객체가 작거나 부분적으로 가려진 경우가 많다는 점을 잘 짚습니다.</p>
+
+<p>서론에서는 특히, 위장 객체가 배경과 섞여 있을 뿐 아니라 크기 변화, 부분 가림, 흐릿한 경계가 동시에 나타난다는 점을 강조합니다. 그래서 단일 해상도 특징만으로는 작은 객체와 넓게 퍼진 객체를 모두 안정적으로 잡기 어렵고, 배경 잡음에 쉽게 흔들리게 됩니다. ZoomNet은 이런 이유로 확대와 축소를 반복하듯 서로 다른 scale의 단서를 적극적으로 교환하는 mixed-scale 설계가 필요하다고 설명합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>저자들은 mixed-scale triplet input과 scale integration unit, hierarchical mixed-scale unit을 결합해 scale-aware representation을 학습합니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 이 섹션에서는 먼저 제안된 ZoomNet의 전체 아키텍처에 대해 자세히 설명하고 각 모듈의 세부 사항과 불확실성 인식 손실을 제시합니다. 수용 필드 범위를 더욱 늘리고 모듈 내 기능 표현을 다양화합니다. 다음으로, 이러한 기능은 후속 처리를 위해 스케일 병합 계층과 계층적 혼합 스케일 디코더에 연속적으로 공급됩니다. 계층적 혼합 스케일 디코더 SIU 이후 보조 스케일 정보는 메인 스케일 분기에 통합됩니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>실험의 메시지는 scale sensitivity입니다. 복잡한 장면과 작은 객체에서 mixed-scale design이 standard COD baselines보다 유리하다는 점을 보여줍니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 1은 상세한 비교 결과를 보여준다. 최근 최고의 COD 방법인 UJSC와 비교하면 훈련을 위해 추가 SOD 데이터를 도입하고 다른 기존 방법을 억제했지만 우리 방법은 여전히 이러한 데이터 세트에서 명백한 성능 향상을 보여줍니다. 4개의 데이터 세트에서 제안된 방법은 평균적으로 MAE 측면에서 두 번째로 좋은 방법인 C2F-Net보다 19.3% 더 나은 성능을 보였으며 FΩ β 및 Fβ 측면에서 평균 이득은 4%였습니다. COD10K는 가장 널리 사용되는 대규모 COD 데이터세트이고 다양한 객체와 장면을 포함하고 있기 때문에 이후의 모든 절제 실험은 이를 기반으로 수행됩니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -229,6 +237,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>ZoomNet은 scale 문제를 COD의 중심 난점으로 밀어 올린 대표 작업입니다.</p>
@@ -238,6 +247,7 @@
 <p>이후 여러 COD 논문에서 multi-scale을 당연하게 다루게 된 배경에는 ZoomNet 같은 설계가 있었다고 봅니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2022/html/Pang_Zoom_in_and_Out_A_Mixed-Scale_Triplet_Network_for_Camouflaged_CVPR_2022_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2022/papers/Pang_Zoom_in_and_Out_A_Mixed-Scale_Triplet_Network_for_Camouflaged_CVPR_2022_paper.pdf</li>

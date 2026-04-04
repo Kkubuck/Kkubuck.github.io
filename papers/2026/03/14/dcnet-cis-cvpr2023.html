@@ -126,9 +126,13 @@
 
 <p>이 논문은 Fourier transformation 기반 camouflage characteristic extraction과 difference attention으로 de-camouflaged feature를 만들고, reference point 기반 prototype similarity로 background noise를 억제하는 DCNet을 제안합니다.</p>
 
+<p>초록을 조금 더 풀어보면, CIS(Camouflaged Instance Segmentation)는 일반적으로 야생 동물이 주변 환경에 맞게 외모를 조정하는 위장 개체의 인스턴스 수준 마스크를 예측하는 것을 목표로 합니다. 이전 인스턴스 분할 방법은 기만적인 위장에 의해 쉽게 방해를 받기 때문에 이 작업에서 제대로 수행되지 않습니다. 이러한 문제를 해결하기 위해 우리는 픽셀 수준 위장 분리 모듈과 인스턴스 수준 위장 억제 모듈을 포함하는 새로운 DCNet(De-camouflaging Network)을 제안합니다. 제안된 DCNet은 몇 가지 장점을 가지고 있습니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>binary mask 수준에서는 객체만 찾으면 되지만, instance segmentation은 object-wise separation까지 해야 해서 camouflage가 더 까다롭게 작동합니다. 이 논문은 그 차이를 분명히 봅니다.</p>
+
+<p>서론에서는 특히, 생물학 분야에서 위장은 동물이 몸을 숨기고 포식자에게 사냥당하는 것을 피하기 위해 주변 환경에 맞게 신체의 외양(예: 색상 및 패턴)을 조정하는 데 사용하는 전략으로 정의됩니다. 인스턴스 세분화의 엄청난 발전에도 불구하고 위장된 인스턴스 세분화에 대한 노력은 거의 없습니다. CIS는 대부분의 위장된 인스턴스가 배경과 뚜렷한 대비가 부족하여 일반적인 인스턴스 세분화 방법이 이 작업에서 제대로 작동하지 않는 더 어려운 작업이기 때문입니다. 획득된 위장 특성 설명을 기반으로 위장 해제된 픽셀 특징을 획득하기 위한 새로운 차이 주의 메커니즘을 제안합니다. 우리는 DCNet에서 타겟 정보를 강조하고 배경 간섭을 억제할 수 있는 두 가지 효과적인 설계, 즉 차이 주의 메커니즘과 참조 주의 메커니즘을 제안합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>pixel-level camouflage decoupling module이 camouflage characteristic을 빼고, instance-level suppression module이 reference similarity를 이용해 noisy prototype-pixel interaction을 줄입니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 이 섹션에서는 먼저 제안된 De-camouflage Network(DCNet)의 전체 아키텍처를 제시하고 각 모듈을 자세히 설명합니다. 인스턴스 수준 위장 억제 모듈은 기만적인 배경으로 인해 발생하는 잘못된 상관 관계를 억제하는 참조 주의 메커니즘을 통해 픽셀 기능과의 상호 작용에서 인스턴스 프로토타입을 학습하는 역할을 담당합니다. 구체적으로, 우리는 먼저 백본 네트워크의 여러 단계에서 특징을 얻은 다음 차이 주의 메커니즘을 통해 해당 위장되지 않은 특징을 얻습니다. 마지막으로 처리된 특징을 FPN 네트워크와 융합하여 후속 인스턴스 분할에 사용되는 고해상도 픽셀 수준 특징 E를 생성합니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>대표 결과는 두 benchmark에서의 AP 향상입니다. binary COD가 아닌 instance-level evaluation에서 큰 폭의 개선을 보인다는 점이 중요합니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 우리는 우리 방법의 효과를 정량화하기 위해 AP50, AP75 및 AP 점수를 평가 지표로 채택합니다. 최신 정량 결과와의 비교. COD10K에서 우리의 방법은 이전의 최상의 방법인 OSFormer보다 AP에서 4.3% 더 뛰어나며 이는 DCNet이 위장된 표적에 대해 보다 정확한 분할을 획득할 수 있음을 나타냅니다. 또한 최첨단 방법에 비해 DCNet의 GFLOP가 낮다는 것은 우리 모델이 높은 계산 효율성을 유지하면서 높은 분할 능력을 달성했음을 나타냅니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -266,6 +274,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>DCNet은 camouflage를 먼저 벗겨낸 뒤 instance를 나누는 관점을 선명하게 보여준 작업입니다.</p>
@@ -275,6 +284,7 @@
 <p>CIS는 아직 논문 수가 많지 않아서, 이 논문은 instance-level camouflage 연구를 볼 때 거의 기준점처럼 읽힙니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2023/html/Luo_Camouflaged_Instance_Segmentation_via_Explicit_De-Camouflaging_CVPR_2023_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2023/papers/Luo_Camouflaged_Instance_Segmentation_via_Explicit_De-Camouflaging_CVPR_2023_paper.pdf</li>

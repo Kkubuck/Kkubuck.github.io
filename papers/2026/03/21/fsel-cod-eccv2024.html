@@ -126,9 +126,13 @@
 
 <p>이 논문은 위장 객체와 배경의 높은 spatial similarity를 COD의 핵심 난점으로 보고, frequency self-attention과 entanglement feed-forward network를 포함한 FSEL을 제안합니다. frequency와 spatial domain을 함께 배워 distinction을 키우는 접근입니다.</p>
 
+<p>초록을 조금 더 풀어보면, 위장된 객체 감지는 컴퓨터 비전에서 많은 관심을 끌었습니다. 가장 큰 문제는 공간 영역에서 위장된 물체와 주변 환경 사이의 유사성이 높아 식별이 어렵다는 것입니다. 기존 방법들은 복잡한 디자인으로 공간 특징의 구별 능력을 극대화하여 픽셀 유사성의 영향을 줄이려고 시도하지만 공간 영역에서 특징의 민감도와 위치성을 무시하는 경우가 많아 차선의 결과를 초래하는 경우가 많습니다. 본 논문에서는 FSEL(Frequency-Spatial Entanglement Learning) 방법을 도입하여 주파수와 공간 영역의 표현을 공동으로 탐색함으로써 이 문제를 해결하는 새로운 접근 방식을 제안합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>frequency clue는 2022년 이후 COD에서 반복적으로 중요하다고 이야기됐지만, 단순 보조 branch 수준에 머무는 경우가 많았습니다. FSEL은 이를 더 깊게 얽는 설계로 가져갑니다.</p>
+
+<p>서론에서는 특히, “위장”은 카멜레온, 메뚜기, 애벌레와 같은 특정 동물이 주변 환경에 섞여 자신을 보호하기 위해 사용하는 자연 방어 메커니즘입니다. 위장 물체 탐지(COD) 연구는 실제 상황에서 숨겨진 표적을 식별하는 데 중점을 둡니다. 그러나 위장된 이미지에는 배경 노이즈가 많이 포함되어 있는 경우가 많아 이미지에서 얻은 주파수 특징을 신뢰할 수 없게 됩니다. 위의 논의를 바탕으로 우리는 정확한 위장 객체 탐지를 위한 주파수 공간 얽힘 학습(FrequencySpatial Entanglement Learning)이라는 새로운 방법을 제안합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>ETB가 frequency band 관계를 잡고, JDPM이 semantic enhancement를 맡고, DRF가 dual-domain feature를 reverse parsing으로 통합합니다. 구조 전체가 domain interaction 중심으로 짜여 있습니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 따라서 우리는 다중 규모 특징에 주파수 변환을 도입하여 다중 수용 필드 정보를 재구성하는 JDPM(Joint Domain Perception Module)을 제안합니다. 또한 색상, 질감, 가장자리, 스펙트럼, 진폭 및 에너지와 같은 정보를 통합할 수 있는 ETB의 다양한 도메인 기능에 대한 얽힘 학습을 제안합니다. 3.4 Dual-domain Reverse Parser 공간 영역을 기반으로 다단계 특징을 통합하는 방법과 달리, 주파수 영역과 공간 영역 모두에서 다단계 특징 X의 다양한 정보를 최적화하고 집계하는 이중 영역 역방향 파서(DRP)를 제안합니다. 3.5 손실 함수 제안된 FSEL 방법에서는 정확하게 예측된 맵을 생성하기 위해 다중 레벨 특징 N을 감독합니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>논문은 three widely-used COD datasets에서 21개 SOTA를 넘어서는 결과를 강조합니다. 세부 수치보다도 frequency-spatial coupling이 유효하다는 메시지가 실험의 핵심입니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, CAMO, COD10K 및 NC4K의 세 가지 벤치마크 데이터 세트에서 FSEL 모델을 평가합니다. 특히, 최근 제안된 FEDER 방법과 비교하여 ResNet50 백본을 사용한 FSEL은 M 메트릭 하의 세 가지 공개 데이터 세트에서 전체적으로 5.97%, 3.23%, 4.76%를 능가합니다. 게다가 Res2Net 백본에서 FSEL은 CAMO 데이터 세트에 대한 6가지 공개 평가 지표 측면에서 두 번째로 좋은 방법에 비해 9.23%, 2.30%, 2.16%, 2.94%, 1.34% 및 1.24%의 평균 성능 향상을 달성합니다. 또한, 주파수 기반 FPNet 및 EVP 방법과 비교하여 PVTv2 백본을 사용하는 FSEL 방법은 FPNet에 비해 평균 38.10%, 4.41%, 4.05%, 5.96%, 3.07%, 2.09%의 성능 향상을 달성했으며, 52.38%, 6.36%, 12.43%, 10.19%, COD10K 데이터 세트의 M, F m ψ, F a ψ, F w ψ, Sm 및 Em 측면에서 EVP에 비해 4.55% 및 5.82%입니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -334,6 +342,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>FSEL은 frequency clue를 COD의 부가 힌트가 아니라 중심 표현 설계로 끌어올린 작업입니다. 이후 frequency-aware COD를 읽을 때 비교 기준이 됩니다.</p>
@@ -343,6 +352,7 @@
 <p>개인적으로는 FDCOD 이후 frequency 계열이 한 단계 더 구조화된 느낌입니다. 단순 fusion이 아니라 interaction 자체를 설계 대상으로 본다는 점이 좋습니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://eccv.ecva.net/virtual/2024/poster/1899</li>
   <li>원문 PDF: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/01001.pdf</li>

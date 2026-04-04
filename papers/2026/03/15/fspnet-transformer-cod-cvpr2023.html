@@ -126,9 +126,13 @@
 
 <p>이 논문은 transformer 기반 COD에서 locality modeling과 decoder aggregation 부족을 핵심 병목으로 봅니다. 그래서 non-local token enhancement와 feature shrinkage pyramid를 결합해 locality-enhanced neighboring transformer feature를 계층적으로 decode합니다.</p>
 
+<p>초록을 조금 더 풀어보면, 비전 변환기는 최근 위장 개체 감지에서 강력한 전역 컨텍스트 모델링 기능을 보여주었습니다. 그러나 두 가지 주요 제한 사항이 있습니다. 즉, 덜 효과적인 지역성 모델링과 디코더의 불충분한 특징 집계로 인해 구별할 수 없는 배경에서 미묘한 단서를 탐색하는 위장 개체 감지에 도움이 되지 않습니다. 이러한 문제를 해결하기 위해 본 논문에서는 위장된 객체 감지를 위한 점진적인 축소를 통해 지역성이 강화된 이웃 변환기 특징을 계층적으로 디코딩하는 것을 목표로 하는 새로운 변환기 기반 FSPNet(Feature Shrinkage Pyramid Network)을 제안합니다. 특히, 우리는 비로컬 메커니즘을 사용하여 이웃 토큰과 상호 작용하고 토큰 내의 그래프 기반 고차 관계를 탐색하여 변환기의 로컬 표현을 향상시키는 비로컬 토큰 향상 모듈(NL-TEM)을 제안합니다.</p>
+
 <h2 id="서론">서론</h2>
 
 <p>2023년 시점의 COD에서는 CNN과 transformer의 장단점이 비교적 명확해졌고, FSPNet은 transformer의 빈틈을 메우려는 설계로 읽힙니다.</p>
+
+<p>서론에서는 특히, 위장은 주변 환경과 “완벽하게” 조화를 이루어 포식자(먹이)를 속이거나 먹이(사냥꾼)에게 몰래 다가가는 유기체의 일반적인 방어 또는 전술입니다. 위장 객체 감지(COD)는 장면에서 위장 객체를 분할하는 것을 목표로 하며 널리 사용되었습니다. 위장된 물체와 배경 사이의 높은 유사성으로 인해 위장된 물체는 일반적으로 눈에 띄지 않고 구별할 수 없으며 이는 정확한 감지에 큰 어려움을 가져옵니다. 변환기의 전역 컨텍스트 모델링, 토큰 내의 위치 탐색 및 점진적 기능 축소 디코더로 인해 제안된 모델은 최첨단 성능을 달성하고 정확하고 완전한 위장 객체 분할을 제공합니다.</p>
 
 <h2 id="본론">본론</h2>
 
@@ -138,9 +142,13 @@
 
 <p>NL-TEM이 non-local mechanism과 graph-based high-order relation으로 token locality를 높이고, feature shrinkage pyramid가 이를 progressive shrinking으로 decode합니다.</p>
 
+<p>방법을 조금 더 자세히 보면, 또한 FSD 디코더에서는 현재 인접 특징 쌍과 이전 AIM에서 출력된 집계 특징을 상호 작용하고 병합하고 현재 집계된 특징을 다음 레이어와 다음 AIM으로 전달하는 AIM(인접 상호 작용 모듈)을 제안합니다. 와 달리 제안된 FSD는 교차 레이어 기능 상호 작용을 채택할 뿐만 아니라 동일한 레이어 내에서 기능 상호 작용도 채택하여 피라미드 구조에서 효과적인 기능의 흐름과 축적을 향상시켜 디코더 프로세스에서 미묘하지만 중요한 기능의 손실을 최소화합니다. 최근 제안된 최신 ZoomNet과 비교하여, 우리의 방법은 이 세 가지 데이터 세트에서 Sα, F w β, F m β, Em ψ, Ex 및 M 측면에서 각각 3.0%, 3.7%, 2.7%, 1.8%, 3.0% 및 17.7%의 평균 성능 향상을 달성합니다. 그림 2(5~7번째)는 다양한 백본 기능 조합에서 제안된 디코더 FSD(D로 표시)의 결과를 보여줍니다.</p>
+
 <h2 id="실험">실험</h2>
 
 <p>실험의 메시지는 transformer backbone을 COD에 맞게 손보면 local cue와 decoding 문제를 줄일 수 있다는 것입니다.</p>
+
+<p>실험 파트를 조금 더 자세히 보면, 광범위한 정량적 및 정성적 실험을 통해 제안된 모델이 널리 사용되는 6가지 평가 측정 기준에 따라 3가지 까다로운 COD 벤치마크 데이터 세트에서 기존 24개 경쟁사보다 훨씬 뛰어난 성능을 발휘함을 보여줍니다. 그림 1은 6가지 평가 지표에 따라 3가지 까다로운 COD 벤치마크 데이터 세트에 대해 24개 경쟁사에 대해 제안된 방법의 정량적 결과를 요약합니다. 최근 제안된 최신 ZoomNet과 비교하여, 우리의 방법은 이 세 가지 데이터 세트에서 Sα, F w β, F m β, Em ψ, Ex 및 M 측면에서 각각 3.0%, 3.7%, 2.7%, 1.8%, 3.0% 및 17.7%의 평균 성능 향상을 달성합니다. 광범위한 비교 실험 및 절제 연구에 따르면 제안된 FSPNet은 널리 사용되는 3가지 COD 벤치마크 데이터 세트에서 24가지 최첨단 접근 방식보다 우수한 성능을 달성합니다.</p>
 
 <h3 id="메인-실험-결과">메인 실험 결과</h3>
 
@@ -336,6 +344,7 @@
 </table>
 
 <p>표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.</p>
+
 <h2 id="결론">결론</h2>
 
 <p>FSPNet은 transformer 기반 COD의 약점을 정면으로 고친 실전형 논문입니다.</p>
@@ -345,6 +354,7 @@
 <p>지금 보면 더 큰 foundation model이 많지만, local cue를 어떻게 붙이느냐는 여전히 남아 있는 문제라서 읽을 가치가 있습니다.</p>
 
 <h2 id="출처">출처</h2>
+
 <ul>
   <li>논문 페이지: https://openaccess.thecvf.com/content/CVPR2023/html/Huang_Feature_Shrinkage_Pyramid_for_Camouflaged_Object_Detection_With_Transformers_CVPR_2023_paper.html</li>
   <li>원문 PDF: https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_Feature_Shrinkage_Pyramid_for_Camouflaged_Object_Detection_With_Transformers_CVPR_2023_paper.pdf</li>
