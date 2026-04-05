@@ -1,32 +1,39 @@
-$theme-color : #0f766e;
-$theme-bright : #edf8f6;
-$theme-dark : #0f172a;
-$theme-dark2 : #1f2937;
-$text : rgba(15, 23, 42, 0.88);
-$text-gray : rgba(15, 23, 42, 0.66);
-$divider-color : #dde5eb;
-$background-gray : rgba(15, 23, 42, 0.05);
+$theme-color: #2f6c66;
+$theme-bright: #e6efea;
+$theme-dark: #171717;
+$theme-dark2: #2a302d;
+$text: rgba(23, 23, 23, 0.92);
+$text-gray: rgba(23, 23, 23, 0.62);
+$divider-color: rgba(23, 23, 23, 0.14);
+$background-gray: rgba(23, 23, 23, 0.05);
+$paper-bg: #f7f3ec;
+$surface-bg: rgba(255, 252, 247, 0.7);
+$surface-strong: #fbf8f2;
 
 %page-padding {
-    padding : 0px 15%!important;
-    @media (max-width: 991px) {
-        padding: 0px 10%!important;
-    }
-    @media (max-width: 576px) {
-        padding: 0px 15px!important;
-    }
+  width: min(1160px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 767px) {
+    width: min(100%, calc(100% - 28px));
+  }
 }
+
 %posts-padding {
-    @media (max-width: 991px) {
-        padding: 0px 10%!important;
-    }
-    @media (max-width: 576px) {
-        padding: 0px!important;
-    }
+  width: min(760px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 767px) {
+    width: min(100%, calc(100% - 28px));
+  }
 }
+
 %page-nav-btn {
-    right : 5%;
-    @media (max-width: 991px) {
-        right : 3%;
-    }
+  right: 5%;
+
+  @media (max-width: 991px) {
+    right: 3%;
+  }
 }

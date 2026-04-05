@@ -7,4 +7,5 @@ archive_label: 프로젝트
 list_title: 프로젝트 및 연구
 permalink: /projects/
 ---
-가볍게 만들고, 실제로 쓰면서 다듬는 쪽의 기록을 남깁니다.
+
+가볍게 시작해도 오래 남길 만한 기록만 천천히 정리합니다.

@@ -2,15 +2,28 @@
 layout: page
 ---
 {% assign primary_category = page.categories | first %}
-<div id="post">
-  <section class="post-header">
-    <p class="eyebrow">{% if primary_category == 'papers' %}Paper Review{% else %}Journal{% endif %}</p>
-    <h1 class="title">{{ page.title }}</h1>
+<article id="post">
+  <header class="post-header">
+    <p class="post-kicker">
+      {% if primary_category == 'papers' %}
+      논문 리뷰
+      {% elsif primary_category == 'subprojects' %}
+      서브 프로젝트
+      {% elsif primary_category == 'projects' %}
+      프로젝트
+      {% else %}
+      글
+      {% endif %}
+    </p>
+    <h1 class="post-title">{{ page.title }}</h1>
     {% if page.subtitle %}
-    <p class="subtitle">{{ page.subtitle }}</p>
+    <p class="post-subtitle">{{ page.subtitle }}</p>
     {% endif %}
-    <div class="post-meta-row">
-      <p class="meta">{{ page.date | date: "%Y.%m.%d" }}</p>
+    <div class="post-meta">
+      <span>{{ page.date | date: "%Y.%m.%d" }}</span>
+      {% if page.venue %}
+      <span>{{ page.venue }}</span>
+      {% endif %}
       {% if page.tags and page.tags.size > 0 %}
       <ul class="post-tags">
         {% for tag in page.tags %}
@@ -19,7 +32,7 @@ layout: page
       </ul>
       {% endif %}
     </div>
-  </section>
+  </header>
 
   {% if page.image %}
   <figure class="post-cover">
@@ -30,33 +43,33 @@ layout: page
   <section class="post-content">
     {{ content }}
   </section>
-</div>
+</article>
 
-<div id="top" class="top-btn" onclick="moveTop()">
-  <i class="fas fa-chevron-up"></i>
+<div id="top" class="top-btn" onclick="moveTop()" aria-label="맨 위로 이동">
+  <i class="fas fa-arrow-up"></i>
 </div>
 
 <script>
   var lastScrollTop = 0;
   window.onscroll = function () {
     var st = document.body.scrollTop || document.documentElement.scrollTop;
-    if (st > 250) {
-      document.getElementById("top").style.display = "block"
+    if (st > 260) {
+      document.getElementById("top").style.display = "block";
       if (st > lastScrollTop) {
-        document.getElementById("top").style.opacity = 0
+        document.getElementById("top").style.opacity = 0;
       } else {
-        document.getElementById("top").style.opacity = 1
+        document.getElementById("top").style.opacity = 1;
       }
     } else {
-      document.getElementById("top").style.opacity = 0
+      document.getElementById("top").style.opacity = 0;
       if (st > lastScrollTop) {
-        document.getElementById("top").style.display = "none"
+        document.getElementById("top").style.display = "none";
       }
     }
     lastScrollTop = st <= 0 ? 0 : st;
-  }
+  };
   function moveTop() {
-    document.body.scrollTop = 0
-    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 </script>

@@ -1,29 +1,16 @@
-<section id="header-nav">
-  <header>
-    <nav>
-      <ul>
-        <a href="{{ '/' | relative_url }}">
-          <li class="btn-nav{% if page.url == '/' or page.url == '/index.html' %} current{% endif %}">홈</li>
-        </a>
-        <a href="{{ '/blog/' | relative_url }}">
-          <li class="btn-nav{% if page.url contains '/blog/' %} current{% endif %}">글</li>
-        </a>
-        <a href="{{ '/papers/' | relative_url }}">
-          <li class="btn-nav{% if page.url contains '/papers/' %} current{% endif %}">논문 리뷰</li>
-        </a>
-        <a href="{{ '/projects/' | relative_url }}">
-          <li class="btn-nav{% if page.url contains '/projects/' %} current{% endif %}">프로젝트</li>
-        </a>
-        <a href="{{ '/subprojects/' | relative_url }}">
-          <li class="btn-nav{% if page.url contains '/subprojects/' %} current{% endif %}">서브 프로젝트</li>
-        </a>
-        <a href="{{ '/about/' | relative_url }}">
-          <li class="btn-nav{% if page.url contains '/about/' %} current{% endif %}">소개</li>
-        </a>
-        <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">
-          <li class="btn-nav">GitHub</li>
-        </a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="{{ '/' | relative_url }}">Kkubuck</a>
+    <nav class="site-nav" aria-label="메인 메뉴">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link{% if page.url == '/' or page.url == '/index.html' %} current{% endif %}"{% if page.url == '/' or page.url == '/index.html' %} aria-current="page"{% endif %} href="{{ '/' | relative_url }}">홈</a></li>
+        <li><a class="site-nav__link{% if page.url contains '/blog/' %} current{% endif %}"{% if page.url contains '/blog/' %} aria-current="page"{% endif %} href="{{ '/blog/' | relative_url }}">글</a></li>
+        <li><a class="site-nav__link{% if page.url contains '/papers/' %} current{% endif %}"{% if page.url contains '/papers/' %} aria-current="page"{% endif %} href="{{ '/papers/' | relative_url }}">논문 리뷰</a></li>
+        <li><a class="site-nav__link{% if page.url contains '/projects/' %} current{% endif %}"{% if page.url contains '/projects/' %} aria-current="page"{% endif %} href="{{ '/projects/' | relative_url }}">프로젝트</a></li>
+        <li><a class="site-nav__link{% if page.url contains '/subprojects/' %} current{% endif %}"{% if page.url contains '/subprojects/' %} aria-current="page"{% endif %} href="{{ '/subprojects/' | relative_url }}">서브 프로젝트</a></li>
+        <li><a class="site-nav__link{% if page.url contains '/about/' %} current{% endif %}"{% if page.url contains '/about/' %} aria-current="page"{% endif %} href="{{ '/about/' | relative_url }}">소개</a></li>
+        <li><a class="site-nav__link site-nav__link--external" href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub</a></li>
       </ul>
     </nav>
-  </header>
-</section>
+  </div>
+</header>

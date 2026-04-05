@@ -1,124 +1,115 @@
 #aside {
+  text-align: left;
+  padding: 0 0 0 1.6rem;
+
+  @media (max-width: 991px) {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  #profile,
+  #tag-wrap,
+  .sidebar-card {
+    margin-bottom: 1.35rem;
+  }
+
+  .sidebar-card {
+    padding-top: 1rem;
+    border-top: 1px solid $divider-color;
+  }
+
+  .profile-card {
     text-align: left;
-    padding: 0 2%;
+  }
 
-    @media (max-width: 991px) {
-        padding: 0;
+  .img-wrap {
+    display: inline-block;
+    overflow: hidden;
+    width: 84px;
+    height: 84px;
+    border-radius: 18px;
+    margin: 0 0 0.9rem;
+    background: rgba(255, 255, 255, 0.76);
+    border: 1px solid rgba(23, 23, 23, 0.08);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+  }
 
-    #profile,
-    #tag-wrap,
-    .sidebar-card {
-        margin-bottom: 18px;
-    }
+  .username {
+    margin-bottom: 0.35rem;
+    color: $theme-dark;
+    font-size: 1rem;
+    font-weight: 700;
+  }
 
-    .sidebar-card {
-        padding: 1.15rem 1.15rem 1.2rem;
-        border: 1px solid $divider-color;
-        border-radius: 24px;
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
-    }
+  .title {
+    margin-bottom: 0.7rem;
+    color: $text-gray;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 
-    .profile-card {
-        text-align: center;
-    }
+  .description {
+    color: $text-gray;
+    font-size: 0.94rem;
+    line-height: 1.8;
+  }
 
-    .img-wrap {
-        display: inline-block;
-        position: relative;
-        overflow: hidden;
-        width: 132px;
-        height: 132px;
-        border-radius: 26px;
-        background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(15, 23, 42, 0.08));
-        margin: 0 0 18px;
+  .nav-card .mini-link {
+    display: block;
+    padding: 0.58rem 0;
+    border-top: 1px solid rgba(23, 23, 23, 0.08);
+    color: $theme-dark;
+    font-weight: 600;
+  }
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
+  .nav-card .mini-link:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
 
-    .img-wrap::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.06);
-    }
+  .nav-card .mini-link:hover {
+    color: $theme-color;
+  }
 
-    .username {
-        margin-bottom: 0.4rem;
-        color: $theme-dark;
-        font-size: 1.1rem;
-        font-weight: 800;
-    }
+  #paper-wrap .paper-mini {
+    display: block;
+    margin-top: 0.72rem;
+    padding-top: 0.72rem;
+    border-top: 1px solid rgba(23, 23, 23, 0.08);
+  }
 
-    .title {
-        margin-bottom: 0.75rem;
-        color: $theme-dark;
-        font-size: 0.82rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-    }
+  #paper-wrap .paper-date {
+    display: block;
+    margin-bottom: 0.18rem;
+    color: $text-gray;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
 
-    .description {
-        color: $text-gray;
-        font-size: 0.95rem;
-        line-height: 1.75;
-    }
+  #paper-wrap .paper-title {
+    display: block;
+    color: $theme-dark;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    font-weight: 600;
+  }
 
-    .nav-card .mini-link {
-        display: block;
-        padding: 0.58rem 0;
-        border-top: 1px dashed rgba(15, 23, 42, 0.12);
-        color: $theme-dark;
-        font-weight: 600;
-    }
+  #paper-wrap .paper-empty {
+    color: $text-gray;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
 
-    .nav-card .mini-link:first-of-type {
-        border-top: 0;
-        padding-top: 0;
-    }
-
-    .nav-card .mini-link:hover {
-        color: $theme-color;
-    }
-
-    #paper-wrap .paper-mini {
-        display: block;
-        margin-top: 0.72rem;
-        padding-top: 0.72rem;
-        border-top: 1px dashed rgba(15, 23, 42, 0.12);
-    }
-
-    #paper-wrap .paper-date {
-        display: block;
-        margin-bottom: 0.18rem;
-        color: $text-gray;
-        font-size: 0.74rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
-
-    #paper-wrap .paper-title {
-        display: block;
-        color: $theme-dark;
-        font-size: 0.92rem;
-        line-height: 1.55;
-        font-weight: 600;
-    }
-
-    #paper-wrap .paper-empty {
-        color: $text-gray;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-    }
-
-    #tag-wrap .tag {
-        margin-bottom: 0.45rem;
-    }
+  #tag-wrap .tag {
+    margin-bottom: 0.45rem;
+  }
 }

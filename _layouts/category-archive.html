@@ -4,30 +4,33 @@ layout: page
 {% assign archive_posts = site.posts | where_exp: "post", "post.categories contains page.archive_category" | sort: 'date' | reverse %}
 <div id="category-archive">
   <section class="archive-hero">
-    <p class="eyebrow">{{ page.archive_label | default: 'Archive' }}</p>
+    <p class="section-kicker">{{ page.archive_label | default: '아카이브' }}</p>
     <h1>{{ page.title }}</h1>
-    <p class="lead">{{ page.lead }}</p>
+    <p class="archive-lead">{{ page.lead }}</p>
   </section>
 
   {% if content and content != '' %}
-  <section class="archive-intro stack-panel">
+  <section class="archive-copy">
     {{ content }}
   </section>
   {% endif %}
 
-  <section class="stack-panel archive-list-panel">
-    <div class="section-head">
-      <h2>{{ page.list_title | default: 'Posts' }}</h2>
-      <span class="archive-count">{{ archive_posts | size }}개의 글</span>
+  <section class="archive-section">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">목록</p>
+        <h2>{{ page.list_title | default: '글 목록' }}</h2>
+      </div>
+      <span class="archive-count">{{ archive_posts | size }}개</span>
     </div>
     {% if archive_posts and archive_posts.size > 0 %}
-    <div class="vertical-list">
+    <div class="editorial-list">
       {% for post in archive_posts %}
-      <article class="list-entry">
+      <article class="editorial-row">
         <a href="{{ post.url | relative_url }}">
-          <p class="entry-meta">{{ post.date | date: "%Y.%m.%d" }}{% if post.venue %} · {{ post.venue }}{% endif %}</p>
+          <p class="row-meta">{{ post.date | date: "%Y.%m.%d" }}{% if post.venue %} · {{ post.venue }}{% endif %}</p>
           <h3>{{ post.title }}</h3>
-          <p>
+          <p class="row-summary">
             {% if post.summary %}
               {{ post.summary | strip_html | truncatewords: 32, '...' }}
             {% else %}
@@ -39,9 +42,8 @@ layout: page
       {% endfor %}
     </div>
     {% else %}
-    <div class="empty-state">
-      <h3>아직 공개된 글이 없습니다.</h3>
-      <p>새 글이 올라오면 이 페이지에 순서대로 쌓입니다.</p>
+    <div class="empty-note">
+      <p>아직 공개된 글이 없습니다.</p>
     </div>
     {% endif %}
   </section>

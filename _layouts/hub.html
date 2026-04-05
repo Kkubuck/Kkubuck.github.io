@@ -7,15 +7,13 @@ layout: page
   </section>
   <section class="bg"></section>
   <div class="row">
-    <!-- Aside Navigation  -->
     <aside id="aside" class="col-md-4">
       {% include hubaside.html %}
     </aside>
-    <!-- Post List -->
     <section id="content" class="col-md-8">
       {{ page.description | markdownify }}
       <section class="links">
-        <h2>Links</h2>
+        <h2>링크</h2>
         {% if page.citekey %}
           {% nocite page.citekey %}
           {% bibliography --cited --template pubhublinkstemplate %}

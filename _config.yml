@@ -12,8 +12,8 @@ lang: ko
 
 # Search engine optimization settings
 title: Kkubuck
-tagline: 연구, 논문, 작업 메모를 기록하는 개인 블로그
-description: 컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다.
+tagline: 논문 리뷰와 개인 연구를 기록하는 개인 블로그
+description: 논문 리뷰와 개인 연구, 작업 메모를 한국어로 정리하는 개인 블로그입니다.
 author: Kkubuck
 twitter:
   username: Kkubuck
@@ -32,7 +32,8 @@ theme_settings:
   papers_title: 논문 리뷰
   blog_title: 글
   tags_title: 태그
-  recentpubs_title: RECENT PAPERS
+  projects_title: 프로젝트
+  recentpubs_title: 최근 논문
 
 # Pagination
 paginate: 5

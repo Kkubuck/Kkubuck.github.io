@@ -1,207 +1,210 @@
 #post {
-    @extend %page-padding;
+  @extend %posts-padding;
+}
 
-    .post-header,
-    .post-cover,
-    .post-content {
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+.post-header {
+  padding-top: 2rem;
+  padding-bottom: 1.4rem;
+  border-top: 1px solid $divider-color;
+}
 
-    .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.28rem 0.66rem;
-        border-radius: 999px;
-        background: rgba(15, 118, 110, 0.08);
-        color: $theme-dark;
-        font-size: 0.74rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
+.post-title {
+  margin-top: 0.55rem;
+  font-size: clamp(2.15rem, 5vw, 3.35rem);
+  line-height: 1.08;
+}
 
-    .post-header {
-        padding-bottom: 1.5rem;
-        text-align: left;
+.post-subtitle {
+  max-width: 54ch;
+  margin-top: 1rem;
+  color: $text-gray;
+  font-size: 1.04rem;
+  line-height: 1.8;
+}
 
-        .title {
-            margin-top: 0.8rem;
-            font-size: 2.3rem;
-            line-height: 1.1;
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  margin-top: 1rem;
+  color: $text-gray;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
 
-            @media (max-width: 767px) {
-                font-size: 1.82rem;
-            }
-        }
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-left: 0;
+  list-style: none;
+}
 
-        .subtitle {
-            margin-top: 0.82rem;
-            max-width: 50ch;
-            color: $text-gray;
-            font-size: 0.98rem;
-            line-height: 1.75;
-        }
-    }
+.post-tags li {
+  margin-bottom: 0;
+  padding: 0.18rem 0.52rem;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.82);
+  color: $theme-dark;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
 
-    .post-meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.72rem;
-        margin-top: 0.92rem;
-    }
+.post-cover {
+  @extend %posts-padding;
+  margin-top: 0.8rem;
+  margin-bottom: 1.8rem;
+  overflow: hidden;
+  border-radius: 18px;
+}
 
-    .meta {
-        color: $text-gray;
-        font-size: 0.76rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
+.post-content {
+  margin-bottom: 4rem;
+}
 
-    .post-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.42rem;
-        list-style: none;
+.post-content > h1:first-child {
+  display: none;
+}
 
-        li {
-            padding: 0.2rem 0.54rem;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.06);
-            color: $theme-dark;
-            font-size: 0.74rem;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-    }
+.post-content p,
+.post-content li,
+.post-content td,
+.post-content th {
+  font-size: 1rem;
+  line-height: 1.9;
+}
 
-    .post-cover {
-        margin-bottom: 1.5rem;
-        border: 1px solid $divider-color;
-        border-radius: 24px;
-        overflow: hidden;
-        background: #fff;
-        box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+.post-content a {
+  color: $theme-color;
+  text-decoration: underline;
+  text-decoration-color: rgba(47, 108, 102, 0.3);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
 
-        img {
-            width: 100%;
-            margin: 0;
-            box-shadow: none;
-        }
-    }
+.post-content a:hover {
+  text-decoration-color: rgba(47, 108, 102, 0.55);
+}
 
-    .post-content {
-        overflow: visible;
-        margin-bottom: 72px;
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content table,
+.post-content pre,
+.post-content blockquote {
+  margin-bottom: 1.35rem;
+}
 
-        > h1:first-child {
-            display: none;
-        }
+.post-content ul,
+.post-content ol {
+  padding-left: 1.25rem;
+}
 
-        p,
-        li {
-            line-height: 1.82;
-            font-size: 0.98rem;
-        }
+.post-content h2,
+.post-content h3 {
+  color: $theme-dark;
+  scroll-margin-top: 5.5rem;
+}
 
-        h2,
-        h3 {
-            margin-top: 2rem;
-            margin-bottom: 0.7rem;
-        }
+.post-content h2 {
+  margin-top: 2.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.55rem;
+}
 
-        h2 {
-            font-size: 1.45rem;
-        }
+.post-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.65rem;
+  font-size: 1.16rem;
+}
 
-        h3 {
-            font-size: 1.18rem;
-        }
+.post-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+  border-top: 1px solid rgba(23, 23, 23, 0.12);
+  border-bottom: 1px solid rgba(23, 23, 23, 0.12);
+  background: rgba(255, 252, 247, 0.78);
+  font-variant-numeric: tabular-nums;
+}
 
-        blockquote {
-            margin: 1.2rem 0;
-            padding: 0.9rem 1rem;
-            border-left: 4px solid rgba(15, 118, 110, 0.32);
-            border-radius: 0 18px 18px 0;
-            background: rgba(15, 118, 110, 0.05);
-        }
+.post-content th,
+.post-content td {
+  padding: 0.78rem 0.9rem;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
 
-        table {
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            overflow-x: auto;
-            white-space: nowrap;
-            margin: 1.2rem 0 1.5rem;
-            border-collapse: collapse;
-            font-size: 0.84rem;
-            line-height: 1.55;
-            background: #fff;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            border-radius: 16px;
-        }
+.post-content th {
+  color: $theme-dark;
+  font-weight: 700;
+  background: rgba(23, 23, 23, 0.04);
+}
 
-        th,
-        td {
-            padding: 0.62rem 0.72rem;
-            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-            text-align: left;
-            vertical-align: top;
-        }
+.post-content th:not(:first-child),
+.post-content td:not(:first-child) {
+  text-align: right;
+}
 
-        th {
-            color: $theme-dark;
-            font-weight: 800;
-            background: rgba(15, 23, 42, 0.03);
-        }
-
-        tr:last-child td {
-            border-bottom: 0;
-        }
-    }
+.post-content tr:last-child td {
+  border-bottom: 0;
 }
 
 .top-btn {
-    transition-duration: 0.5s;
-    transition-property: opacity;
-    opacity: 0;
-    display: none;
-    position: fixed;
-    bottom: 10%;
-    right: 15%;
-    width: 44px;
-    height: 44px;
-    border-radius: 15px;
-    background-color: $theme-dark;
-    color: #fff;
-    text-align: center;
-    line-height: 2.45rem;
-    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
-
-    @media (max-width: 991px) {
-        right: 8%;
-    }
-
-    @media (max-width: 576px) {
-        right: 4%;
-    }
-
-    i {
-        color: #fff;
-    }
+  transition-duration: 0.35s;
+  transition-property: opacity, transform;
+  opacity: 0;
+  display: none;
+  position: fixed;
+  bottom: 8%;
+  right: 4%;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 252, 247, 0.9);
+  color: $theme-dark;
+  text-align: center;
+  line-height: 2.55rem;
+  box-shadow: 0 10px 24px rgba(23, 23, 23, 0.08);
 }
 
 .top-btn:hover {
-    background-color: $theme-dark2;
+  transform: translateY(-1px);
+  background: $theme-dark;
+  color: #fff;
+}
+
+.top-btn i {
+  color: inherit;
 }
 
 #comments {
-    @extend %page-padding;
+  @extend %posts-padding;
 
-    div.border {
-        border-top: 1px solid #e7e9ee;
-    }
+  div.border {
+    border-top: 1px solid $divider-color;
+  }
+}
+
+@media (max-width: 767px) {
+  .post-header {
+    padding-top: 1.5rem;
+  }
+
+  .post-title {
+    font-size: clamp(1.9rem, 9vw, 2.5rem);
+  }
+
+  .post-content p,
+  .post-content li,
+  .post-content td,
+  .post-content th {
+    font-size: 0.96rem;
+  }
 }
