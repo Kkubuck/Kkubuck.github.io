@@ -27,24 +27,24 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>논문 리뷰 툴킷을 만든 방식 | Kkubuck</title>
+<title>논문 리뷰 툴을 블로그에 붙인 방법 | Kkubuck</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="논문 리뷰 툴킷을 만든 방식" />
+<meta property="og:title" content="논문 리뷰 툴을 블로그에 붙인 방법" />
 <meta name="author" content="Kkubuck" />
 <meta property="og:locale" content="ko_KR" />
-<meta name="description" content="PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다." />
-<meta property="og:description" content="PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다." />
+<meta name="description" content="논문 PDF를 받아 한국어 블로그 글로 정리하고 GitHub 블로그까지 반영하는 도구를, Codex가 다루기 쉬운 구조로 정리한 과정을 적었습니다." />
+<meta property="og:description" content="논문 PDF를 받아 한국어 블로그 글로 정리하고 GitHub 블로그까지 반영하는 도구를, Codex가 다루기 쉬운 구조로 정리한 과정을 적었습니다." />
 <link rel="canonical" href="https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html" />
 <meta property="og:url" content="https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html" />
 <meta property="og:site_name" content="Kkubuck" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2026-04-03T23:30:00+00:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="논문 리뷰 툴킷을 만든 방식" />
+<meta property="twitter:title" content="논문 리뷰 툴을 블로그에 붙인 방법" />
 <meta name="twitter:site" content="@Kkubuck" />
 <meta name="twitter:creator" content="@Kkubuck" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-04-03T23:30:00+00:00","datePublished":"2026-04-03T23:30:00+00:00","description":"PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다.","headline":"논문 리뷰 툴킷을 만든 방식","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kkubuck"},"dateModified":"2026-04-03T23:30:00+00:00","datePublished":"2026-04-03T23:30:00+00:00","description":"논문 PDF를 받아 한국어 블로그 글로 정리하고 GitHub 블로그까지 반영하는 도구를, Codex가 다루기 쉬운 구조로 정리한 과정을 적었습니다.","headline":"논문 리뷰 툴을 블로그에 붙인 방법","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/subprojects/2026/04/03/paper-review-toolkit-build-notes.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -79,9 +79,9 @@
       서브 프로젝트
       
     </p>
-    <h1 class="post-title">논문 리뷰 툴킷을 만든 방식</h1>
+    <h1 class="post-title">논문 리뷰 툴을 블로그에 붙인 방법</h1>
     
-    <p class="post-subtitle">PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다.</p>
+    <p class="post-subtitle">PDF를 읽고, 정리하고, 블로그 글로 올리는 흐름을 Codex 친화적으로 다시 묶은 기록입니다.</p>
     
     <div class="post-meta">
       <span>2026.04.03</span>
@@ -89,9 +89,9 @@
       
       <ul class="post-tags">
         
-        <li>toolkit</li>
+        <li>codex</li>
         
-        <li>qwen</li>
+        <li>tooling</li>
         
         <li>jekyll</li>
         
@@ -105,71 +105,131 @@
   
 
   <section class="post-content">
-    <h2 id="시작점">시작점</h2>
+    <h2 id="왜-이-툴을-만들었나">왜 이 툴을 만들었나</h2>
 
-<p>이번에 만들고 싶었던 건 단순 요약기가 아니었습니다. 논문 PDF를 읽고, 핵심 주장과 실험을 정리하고, 한국어 블로그 포스트 형태로 바로 옮길 수 있는 흐름이 필요했습니다. 실제로 계속 쓸 수 있는 도구가 목표였고, 그래서 처음부터 로컬 실행과 블로그 게시를 함께 생각했습니다.</p>
+<p>논문 리뷰는 늘 같은 지점에서 시간을 많이 씁니다. PDF를 열고, 초록과 실험을 다시 읽고, 블로그 형식으로 맞추고, 마지막으로 GitHub 블로그 저장소에 옮기는 일이 반복됩니다. 하나씩 하면 어렵진 않지만, 매번 손이 많이 갑니다.</p>
 
-<h2 id="왜-따로-만들었는가">왜 따로 만들었는가</h2>
+<p>이번에 만든 도구는 이 반복을 줄이기 위한 작은 작업용 툴입니다. 목표는 거창한 자동 요약기가 아니라, 내가 실제로 계속 쓸 수 있는 글쓰기 보조 도구를 만드는 것이었습니다. 논문을 넣으면 바로 게시해버리는 기계가 아니라, 초안을 빠르게 만들고 사람이 손볼 위치를 분명하게 남겨주는 쪽에 더 가깝습니다.</p>
 
-<p>논문 리뷰를 손으로 하나씩 정리하면 글맛은 좋지만 시간이 오래 걸립니다. 반대로 자동화만 밀어붙이면 근거가 약하거나, 블로그에 올리기엔 문장이 너무 거칠어지기 쉽습니다. 그래서 이번 툴킷은 그 중간을 노렸습니다. 초안은 빠르게 만들되, 공개 포스트는 사람이 읽기에 자연스럽고 근거도 따라갈 수 있게 만드는 쪽입니다.</p>
+<h2 id="이번-글에서-강조하고-싶은-점">이번 글에서 강조하고 싶은 점</h2>
 
-<h2 id="전체-흐름">전체 흐름</h2>
+<p>이 도구를 설명할 때 특정 모델 이름을 앞세우는 건 핵심이 아니라고 느꼈습니다. 실제로 중요한 건 어떤 LLM을 붙였는가보다, 논문을 블로그 글로 바꾸는 흐름을 얼마나 다루기 좋게 잘게 나눴는가였습니다.</p>
 
-<p>툴킷의 기본 흐름은 꽤 단순합니다.</p>
-
-<ol>
-  <li>PDF 또는 arXiv URL을 입력으로 받습니다.</li>
-  <li>텍스트를 추출하고, 섹션 구조를 다시 잡습니다.</li>
-  <li>핵심 주장과 실험 결과를 정리합니다.</li>
-  <li>한국어 블로그 포스트 형식으로 렌더링합니다.</li>
-  <li>필요하면 GitHub Pages 블로그 저장소에 반영합니다.</li>
-</ol>
-
-<p>처음에는 그림까지 자동으로 넣는 방향도 같이 시도했는데, 블로그에서 보기에 오히려 어색한 경우가 많았습니다. 그래서 지금은 이미지보다 텍스트와 표를 더 정확하게 만드는 쪽으로 정리했습니다.</p>
-
-<h2 id="모델-선택">모델 선택</h2>
-
-<p>로컬에서 계속 돌릴 수 있어야 해서, 모델은 Qwen 계열을 기준으로 잡았습니다. M1 Max 32GB 환경에서는 Qwen 14B 정도가 품질과 현실성을 같이 보는 쪽에 더 맞았습니다. 아주 가볍게 돌릴 때는 8B로 내려갈 수 있게 했고, 공개용 자동 게시는 heuristic fallback만으로는 막아두는 안전장치도 넣었습니다.</p>
-
-<p>이 부분은 결국 품질 문제였습니다. 논문 리뷰는 숫자와 주장 하나만 어긋나도 글 전체 신뢰도가 크게 떨어지기 때문에, 대충 빨리보다 어느 정도 안정적인 로컬 추론이 더 중요했습니다.</p>
-
-<h2 id="블로그와-툴을-나눈-이유">블로그와 툴을 나눈 이유</h2>
-
-<p>중간에 한 번 느낀 건, 블로그와 툴이 한 저장소에 있으면 둘 다 애매해진다는 점이었습니다. 블로그는 글이 주인공이어야 하고, 툴 저장소는 설치법과 구조 설명이 주인공이어야 합니다. 그래서 결국 둘을 분리했습니다.</p>
+<p>그래서 이 툴은 <code class="language-plaintext highlighter-rouge">Codex가 읽고 수정하기 좋은 구조</code>를 먼저 잡았습니다.</p>
 
 <ul>
-  <li>블로그 저장소는 공개 글과 페이지 중심</li>
-  <li>툴 저장소는 생성기 코드, 테스트, 입력 데이터 중심</li>
+  <li>입력은 <code class="language-plaintext highlighter-rouge">PDF</code>, <code class="language-plaintext highlighter-rouge">arXiv ID</code>, <code class="language-plaintext highlighter-rouge">arXiv URL</code>, <code class="language-plaintext highlighter-rouge">topic</code></li>
+  <li>출력은 <code class="language-plaintext highlighter-rouge">Jekyll 포스트</code>, <code class="language-plaintext highlighter-rouge">papers/index.md</code>, <code class="language-plaintext highlighter-rouge">assets/papers/...</code></li>
+  <li>게시는 생성된 파일만 골라서 <code class="language-plaintext highlighter-rouge">git add -&gt; commit -&gt; push</code></li>
+  <li>긴 본문 수정은 포스트 전체를 다시 쓰기보다 섹션 단위로 보강</li>
 </ul>
 
-<p>이렇게 나누고 나니 블로그도 훨씬 덜 도구 소개 사이트 같아졌고, 툴도 그 자체로 설명 가능한 형태가 됐습니다.</p>
+<p>이렇게 해두면 Codex로 고치든, 내가 직접 고치든, 어디를 건드려야 하는지가 명확해집니다.</p>
 
-<h2 id="이번에-바꾼-포스트-형식">이번에 바꾼 포스트 형식</h2>
+<h2 id="실제로-무슨-일을-하나">실제로 무슨 일을 하나</h2>
 
-<p>지금 논문 리뷰 포스트는 조금 더 단순한 형태로 갑니다.</p>
+<p>이 저장소의 CLI는 <code class="language-plaintext highlighter-rouge">paper-blog</code> 하나로 시작합니다. 진입점은 단순하지만, 안쪽은 역할이 꽤 또렷하게 나뉘어 있습니다.</p>
 
 <ul>
-  <li>그림은 넣지 않음</li>
-  <li>대표 실험은 Markdown 표로 다시 작성</li>
-  <li>본문은 한국어</li>
-  <li>구조는 오버뷰, 핵심 주장, 초록, 서론, 본론, 제안방법, 실험, 결론, 논의</li>
+  <li><code class="language-plaintext highlighter-rouge">cli.py</code>: 어떤 작업을 할지 받는 입구</li>
+  <li><code class="language-plaintext highlighter-rouge">pipeline.py</code>: 추출, 초안 생성, 검수, 렌더링까지 묶는 중심 흐름</li>
+  <li><code class="language-plaintext highlighter-rouge">render.py</code>: 블로그 포스트와 인덱스를 Jekyll 형식으로 출력</li>
+  <li><code class="language-plaintext highlighter-rouge">publish.py</code>: 생성된 파일만 골라 Git으로 올리는 게시 단계</li>
 </ul>
 
-<p>이 방식이 블로그에서 훨씬 읽기 편했습니다. 특히 위장 객체 탐지처럼 표가 중요한 논문은 그림보다 숫자 비교가 더 바로 들어오는 경우가 많았습니다.</p>
+<p>내가 특히 마음에 들었던 건 <code class="language-plaintext highlighter-rouge">publish.py</code>의 방식이었습니다. 저장소 전체를 한 번에 올리는 게 아니라, 방금 생성된 포스트와 인덱스만 추적해서 커밋합니다. 그래서 글 하나 올릴 때 블로그 다른 작업과 섞이지 않습니다.</p>
 
-<h2 id="검수는-어떻게-두었나">검수는 어떻게 두었나</h2>
+<h2 id="사용-흐름은-어떻게-되나">사용 흐름은 어떻게 되나</h2>
 
-<p>공개 블로그에는 검수 로그를 안 보이게 했지만, 내부적으로는 두 번 점검하는 흐름을 남겨두었습니다. 필수 섹션이 비었는지, 숫자가 원문과 맞는지, 과장된 표현이 섞였는지 같은 걸 한 번 더 확인하는 수준입니다.</p>
+<p>실제로 쓰는 명령은 몇 개 안 됩니다.</p>
 
-<p>완벽하게 자동화했다고 말하긴 어렵지만, 적어도 바로 공개해도 되는지 아닌지를 한 번 걸러주는 장치는 있어야 한다고 생각했습니다.</p>
+<p>환경이 제대로 잡혔는지 먼저 확인할 때:</p>
 
-<h2 id="지금-상태에서-마음에-드는-점">지금 상태에서 마음에 드는 점</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper-blog doctor
+</code></pre></div></div>
 
-<p>가장 마음에 드는 건 이제 이 흐름이 실제로 블로그에 연결된다는 점입니다. 논문을 고르고, 정리하고, 페이지에 올리는 일이 한 번의 작업 흐름 안에 들어왔습니다. 그리고 공개 블로그 쪽에서는 도구 얘기를 앞세우지 않고, 그냥 읽히는 글 형태로 남는 것도 좋았습니다.</p>
+<p>특정 논문 하나를 초안으로 만들 때:</p>
 
-<h2 id="아직-남아-있는-것">아직 남아 있는 것</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper-blog draft <span class="nt">--arxiv-id</span> 2509.15753 <span class="nt">--site-dir</span> /path/to/Kkubuck.github.io
+</code></pre></div></div>
 
-<p>아직 완전히 끝난 건 아닙니다. 표 자동 추출은 더 다듬을 여지가 있고, 논문 종류가 바뀌면 지금보다 더 유연한 후처리도 필요합니다. 프로젝트 페이지도 몇 편 더 쌓여야 훨씬 자연스러워질 겁니다. 그래도 지금 상태면, 실제로 계속 쓰면서 발전시키기엔 충분히 괜찮은 첫 버전이라고 생각합니다.</p>
+<p>여러 편을 큐레이션 파일로 한 번에 만들 때:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper-blog compose <span class="nt">--input</span> examples/cod_top20_recent_plus_benchmarks.json <span class="nt">--site-dir</span> /path/to/Kkubuck.github.io
+</code></pre></div></div>
+
+<p>이미 올라간 글의 본문을 더 길게 보강할 때:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper-blog expand-sections <span class="nt">--site-dir</span> /path/to/Kkubuck.github.io <span class="nt">--cache-dir</span> downloads/tablecheck
+</code></pre></div></div>
+
+<p>게시까지 한 번에 하고 싶으면 마지막에 <code class="language-plaintext highlighter-rouge">--publish</code>를 붙이면 됩니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper-blog draft <span class="nt">--arxiv-id</span> 2509.15753 <span class="nt">--site-dir</span> /path/to/Kkubuck.github.io <span class="nt">--publish</span>
+</code></pre></div></div>
+
+<p>이 정도로 인터페이스를 줄여두니, 도구가 커져도 실제 사용법은 복잡해지지 않았습니다.</p>
+
+<h2 id="codex와-잘-맞는-이유">Codex와 잘 맞는 이유</h2>
+
+<p>이번 작업을 하면서 느낀 건, Codex가 잘 도와주는 건 마법 같은 추론 자체보다도 <code class="language-plaintext highlighter-rouge">명확한 입출력 계약이 있는 반복 작업</code>이라는 점이었습니다. 이 도구는 그 조건에 잘 맞습니다.</p>
+
+<p>예를 들어:</p>
+
+<ul>
+  <li>어떤 논문을 넣었을 때 포스트 파일이 어디에 생성되는지 고정돼 있고</li>
+  <li>인덱스 파일이 어디서 갱신되는지도 정해져 있고</li>
+  <li>게시 단계가 어떤 파일만 올리는지 코드에서 분명하고</li>
+  <li>이미 생성된 글을 다시 보강하는 경로도 따로 있습니다</li>
+</ul>
+
+<p>이런 구조 덕분에 Codex로 작업할 때도 안정감이 있습니다. “어디를 어떻게 바꿔야 할지”가 드러나 있기 때문입니다. 그냥 거대한 스크립트 하나를 돌리는 구조였다면, 지금처럼 블로그 글 톤을 바꾸거나 게시 흐름만 따로 고치기가 훨씬 어려웠을 겁니다.</p>
+
+<h2 id="글을-만들-때-기준으로-둔-것">글을 만들 때 기준으로 둔 것</h2>
+
+<p>처음에는 그림을 자동으로 넣고, 검수 로그도 공개 포스트에 보여주는 방향까지 같이 만져봤습니다. 그런데 블로그에서 읽히는 글은 생각보다 더 단순해야 했습니다.</p>
+
+<p>지금은 기준을 이렇게 잡았습니다.</p>
+
+<ul>
+  <li>공개 포스트에는 불필요한 내부 로그를 보이지 않음</li>
+  <li>글은 한국어 본문 중심으로 정리</li>
+  <li>논문은 섹션 구조가 살아 있도록 <code class="language-plaintext highlighter-rouge">초록 / 서론 / 제안방법 / 실험</code>을 분리</li>
+  <li>성능 비교는 이미지보다 표로 다시 적는 편이 더 읽기 좋으면 표를 우선</li>
+</ul>
+
+<p>즉, 이 도구의 목표는 “가능한 걸 다 보여주는 것”이 아니라 “블로그 글로 읽히는 결과를 안정적으로 만드는 것”에 더 가깝습니다.</p>
+
+<h2 id="블로그와-툴-저장소를-나눈-이유">블로그와 툴 저장소를 나눈 이유</h2>
+
+<p>중간에 한 번 크게 방향을 바꾼 부분도 있습니다. 처음에는 블로그와 생성 툴을 한 저장소에 같이 두려고 했는데, 막상 그렇게 두니 블로그는 툴 소개 페이지처럼 보이고, 툴 저장소도 문서와 코드가 섞여서 흐릿해졌습니다.</p>
+
+<p>그래서 지금은 둘을 분리했습니다.</p>
+
+<ul>
+  <li>블로그 저장소는 글과 페이지가 중심</li>
+  <li>툴 저장소는 코드와 테스트, 예시 입력이 중심</li>
+</ul>
+
+<p>이 분리가 생각보다 중요했습니다. 블로그는 읽는 공간이고, 툴 저장소는 만드는 공간이라는 게 훨씬 선명해졌기 때문입니다.</p>
+
+<h2 id="지금-버전에서-만족하는-점">지금 버전에서 만족하는 점</h2>
+
+<p>지금 버전이 완벽하진 않지만, 적어도 “논문을 읽고 블로그에 올린다”는 작업이 하나의 흐름으로 연결돼 있다는 점은 꽤 만족스럽습니다. 논문 하나를 읽고 정리하는 과정이 더는 메모, 로컬 파일, 블로그 저장소 사이에서 흩어지지 않습니다.</p>
+
+<p>또 하나 좋은 점은, 이 툴이 특정 모델 홍보 문서처럼 보이지 않는다는 점입니다. 이 프로젝트의 중심은 모델이 아니라 워크플로입니다. PDF를 받아, 근거를 모으고, 글을 만들고, 블로그에 반영하는 과정 자체가 이 도구의 핵심입니다.</p>
+
+<h2 id="앞으로-더-손볼-부분">앞으로 더 손볼 부분</h2>
+
+<p>아직 남은 것도 분명합니다.</p>
+
+<ul>
+  <li>표 자동 재구성이 더 안정적이어야 하고</li>
+  <li>분야가 바뀌는 논문에도 본문 톤이 덜 흔들려야 하고</li>
+  <li>게시 전에 사람이 마지막으로 확인하기 좋은 프리뷰도 더 좋아질 수 있습니다</li>
+</ul>
+
+<p>그래도 지금 시점에서는, “논문 리뷰를 블로그에 정리하는 일을 덜 번거롭게 만들어주는 도구”로서는 충분히 의미 있는 첫 버전이라고 생각합니다.</p>
 
   </section>
 </article>
