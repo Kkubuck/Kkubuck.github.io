@@ -57,6 +57,9 @@ exclude:
   - README.md
   - site
 
+include:
+  - site.webmanifest
+
 # Bibliography settings
 scholar:
   bibliography: publications.bib
