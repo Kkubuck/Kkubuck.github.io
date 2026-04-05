@@ -3,7 +3,7 @@ layout: page
 ---
 {% assign archive_posts = site.posts | where_exp: "post", "post.categories contains page.archive_category" | sort: 'date' | reverse %}
 <div id="category-archive">
-  <section class="archive-hero">
+  <section class="archive-hero surface-panel">
     <p class="section-kicker">{{ page.archive_label | default: '아카이브' }}</p>
     <h1>{{ page.title }}</h1>
     <p class="archive-lead">{{ page.lead }}</p>

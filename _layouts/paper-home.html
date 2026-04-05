@@ -6,13 +6,39 @@ layout: page
 {% assign project_posts = site.posts | where_exp: "post", "post.categories contains 'projects'" | sort: 'date' | reverse %}
 {% assign subproject_posts = site.posts | where_exp: "post", "post.categories contains 'subprojects'" | sort: 'date' | reverse %}
 <div id="paper-home">
-  <section class="home-hero">
-    <p class="section-kicker">Kkubuck</p>
-    <h1>{{ page.title }}</h1>
-    <p class="home-lead">{{ page.lead }}</p>
-    <div class="home-actions">
-      <a class="action-link action-link--primary" href="{{ '/blog/' | relative_url }}">전체 글 보기</a>
-      <a class="action-link" href="{{ '/papers/' | relative_url }}">논문 리뷰 보기</a>
+  <section class="home-hero surface-panel">
+    <div class="home-hero__body">
+      <div class="home-hero__copy">
+        <p class="section-kicker">Kkubuck</p>
+        <h1>{{ page.title }}</h1>
+        <p class="home-lead">{{ page.lead }}</p>
+        <div class="home-actions">
+          <a class="action-link action-link--primary" href="{{ '/blog/' | relative_url }}">전체 글 보기</a>
+          <a class="action-link" href="{{ '/papers/' | relative_url }}">논문 리뷰 보기</a>
+        </div>
+      </div>
+
+      <aside class="home-hero__status" aria-label="블로그 현황">
+        <p class="section-kicker">Today</p>
+        <ul class="status-list">
+          <li>
+            <span>오늘 기준</span>
+            <strong>{{ 'now' | date: "%Y.%m.%d" }}</strong>
+          </li>
+          <li>
+            <span>전체 글</span>
+            <strong>{{ recent_posts.size }}편</strong>
+          </li>
+          <li>
+            <span>논문 리뷰</span>
+            <strong>{{ paper_posts.size }}편</strong>
+          </li>
+          <li>
+            <span>서브 프로젝트</span>
+            <strong>{{ subproject_posts.size }}편</strong>
+          </li>
+        </ul>
+      </aside>
     </div>
   </section>
 
