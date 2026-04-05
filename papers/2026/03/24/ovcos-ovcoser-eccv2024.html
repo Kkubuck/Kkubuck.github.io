@@ -72,6 +72,9 @@
 
 <main id="main-content" class="site-main" tabindex="-1">
   
+<div class="post-progress" aria-hidden="true">
+  <span id="post-progress-bar"></span>
+</div>
 <article id="post">
   <header class="post-header">
     <p class="post-kicker">
@@ -238,8 +241,17 @@
 
 <script>
   var lastScrollTop = 0;
+  var progressBar = document.getElementById("post-progress-bar");
+
   window.onscroll = function () {
     var st = document.body.scrollTop || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var progress = scrollHeight > 0 ? Math.min(1, st / scrollHeight) : 0;
+
+    if (progressBar) {
+      progressBar.style.transform = "scaleX(" + progress + ")";
+    }
+
     if (st > 260) {
       document.getElementById("top").style.display = "block";
       if (st > lastScrollTop) {
@@ -253,8 +265,10 @@
         document.getElementById("top").style.display = "none";
       }
     }
+
     lastScrollTop = st <= 0 ? 0 : st;
   };
+
   function moveTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
