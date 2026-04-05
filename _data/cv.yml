@@ -1,0 +1,184 @@
+profile:
+  name: Jisang Lee
+  role: M.S. Student in Computer Engineering
+  affiliation: Artificial Intelligence & Media Lab. (AIMLab), Hanbat National University
+  location: Daejeon, Republic of Korea
+  phone: "+82 10-9758-7656"
+  email: "30251274@edu.hanbat.ac.kr"
+  advisor: Prof. Haneol Jang
+  last_updated: April 5, 2026
+  pdf: /assets/files/CV_jisanglee.pdf
+  github: https://github.com/Kkubuck
+  summary: 한밭대학교 대학원 컴퓨터공학과 석사과정으로 AIMLab에서 연구하고 있습니다. CV에 기록된 작업은 원격탐사 영상, 의료 영상, 위조 탐지, 개방어휘 탐지까지 폭넓게 이어집니다.
+
+education:
+  - institution: Hanbat National University
+    degree: M.S. Student in Computer Engineering
+    advisor: Prof. Haneol Jang
+    location: Daejeon
+    period: Mar. 2026 - Present
+    details:
+      - GPA 4.5/4.5
+  - institution: Hanbat National University
+    degree: B.S. in Computer Engineering
+    advisor: Prof. Haneol Jang
+    location: Daejeon
+    period: Mar. 2019 - Feb. 2026
+    details:
+      - GPA 4.09/4.5
+      - Major GPA 4.28/4.5
+
+publications:
+  conference:
+    - title: Development of Optical Character Recognition Model for Document Leak Investigation
+      authors: Eojin Jang, Jisang Lee, DongSu Kim, SeoYeon Oh, and Haneol Jang
+      venue: 2022 Korean Digital Forensic Society Winter Conference
+      date: Dec. 2022
+    - title: Lightweight Deep Convolutional Neural Networks for Fine-Grained Leaf Classification
+      authors: SeoYeon Oh, Jisang Lee, DongSu Kim, and Haneol Jang
+      venue: The 33rd Joint Conference on Communications and Information
+      date: Apr. 2023
+    - title: Lightweight Fingerprint Forgery Detection Technique Utilizing Median Filter and Ensemble Model
+      authors: Jisang Lee, DongSu Kim, SeoYeon Oh, and Haneol Jang
+      venue: 2023 Korean Digital Forensic Society Summer Conference
+      date: Jun. 2023
+    - title: Effective Data Augmentaions for Fingerprint Recognition
+      authors: DongSu Kim, Jisang Lee, SeoYeon Oh, and Haneol Jang
+      venue: 2023 Korean Digital Forensic Society Summer Conference
+      date: Jun. 2023
+    - title: Effective Detection of Generated Images Using Fast Fourier Transform and Discrete Cosine Transform
+      authors: HyeongWon Seo, Jisang Lee, DongSu Kim, SeoYeon Oh, and Haneol Jang
+      venue: 2023 Korean Digital Forensic Society Winter Conference
+      date: Dec. 2023
+    - title: Crop-Paste Technique for Enhancing Object Detection Performance in Synthetic Aperture Radar Images
+      authors: Jisang Lee, HyeongWon Seo, and Haneol Jang
+      venue: Korea Computer Congress 2024
+      date: Jun. 2024
+    - title: Data Preprocessing and Augmentation Methods for SAR to Optical Image Translation
+      authors: HyeongWon Seo, Jisang Lee, and Haneol Jang
+      venue: Korea Computer Congress 2024
+      date: Jun. 2024
+  journal:
+    - title: Lightweight Technique for Forged Fingerprint Detection Using Ensemble Models and Median Filters
+      authors: Jisang Lee, DongSu Kim, SeoYeon Oh, and Haneol Jang
+      venue: Journal of Digital Forensics (KCI)
+      date: 2023
+    - title: Effective Data Augmentations for Cross-Domain Fingerprint Recognition
+      authors: DongSu Kim, Jisang Lee, SeoYeon Oh, and Haneol Jang
+      venue: Journal of Digital Forensics (KCI)
+      date: 2024
+    - title: Parcel-Based Crop Type Classification in UAV Imagery with SAM for Smallholder Farms
+      authors: Jisang Lee, H. Kim, J. Koo, H. Choi, and D.Y. Jeong
+      venue: Korean Journal of Remote Sensing (SCOPUS)
+      date: 2024
+    - title: Effective Detection of Generated Images Using Fast Fourier Transform and Discrete Cosine Transform
+      authors: HyeongWon Seo, DongSu Kim, SeoYeon Oh, Jisang Lee, and Haneol Jang
+      venue: Journal of KIISE (JOK)
+      date: 2025
+    - title: Crop-Paste Data Augmentation Technique for Enhancing Object Detection Performance in Synthetic Aperture Radar Images
+      authors: Jisang Lee, HyeongWon Seo, WooJin Park, HyunCheol Choi, KyeongHo Kim, EunKyung Kim, and Haneol Jang
+      venue: Journal of IKEEE (KCI)
+      date: 2025
+    - title: Enhanced Copy-Paste Data Augmentation Using SAM for Precise Ship Detection
+      authors: J.H. Park, Jisang Lee, S.M. Pyo, and Haneol Jang
+      venue: Journal of IKEEE (KCI)
+      date: 2025
+
+research_experience:
+  - role: Research Intern
+    organization: SI Analytics
+    location: Daejeon, Republic of Korea
+    period: Jul. 2024 - Sep. 2024
+    bullets:
+      - Worked on UAV image segmentation and classification.
+      - Conducted research on remote sensing image analysis.
+
+research_projects:
+  - title: Deep Learning Research for X-ray Diagnosis of Neonatal Respiratory Distress Syndrome (RDS)
+    organization: Chungnam National University Hospital
+    period: Jan. 2023 - Jul. 2023
+    bullets:
+      - Segmented X-ray images to isolate lung regions.
+      - Improved diagnostic performance through classification network training.
+      - Used Grad-CAM for analysis.
+  - title: Research on SAR Image Analysis and Semantic Segmentation
+    organization: Capstone Design
+    period: Jan. 2024 - Dec. 2024
+    bullets:
+      - Explored SAR image preprocessing techniques.
+      - Investigated despeckling and scaling methods for SAR data.
+      - Devised generative models and data augmentation for training data acquisition.
+      - Improved SAR segmentation performance through knowledge distillation.
+  - title: Open-Vocabulary Zero-Shot Detection for Military Objects
+    organization: Collaborative Research with DataMaker
+    period: Jan. 2025 - Oct. 2025
+    bullets:
+      - Conducted collaborative research on open-vocabulary zero-shot detection for military objects.
+      - Studied recognition and detection strategies for unseen military targets.
+      - Built and analyzed experimental pipelines for robust zero-shot understanding.
+      - Investigated vision-language approaches for military AI applications.
+
+awards:
+  - category: Competition Award
+    title: President’s Award, 2022 Creative Design Online Competition
+    date: Nov. 2022
+  - category: Competition Award
+    title: Chairman’s Prize, SW-univ AI Competition 2022
+    detail: 광학 문자 인식(OCR) 알고리즘 개발
+    date: Aug. 2022
+  - category: Best Paper Award
+    title: President’s Award, Development of Optical Character Recognition Model for Document Leak Investigation
+    date: Dec. 2022
+  - category: Competition Award
+    title: Prize, Computer Engineering Portfolio Competition 2022
+  - category: Best Paper Award
+    title: Commissioner General Award, Lightweight Fingerprint Forgery Detection Technique Utilizing Median Filter and Ensemble Model
+    detail: 해양경찰청장상
+    date: Jun. 2023
+  - category: Competition Award
+    title: Corporate Prize, SW-univ AI Competition 2023
+    detail: 위성 이미지 건물 영역 분할(Image Segmentation) AI 모델 개발
+    date: Aug. 2023
+  - category: Best Paper Award
+    title: President’s Award, Effective Detection of Generated Images Using Fast Fourier Transform and Discrete Cosine Transform
+    date: Dec. 2023
+  - category: Competition Award
+    title: Prize, Computer Engineering Portfolio Competition 2023
+  - category: Competition Award
+    title: Grand Prize, Research and Development Special Zone Promotion Foundation
+    detail: "글로벌 산불 감지 챌린지: AI를 활용한 향상된 위성 이미지 분석"
+    date: Apr. 2024
+  - category: Competition Award
+    title: Gold Prize, Capstone Design Exhibition (SkyPixel) 2024
+  - category: Competition Award
+    title: Prize, Computer Engineering Portfolio Competition 2024
+
+skills:
+  programming:
+    - Python
+    - Java
+    - C
+    - C++
+  frameworks:
+    - PyTorch
+  languages:
+    - Korean (Native)
+    - English (Beginner)
+
+teaching:
+  - course: Hanbat AI Intensive Course
+    institution: Hanbat National University
+    role: Teaching Assistant (Prof. Haneol Jang)
+    period: Jan. 2023
+  - course: Data Structure Class
+    institution: Hanbat National University
+    role: Teaching Assistant (Prof. Haneol Jang)
+    period: Mar. 2023 - Jun. 2023
+  - course: Artificial Intelligence and Applications Class
+    institution: Hanbat National University
+    role: Teaching Assistant (Prof. Haneol Jang)
+    period: Mar. 2024 - Jun. 2024
+  - course: Artificial Intelligence and Applications Class
+    institution: Hanbat National University
+    role: Teaching Assistant (Prof. Haneol Jang)
+    period: Mar. 2025 - Jun. 2025

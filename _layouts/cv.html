@@ -1,0 +1,238 @@
+---
+layout: page
+---
+{% assign cv = site.data.cv %}
+{% assign conference_count = cv.publications.conference | size %}
+{% assign journal_count = cv.publications.journal | size %}
+{% assign award_count = cv.awards | size %}
+{% assign teaching_count = cv.teaching | size %}
+<div id="cv-page">
+  <section class="cv-hero">
+    <div class="cv-hero__body">
+      <div>
+        <p class="section-kicker">Curriculum Vitae</p>
+        <h1>{{ cv.profile.name }}</h1>
+        <p class="cv-role">{{ cv.profile.role }}</p>
+        <p class="cv-affiliation">{{ cv.profile.affiliation }}</p>
+        <p class="cv-summary">{{ cv.profile.summary }}</p>
+      </div>
+      <div class="cv-actions">
+        <a class="action-link action-link--primary" href="{{ cv.profile.pdf | relative_url }}" target="_blank" rel="noreferrer">PDF 다운로드</a>
+        <a class="action-link action-link--secondary" href="mailto:{{ cv.profile.email }}">이메일 보내기</a>
+      </div>
+    </div>
+    <div class="cv-metrics">
+      <div class="cv-metric"><span>{{ conference_count | plus: journal_count }}</span><small>Publications</small></div>
+      <div class="cv-metric"><span>{{ award_count }}</span><small>Awards</small></div>
+      <div class="cv-metric"><span>{{ teaching_count }}</span><small>Teaching Roles</small></div>
+      <div class="cv-metric"><span>2</span><small>Degrees</small></div>
+    </div>
+  </section>
+
+  <div class="cv-layout">
+    <aside class="cv-sidebar">
+      <section class="cv-panel">
+        <p class="section-kicker">Contact</p>
+        <ul class="cv-contact-list">
+          <li><span>Location</span><strong>{{ cv.profile.location }}</strong></li>
+          <li><span>Phone</span><strong><a href="tel:{{ cv.profile.phone | replace: ' ', '' }}">{{ cv.profile.phone }}</a></strong></li>
+          <li><span>Email</span><strong><a href="mailto:{{ cv.profile.email }}">{{ cv.profile.email }}</a></strong></li>
+          <li><span>Advisor</span><strong>{{ cv.profile.advisor }}</strong></li>
+          <li><span>GitHub</span><strong><a href="{{ cv.profile.github }}" target="_blank" rel="noreferrer">Kkubuck</a></strong></li>
+          <li><span>Updated</span><strong>{{ cv.profile.last_updated }}</strong></li>
+        </ul>
+      </section>
+
+      <section class="cv-panel">
+        <p class="section-kicker">Education</p>
+        <div class="cv-stack">
+          {% for item in cv.education %}
+          <article class="cv-mini-entry">
+            <h3>{{ item.degree }}</h3>
+            <p>{{ item.institution }}</p>
+            <p>{{ item.period }} · {{ item.location }}</p>
+            <p>Advisor: {{ item.advisor }}</p>
+            {% if item.details %}
+            <ul>
+              {% for detail in item.details %}
+              <li>{{ detail }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="cv-panel">
+        <p class="section-kicker">Technical Skills</p>
+        <div class="cv-skill-group">
+          <h3>Programming</h3>
+          <ul class="cv-chip-list">
+            {% for skill in cv.skills.programming %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="cv-skill-group">
+          <h3>Framework</h3>
+          <ul class="cv-chip-list">
+            {% for skill in cv.skills.frameworks %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="cv-skill-group">
+          <h3>Language</h3>
+          <ul class="cv-chip-list">
+            {% for skill in cv.skills.languages %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    </aside>
+
+    <div class="cv-main">
+      <section class="cv-section">
+        <div class="section-heading section-heading--stacked">
+          <div>
+            <p class="section-kicker">Experience</p>
+            <h2>Research Experience</h2>
+          </div>
+        </div>
+        {% for item in cv.research_experience %}
+        <article class="cv-entry">
+          <div class="cv-entry__header">
+            <div>
+              <h3>{{ item.role }}</h3>
+              <p>{{ item.organization }}</p>
+            </div>
+            <div class="cv-entry__meta">
+              <span>{{ item.period }}</span>
+              <span>{{ item.location }}</span>
+            </div>
+          </div>
+          <ul>
+            {% for bullet in item.bullets %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+        </article>
+        {% endfor %}
+      </section>
+
+      <section class="cv-section">
+        <div class="section-heading section-heading--stacked">
+          <div>
+            <p class="section-kicker">Projects</p>
+            <h2>Research Projects</h2>
+          </div>
+        </div>
+        {% for item in cv.research_projects %}
+        <article class="cv-entry">
+          <div class="cv-entry__header">
+            <div>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.organization }}</p>
+            </div>
+            <div class="cv-entry__meta">
+              <span>{{ item.period }}</span>
+            </div>
+          </div>
+          <ul>
+            {% for bullet in item.bullets %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+        </article>
+        {% endfor %}
+      </section>
+
+      <section class="cv-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Publications</p>
+            <h2>Conference</h2>
+          </div>
+          <span class="archive-count">{{ conference_count }}편</span>
+        </div>
+        <ol class="cv-publication-list">
+          {% for item in cv.publications.conference %}
+          <li class="cv-publication-item">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.authors }}</p>
+            <p>{{ item.venue }} · {{ item.date }}</p>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Publications</p>
+            <h2>Journal</h2>
+          </div>
+          <span class="archive-count">{{ journal_count }}편</span>
+        </div>
+        <ol class="cv-publication-list">
+          {% for item in cv.publications.journal %}
+          <li class="cv-publication-item">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.authors }}</p>
+            <p>{{ item.venue }} · {{ item.date }}</p>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Awards</p>
+            <h2>Awards &amp; Honors</h2>
+          </div>
+          <span class="archive-count">{{ award_count }}건</span>
+        </div>
+        <div class="cv-award-list">
+          {% for item in cv.awards %}
+          <article class="cv-award-item">
+            <p class="cv-award-item__meta">{{ item.category }}{% if item.date %} · {{ item.date }}{% endif %}</p>
+            <h3>{{ item.title }}</h3>
+            {% if item.detail %}
+            <p>{{ item.detail }}</p>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Teaching</p>
+            <h2>Teaching Experience</h2>
+          </div>
+          <span class="archive-count">{{ teaching_count }}회</span>
+        </div>
+        <div class="cv-stack">
+          {% for item in cv.teaching %}
+          <article class="cv-entry cv-entry--compact">
+            <div class="cv-entry__header">
+              <div>
+                <h3>{{ item.course }}</h3>
+                <p>{{ item.role }}</p>
+              </div>
+              <div class="cv-entry__meta">
+                <span>{{ item.period }}</span>
+                <span>{{ item.institution }}</span>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
