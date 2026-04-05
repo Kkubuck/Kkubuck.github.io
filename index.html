@@ -4,29 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  
+  <meta name="theme-color" content="#f7f3ec">
+
   <!-- Favicon code from realfavicongenerator.net -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
-<meta name="msapplication-TileColor" content="#563d7c">
-<meta name="theme-color" content="#ffffff">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2f6c66">
+<meta name="msapplication-TileColor" content="#f7f3ec">
+<meta name="theme-color" content="#f7f3ec">
 
-  <!--jQuery-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Serif+KR:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
-  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Kkubuck | 연구, 논문, 작업 메모를 기록하는 개인 블로그</title>
+<title>Kkubuck | 논문 리뷰와 개인 연구를 기록하는 개인 블로그</title>
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Kkubuck" />
 <meta name="author" content="Kkubuck" />
@@ -46,79 +47,299 @@
 <!-- End Jekyll SEO tag -->
 
 </head>
-<!--jQuery-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<body>
-  <div class="container">
-    <section id="header-nav">
-  <header>
-    <nav>
-      <ul>
-        <a href="/">
-          <li class="btn-nav current">홈</li>
-        </a>
-        <a href="/blog/">
-          <li class="btn-nav">글</li>
-        </a>
-        <a href="/papers/">
-          <li class="btn-nav">논문 리뷰</li>
-        </a>
-        <a href="/projects/">
-          <li class="btn-nav">프로젝트</li>
-        </a>
-        <a href="/subprojects/">
-          <li class="btn-nav">서브 프로젝트</li>
-        </a>
-        <a href="/about/">
-          <li class="btn-nav">소개</li>
-        </a>
-        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
-          <li class="btn-nav">GitHub</li>
-        </a>
+
+<body class="site-body">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/">Kkubuck</a>
+    <nav class="site-nav" aria-label="메인 메뉴">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link current" aria-current="page" href="/">홈</a></li>
+        <li><a class="site-nav__link" href="/blog/">글</a></li>
+        <li><a class="site-nav__link" href="/papers/">논문 리뷰</a></li>
+        <li><a class="site-nav__link" href="/projects/">프로젝트</a></li>
+        <li><a class="site-nav__link" href="/subprojects/">서브 프로젝트</a></li>
+        <li><a class="site-nav__link" href="/about/">소개</a></li>
+        <li><a class="site-nav__link site-nav__link--external" href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a></li>
       </ul>
     </nav>
-  </header>
-</section>
+  </div>
+</header>
+
+<main id="main-content" class="site-main" tabindex="-1">
+  
+
+
 
 <div id="paper-home">
-  <section class="journal-hero">
-    <p class="eyebrow">Kkubuck</p>
+  <section class="home-hero">
+    <p class="section-kicker">Kkubuck</p>
     <h1>Kkubuck</h1>
-    <p class="lede">논문 리뷰 및 개인 연구를 정리하는 공간입니다.</p>
-    <div class="hero-actions">
-      <a class="hero-btn primary" href="/blog/">전체 글 보기</a>
-      <a class="hero-btn" href="/papers/">논문 리뷰 보기</a>
+    <p class="home-lead">논문 리뷰 및 개인 연구를 정리하는 공간입니다.</p>
+    <div class="home-actions">
+      <a class="action-link action-link--primary" href="/blog/">전체 글 보기</a>
+      <a class="action-link" href="/papers/">논문 리뷰 보기</a>
     </div>
   </section>
+
+  <div class="home-layout">
+    <div class="home-main">
+      <section class="editorial-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">최근 글</p>
+            <h2>최근에 쓴 글</h2>
+          </div>
+          <a href="/blog/">전체 아카이브</a>
+        </div>
+        <div class="editorial-list">
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/04/seeing-the-unseen-suclip.html">
+              <p class="row-meta">2026.04.04 · 논문 리뷰</p>
+              <h3>Seeing the Unseen: A Semantic Alignment and Context-Aware Prompt Framework</h3>
+              <p class="row-summary">SuCLIP은 개방어휘 위장 객체 분할에서 텍스트-비전 정렬을 다시 맞춰 OVCoser보다 안정적으로 성능을 끌어올린다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>paper</li>
+                
+                <li>cod</li>
+                
+                <li>ovcos</li>
+                
+                <li>iccv2025</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/subprojects/2026/04/03/paper-review-toolkit-build-notes.html">
+              <p class="row-meta">2026.04.03 · 서브 프로젝트</p>
+              <h3>논문 리뷰 툴킷을 만든 방식</h3>
+              <p class="row-summary">PDF에서 한국어 블로그 포스트까지 이어지는 흐름을 로컬 중심으로 정리한 작업 기록입니다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>toolkit</li>
+                
+                <li>qwen</li>
+                
+                <li>jekyll</li>
+                
+                <li>automation</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/03/uscnet-unconstrained-scenes.html">
+              <p class="row-meta">2026.04.03 · 논문 리뷰</p>
+              <h3>Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes</h3>
+              <p class="row-summary">USCNet은 SOD와 COD를 분리된 문제로 보지 않고, 같은 장면 안에서 함께 존재하는 관계까지 모델링해야 한다고 주장한다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>paper</li>
+                
+                <li>cod</li>
+                
+                <li>sod</li>
+                
+                <li>iccv2025</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/02/rise-unsupervised-cod.html">
+              <p class="row-meta">2026.04.02 · 논문 리뷰</p>
+              <h3>Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection</h3>
+              <p class="row-summary">RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>paper</li>
+                
+                <li>cod</li>
+                
+                <li>unsupervised</li>
+                
+                <li>iccv2025</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/01/sam-dsa-rgbd-cod.html">
+              <p class="row-meta">2026.04.01 · 논문 리뷰</p>
+              <h3>Improving SAM for Camouflaged Object Detection via Dual Stream Adapters</h3>
+              <p class="row-summary">SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>paper</li>
+                
+                <li>cod</li>
+                
+                <li>sam</li>
+                
+                <li>rgbd</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/03/31/adaptive-refinement-arm-cod.html">
+              <p class="row-meta">2026.03.31 · 논문 리뷰</p>
+              <h3>Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection</h3>
+              <p class="row-summary">ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다.</p>
+              
+              <ul class="row-tags">
+                
+                <li>paper</li>
+                
+                <li>cod</li>
+                
+                <li>sam</li>
+                
+                <li>iccv2025</li>
+                
+              </ul>
+              
+            </a>
+          </article>
+          
+        </div>
+      </section>
+
+      <section class="editorial-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">논문 리뷰</p>
+            <h2>최근에 정리한 논문</h2>
+          </div>
+          <a href="/papers/">논문 리뷰 아카이브</a>
+        </div>
+        <div class="editorial-list">
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/04/seeing-the-unseen-suclip.html">
+              <p class="row-meta">2026.04.04 · ICCV 2025</p>
+              <h3>Seeing the Unseen: A Semantic Alignment and Context-Aware Prompt Framework</h3>
+              <p class="row-summary">SuCLIP은 개방어휘 위장 객체 분할에서 텍스트-비전 정렬을 다시 맞춰 OVCoser보다 안정적으로 성능을 끌어올린다.</p>
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/03/uscnet-unconstrained-scenes.html">
+              <p class="row-meta">2026.04.03 · ICCV 2025</p>
+              <h3>Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes</h3>
+              <p class="row-summary">USCNet은 SOD와 COD를 분리된 문제로 보지 않고, 같은 장면 안에서 함께 존재하는 관계까지 모델링해야 한다고 주장한다.</p>
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/02/rise-unsupervised-cod.html">
+              <p class="row-meta">2026.04.02 · ICCV 2025</p>
+              <h3>Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection</h3>
+              <p class="row-summary">RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다.</p>
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/04/01/sam-dsa-rgbd-cod.html">
+              <p class="row-meta">2026.04.01 · ICCV 2025</p>
+              <h3>Improving SAM for Camouflaged Object Detection via Dual Stream Adapters</h3>
+              <p class="row-summary">SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다.</p>
+            </a>
+          </article>
+          
+          <article class="editorial-row">
+            <a href="/papers/2026/03/31/adaptive-refinement-arm-cod.html">
+              <p class="row-meta">2026.03.31 · ICCV 2025</p>
+              <h3>Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection</h3>
+              <p class="row-summary">ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다.</p>
+            </a>
+          </article>
+          
+        </div>
+      </section>
+    </div>
+
+    <aside class="home-rail">
+      <section class="rail-section">
+        <div class="section-heading section-heading--stacked">
+          <div>
+            <p class="section-kicker">프로젝트</p>
+            <h2>개인 프로젝트와 연구</h2>
+          </div>
+          <a href="/projects/">전체 보기</a>
+        </div>
+        
+        <div class="empty-note">
+          <p>아직 공개된 프로젝트 글이 없습니다.</p>
+        </div>
+        
+      </section>
+
+      <section class="rail-section">
+        <div class="section-heading section-heading--stacked">
+          <div>
+            <p class="section-kicker">서브 프로젝트</p>
+            <h2>작은 실험과 도구</h2>
+          </div>
+          <a href="/subprojects/">전체 보기</a>
+        </div>
+        
+        <div class="mini-list">
+          
+          <article class="mini-row">
+            <a href="/subprojects/2026/04/03/paper-review-toolkit-build-notes.html">
+              <p class="row-meta">2026.04.03</p>
+              <h3>논문 리뷰 툴킷을 만든 방식</h3>
+            </a>
+          </article>
+          
+        </div>
+        
+      </section>
+    </aside>
+  </div>
 </div>
 
-
-<!-- Footer -->
-<footer>
-  <div class="footer">
-    <div class="footer-line footer-main">
-      <span>© 2026 Kkubuck</span>
-      <span class="footer-sep">·</span>
-      <span>Kkubuck</span>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <p class="site-footer__brand">© 2026 Kkubuck</p>
+      <p class="site-footer__note">논문 리뷰 및 개인 연구를 정리하는 공간입니다.</p>
     </div>
-    <div class="footer-line footer-links">
+    <div class="site-footer__links">
       <a href="/">홈</a>
-      <span class="footer-sep">·</span>
       <a href="/blog/">글</a>
-      <span class="footer-sep">·</span>
       <a href="/papers/">논문 리뷰</a>
-      <span class="footer-sep">·</span>
+      <a href="/projects/">프로젝트</a>
+      <a href="/subprojects/">서브 프로젝트</a>
       <a href="/about/">소개</a>
-      <span class="footer-sep">·</span>
       <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
-    </div>
-    <div class="footer-note">
-      Notes on vision, multimodal systems, papers, and building.
     </div>
   </div>
 </footer>
 
+
   </div>
 </body>
-
 </html>

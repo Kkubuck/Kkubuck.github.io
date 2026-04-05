@@ -4,26 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  
+  <meta name="theme-color" content="#f7f3ec">
+
   <!-- Favicon code from realfavicongenerator.net -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8b51a3">
-<meta name="msapplication-TileColor" content="#563d7c">
-<meta name="theme-color" content="#ffffff">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2f6c66">
+<meta name="msapplication-TileColor" content="#f7f3ec">
+<meta name="theme-color" content="#f7f3ec">
 
-  <!--jQuery-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Serif+KR:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
-  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>논문 리뷰 | Kkubuck</title>
@@ -31,8 +32,8 @@
 <meta property="og:title" content="논문 리뷰" />
 <meta name="author" content="Kkubuck" />
 <meta property="og:locale" content="ko_KR" />
-<meta name="description" content="컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다." />
-<meta property="og:description" content="컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다." />
+<meta name="description" content="논문 리뷰와 개인 연구, 작업 메모를 한국어로 정리하는 개인 블로그입니다." />
+<meta property="og:description" content="논문 리뷰와 개인 연구, 작업 메모를 한국어로 정리하는 개인 블로그입니다." />
 <link rel="canonical" href="https://kkubuck.github.io/papers/" />
 <meta property="og:url" content="https://kkubuck.github.io/papers/" />
 <meta property="og:site_name" content="Kkubuck" />
@@ -42,470 +43,455 @@
 <meta name="twitter:site" content="@Kkubuck" />
 <meta name="twitter:creator" content="@Kkubuck" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Kkubuck"},"description":"컴퓨터비전, 멀티모달, 구현 메모와 논문 리뷰를 한국어로 기록하는 개인 블로그입니다.","headline":"논문 리뷰","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Kkubuck"},"description":"논문 리뷰와 개인 연구, 작업 메모를 한국어로 정리하는 개인 블로그입니다.","headline":"논문 리뷰","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://kkubuck.github.io/assets/img/kkubuck-avatar.svg"},"name":"Kkubuck"},"url":"https://kkubuck.github.io/papers/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
-<!--jQuery-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<body>
-  <div class="container">
-    <section id="header-nav">
-  <header>
-    <nav>
-      <ul>
-        <a href="/">
-          <li class="btn-nav">홈</li>
-        </a>
-        <a href="/blog/">
-          <li class="btn-nav">글</li>
-        </a>
-        <a href="/papers/">
-          <li class="btn-nav current">논문 리뷰</li>
-        </a>
-        <a href="/projects/">
-          <li class="btn-nav">프로젝트</li>
-        </a>
-        <a href="/subprojects/">
-          <li class="btn-nav">서브 프로젝트</li>
-        </a>
-        <a href="/about/">
-          <li class="btn-nav">소개</li>
-        </a>
-        <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">
-          <li class="btn-nav">GitHub</li>
-        </a>
+
+<body class="site-body">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/">Kkubuck</a>
+    <nav class="site-nav" aria-label="메인 메뉴">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="/">홈</a></li>
+        <li><a class="site-nav__link" href="/blog/">글</a></li>
+        <li><a class="site-nav__link current" aria-current="page" href="/papers/">논문 리뷰</a></li>
+        <li><a class="site-nav__link" href="/projects/">프로젝트</a></li>
+        <li><a class="site-nav__link" href="/subprojects/">서브 프로젝트</a></li>
+        <li><a class="site-nav__link" href="/about/">소개</a></li>
+        <li><a class="site-nav__link site-nav__link--external" href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a></li>
       </ul>
     </nav>
-  </header>
-</section>
+  </div>
+</header>
 
-<div id="paper-archive">
+<main id="main-content" class="site-main" tabindex="-1">
+  <div id="paper-archive">
   <section class="archive-hero">
-    <p class="eyebrow">Paper Reviews</p>
+    <p class="section-kicker">논문 리뷰</p>
     <h1>논문 리뷰</h1>
-    <p class="lead">최근에 정리한 논문 리뷰를 한눈에 볼 수 있는 아카이브입니다.</p>
+    <p class="archive-lead">최근에 정리한 논문 리뷰를 한곳에서 모아보는 아카이브입니다.</p>
   </section>
 
-  <section class="archive-intro stack-panel">
-    <p>현재 공개된 논문 리뷰는 31편입니다.</p>
-
+  
+  <section class="archive-copy">
+    <p>최근에 정리한 논문 리뷰를 차분하게 모아둡니다.</p>
 
   </section>
+  
 
-  <section class="stack-panel archive-list-panel">
-    <div class="section-head">
-      <h2>All Reviews</h2>
-      <span class="archive-count">31 posts</span>
+  <section class="archive-section">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">아카이브</p>
+        <h2>전체 논문 리뷰</h2>
+      </div>
+      <span class="archive-count">31편</span>
     </div>
     
     
-      <div class="vertical-list">
-        
-        <article class="list-entry">
-          <a href="/papers/2026/04/04/seeing-the-unseen-suclip.html">
-            <p class="entry-meta">2026.04.04 · ICCV 2025</p>
-            <h3>Seeing the Unseen: A Semantic Alignment and Context-Aware Prompt Framework</h3>
-            <p>
-              
-                SuCLIP은 개방어휘 위장 객체 분할에서 텍스트-비전 정렬을 다시 맞춰 OVCoser보다 안정적으로 성능을 끌어올린다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/04/03/uscnet-unconstrained-scenes.html">
-            <p class="entry-meta">2026.04.03 · ICCV 2025</p>
-            <h3>Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes</h3>
-            <p>
-              
-                USCNet은 SOD와 COD를 분리된 문제로 보지 않고, 같은 장면 안에서 함께 존재하는 관계까지 모델링해야 한다고 주장한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/04/02/rise-unsupervised-cod.html">
-            <p class="entry-meta">2026.04.02 · ICCV 2025</p>
-            <h3>Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection</h3>
-            <p>
-              
-                RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/04/01/sam-dsa-rgbd-cod.html">
-            <p class="entry-meta">2026.04.01 · ICCV 2025</p>
-            <h3>Improving SAM for Camouflaged Object Detection via Dual Stream Adapters</h3>
-            <p>
-              
-                SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/31/adaptive-refinement-arm-cod.html">
-            <p class="entry-meta">2026.03.31 · ICCV 2025</p>
-            <h3>Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection</h3>
-            <p>
-              
-                ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/30/escnet-edge-semantic-cod.html">
-            <p class="entry-meta">2026.03.30 · ICCV 2025</p>
-            <h3>ESCNet: Edge-Semantic Collaborative Network for Camouflaged Object Detection</h3>
-            <p>
-              
-                ESCNet은 위장 객체 탐지의 병목을 경계와 텍스처의 공동 추론 문제로 보고, edge-semantic feedback loop를 설계한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/29/mm-sam-camouflaged-scene-segmentation.html">
-            <p class="entry-meta">2026.03.29 · ICCV 2025</p>
-            <h3>Multi-modal Segment Anything Model for Camouflaged Scene Segmentation</h3>
-            <p>
-              
-                MM-SAM은 BLIP에서 만든 텍스트·비전 임베딩을 SAM prompt로 넣어 수동 프롬프트 없이 위장 장면 분할을 개선한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/28/srrnet-video-camouflaged-objects.html">
-            <p class="entry-meta">2026.03.28 · ICCV 2025</p>
-            <h3>Scoring, Remember, and Reference: Catching Camouflaged Objects in Videos</h3>
-            <p>
-              
-                SRRNet은 위장 객체 비디오에서 reference frame을 점수 기반으로 고르고, 기억 정보와 motion cue를 함께 써서 단일 패스로 성능을 높인다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/27/ease-environment-aware-unsupervised-cod.html">
-            <p class="entry-meta">2026.03.27 · CVPR 2025</p>
-            <h3>Shift the Lens: Environment-Aware Unsupervised Camouflaged Object Detection</h3>
-            <p>
-              
-                EASE는 위장 객체를 직접 찾기보다 환경을 먼저 식별한 뒤 반전시키는 방식으로 비지도 COD를 다시 정의한다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/26/ucod-dpl-dynamic-pseudo-label-learning.html">
-            <p class="entry-meta">2026.03.26 · CVPR 2025</p>
-            <h3>UCOD-DPL: Unsupervised Camouflaged Object Detection via Dynamic Pseudo-label Learning</h3>
-            <p>
-              
-                UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/25/cod-benchmarks-guide.html">
-            <p class="entry-meta">2026.03.25 · Benchmark Guide</p>
-            <h3>COD 벤치마크 정리</h3>
-            <p>
-              
-                정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/24/ovcos-ovcoser-eccv2024.html">
-            <p class="entry-meta">2026.03.24 · ECCV 2024</p>
-            <h3>Open-Vocabulary Camouflaged Object Segmentation</h3>
-            <p>
-              
-                이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/23/noisy-pseudo-label-cod-eccv2024.html">
-            <p class="entry-meta">2026.03.23 · ECCV 2024</p>
-            <h3>Learning Camouflaged Object Detection from Noisy Pseudo Label</h3>
-            <p>
-              
-                이 논문은 COD의 큰 비용인 pixel annotation 문제를 정면으로 다룹니다. 소량의 fully labeled data와 box prompt만으로도 괜찮은 pseudo label을 만들고, noisy pixels를 교정해 실용적인 반지도 COD를 밀어붙입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/22/just-a-hint-point-supervised-cod-eccv2024.html">
-            <p class="entry-meta">2026.03.22 · ECCV 2024</p>
-            <h3>Just a Hint: Point-Supervised Camouflaged Object Detection</h3>
-            <p>
-              
-                point 하나만으로 COD를 풀겠다는 건 꽤 공격적인 설정입니다. 이 논문은 point annotation을 hint area로 확장하고 attention regulator와 contrastive learning을 붙여, 최소 supervision으로도 전체 객체를 보게 만드는 방향을 제안합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/21/fsel-cod-eccv2024.html">
-            <p class="entry-meta">2026.03.21 · ECCV 2024</p>
-            <h3>Frequency-Spatial Entanglement Learning for Camouflaged Object Detection</h3>
-            <p>
-              
-                FSEL은 spatial feature만 복잡하게 밀어붙이는 기존 COD 설계가 frequency clue를 충분히 못 쓴다고 봅니다. 그래서 frequency와 spatial representation을 따로 두지 않고 entanglement 형태로 엮어 학습합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/20/vscode-generalist-cod-cvpr2024.html">
-            <p class="entry-meta">2026.03.20 · CVPR 2024</p>
-            <h3>VSCode: General Visual Salient and Camouflaged Object Detection with 2D Prompt Learning</h3>
-            <p>
-              
-                VSCode는 SOD와 COD를 task-specific specialist 모델로 따로따로 만드는 흐름에 반대합니다. 하나의 generalist model 안에서 domain과 task를 2D prompt로 분리해, 여러 binary mapping task를 동시에 다루는 방향입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/19/tsp-sam-vcod-cvpr2024.html">
-            <p class="entry-meta">2026.03.19 · CVPR 2024</p>
-            <h3>Endow SAM with Keen Eyes: Temporal-spatial Prompt Learning for Video Camouflaged Object Detection</h3>
-            <p>
-              
-                TSP-SAM은 SAM을 그대로 VCOD에 넣으면 temporal-spatial association과 prompt reliability 문제 때문에 무너진다고 봅니다. 그래서 motion-driven self-prompt와 long-range consistency를 넣어 비디오 위장 객체에 맞게 SAM을 적응시킵니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/18/making-and-breaking-of-camouflage-iccv2023.html">
-            <p class="entry-meta">2026.03.18 · ICCV 2023</p>
-            <h3>The Making and Breaking of Camouflage</h3>
-            <p>
-              
-                이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/17/source-free-depth-pop-out-iccv2023.html">
-            <p class="entry-meta">2026.03.17 · ICCV 2023</p>
-            <h3>Source-free Depth for Object Pop-out</h3>
-            <p>
-              
-                Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/16/feder-cod-cvpr2023.html">
-            <p class="entry-meta">2026.03.16 · CVPR 2023</p>
-            <h3>Camouflaged Object Detection With Feature Decomposition and Edge Reconstruction</h3>
-            <p>
-              
-                FEDER는 COD의 두 난점을 foreground-background intrinsic similarity와 ambiguous boundary로 딱 잘라 봅니다. 그리고 feature decomposition과 auxiliary edge reconstruction으로 이 둘을 따로 건드립니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html">
-            <p class="entry-meta">2026.03.15 · CVPR 2023</p>
-            <h3>Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers</h3>
-            <p>
-              
-                FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/14/dcnet-cis-cvpr2023.html">
-            <p class="entry-meta">2026.03.14 · CVPR 2023</p>
-            <h3>Camouflaged Instance Segmentation via Explicit De-Camouflaging</h3>
-            <p>
-              
-                DCNet은 COD에서 한 단계 더 나아가 instance segmentation을 본격적으로 다룹니다. camouflage characteristic을 explicit하게 분리해 내는 de-camouflaging 관점이 핵심입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/13/fdcod-cvpr2022.html">
-            <p class="entry-meta">2026.03.13 · CVPR 2022</p>
-            <h3>Detecting Camouflaged Object in Frequency Domain</h3>
-            <p>
-              
-                FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/12/zoomnet-cvpr2022.html">
-            <p class="entry-meta">2026.03.12 · CVPR 2022</p>
-            <h3>Zoom in and Out: A Mixed-Scale Triplet Network for Camouflaged Object Detection</h3>
-            <p>
-              
-                ZoomNet은 사람이 흐릿한 장면을 볼 때 확대했다 축소했다 하며 단서를 찾는 행동에서 출발합니다. COD의 scale diversity와 fuzzy appearance를 mixed-scale triplet design으로 푸는 작업입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/11/segmar-cvpr2022.html">
-            <p class="entry-meta">2026.03.11 · CVPR 2022</p>
-            <h3>Segment, Magnify and Reiterate: Detecting Camouflaged Objects the Hard Way</h3>
-            <p>
-              
-                SegMaR는 위장 객체를 한 번에 찾으려 하기보다, segment하고 확대하고 다시 보는 과정을 여러 단계로 반복합니다. 작은 객체와 저해상도 경계를 제대로 보려면 iteration이 필요하다는 주장입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html">
-            <p class="entry-meta">2026.03.10 · CVPR 2022</p>
-            <h3>Implicit Motion Handling for Video Camouflaged Object Detection</h3>
-            <p>
-              
-                이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/09/ugtr-cod-iccv2021.html">
-            <p class="entry-meta">2026.03.09 · ICCV 2021</p>
-            <h3>Uncertainty-Guided Transformer Reasoning for Camouflaged Object Detection</h3>
-            <p>
-              
-                UGTR은 COD에서 애매한 구역을 그냥 residual로 넘기지 않고, uncertainty를 먼저 추정한 뒤 transformer reasoning으로 다시 해석합니다. uncertainty와 attention reasoning을 결합한 대표 작업입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/08/pfnet-distraction-mining-cvpr2021.html">
-            <p class="entry-meta">2026.03.08 · CVPR 2021</p>
-            <h3>Camouflaged Object Segmentation With Distraction Mining</h3>
-            <p>
-              
-                PFNet은 COD 초창기 기준선 가운데 가장 자주 인용되는 모델입니다. predation process를 흉내 내며 positioning과 focus를 나누고, distraction mining으로 배경 잡음을 줄입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/07/joint-sod-cod-cvpr2021.html">
-            <p class="entry-meta">2026.03.07 · CVPR 2021</p>
-            <h3>Uncertainty-Aware Joint Salient Object and Camouflaged Object Detection</h3>
-            <p>
-              
-                이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/06/rank-camouflaged-objects-cvpr2021.html">
-            <p class="entry-meta">2026.03.06 · CVPR 2021</p>
-            <h3>Simultaneously Localize, Segment and Rank the Camouflaged Objects</h3>
-            <p>
-              
-                이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다.
-              
-            </p>
-          </a>
-        </article>
-        
-        <article class="list-entry">
-          <a href="/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html">
-            <p class="entry-meta">2026.03.05 · CVPR 2021</p>
-            <h3>Mutual Graph Learning for Camouflaged Object Detection</h3>
-            <p>
-              
-                Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다.
-              
-            </p>
-          </a>
-        </article>
-        
-      </div>
+    <div class="editorial-list">
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/04/04/seeing-the-unseen-suclip.html">
+          <p class="row-meta">2026.04.04 · ICCV 2025</p>
+          <h3>Seeing the Unseen: A Semantic Alignment and Context-Aware Prompt Framework</h3>
+          <p class="row-summary">
+            
+              SuCLIP은 개방어휘 위장 객체 분할에서 텍스트-비전 정렬을 다시 맞춰 OVCoser보다 안정적으로 성능을 끌어올린다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/04/03/uscnet-unconstrained-scenes.html">
+          <p class="row-meta">2026.04.03 · ICCV 2025</p>
+          <h3>Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes</h3>
+          <p class="row-summary">
+            
+              USCNet은 SOD와 COD를 분리된 문제로 보지 않고, 같은 장면 안에서 함께 존재하는 관계까지 모델링해야 한다고 주장한다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/04/02/rise-unsupervised-cod.html">
+          <p class="row-meta">2026.04.02 · ICCV 2025</p>
+          <h3>Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/04/01/sam-dsa-rgbd-cod.html">
+          <p class="row-meta">2026.04.01 · ICCV 2025</p>
+          <h3>Improving SAM for Camouflaged Object Detection via Dual Stream Adapters</h3>
+          <p class="row-summary">
+            
+              SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/31/adaptive-refinement-arm-cod.html">
+          <p class="row-meta">2026.03.31 · ICCV 2025</p>
+          <h3>Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/30/escnet-edge-semantic-cod.html">
+          <p class="row-meta">2026.03.30 · ICCV 2025</p>
+          <h3>ESCNet: Edge-Semantic Collaborative Network for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              ESCNet은 위장 객체 탐지의 병목을 경계와 텍스처의 공동 추론 문제로 보고, edge-semantic feedback loop를 설계한다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/29/mm-sam-camouflaged-scene-segmentation.html">
+          <p class="row-meta">2026.03.29 · ICCV 2025</p>
+          <h3>Multi-modal Segment Anything Model for Camouflaged Scene Segmentation</h3>
+          <p class="row-summary">
+            
+              MM-SAM은 BLIP에서 만든 텍스트·비전 임베딩을 SAM prompt로 넣어 수동 프롬프트 없이 위장 장면 분할을 개선한다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/28/srrnet-video-camouflaged-objects.html">
+          <p class="row-meta">2026.03.28 · ICCV 2025</p>
+          <h3>Scoring, Remember, and Reference: Catching Camouflaged Objects in Videos</h3>
+          <p class="row-summary">
+            
+              SRRNet은 위장 객체 비디오에서 reference frame을 점수 기반으로 고르고, 기억 정보와 motion cue를 함께 써서 단일 패스로 성능을 높인다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/27/ease-environment-aware-unsupervised-cod.html">
+          <p class="row-meta">2026.03.27 · CVPR 2025</p>
+          <h3>Shift the Lens: Environment-Aware Unsupervised Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              EASE는 위장 객체를 직접 찾기보다 환경을 먼저 식별한 뒤 반전시키는 방식으로 비지도 COD를 다시 정의한다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/26/ucod-dpl-dynamic-pseudo-label-learning.html">
+          <p class="row-meta">2026.03.26 · CVPR 2025</p>
+          <h3>UCOD-DPL: Unsupervised Camouflaged Object Detection via Dynamic Pseudo-label Learning</h3>
+          <p class="row-summary">
+            
+              UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/25/cod-benchmarks-guide.html">
+          <p class="row-meta">2026.03.25 · Benchmark Guide</p>
+          <h3>COD 벤치마크 정리</h3>
+          <p class="row-summary">
+            
+              정적 RGB COD부터 비디오, open-vocabulary, unconstrained setting까지 지금 자주 보는 평가축을 한 번에 묶어본다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/24/ovcos-ovcoser-eccv2024.html">
+          <p class="row-meta">2026.03.24 · ECCV 2024</p>
+          <h3>Open-Vocabulary Camouflaged Object Segmentation</h3>
+          <p class="row-summary">
+            
+              이 논문은 기존 open-vocabulary segmentation 데이터셋이 위장 장면을 거의 다루지 못한다는 점에서 출발합니다. 그래서 OVCOS라는 새 문제를 정의하고, OVCamo라는 전용 benchmark와 CLIP 기반 baseline인 OVCoser를 함께 제안합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/23/noisy-pseudo-label-cod-eccv2024.html">
+          <p class="row-meta">2026.03.23 · ECCV 2024</p>
+          <h3>Learning Camouflaged Object Detection from Noisy Pseudo Label</h3>
+          <p class="row-summary">
+            
+              이 논문은 COD의 큰 비용인 pixel annotation 문제를 정면으로 다룹니다. 소량의 fully labeled data와 box prompt만으로도 괜찮은 pseudo label을 만들고, noisy pixels를 교정해 실용적인 반지도 COD를 밀어붙입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/22/just-a-hint-point-supervised-cod-eccv2024.html">
+          <p class="row-meta">2026.03.22 · ECCV 2024</p>
+          <h3>Just a Hint: Point-Supervised Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              point 하나만으로 COD를 풀겠다는 건 꽤 공격적인 설정입니다. 이 논문은 point annotation을 hint area로 확장하고 attention regulator와 contrastive learning을 붙여, 최소 supervision으로도 전체 객체를 보게 만드는 방향을 제안합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/21/fsel-cod-eccv2024.html">
+          <p class="row-meta">2026.03.21 · ECCV 2024</p>
+          <h3>Frequency-Spatial Entanglement Learning for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              FSEL은 spatial feature만 복잡하게 밀어붙이는 기존 COD 설계가 frequency clue를 충분히 못 쓴다고 봅니다. 그래서 frequency와 spatial representation을 따로 두지 않고 entanglement 형태로 엮어 학습합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/20/vscode-generalist-cod-cvpr2024.html">
+          <p class="row-meta">2026.03.20 · CVPR 2024</p>
+          <h3>VSCode: General Visual Salient and Camouflaged Object Detection with 2D Prompt Learning</h3>
+          <p class="row-summary">
+            
+              VSCode는 SOD와 COD를 task-specific specialist 모델로 따로따로 만드는 흐름에 반대합니다. 하나의 generalist model 안에서 domain과 task를 2D prompt로 분리해, 여러 binary mapping task를 동시에 다루는 방향입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/19/tsp-sam-vcod-cvpr2024.html">
+          <p class="row-meta">2026.03.19 · CVPR 2024</p>
+          <h3>Endow SAM with Keen Eyes: Temporal-spatial Prompt Learning for Video Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              TSP-SAM은 SAM을 그대로 VCOD에 넣으면 temporal-spatial association과 prompt reliability 문제 때문에 무너진다고 봅니다. 그래서 motion-driven self-prompt와 long-range consistency를 넣어 비디오 위장 객체에 맞게 SAM을 적응시킵니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/18/making-and-breaking-of-camouflage-iccv2023.html">
+          <p class="row-meta">2026.03.18 · ICCV 2023</p>
+          <h3>The Making and Breaking of Camouflage</h3>
+          <p class="row-summary">
+            
+              이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/17/source-free-depth-pop-out-iccv2023.html">
+          <p class="row-meta">2026.03.17 · ICCV 2023</p>
+          <h3>Source-free Depth for Object Pop-out</h3>
+          <p class="row-summary">
+            
+              Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/16/feder-cod-cvpr2023.html">
+          <p class="row-meta">2026.03.16 · CVPR 2023</p>
+          <h3>Camouflaged Object Detection With Feature Decomposition and Edge Reconstruction</h3>
+          <p class="row-summary">
+            
+              FEDER는 COD의 두 난점을 foreground-background intrinsic similarity와 ambiguous boundary로 딱 잘라 봅니다. 그리고 feature decomposition과 auxiliary edge reconstruction으로 이 둘을 따로 건드립니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/15/fspnet-transformer-cod-cvpr2023.html">
+          <p class="row-meta">2026.03.15 · CVPR 2023</p>
+          <h3>Feature Shrinkage Pyramid for Camouflaged Object Detection With Transformers</h3>
+          <p class="row-summary">
+            
+              FSPNet은 transformer가 COD에 유리한 global context는 잘 보지만, locality modeling과 decoder aggregation이 약하다는 문제를 짚습니다. 이를 progressive shrinking 기반 pyramid decoder로 보완하는 작업입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/14/dcnet-cis-cvpr2023.html">
+          <p class="row-meta">2026.03.14 · CVPR 2023</p>
+          <h3>Camouflaged Instance Segmentation via Explicit De-Camouflaging</h3>
+          <p class="row-summary">
+            
+              DCNet은 COD에서 한 단계 더 나아가 instance segmentation을 본격적으로 다룹니다. camouflage characteristic을 explicit하게 분리해 내는 de-camouflaging 관점이 핵심입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/13/fdcod-cvpr2022.html">
+          <p class="row-meta">2026.03.13 · CVPR 2022</p>
+          <h3>Detecting Camouflaged Object in Frequency Domain</h3>
+          <p class="row-summary">
+            
+              FDCOD는 COD가 인간 RGB 시각을 모사하는 데 머물면 한계가 있다고 보고, frequency domain을 본격적인 추가 단서로 끌어옵니다. 이후 frequency 계열 연구의 분기점에 가까운 논문입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/12/zoomnet-cvpr2022.html">
+          <p class="row-meta">2026.03.12 · CVPR 2022</p>
+          <h3>Zoom in and Out: A Mixed-Scale Triplet Network for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              ZoomNet은 사람이 흐릿한 장면을 볼 때 확대했다 축소했다 하며 단서를 찾는 행동에서 출발합니다. COD의 scale diversity와 fuzzy appearance를 mixed-scale triplet design으로 푸는 작업입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/11/segmar-cvpr2022.html">
+          <p class="row-meta">2026.03.11 · CVPR 2022</p>
+          <h3>Segment, Magnify and Reiterate: Detecting Camouflaged Objects the Hard Way</h3>
+          <p class="row-summary">
+            
+              SegMaR는 위장 객체를 한 번에 찾으려 하기보다, segment하고 확대하고 다시 보는 과정을 여러 단계로 반복합니다. 작은 객체와 저해상도 경계를 제대로 보려면 iteration이 필요하다는 주장입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/10/implicit-motion-vcod-cvpr2022.html">
+          <p class="row-meta">2026.03.10 · CVPR 2022</p>
+          <h3>Implicit Motion Handling for Video Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              이 논문은 비디오 COD에서 optical flow나 homography 같은 explicit motion이 오히려 오차를 누적시킬 수 있다고 보고, motion estimation과 segmentation을 하나의 최적화로 묶는 implicit motion handling을 제안합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/09/ugtr-cod-iccv2021.html">
+          <p class="row-meta">2026.03.09 · ICCV 2021</p>
+          <h3>Uncertainty-Guided Transformer Reasoning for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              UGTR은 COD에서 애매한 구역을 그냥 residual로 넘기지 않고, uncertainty를 먼저 추정한 뒤 transformer reasoning으로 다시 해석합니다. uncertainty와 attention reasoning을 결합한 대표 작업입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/08/pfnet-distraction-mining-cvpr2021.html">
+          <p class="row-meta">2026.03.08 · CVPR 2021</p>
+          <h3>Camouflaged Object Segmentation With Distraction Mining</h3>
+          <p class="row-summary">
+            
+              PFNet은 COD 초창기 기준선 가운데 가장 자주 인용되는 모델입니다. predation process를 흉내 내며 positioning과 focus를 나누고, distraction mining으로 배경 잡음을 줄입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/07/joint-sod-cod-cvpr2021.html">
+          <p class="row-meta">2026.03.07 · CVPR 2021</p>
+          <h3>Uncertainty-Aware Joint Salient Object and Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/06/rank-camouflaged-objects-cvpr2021.html">
+          <p class="row-meta">2026.03.06 · CVPR 2021</p>
+          <h3>Simultaneously Localize, Segment and Rank the Camouflaged Objects</h3>
+          <p class="row-summary">
+            
+              이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다.
+            
+          </p>
+        </a>
+      </article>
+      
+      <article class="editorial-row">
+        <a href="/papers/2026/03/05/mutual-graph-learning-cod-cvpr2021.html">
+          <p class="row-meta">2026.03.05 · CVPR 2021</p>
+          <h3>Mutual Graph Learning for Camouflaged Object Detection</h3>
+          <p class="row-summary">
+            
+              Mutual Graph Learning은 위장 객체와 배경의 subtle relation을 graph 형태로 모델링하려는 초기 대표 작업입니다. local relation만 보지 않고 상호관계를 구조적으로 학습한다는 점이 포인트입니다.
+            
+          </p>
+        </a>
+      </article>
+      
+    </div>
     
   </section>
 </div>
 
-
-<!-- Footer -->
-<footer>
-  <div class="footer">
-    <div class="footer-line footer-main">
-      <span>© 2026 Kkubuck</span>
-      <span class="footer-sep">·</span>
-      <span>Kkubuck</span>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <p class="site-footer__brand">© 2026 Kkubuck</p>
+      <p class="site-footer__note">논문 리뷰 및 개인 연구를 정리하는 공간입니다.</p>
     </div>
-    <div class="footer-line footer-links">
+    <div class="site-footer__links">
       <a href="/">홈</a>
-      <span class="footer-sep">·</span>
       <a href="/blog/">글</a>
-      <span class="footer-sep">·</span>
       <a href="/papers/">논문 리뷰</a>
-      <span class="footer-sep">·</span>
+      <a href="/projects/">프로젝트</a>
+      <a href="/subprojects/">서브 프로젝트</a>
       <a href="/about/">소개</a>
-      <span class="footer-sep">·</span>
       <a href="https://github.com/Kkubuck" target="_blank" rel="noreferrer">GitHub</a>
-    </div>
-    <div class="footer-note">
-      Notes on vision, multimodal systems, papers, and building.
     </div>
   </div>
 </footer>
 
+
   </div>
 </body>
-
 </html>
