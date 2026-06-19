@@ -3,27 +3,27 @@ layout: page
 ---
 <div class="page-frame tags-page">
   <header class="archive-heading reveal">
-    <div><p class="eyebrow">TOPIC INDEX</p><h1>{{ page.title }}</h1><p>논문 리뷰와 연구 기록을 주제별로 빠르게 찾아볼 수 있습니다.</p></div>
-    <dl class="archive-summary glass-surface"><div><dt>전체 태그</dt><dd>{{ site.tags | size }}</dd></div></dl>
+    <div><p class="eyebrow">TOPIC INDEX</p><h1>{{ page.title }}</h1><p>Find paper reviews and research notes by topic.</p></div>
+    <dl class="archive-summary glass-surface"><div><dt>Total Tags</dt><dd>{{ site.tags | size }}</dd></div></dl>
   </header>
 
   <section class="tag-overview glass-surface reveal" aria-labelledby="tag-overview-title">
-    <div class="tag-overview__heading"><div><p class="eyebrow">POPULAR TOPICS</p><h2 id="tag-overview-title">주요 연구 주제</h2></div><p>태그를 선택하면 해당 기록으로 이동합니다.</p></div>
+    <div class="tag-overview__heading"><div><p class="eyebrow">POPULAR TOPICS</p><h2 id="tag-overview-title">Key Research Topics</h2></div><p>Select a tag to jump to matching records.</p></div>
     <div class="tag-cloud">
       {% for tag in site.tags limit: 30 %}{% assign tag_name = tag | first %}{% assign tag_posts = tag | last %}<a href="#{{ tag_name | slugify }}" style="--weight: {{ tag_posts | size }}"><span>{{ tag_name }}</span><small>{{ tag_posts | size }}</small></a>{% endfor %}
     </div>
   </section>
 
   <section class="tag-index section-space" aria-labelledby="tag-index-title">
-    <div class="section-heading reveal"><div><p class="eyebrow">ALL TOPICS</p><h2 id="tag-index-title">전체 태그</h2></div><label class="tag-search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg><span class="sr-only">태그 검색</span><input type="search" placeholder="태그 검색" data-tag-search></label></div>
+    <div class="section-heading reveal"><div><p class="eyebrow">ALL TOPICS</p><h2 id="tag-index-title">All Tags</h2></div><label class="tag-search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg><span class="sr-only">Search tags</span><input type="search" placeholder="Search tags" data-tag-search></label></div>
     <div class="tag-groups" data-tag-groups>
       {% for tag in site.tags %}{% assign tag_name = tag | first %}{% assign tag_posts = tag | last %}
       <article class="tag-group glass-surface reveal" id="{{ tag_name | slugify }}" data-tag-group data-tag-name="{{ tag_name | downcase | escape }}">
-        <header><div><h3>{{ tag_name }}</h3><span>{{ tag_posts | size }}개 기록</span></div></header>
+        <header><div><h3>{{ tag_name }}</h3><span>{{ tag_posts | size }} records</span></div></header>
         <div class="tag-group__posts">{% for post in tag_posts %}<a href="{{ post.url | relative_url }}"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>{{ post.title }}</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>{% endfor %}</div>
       </article>
       {% endfor %}
     </div>
-    <p class="tag-search-empty glass-surface" data-tag-empty hidden>일치하는 태그가 없습니다.</p>
+    <p class="tag-search-empty glass-surface" data-tag-empty hidden>No matching tags.</p>
   </section>
 </div>

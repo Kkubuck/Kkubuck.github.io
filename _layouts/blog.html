@@ -2,26 +2,25 @@
 layout: page
 ---
 {% assign posts = site.posts | sort: 'date' | reverse %}
-<div class="page-frame archive-page">
+<div class="page-frame archive-page blog-archive">
   <header class="archive-heading reveal">
-    <div><p class="eyebrow">RESEARCH & DEVELOPMENT LOG</p><h1>{{ page.title }}</h1><p>{{ page.lead }}</p></div>
-    <dl class="archive-summary glass-surface"><div><dt>전체 기록</dt><dd>{{ posts.size }}</dd></div><div><dt>기록 기간</dt><dd>{{ posts.last.date | date: '%Y' }}–{{ posts.first.date | date: '%Y' }}</dd></div></dl>
+    <div><p class="eyebrow">FIELD LOG</p><h1>{{ page.title }}</h1><p>{{ page.lead }}</p></div>
+    <dl class="archive-summary glass-surface"><div><dt>Total Posts</dt><dd>{{ posts.size }}</dd></div><div><dt>Years Covered</dt><dd>{{ posts.last.date | date: '%Y' }}–{{ posts.first.date | date: '%Y' }}</dd></div></dl>
   </header>
-  <section class="archive-console glass-surface reveal" data-archive-console>
-    <div class="archive-console__search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg><label class="sr-only" for="blog-filter-search">기록 검색</label><input id="blog-filter-search" type="search" placeholder="제목, 요약, 태그 검색" data-filter-search autocomplete="off"><kbd>/</kbd></div>
-    <div class="archive-console__filters"><label><span>유형</span><select data-filter-select="type"><option value="all">전체</option></select></label><label><span>연도</span><select data-filter-select="year"><option value="all">전체</option></select></label><label><span>주제</span><select data-filter-select="tag"><option value="all">전체</option></select></label><button type="button" data-filter-reset>초기화</button></div>
-    <div class="archive-console__status"><span class="status-dot"></span><strong data-filter-count>{{ posts.size }}</strong><span>개의 기록</span></div>
+  <section class="archive-console glass-surface reveal" aria-label="Blog filters">
+    <div class="archive-console__search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg><label class="sr-only" for="blog-filter-search">Search posts</label><input id="blog-filter-search" type="search" placeholder="Search title, summary, or tags" data-filter-search autocomplete="off"><kbd>/</kbd></div>
+    <div class="archive-console__filters"><label><span>Type</span><select data-filter-select="type"><option value="all">All</option></select></label><label><span>Year</span><select data-filter-select="year"><option value="all">All</option></select></label><label><span>Topic</span><select data-filter-select="tag"><option value="all">All</option></select></label><button type="button" data-filter-reset>Reset</button></div>
+    <div class="archive-console__status"><span class="status-dot"></span><strong data-filter-count>{{ posts.size }}</strong><span>posts</span></div>
   </section>
-
-  <section class="chronicle-list" data-filter-list aria-label="전체 연구 노트">
+  <section class="chronicle-list" data-filter-list aria-label="All blog notes">
     {% for post in posts %}
-    {% assign entry_type = '노트' %}{% if post.categories contains 'papers' %}{% assign entry_type = '논문' %}{% elsif post.categories contains 'subprojects' or post.categories contains 'projects' %}{% assign entry_type = '프로젝트' %}{% elsif post.categories contains 'tistory' %}{% assign entry_type = '이전 기록' %}{% endif %}
-    <article class="chronicle-card glass-surface reveal" data-filter-item data-title="{{ post.title | escape }}" data-summary="{{ post.summary | default: post.excerpt | strip_html | escape }}" data-type="{{ entry_type }}" data-year="{{ post.date | date: '%Y' }}" data-tags="{{ post.tags | join: '|' | downcase | escape }}">
-      <time class="chronicle-card__date" datetime="{{ post.date | date_to_xmlschema }}"><strong>{{ post.date | date: '%m.%d' }}</strong><span>{{ post.date | date: '%Y' }}</span></time>
-      <div class="chronicle-card__body"><div class="chronicle-card__meta"><span class="entry-type">{{ entry_type }}</span>{% if post.venue %}<span>{{ post.venue }}</span>{% endif %}</div><h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2><p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 35, '…' }}</p><ul class="compact-tags">{% for tag in post.tags limit: 4 %}<li>{{ tag }}</li>{% endfor %}</ul></div>
-      <a class="chronicle-card__open" href="{{ post.url | relative_url }}" aria-label="{{ post.title }} 열기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+    {% assign entry_type = 'Note' %}{% if post.categories contains 'papers' %}{% assign entry_type = 'Paper' %}{% elsif post.categories contains 'subprojects' or post.categories contains 'projects' %}{% assign entry_type = 'Project' %}{% elsif post.categories contains 'tistory' %}{% assign entry_type = 'Archive' %}{% endif %}
+    <article class="chronicle-card glass-surface reveal" data-filter-card data-title="{{ post.title | downcase | escape }}" data-summary="{{ post.summary | default: post.excerpt | strip_html | downcase | escape }}" data-tags="{{ post.tags | join: ' ' | downcase | escape }}" data-year="{{ post.date | date: '%Y' }}" data-type="{{ entry_type | downcase }}">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+      <div><span class="entry-type">{{ entry_type }}</span><h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2><p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 30, '…' }}</p><ul class="compact-tags">{% for tag in post.tags limit: 4 %}<li>{{ tag }}</li>{% endfor %}</ul></div>
+      <a class="chronicle-card__open" href="{{ post.url | relative_url }}" aria-label="Open {{ post.title }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
     </article>
     {% endfor %}
-    <div class="filter-empty glass-surface" data-filter-empty hidden><h2>검색 결과가 없습니다.</h2><p>검색어나 필터를 변경해 보세요.</p><button type="button" data-filter-reset>필터 초기화</button></div>
+    <div class="filter-empty glass-surface" data-filter-empty hidden><h2>No results found.</h2><p>Try a different search term or filter.</p><button type="button" data-filter-reset>Reset filters</button></div>
   </section>
 </div>

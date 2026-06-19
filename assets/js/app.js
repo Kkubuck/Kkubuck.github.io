@@ -43,7 +43,7 @@
     if (themeMeta) themeMeta.setAttribute('content', next === 'light' ? '#eef4fc' : '#07101f');
     themeButtons.forEach(function (button) {
       button.setAttribute('aria-pressed', String(next === 'light'));
-      button.setAttribute('aria-label', next === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환');
+      button.setAttribute('aria-label', next === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
     });
     if (persist) {
       try { localStorage.setItem('kkubuck-theme', next); } catch (error) { /* no-op */ }
@@ -224,11 +224,11 @@
     result.dataset.resultIndex = String(index);
 
     var title = doc.createElement('strong');
-    title.textContent = entry.title || '제목 없음';
+    title.textContent = entry.title || 'Untitled';
     var date = doc.createElement('time');
     date.textContent = [entry.type, entry.date].filter(Boolean).join(' · ');
     var summary = doc.createElement('p');
-    summary.textContent = entry.summary || (entry.tags || []).join(' · ') || '내용 미리보기 없음';
+    summary.textContent = entry.summary || (entry.tags || []).join(' · ') || 'No preview available';
 
     result.appendChild(title);
     result.appendChild(date);
@@ -260,7 +260,7 @@
     matches.forEach(function (entry, index) { commandList.appendChild(createCommandResult(entry, index)); });
     commandQuick.hidden = true;
     commandResults.hidden = false;
-    if (commandCount) commandCount.textContent = matches.length + '개';
+    if (commandCount) commandCount.textContent = matches.length + (matches.length === 1 ? ' result' : ' results');
     if (commandEmpty) commandEmpty.hidden = matches.length > 0;
     if (matches.length) selectCommandResult(0);
   }
@@ -517,7 +517,7 @@
     });
     if (!headings.length) {
       var emptyOutline = doc.createElement('p');
-      emptyOutline.textContent = '이 글에는 별도 목차가 없습니다.';
+      emptyOutline.textContent = 'No outline is available for this post.';
       postToc.appendChild(emptyOutline);
     }
 
@@ -580,8 +580,8 @@
   qsa('[data-copy-url]').forEach(function (button) {
     button.addEventListener('click', function () {
       copyText(window.location.href)
-        .then(function () { toast('링크를 복사했습니다.'); })
-        .catch(function () { toast('링크 복사에 실패했습니다.'); });
+        .then(function () { toast('Link copied.'); })
+        .catch(function () { toast('Could not copy link.'); });
     });
   });
 
@@ -591,8 +591,8 @@
         navigator.share({ title: doc.title, url: window.location.href }).catch(function () { /* cancelled */ });
       } else {
         copyText(window.location.href)
-          .then(function () { toast('공유 링크를 복사했습니다.'); })
-          .catch(function () { toast('공유 링크 복사에 실패했습니다.'); });
+          .then(function () { toast('Share link copied.'); })
+          .catch(function () { toast('Could not copy share link.'); });
       }
     });
   });

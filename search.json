@@ -4,8 +4,8 @@ permalink: /search.json
 ---
 [
 {% for post in site.posts %}
-  {% assign search_type = '노트' %}
-  {% if post.categories contains 'papers' %}{% assign search_type = '논문' %}{% elsif post.categories contains 'subprojects' or post.categories contains 'projects' %}{% assign search_type = '프로젝트' %}{% elsif post.categories contains 'tistory' %}{% assign search_type = '이전 기록' %}{% endif %}
+  {% assign search_type = 'Note' %}
+  {% if post.categories contains 'papers' %}{% assign search_type = 'Paper' %}{% elsif post.categories contains 'subprojects' or post.categories contains 'projects' %}{% assign search_type = 'Project' %}{% elsif post.categories contains 'tistory' %}{% assign search_type = 'Archive' %}{% endif %}
   {
     "title": {{ post.title | jsonify }},
     "summary": {{ post.summary | default: post.excerpt | strip_html | strip_newlines | jsonify }},

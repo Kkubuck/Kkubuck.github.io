@@ -4,9 +4,9 @@ baseurl: ""
 lang: ko
 timezone: Asia/Seoul
 
-title: Kkubuck 연구 노트
-tagline: 논문 리뷰, 실험 기록, 컴퓨터 비전 연구 아카이브
-description: 컴퓨터 비전 논문 리뷰와 연구·개발 기록을 정리하는 개인 아카이브입니다.
+title: Kkubuck Blog
+tagline: Paper reviews, experiment notes, and computer vision research logs
+description: A personal archive for computer vision paper reviews and research/build notes.
 author: Kkubuck
 locale: ko_KR
 logo: /assets/img/og-card.png
@@ -26,12 +26,12 @@ blog: true
 
 theme_settings:
   title: Kkubuck
-  home_title: 홈
-  papers_title: 논문 리뷰
-  blog_title: 연구 노트
-  tags_title: 태그
-  projects_title: 프로젝트
-  recentpubs_title: 최근 글
+  home_title: Home
+  papers_title: Papers
+  blog_title: Blog
+  tags_title: Tags
+  projects_title: Projects
+  recentpubs_title: Recent
 
 markdown: kramdown
 highlighter: rouge

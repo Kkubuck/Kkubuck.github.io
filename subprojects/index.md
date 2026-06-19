@@ -1,11 +1,11 @@
 ---
 layout: category-archive
-title: 작은 도구
-lead: 프로젝트를 보조하는 작은 실험과 도구를 모아둡니다.
+title: Tools
+lead: Small experiments and utilities that support larger projects.
 archive_category: subprojects
-archive_label: 프로젝트
-list_title: 작은 도구
+archive_label: Projects
+list_title: Tools
 permalink: /subprojects/
 ---
 
-이 페이지는 프로젝트 메뉴 안의 보조 아카이브로 유지합니다.
+This page is kept as a supporting archive inside the Projects section.
