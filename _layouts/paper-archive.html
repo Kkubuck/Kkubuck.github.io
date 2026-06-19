@@ -2,83 +2,31 @@
 layout: page
 ---
 {% assign papers = site.categories.papers | sort: 'date' | reverse %}
-<div class="page-frame archive-page paper-archive-page">
-  <header class="archive-hero reveal">
-    <div class="archive-hero__copy">
-      <p class="display-kicker">Paper intelligence / {{ papers.size }} reviews</p>
-      <h1>{{ page.title }}<span class="title-dot">.</span></h1>
-      <p>{{ page.lead }}</p>
-    </div>
-    <div class="archive-hero__instrument glass-surface" aria-hidden="true">
-      <span class="instrument-ring instrument-ring--a"></span>
-      <span class="instrument-ring instrument-ring--b"></span>
-      <div><strong>{{ papers.size }}</strong><small>REVIEW<br>ENTRIES</small></div>
-      <p>INDEX STATUS <b>ONLINE</b></p>
-    </div>
+<div class="page-frame archive-page">
+  <header class="archive-heading reveal">
+    <div><p class="eyebrow">PAPER REVIEW ARCHIVE</p><h1>{{ page.title }}</h1><p>{{ page.lead }}</p></div>
+    <dl class="archive-summary glass-surface"><div><dt>전체 리뷰</dt><dd>{{ papers.size }}</dd></div><div><dt>주제 태그</dt><dd>{{ site.tags | size }}</dd></div></dl>
   </header>
 
   <section class="archive-console glass-surface reveal" data-archive-console>
-    <div class="archive-console__search">
-      <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <label class="sr-only" for="paper-filter-search">Search papers</label>
-      <input id="paper-filter-search" type="search" placeholder="Search title, summary, tag, venue" data-filter-search autocomplete="off">
-      <kbd>/</kbd>
-    </div>
+    <div class="archive-console__search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg><label class="sr-only" for="paper-filter-search">논문 검색</label><input id="paper-filter-search" type="search" placeholder="제목, 요약, 태그, 학회 검색" data-filter-search autocomplete="off"><kbd>/</kbd></div>
     <div class="archive-console__filters">
-      <label>
-        <span>Venue</span>
-        <select data-filter-select="venue"><option value="all">All venues</option></select>
-      </label>
-      <label>
-        <span>Year</span>
-        <select data-filter-select="year"><option value="all">All years</option></select>
-      </label>
-      <label>
-        <span>Topic</span>
-        <select data-filter-select="tag"><option value="all">All topics</option></select>
-      </label>
-      <button type="button" data-filter-reset>Reset</button>
+      <label><span>학회</span><select data-filter-select="venue"><option value="all">전체</option></select></label>
+      <label><span>연도</span><select data-filter-select="year"><option value="all">전체</option></select></label>
+      <label><span>주제</span><select data-filter-select="tag"><option value="all">전체</option></select></label>
+      <button type="button" data-filter-reset>초기화</button>
     </div>
-    <div class="archive-console__status">
-      <span class="signal-dot"></span>
-      <strong data-filter-count>{{ papers.size }}</strong>
-      <span>records in view</span>
-    </div>
+    <div class="archive-console__status"><span class="status-dot"></span><strong data-filter-count>{{ papers.size }}</strong><span>개의 리뷰</span></div>
   </section>
 
-  {% if content and content != '' %}<div class="archive-preface reveal">{{ content }}</div>{% endif %}
-
-  <section class="research-catalog" aria-label="Paper review list" data-filter-list>
+  <section class="catalog-list" aria-label="논문 리뷰 목록" data-filter-list>
     {% for post in papers %}
-    <article class="catalog-entry glass-surface reveal"
-      data-filter-item
-      data-title="{{ post.title | escape }}"
-      data-summary="{{ post.summary | default: post.excerpt | strip_html | escape }}"
-      data-venue="{{ post.venue | default: 'Review' | escape }}"
-      data-year="{{ post.date | date: '%Y' }}"
-      data-tags="{{ post.tags | join: '|' | downcase | escape }}">
-      <div class="catalog-entry__index"><span>R</span><strong>{{ forloop.rindex | prepend: '000' | slice: -3, 3 }}</strong></div>
-      <div class="catalog-entry__main">
-        <div class="metadata-line">
-          <span class="venue-badge">{{ post.venue | default: 'Paper review' }}</span>
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
-        </div>
-        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-        <p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 36, '…' }}</p>
-        <ul class="compact-tags">{% for tag in post.tags limit: 6 %}<li>{{ tag }}</li>{% endfor %}</ul>
-      </div>
-      <div class="catalog-entry__links">
-        <a class="catalog-entry__read" href="{{ post.url | relative_url }}">Review <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
-        {% if post.pdf_url %}<a href="{{ post.pdf_url }}" target="_blank" rel="noreferrer">PDF <span aria-hidden="true">↗</span></a>{% endif %}
-        {% if post.source_url %}<a href="{{ post.source_url }}" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>{% endif %}
-      </div>
+    <article class="catalog-card glass-surface reveal" data-filter-item data-title="{{ post.title | escape }}" data-summary="{{ post.summary | default: post.excerpt | strip_html | escape }}" data-venue="{{ post.venue | default: 'Review' | escape }}" data-year="{{ post.date | date: '%Y' }}" data-tags="{{ post.tags | join: '|' | downcase | escape }}">
+      <div class="catalog-card__meta"><span class="venue-badge">{{ post.venue | default: 'Paper Review' }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></div>
+      <div class="catalog-card__body"><h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2><p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 34, '…' }}</p><ul class="compact-tags">{% for tag in post.tags limit: 5 %}<li>{{ tag }}</li>{% endfor %}</ul></div>
+      <div class="catalog-card__actions"><a class="catalog-card__primary" href="{{ post.url | relative_url }}">리뷰 읽기 <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>{% if post.pdf_url %}<a href="{{ post.pdf_url }}" target="_blank" rel="noreferrer">PDF ↗</a>{% endif %}{% if post.source_url %}<a href="{{ post.source_url }}" target="_blank" rel="noreferrer">원문 ↗</a>{% endif %}</div>
     </article>
     {% endfor %}
-    <div class="filter-empty glass-surface" data-filter-empty hidden>
-      <span class="filter-empty__orbit" aria-hidden="true"></span>
-      <h2>No papers found.</h2>
-      <p>Adjust your search or filters.</p>
-      <button type="button" data-filter-reset>Reset filters</button>
-    </div>
+    <div class="filter-empty glass-surface" data-filter-empty hidden><h2>검색 결과가 없습니다.</h2><p>검색어나 필터를 변경해 보세요.</p><button type="button" data-filter-reset>필터 초기화</button></div>
   </section>
 </div>

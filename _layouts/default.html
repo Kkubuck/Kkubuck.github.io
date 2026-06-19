@@ -2,17 +2,14 @@
 <html lang="{{ site.lang | default: 'ko' }}" data-theme="dark">
 {% include head.html %}
 <body class="site-body{% if page.paper %} is-paper{% endif %}" data-page-kind="{{ page.layout | default: 'page' }}" data-search-index="{{ '/search.json' | relative_url }}">
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
   <div class="ambient-canvas" aria-hidden="true">
     <span class="ambient-canvas__orb ambient-canvas__orb--one"></span>
     <span class="ambient-canvas__orb ambient-canvas__orb--two"></span>
-    <span class="ambient-canvas__orb ambient-canvas__orb--three"></span>
     <span class="ambient-canvas__grid"></span>
     <span class="ambient-canvas__noise"></span>
   </div>
-  <div class="site-shell">
-    {{ content }}
-  </div>
+  <div class="site-shell">{{ content }}</div>
   <script src="{{ '/assets/js/app.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>

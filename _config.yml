@@ -1,14 +1,14 @@
 # Site identity
 url: "https://kkubuck.github.io"
 baseurl: ""
-lang: en
+lang: ko
 timezone: Asia/Seoul
 
-title: Kkubuck Research Notes
-tagline: Computer vision papers, experiments, and field notes
-description: Computer vision paper notes, experiments, and research logs.
+title: Kkubuck 연구 노트
+tagline: 논문 리뷰, 실험 기록, 컴퓨터 비전 연구 아카이브
+description: 컴퓨터 비전 논문 리뷰와 연구·개발 기록을 정리하는 개인 아카이브입니다.
 author: Kkubuck
-locale: en_US
+locale: ko_KR
 logo: /assets/img/og-card.png
 
 social:
@@ -20,21 +20,19 @@ twitter:
   username: Kkubuck
   card: summary_large_image
 
-# Feature flags retained for compatibility with the original repository.
 publications: false
 presentations: false
 blog: true
 
 theme_settings:
   title: Kkubuck
-  home_title: Home
-  papers_title: Papers
-  blog_title: Notes
-  tags_title: Tags
-  projects_title: Projects
-  recentpubs_title: Recent
+  home_title: 홈
+  papers_title: 논문 리뷰
+  blog_title: 연구 노트
+  tags_title: 태그
+  projects_title: 프로젝트
+  recentpubs_title: 최근 글
 
-# Build
 markdown: kramdown
 highlighter: rouge
 future: true
@@ -64,7 +62,6 @@ exclude:
 include:
   - site.webmanifest
 
-# Bibliography settings retained for optional publication pages.
 scholar:
   bibliography: publications.bib
   bibliography_template: pubstemplate

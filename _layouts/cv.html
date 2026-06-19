@@ -1,111 +1,31 @@
 ---
 layout: page
 ---
-{% assign cv = site.data.cv %}
-{% assign conference_count = cv.publications.conference | size %}
-{% assign journal_count = cv.publications.journal | size %}
-{% assign publication_count = conference_count | plus: journal_count %}
-{% assign award_count = cv.awards | size %}
-{% assign teaching_count = cv.teaching | size %}
+{% assign cv = site.data.cv %}{% assign conference_count = cv.publications.conference | size %}{% assign journal_count = cv.publications.journal | size %}{% assign publication_count = conference_count | plus: journal_count %}
 <div class="page-frame cv-page">
-  <header class="cv-hero glass-surface reveal">
-    <div class="cv-hero__identity">
-      <p class="display-kicker">Academic dossier / curriculum vitae</p>
-      <h1>{{ cv.profile.name }}</h1>
-      <p class="cv-hero__role">{{ cv.profile.role }}</p>
-      <p class="cv-hero__affiliation">{{ cv.profile.affiliation }}</p>
-      <p class="cv-hero__summary">{{ cv.profile.summary }}</p>
-      <div class="hero-actions">
-        <a class="button button--primary" href="{{ cv.profile.pdf | relative_url }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#download"></use></svg><span>Download CV</span></a>
-        <a class="button button--ghost" href="mailto:{{ cv.profile.email }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#mail"></use></svg><span>Email</span></a>
-      </div>
-    </div>
-    <div class="cv-hero__seal" aria-hidden="true">
-      <span class="cv-seal__ring cv-seal__ring--a"></span><span class="cv-seal__ring cv-seal__ring--b"></span><span class="cv-seal__cross"></span>
-      <div><strong>JL</strong><small>AIMLab<br>HBNU</small></div>
-    </div>
-    <dl class="cv-hero__metrics">
-      <div><dt>{{ publication_count }}</dt><dd>Publications</dd></div>
-      <div><dt>{{ award_count }}</dt><dd>Awards</dd></div>
-      <div><dt>{{ teaching_count }}</dt><dd>Teaching</dd></div>
-      <div><dt>{{ cv.research_projects | size }}</dt><dd>Research projects</dd></div>
-    </dl>
+  <header class="cv-header glass-surface reveal">
+    <div class="cv-header__main"><p class="eyebrow">CURRICULUM VITAE</p><h1>{{ cv.profile.name }}</h1><p class="cv-header__role">{{ cv.profile.role }}</p><p class="cv-header__affiliation">{{ cv.profile.affiliation }}</p><p class="cv-header__summary">{{ cv.profile.summary }}</p><div class="hero-actions"><a class="button button--primary" href="{{ cv.profile.pdf | relative_url }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#download"></use></svg>CV 다운로드</a><a class="button button--ghost" href="mailto:{{ cv.profile.email }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#mail"></use></svg>이메일</a></div></div>
+    <dl class="cv-header__stats"><div><dt>{{ publication_count }}</dt><dd>논문</dd></div><div><dt>{{ cv.awards | size }}</dt><dd>수상</dd></div><div><dt>{{ cv.research_projects | size }}</dt><dd>프로젝트</dd></div></dl>
   </header>
 
-  <div class="cv-grid">
-    <aside class="cv-aside">
-      <section class="cv-card glass-surface reveal">
-        <p class="micro-label">Coordinates</p>
-        <h2>Contact</h2>
-        <ul class="cv-contact">
-          <li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#location"></use></svg><span><small>Location</small><strong>{{ cv.profile.location }}</strong></span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#mail"></use></svg><span><small>Email</small><strong><a href="mailto:{{ cv.profile.email }}">{{ cv.profile.email }}</a></strong></span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#phone"></use></svg><span><small>Phone</small><strong><a href="tel:{{ cv.profile.phone | replace: ' ', '' }}">{{ cv.profile.phone }}</a></strong></span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#about"></use></svg><span><small>Advisor</small><strong>{{ cv.profile.advisor }}</strong></span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg><span><small>GitHub</small><strong><a href="{{ cv.profile.github }}" target="_blank" rel="noreferrer">Kkubuck ↗</a></strong></span></li>
-        </ul>
-        <p class="cv-updated">Last updated · {{ cv.profile.last_updated }}</p>
-      </section>
-
-      <section class="cv-card glass-surface reveal">
-        <p class="micro-label">Technical stack</p>
-        <h2>Skills</h2>
-        <div class="cv-skill-set"><h3>Programming</h3><ul>{% for skill in cv.skills.programming %}<li>{{ skill }}</li>{% endfor %}</ul></div>
-        <div class="cv-skill-set"><h3>Framework</h3><ul>{% for skill in cv.skills.frameworks %}<li>{{ skill }}</li>{% endfor %}</ul></div>
-        <div class="cv-skill-set"><h3>Languages</h3><ul>{% for skill in cv.skills.languages %}<li>{{ skill }}</li>{% endfor %}</ul></div>
-      </section>
-
-      <section class="cv-card glass-surface reveal">
-        <p class="micro-label">Education</p>
-        <h2>Degrees</h2>
-        <div class="cv-compact-timeline">
-          {% for item in cv.education %}
-          <article><span></span><time>{{ item.period }}</time><h3>{{ item.degree }}</h3><p>{{ item.institution }} · {{ item.location }}</p><small>Advisor: {{ item.advisor }}</small>{% if item.details %}<ul>{% for detail in item.details %}<li>{{ detail }}</li>{% endfor %}</ul>{% endif %}</article>
-          {% endfor %}
-        </div>
-      </section>
+  <div class="cv-layout">
+    <aside class="cv-sidebar">
+      <section class="cv-card glass-surface reveal"><p class="eyebrow">CONTACT</p><h2>연락처</h2><ul class="cv-contact"><li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#location"></use></svg><span>{{ cv.profile.location }}</span></li><li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#mail"></use></svg><a href="mailto:{{ cv.profile.email }}">{{ cv.profile.email }}</a></li><li><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg><a href="{{ cv.profile.github }}" target="_blank" rel="noreferrer">github.com/Kkubuck</a></li></ul><p class="cv-updated">최근 업데이트 · {{ cv.profile.last_updated }}</p></section>
+      <section class="cv-card glass-surface reveal"><p class="eyebrow">EDUCATION</p><h2>학력</h2><div class="cv-education">{% for item in cv.education %}<article><time>{{ item.period }}</time><h3>{{ item.degree }}</h3><p>{{ item.institution }}</p><small>지도교수 · {{ item.advisor }}</small>{% if item.details %}<ul>{% for detail in item.details %}<li>{{ detail }}</li>{% endfor %}</ul>{% endif %}</article>{% endfor %}</div></section>
+      <section class="cv-card glass-surface reveal"><p class="eyebrow">SKILLS</p><h2>기술</h2><div class="cv-skills"><div><strong>프로그래밍</strong><p>{% for item in cv.skills.programming %}<span>{{ item }}</span>{% endfor %}</p></div><div><strong>프레임워크</strong><p>{% for item in cv.skills.frameworks %}<span>{{ item }}</span>{% endfor %}</p></div><div><strong>언어</strong><p>{% for item in cv.skills.languages %}<span>{{ item }}</span>{% endfor %}</p></div></div></section>
     </aside>
 
     <div class="cv-main">
-      <section class="cv-section reveal" aria-labelledby="cv-publications-title">
-        <div class="cv-section__heading"><div><p class="micro-label">Selected record</p><h2 id="cv-publications-title">Publications</h2></div><span>{{ publication_count }} total</span></div>
-        <div class="cv-publication-group glass-surface">
-          <header><h3>Journal Articles</h3><span>{{ journal_count }}</span></header>
-          <ol>{% for item in cv.publications.journal reversed %}<li><span class="cv-entry-number">J{{ forloop.rindex | prepend: '0' | slice: -2, 2 }}</span><div><h4>{{ item.title }}</h4><p>{{ item.authors }}</p><footer><strong>{{ item.venue }}</strong><time>{{ item.date }}</time></footer></div></li>{% endfor %}</ol>
-        </div>
-        <div class="cv-publication-group glass-surface">
-          <header><h3>Conference Papers</h3><span>{{ conference_count }}</span></header>
-          <ol>{% for item in cv.publications.conference reversed %}<li><span class="cv-entry-number">C{{ forloop.rindex | prepend: '0' | slice: -2, 2 }}</span><div><h4>{{ item.title }}</h4><p>{{ item.authors }}</p><footer><strong>{{ item.venue }}</strong><time>{{ item.date }}</time></footer></div></li>{% endfor %}</ol>
-        </div>
+      <section class="cv-section reveal"><div class="cv-section__heading"><div><p class="eyebrow">PUBLICATIONS</p><h2>논문</h2></div><span>{{ publication_count }}건</span></div>
+        <div class="cv-record-group glass-surface"><header><h3>저널 논문</h3><span>{{ journal_count }}</span></header><ol>{% for item in cv.publications.journal reversed %}<li><span>J{{ forloop.rindex | prepend: '0' | slice: -2, 2 }}</span><div><h4>{{ item.title }}</h4><p>{{ item.authors }}</p><footer><strong>{{ item.venue }}</strong><time>{{ item.date }}</time></footer></div></li>{% endfor %}</ol></div>
+        <div class="cv-record-group glass-surface"><header><h3>학회 논문</h3><span>{{ conference_count }}</span></header><ol>{% for item in cv.publications.conference reversed %}<li><span>C{{ forloop.rindex | prepend: '0' | slice: -2, 2 }}</span><div><h4>{{ item.title }}</h4><p>{{ item.authors }}</p><footer><strong>{{ item.venue }}</strong><time>{{ item.date }}</time></footer></div></li>{% endfor %}</ol></div>
       </section>
 
-      <section class="cv-section reveal" aria-labelledby="cv-research-title">
-        <div class="cv-section__heading"><div><p class="micro-label">Research trajectory</p><h2 id="cv-research-title">Experience & Projects</h2></div></div>
-        <div class="cv-timeline glass-surface">
-          {% for item in cv.research_experience %}
-          <article><div class="cv-timeline__marker"><span></span></div><div class="cv-timeline__content"><div class="cv-timeline__meta"><time>{{ item.period }}</time><span>{{ item.location }}</span></div><h3>{{ item.role }}</h3><p class="cv-timeline__org">{{ item.organization }}</p><ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul></div></article>
-          {% endfor %}
-          {% for item in cv.research_projects reversed %}
-          <article><div class="cv-timeline__marker"><span></span></div><div class="cv-timeline__content"><div class="cv-timeline__meta"><time>{{ item.period }}</time><span>Research project</span></div><h3>{{ item.title }}</h3><p class="cv-timeline__org">{{ item.organization }}</p><ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul></div></article>
-          {% endfor %}
-        </div>
-      </section>
+      <section class="cv-section reveal"><div class="cv-section__heading"><div><p class="eyebrow">EXPERIENCE</p><h2>연구 경험 및 프로젝트</h2></div></div><div class="cv-timeline glass-surface">{% for item in cv.research_experience %}<article><time>{{ item.period }}</time><div><h3>{{ item.role }}</h3><p>{{ item.organization }} · {{ item.location }}</p><ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul></div></article>{% endfor %}{% for item in cv.research_projects reversed %}<article><time>{{ item.period }}</time><div><h3>{{ item.title }}</h3><p>{{ item.organization }}</p><ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul></div></article>{% endfor %}</div></section>
 
-      <section class="cv-section reveal" aria-labelledby="cv-awards-title">
-        <div class="cv-section__heading"><div><p class="micro-label">Recognition</p><h2 id="cv-awards-title">Awards</h2></div><span>{{ award_count }} records</span></div>
-        <div class="cv-award-grid">
-          {% for item in cv.awards reversed %}
-          <article class="cv-award glass-surface"><span class="cv-award__index">A{{ forloop.rindex | prepend: '0' | slice: -2, 2 }}</span><p>{{ item.category }}</p><h3>{{ item.title }}</h3>{% if item.detail %}<small>{{ item.detail }}</small>{% endif %}{% if item.date %}<time>{{ item.date }}</time>{% endif %}</article>
-          {% endfor %}
-        </div>
-      </section>
+      <section class="cv-section reveal"><div class="cv-section__heading"><div><p class="eyebrow">AWARDS</p><h2>수상</h2></div><span>{{ cv.awards | size }}건</span></div><div class="cv-awards">{% for item in cv.awards reversed %}<article class="glass-surface"><span>{{ item.category }}</span><h3>{{ item.title }}</h3>{% if item.detail %}<p>{{ item.detail }}</p>{% endif %}{% if item.date %}<time>{{ item.date }}</time>{% endif %}</article>{% endfor %}</div></section>
 
-      <section class="cv-section reveal" aria-labelledby="cv-teaching-title">
-        <div class="cv-section__heading"><div><p class="micro-label">Academic service</p><h2 id="cv-teaching-title">Teaching</h2></div></div>
-        <div class="cv-teaching glass-surface">
-          {% for item in cv.teaching reversed %}<article><time>{{ item.period }}</time><div><h3>{{ item.course }}</h3><p>{{ item.role }}</p><small>{{ item.institution }}</small></div></article>{% endfor %}
-        </div>
-      </section>
+      <section class="cv-section reveal"><div class="cv-section__heading"><div><p class="eyebrow">TEACHING</p><h2>교육 활동</h2></div></div><div class="cv-teaching glass-surface">{% for item in cv.teaching reversed %}<article><time>{{ item.period }}</time><div><h3>{{ item.course }}</h3><p>{{ item.role }} · {{ item.institution }}</p></div></article>{% endfor %}</div></section>
     </div>
   </div>
 </div>

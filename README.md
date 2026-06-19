@@ -4,7 +4,7 @@
 
 ## 핵심 경험
 
-- **Research Orbit**: 일반 드롭다운 대신 원형 궤도 기반 전체 메뉴
+- **Research Orbit**: 홈 화면에서 연구 주제를 탐색하는 절제된 원형 인터랙션
 - **Command Search**: `⌘/Ctrl + K`로 제목·태그·학회·요약 통합 검색
 - **Paper Index**: 연도·학회·주제·키워드 동시 필터
 - **Research Reader**: 자동 목차, 읽기 진행률, 헤딩 링크, 원문/PDF 패널

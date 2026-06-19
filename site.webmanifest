@@ -1,13 +1,13 @@
 {
-  "name": "Kkubuck Research Notes",
+  "name": "Kkubuck 연구 노트",
   "short_name": "Kkubuck",
-  "description": "컴퓨터 비전 논문 리뷰, 연구 기록, 구현 노트를 연결하는 개인 아카이브",
+  "description": "컴퓨터 비전 논문 리뷰와 연구·개발 기록을 정리하는 개인 아카이브",
   "lang": "ko-KR",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#060b16",
-  "theme_color": "#060b16",
+  "background_color": "#07101f",
+  "theme_color": "#07101f",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

@@ -1,6 +1,6 @@
 ---
 layout: cv
-title: CV
+title: 이력
 permalink: /cv/
-description: Jisang Lee CV
+description: Jisang Lee 연구 및 학술 이력
 ---

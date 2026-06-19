@@ -1,35 +1,39 @@
 ---
 layout: page
-title: About
-description: Scope and editorial rules for the Kkubuck archive
+title: 소개
+description: Kkubuck 연구 아카이브 소개
 permalink: /about/
 ---
 <div class="page-frame about-page">
-  <header class="about-hero reveal">
-    <div>
-      <p class="display-kicker">About this research archive</p>
-      <h1>Read.<br><span>Build. Index.</span></h1>
-      <p>Kkubuck is a compact archive for computer vision papers, experiments, and implementation notes.</p>
-    </div>
-    <div class="about-hero__mark glass-surface" aria-hidden="true"><span></span><span></span><i></i><strong>K</strong></div>
+  <header class="simple-hero reveal">
+    <p class="eyebrow">ABOUT THE ARCHIVE</p>
+    <h1>읽은 것을 남기고,<br>다음 연구에 연결합니다.</h1>
+    <p>컴퓨터 비전 논문 리뷰, 실험 과정, 구현 메모를 한곳에 정리하는 개인 연구 아카이브입니다.</p>
   </header>
 
-  <section class="about-principles section-space">
-    <div class="section-intro reveal"><div><p class="micro-label">Editorial protocol</p><h2>Principles</h2></div><p class="section-intro__note">Each note keeps the context needed to reuse a research decision.</p></div>
-    <div class="principle-grid">
-      <article class="principle-card glass-surface reveal"><span>01</span><h3>Start with the problem</h3><p>Each review begins with the bottleneck, not just the model diagram.</p></article>
-      <article class="principle-card glass-surface reveal"><span>02</span><h3>Trace the design</h3><p>Modules are recorded with the signals they add and the tradeoffs they create.</p></article>
-      <article class="principle-card glass-surface reveal"><span>03</span><h3>Index the limits</h3><p>Results, failure cases, costs, and next experiments stay visible together.</p></article>
-    </div>
-  </section>
-
-  <section class="about-fields section-space glass-surface reveal">
-    <div><p class="micro-label">Current coordinates</p><h2>Focus</h2><p>The archive tracks camouflaged object detection, foundation models, open-vocabulary segmentation, unsupervised learning, RGB-D, and video understanding.</p></div>
-    <ul><li><span>Camouflaged Object Detection</span><small>Primary field</small></li><li><span>Open-vocabulary Segmentation</span><small>Vision-language</small></li><li><span>Segment Anything Model</span><small>Foundation model</small></li><li><span>Remote Sensing & Forensics</span><small>Applied vision</small></li></ul>
-  </section>
-
-  <section class="about-route section-space reveal">
-    <div><p class="micro-label">Start exploring</p><h2>Entry Points</h2></div>
-    <div class="about-route__links"><a class="glass-surface" href="{{ '/papers/' | relative_url }}"><span>01</span><strong>Papers</strong><small>Claims and limits</small><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a><a class="glass-surface" href="{{ '/projects/' | relative_url }}"><span>02</span><strong>Projects</strong><small>Builds and tools</small><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a><a class="glass-surface" href="{{ '/cv/' | relative_url }}"><span>03</span><strong>CV</strong><small>Research path</small><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a></div>
+  <section class="about-grid section-space">
+    <article class="about-intro glass-surface reveal">
+      <p class="eyebrow">기록 원칙</p>
+      <h2>요약보다 맥락을 남깁니다.</h2>
+      <p>모델 구조만 나열하지 않고, 어떤 문제를 풀기 위해 설계되었는지와 실험 결과가 무엇을 의미하는지 함께 기록합니다.</p>
+      <ul class="about-checklist">
+        <li><span>01</span><div><strong>문제 정의</strong><p>논문이 해결하려는 병목과 기존 접근의 한계를 먼저 확인합니다.</p></div></li>
+        <li><span>02</span><div><strong>설계 해부</strong><p>각 모듈이 추가하는 신호와 비용, 대안을 구조적으로 정리합니다.</p></div></li>
+        <li><span>03</span><div><strong>근거와 한계</strong><p>정량 결과뿐 아니라 실패 조건과 다음 실험까지 연결합니다.</p></div></li>
+      </ul>
+    </article>
+    <aside class="about-focus glass-surface reveal">
+      <p class="eyebrow">RESEARCH FOCUS</p>
+      <h2>주요 관심 분야</h2>
+      <div class="focus-list">
+        <span>Camouflaged Object Detection</span>
+        <span>Open-vocabulary Segmentation</span>
+        <span>Foundation Models</span>
+        <span>Remote Sensing</span>
+        <span>Medical Imaging</span>
+        <span>Image Forensics</span>
+      </div>
+      <a class="text-link" href="{{ '/papers/' | relative_url }}">논문 리뷰 살펴보기 <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+    </aside>
   </section>
 </div>

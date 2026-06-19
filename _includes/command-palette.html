@@ -1,48 +1,32 @@
 <div class="command-palette" data-command-palette aria-hidden="true">
-  <button class="command-palette__backdrop" type="button" data-command-close tabindex="-1" aria-label="Close search"></button>
+  <button class="command-palette__backdrop" type="button" data-command-close tabindex="-1" aria-label="검색 닫기"></button>
   <section class="command-panel glass-surface" role="dialog" aria-modal="true" aria-labelledby="command-title">
-    <div class="command-panel__header">
-      <div>
-        <p class="micro-label">Research command</p>
-        <h2 id="command-title">Search</h2>
-      </div>
-      <button type="button" class="command-close" data-command-close aria-label="Close search">
-        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg>
-      </button>
-    </div>
-
+    <header class="command-panel__header">
+      <div><p class="eyebrow">아카이브 검색</p><h2 id="command-title">무엇을 찾고 있나요?</h2></div>
+      <button type="button" class="icon-button" data-command-close aria-label="검색 닫기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg></button>
+    </header>
     <label class="command-search" for="command-search-input">
       <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <span class="sr-only">Search by title, tag, or venue</span>
-      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Title, tag, or venue" data-command-input>
+      <span class="sr-only">제목, 태그 또는 학회 검색</span>
+      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="제목, 태그, 학회로 검색" data-command-input>
       <kbd>ESC</kbd>
     </label>
-
     <div class="command-panel__body">
       <div class="command-panel__quick" data-command-quick>
-        <p class="command-section-label">Quick routes</p>
+        <p class="command-section-label">바로가기</p>
         <div class="quick-route-grid">
-          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>Papers</strong><small>Reviews</small></span></a>
-          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>Notes</strong><small>Research log</small></span></a>
-          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>Projects</strong><small>Case studies</small></span></a>
-          <a href="{{ '/cv/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#cv"></use></svg><span><strong>CV</strong><small>Academic dossier</small></span></a>
+          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>논문 리뷰</strong><small>연구 논문 아카이브</small></span></a>
+          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>연구 노트</strong><small>개발·실험 기록</small></span></a>
+          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>프로젝트</strong><small>구현 사례</small></span></a>
+          <a href="{{ '/tags/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg><span><strong>태그</strong><small>주제별 탐색</small></span></a>
         </div>
       </div>
-
       <div class="command-results" data-command-results hidden>
-        <div class="command-results__head">
-          <p class="command-section-label">Search results</p>
-          <span data-command-count>0 results</span>
-        </div>
+        <div class="command-results__head"><p class="command-section-label">검색 결과</p><span data-command-count>0개</span></div>
         <div class="command-results__list" role="listbox" data-command-list></div>
-        <p class="command-empty" data-command-empty hidden>No matching records. Try another keyword.</p>
+        <p class="command-empty" data-command-empty hidden>일치하는 기록이 없습니다.</p>
       </div>
     </div>
-
-    <footer class="command-panel__footer">
-      <span><kbd>↑</kbd><kbd>↓</kbd> Move</span>
-      <span><kbd>Enter</kbd> Open</span>
-      <span>Full post index</span>
-    </footer>
+    <footer class="command-panel__footer"><span><kbd>↑</kbd><kbd>↓</kbd> 이동</span><span><kbd>Enter</kbd> 열기</span><span><kbd>ESC</kbd> 닫기</span></footer>
   </section>
 </div>
