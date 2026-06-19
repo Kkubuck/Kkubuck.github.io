@@ -1,0 +1,33 @@
+<footer class="site-footer">
+  <div class="site-footer__frame glass-surface">
+    <div class="site-footer__intro">
+      <span class="site-footer__index">KR / {{ 'now' | date: '%Y' }}</span>
+      <h2>Ideas become useful<br>when they are indexed.</h2>
+      <p>논문, 실험, 구현 과정에서 얻은 판단 근거를 다시 찾을 수 있는 형태로 기록합니다.</p>
+    </div>
+
+    <div class="site-footer__map">
+      <div>
+        <p class="micro-label">Index</p>
+        <a href="{{ '/papers/' | relative_url }}">논문 리뷰</a>
+        <a href="{{ '/blog/' | relative_url }}">전체 기록</a>
+        <a href="{{ '/projects/' | relative_url }}">프로젝트</a>
+        <a href="{{ '/tags/' | relative_url }}">태그 지도</a>
+      </div>
+      <div>
+        <p class="micro-label">Profile</p>
+        <a href="{{ '/cv/' | relative_url }}">Curriculum Vitae</a>
+        <a href="{{ '/about/' | relative_url }}">About this archive</a>
+        <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <div class="site-footer__meta">
+      <p>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }}. Built as a Jekyll research archive.</p>
+      <button type="button" data-scroll-top>
+        <span>Back to top</span>
+        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg>
+      </button>
+    </div>
+  </div>
+</footer>

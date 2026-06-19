@@ -1,0 +1,88 @@
+{% assign current_url = page.url | default: '/' %}
+<header class="site-header" data-site-header>
+  <div class="site-header__bar glass-surface">
+    <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="Kkubuck Research Notes 홈">
+      <span class="site-brand__mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <span class="site-brand__copy">
+        <strong>Kkubuck</strong>
+        <small>Research Notes</small>
+      </span>
+    </a>
+
+    <div class="site-header__status" aria-hidden="true">
+      <span class="signal-dot"></span>
+      <span>Computer Vision · Field Log</span>
+    </div>
+
+    <div class="site-header__actions">
+      <button class="header-tool header-tool--search" type="button" data-command-open aria-label="검색 열기">
+        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
+        <span class="header-tool__label">Search</span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="header-tool header-tool--icon" type="button" data-theme-toggle aria-label="색상 테마 전환" aria-pressed="false">
+        <svg class="icon theme-icon theme-icon--moon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#moon"></use></svg>
+        <svg class="icon theme-icon theme-icon--sun" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#sun"></use></svg>
+      </button>
+      <button class="orbit-trigger" type="button" data-orbit-open aria-haspopup="dialog" aria-controls="research-orbit" aria-expanded="false">
+        <span class="orbit-trigger__rings" aria-hidden="true"></span>
+        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#orbit"></use></svg>
+        <span class="sr-only">Research Orbit 메뉴 열기</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="orbit-overlay" id="research-orbit" data-orbit-overlay aria-hidden="true">
+    <button class="orbit-overlay__backdrop" type="button" data-orbit-close tabindex="-1" aria-label="메뉴 닫기"></button>
+    <div class="orbit-stage" role="dialog" aria-modal="true" aria-labelledby="orbit-title">
+      <span class="orbit-stage__halo orbit-stage__halo--outer" aria-hidden="true"></span>
+      <span class="orbit-stage__halo orbit-stage__halo--middle" aria-hidden="true"></span>
+      <span class="orbit-stage__halo orbit-stage__halo--inner" aria-hidden="true"></span>
+      <span class="orbit-stage__axis" aria-hidden="true"></span>
+
+      <div class="orbit-stage__core glass-surface">
+        <p class="micro-label">Navigation system</p>
+        <h2 id="orbit-title">Research<br>Orbit</h2>
+        <p>지식 아카이브를 탐색하세요.</p>
+        <button class="orbit-stage__close" type="button" data-orbit-close aria-label="메뉴 닫기">
+          <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg>
+        </button>
+      </div>
+
+      <nav class="orbit-navigation" aria-label="전체 메뉴">
+        <a class="orbit-node{% if current_url == '/' %} is-current{% endif %}" style="--angle: -90deg; --delay: 0" href="{{ '/' | relative_url }}"{% if current_url == '/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#home"></use></svg></span>
+          <span><small>00</small><strong>Home</strong><em>관측소</em></span>
+        </a>
+        <a class="orbit-node{% if current_url contains '/papers/' %} is-current{% endif %}" style="--angle: -30deg; --delay: 1" href="{{ '/papers/' | relative_url }}"{% if current_url contains '/papers/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg></span>
+          <span><small>01</small><strong>Papers</strong><em>논문 리뷰</em></span>
+        </a>
+        <a class="orbit-node{% if current_url contains '/blog/' %} is-current{% endif %}" style="--angle: 30deg; --delay: 2" href="{{ '/blog/' | relative_url }}"{% if current_url contains '/blog/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg></span>
+          <span><small>02</small><strong>Notes</strong><em>전체 기록</em></span>
+        </a>
+        <a class="orbit-node{% if current_url contains '/projects/' or current_url contains '/subprojects/' %} is-current{% endif %}" style="--angle: 90deg; --delay: 3" href="{{ '/projects/' | relative_url }}"{% if current_url contains '/projects/' or current_url contains '/subprojects/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg></span>
+          <span><small>03</small><strong>Projects</strong><em>실험과 도구</em></span>
+        </a>
+        <a class="orbit-node{% if current_url contains '/cv/' %} is-current{% endif %}" style="--angle: 150deg; --delay: 4" href="{{ '/cv/' | relative_url }}"{% if current_url contains '/cv/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#cv"></use></svg></span>
+          <span><small>04</small><strong>CV</strong><em>Academic dossier</em></span>
+        </a>
+        <a class="orbit-node{% if current_url contains '/about/' %} is-current{% endif %}" style="--angle: 210deg; --delay: 5" href="{{ '/about/' | relative_url }}"{% if current_url contains '/about/' %} aria-current="page"{% endif %}>
+          <span class="orbit-node__icon"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#about"></use></svg></span>
+          <span><small>05</small><strong>About</strong><em>연구 방향</em></span>
+        </a>
+      </nav>
+
+      <a class="orbit-github" href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">
+        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg>
+        <span>GitHub repository</span>
+        <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg>
+      </a>
+    </div>
+  </div>
+</header>

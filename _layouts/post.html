@@ -1,0 +1,85 @@
+---
+layout: page
+---
+{% assign primary_category = page.categories | first %}
+{% assign word_count = content | number_of_words %}
+{% assign reading_time = word_count | divided_by: 250 | plus: 1 %}
+{% assign post_kind = 'Field note' %}
+{% if page.categories contains 'papers' %}{% assign post_kind = 'Paper review' %}{% elsif page.categories contains 'subprojects' or page.categories contains 'projects' %}{% assign post_kind = 'Project record' %}{% elsif page.categories contains 'tistory' %}{% assign post_kind = 'Archive note' %}{% endif %}
+{% assign is_paper = false %}{% if page.paper or page.categories contains 'papers' %}{% assign is_paper = true %}{% endif %}
+<div class="post-progress" aria-hidden="true"><span data-reading-progress-line></span></div>
+<article class="post-page" data-post-page>
+  <header class="post-hero">
+    <div class="post-hero__index reveal" aria-hidden="true">
+      <span>{{ post_kind }}</span>
+      <strong>{{ page.date | date: '%y' }}<i>/</i>{{ page.date | date: '%m%d' }}</strong>
+    </div>
+    <div class="post-hero__main reveal">
+      <div class="metadata-line">
+        <span class="entry-type{% if is_paper %} entry-type--paper{% endif %}">{{ post_kind }}</span>
+        {% if page.venue %}<span class="venue-badge">{{ page.venue }}</span>{% endif %}
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.subtitle %}<p class="post-hero__subtitle">{{ page.subtitle }}</p>{% elsif page.summary %}<p class="post-hero__subtitle">{{ page.summary }}</p>{% endif %}
+      <div class="post-hero__details">
+        <span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#clock"></use></svg>{{ reading_time }} min read</span>
+        <span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg>{{ word_count }} words</span>
+        {% if page.tags %}<span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg>{{ page.tags | size }} topics</span>{% endif %}
+      </div>
+    </div>
+    <div class="post-hero__orbit reveal" aria-hidden="true">
+      <span class="post-orbit post-orbit--a"></span><span class="post-orbit post-orbit--b"></span><span class="post-orbit post-orbit--c"></span><i></i>
+      <div><small>READING<br>OBJECT</small><strong>{% if is_paper %}P{% else %}N{% endif %}</strong></div>
+    </div>
+  </header>
+
+  {% if is_paper or page.source_url or page.pdf_url %}
+  <section class="post-source-panel glass-surface reveal" aria-label="문서 메타데이터">
+    <div><p class="micro-label">Document access</p><strong>{% if page.venue %}{{ page.venue }}{% else %}Reference material{% endif %}</strong></div>
+    <div class="post-source-panel__links">
+      {% if page.source_url %}<a href="{{ page.source_url }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg><span>Original source</span></a>{% endif %}
+      {% if page.pdf_url %}<a href="{{ page.pdf_url }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#file"></use></svg><span>Open PDF</span></a>{% endif %}
+      <button type="button" data-copy-url><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#copy"></use></svg><span>Copy link</span></button>
+      <button type="button" data-share-page><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#share"></use></svg><span>Share</span></button>
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="post-layout">
+    <aside class="post-rail reveal" aria-label="문서 탐색">
+      <div class="post-rail__sticky glass-surface">
+        <div class="post-rail__head"><p class="micro-label">On this page</p><span data-toc-progress>00%</span></div>
+        <nav class="post-toc" data-post-toc><p>목차를 구성하는 중입니다.</p></nav>
+        {% if page.tags %}
+        <div class="post-rail__tags"><p class="micro-label">Coordinates</p>{% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}</div>
+        {% endif %}
+      </div>
+    </aside>
+
+    <div class="post-document glass-surface reveal">
+      {% if page.source_blog %}<p class="imported-note"><span>Archive transfer</span> 이 글은 {{ page.source_blog }}에서 이전한 기록입니다.{% if page.source_url %} <a href="{{ page.source_url }}" target="_blank" rel="noreferrer">원문 보기 ↗</a>{% endif %}</p>{% endif %}
+      {% if page.image %}<figure class="post-cover"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="eager"></figure>{% endif %}
+      <div class="post-content" data-post-content>
+        {{ content }}
+      </div>
+    </div>
+
+    <aside class="post-actions-rail" aria-label="문서 작업">
+      <div class="post-actions-rail__sticky">
+        <button type="button" data-copy-url aria-label="링크 복사"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#copy"></use></svg><span>Copy</span></button>
+        <button type="button" data-share-page aria-label="공유"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#share"></use></svg><span>Share</span></button>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="post-neighbors" aria-label="이전 및 다음 글">
+    {% if page.previous %}<a class="post-neighbor post-neighbor--previous glass-surface reveal" href="{{ page.previous.url | relative_url }}"><span>Previous record</span><strong>{{ page.previous.title }}</strong><time>{{ page.previous.date | date: '%Y.%m.%d' }}</time></a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a class="post-neighbor post-neighbor--next glass-surface reveal" href="{{ page.next.url | relative_url }}"><span>Next record</span><strong>{{ page.next.title }}</strong><time>{{ page.next.date | date: '%Y.%m.%d' }}</time></a>{% endif %}
+  </nav>
+</article>
+
+<button class="reading-dock glass-surface" type="button" data-scroll-top aria-label="맨 위로 이동">
+  <svg class="reading-dock__progress" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18"></circle><circle cx="22" cy="22" r="18" data-reading-progress-ring></circle></svg>
+  <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg>
+</button>

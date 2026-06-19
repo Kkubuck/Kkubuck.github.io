@@ -1,0 +1,14 @@
+*.gem
+.bundle
+.sass-cache
+_site
+.jekyll-cache/
+downloads/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+vendor/
+*.egg-info/
+.DS_Store

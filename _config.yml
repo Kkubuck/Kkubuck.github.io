@@ -1,0 +1,78 @@
+# Site identity
+url: "https://kkubuck.github.io"
+baseurl: ""
+lang: ko
+timezone: Asia/Seoul
+
+title: Kkubuck Research Notes
+tagline: Computer vision papers, experiments, and field notes
+description: 컴퓨터 비전 논문 리뷰와 개인 연구, 구현 기록을 한국어로 정리하는 리서치 블로그입니다.
+author: Kkubuck
+locale: ko_KR
+logo: /assets/img/og-card.png
+
+social:
+  name: Kkubuck
+  links:
+    - https://github.com/Kkubuck
+
+twitter:
+  username: Kkubuck
+  card: summary_large_image
+
+# Feature flags retained for compatibility with the original repository.
+publications: false
+presentations: false
+blog: true
+
+theme_settings:
+  title: Kkubuck
+  home_title: 홈
+  papers_title: 논문
+  blog_title: 글
+  tags_title: 태그
+  projects_title: 프로젝트
+  recentpubs_title: 최근 논문
+
+# Build
+markdown: kramdown
+highlighter: rouge
+future: true
+strict_front_matter: true
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+plugins:
+  - jekyll/scholar
+  - jekyll-seo-tag
+
+exclude:
+  - .venv
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - downloads
+  - UNKNOWN.egg-info
+  - README.md
+  - DESIGN_PROMPT.md
+  - node_modules
+  - vendor
+  - site
+
+include:
+  - site.webmanifest
+
+# Bibliography settings retained for optional publication pages.
+scholar:
+  bibliography: publications.bib
+  bibliography_template: pubstemplate
+  style: apa
+  locale: en
+  last_name: Lee
+  first_name: [Jisang, J.]
+  sort_by: year,month
+  order: descending,ascending
+
+filtered_bibtex_keywords: [abbr, abstract, arxiv, bibtex_show, html, pdf, selected, supp, blog, code, poster, slides, website]

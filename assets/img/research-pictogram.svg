@@ -1,0 +1,19 @@
+<svg width="260" height="190" viewBox="0 0 260 190" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Research note sketch</title>
+  <desc id="desc">A minimal black and white pictogram showing a document, search lens, and small annotation marks.</desc>
+  <rect x="34" y="34" width="116" height="126" rx="2" fill="#FFFFFF" stroke="#111111" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M150 34L184 68V160H150" stroke="#111111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M150 34V68H184" stroke="#111111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M58 74H118" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M58 96H130" stroke="#6B6B6B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M58 118H108" stroke="#6B6B6B" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="169" cy="125" r="29" fill="#FFFFFF" stroke="#111111" stroke-width="7"/>
+  <path d="M190 146L216 172" stroke="#111111" stroke-width="7" stroke-linecap="round"/>
+  <path d="M31 84L20 95L31 106" stroke="#111111" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M220 84L231 95L220 106" stroke="#111111" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M68 172C94 181 121 181 148 172" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M42 22H52" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M46 18V28" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M210 28L222 40" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M222 28L210 40" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+</svg>

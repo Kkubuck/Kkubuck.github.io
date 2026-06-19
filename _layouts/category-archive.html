@@ -1,0 +1,59 @@
+---
+layout: page
+---
+{% assign archive_posts = '' | split: '' %}
+{% if page.archive_categories %}
+  {% for category in page.archive_categories %}
+    {% assign category_posts = site.categories[category] %}
+    {% if category_posts %}{% assign archive_posts = archive_posts | concat: category_posts %}{% endif %}
+  {% endfor %}
+{% else %}
+  {% assign category_posts = site.categories[page.archive_category] %}
+  {% if category_posts %}{% assign archive_posts = archive_posts | concat: category_posts %}{% endif %}
+{% endif %}
+{% assign archive_posts = archive_posts | uniq | sort: 'date' | reverse %}
+<div class="page-frame archive-page project-archive-page">
+  <header class="archive-hero archive-hero--projects reveal">
+    <div class="archive-hero__copy">
+      <p class="display-kicker">Applied research / build records</p>
+      <h1>{{ page.title }}<span class="title-dot">.</span></h1>
+      <p>{{ page.lead }}</p>
+    </div>
+    <div class="project-blueprint glass-surface" aria-hidden="true">
+      <span class="project-blueprint__grid"></span>
+      <span class="project-blueprint__circle"></span>
+      <span class="project-blueprint__line project-blueprint__line--a"></span>
+      <span class="project-blueprint__line project-blueprint__line--b"></span>
+      <strong>{{ archive_posts.size | prepend: '0' | slice: -2, 2 }}</strong>
+      <small>ACTIVE<br>RECORDS</small>
+    </div>
+  </header>
+
+  {% if content and content != '' %}<div class="archive-preface reveal">{{ content }}</div>{% endif %}
+
+  <section class="project-lab" aria-labelledby="project-list-title">
+    <div class="section-intro reveal">
+      <div><p class="micro-label">Lab notebook</p><h2 id="project-list-title">{{ page.list_title | default: page.title }}</h2></div>
+      <p class="section-intro__note">문제 정의부터 구현 선택, 자동화와 운영 메모까지 프로젝트 단위로 묶었습니다.</p>
+    </div>
+    {% if archive_posts.size > 0 %}
+    <div class="project-case-grid">
+      {% for post in archive_posts %}
+      <article class="project-case glass-surface reveal" data-tilt data-tilt-strength="1.5">
+        <div class="project-case__header">
+          <span class="project-case__index">CASE / {{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+        </div>
+        <div class="project-case__symbol" aria-hidden="true"><span></span><i></i></div>
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 40, '…' }}</p>
+        <ul class="compact-tags">{% for tag in post.tags limit: 5 %}<li>{{ tag }}</li>{% endfor %}</ul>
+        <footer><span>{% if post.categories contains 'subprojects' %}Tooling note{% else %}Project record{% endif %}</span><a href="{{ post.url | relative_url }}" aria-label="{{ post.title }} 읽기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a></footer>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-lab glass-surface reveal"><span aria-hidden="true">∅</span><h2>아직 공개된 프로젝트가 없습니다.</h2><p>새 프로젝트 기록이 추가되면 이곳에 나타납니다.</p></div>
+    {% endif %}
+  </section>
+</div>

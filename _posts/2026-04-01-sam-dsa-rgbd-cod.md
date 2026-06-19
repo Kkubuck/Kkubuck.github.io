@@ -1,0 +1,72 @@
+---
+layout: "post"
+title: "Improving SAM for Camouflaged Object Detection via Dual Stream Adapters"
+subtitle: "SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다."
+summary: "SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다."
+description: "SAM-DSA는 RGB와 depth를 병렬 어댑터로 받아 SAM 내부 표현을 교정하고, RGB-D COD에서 기존 SAM 기반 방법을 앞선다."
+date: "2026-04-01 09:00:00 +0900"
+slug: "sam-dsa-rgbd-cod"
+lang: "ko"
+paper: true
+categories:
+  - "papers"
+tags:
+  - "paper"
+  - "cod"
+  - "sam"
+  - "rgbd"
+  - "iccv2025"
+venue: "ICCV 2025"
+source_url: "https://openaccess.thecvf.com/content/ICCV2025/html/Liu_Improving_SAM_for_Camouflaged_Object_Detection_via_Dual_Stream_Adapters_ICCV_2025_paper.html"
+pdf_url: "https://openaccess.thecvf.com/content/ICCV2025/papers/Liu_Improving_SAM_for_Camouflaged_Object_Detection_via_Dual_Stream_Adapters_ICCV_2025_paper.pdf"
+---
+## 오버뷰
+
+이 논문은 범용 분할 모델인 SAM을 위장 객체 탐지, 그것도 RGB-D 입력으로 제대로 쓰려면 내부 표현을 더 섬세하게 조정해야 한다고 본다. SAM-DSA는 SAM 본체를 유지하면서 dual-stream adapter와 양방향 distillation으로 그 문제를 해결한다.
+
+## 핵심 주장
+
+- RGB-D COD에서는 RGB와 depth를 단순 병합하는 것보다, 각 스트림을 병렬 어댑터로 정교하게 조정하는 편이 낫다.
+- dual stream adapter와 bidirectional knowledge distillation이 서로 다른 modality 간 채널 불일치를 줄인다.
+- COMPrompter 기반 설정과 비교해 네 데이터셋 모두에서 Sm을 올리고 M을 낮췄다.
+
+## 초록
+
+논문은 자연 이미지에서 강한 SAM이 COD에서는 만족스러운 성능을 내지 못한다고 지적한다. 이를 보완하기 위해 image encoder에 dual stream adapters를 붙이고, RGB와 depth attention을 함께 고려하는 mask decoder 업데이트 전략을 제안한다. 또 model distiller와 modal distiller를 포함하는 양방향 knowledge distillation으로 두 스트림의 불일치를 줄인다.
+
+초록을 조금 더 풀어보면, SAM(Segment Everything Model)은 자연 이미지에서 인상적인 범용 분할 성능을 보여주었지만, COD(위장 객체 감지)에서는 성능이 만족스럽지 않습니다. 본 논문에서는 듀얼 스트림 어댑터를 통해 RGB-D 입력에 대해 COD를 수행하는 SAMDSA를 제안한다. SAM 아키텍처를 그대로 유지하면서 이미지 인코더에서 듀얼 스트림 어댑터를 확장하여 RGB 이미지와 깊이 이미지에서 잠재적인 보완 정보를 학습하고 마스크 디코더와 깊이 인식 복제본을 미세 조정하여 듀얼 스트림 마스크 예측을 수행합니다. 실제로 듀얼 스트림 어댑터는 두 가지 유형의 이미지 임베딩의 개선 및 수정을 용이하게 하기 위해 병렬 방식으로 이미지 인코더의 어텐션 블록에 임베드됩니다.
+
+## 서론
+
+RGB-D 위장 객체 탐지는 단순 RGB COD보다도 더 까다롭다. 깊이 정보가 도움이 되기도 하지만, 잘못 쓰면 오히려 noisy cue가 될 수 있기 때문이다. 이 논문은 바로 그 지점에서, SAM의 general segmentation prior를 유지하면서 depth 정보를 보조축으로 정교하게 끌어들이는 데 초점을 둔다.
+
+서론에서는 특히, SAM은 강력한 제로샷 기능과 광범위한 일반화를 통해 신속한 이미지 분할을 위한 시각적 기반 모델(VFM)입니다. 사실 SAM의 2D 이미지 구별 능력은 훈련 데이터의 분포 범위에 따라 달라집니다. 먼저 SAM과 관련된 두 가지 주요 이점을 분석합니다. SAM의 교육 데이터 세트에는 본질적으로 위장 이미지의 배경이 많이 포함되어 있으며 고정 매개변수는 전체 시각적 환경을 구문 분석하는 데 충분합니다. 간단히 말해서 우리의 기여는 다음과 같습니다. • SAM을 COD 영역으로 개선하기 위해 SAM-DSA를 제안합니다.
+
+## 본론
+
+핵심은 SAM을 새로 만드는 것이 아니라, SAM 내부 attention block에 dual stream adapter를 병렬 삽입해 RGB와 depth가 서로를 보정하도록 만드는 것이다. 여기에 prompt 업데이트와 distillation을 함께 넣어, 두 modality가 따로 놀지 않게 한다.
+
+## 제안방법
+
+SAM-DSA는 image encoder에 dual stream adapter를 삽입해 RGB 이미지와 depth 이미지의 잠재 보완 정보를 학습한다. 이후 mask decoder와 depth-aware replica를 fine-tune해 dual-stream mask prediction을 수행한다. 동시에 bidirectional knowledge distillation로 modality gap을 줄이고, prompt embedding까지 함께 갱신해 최종 분할 일관성을 맞춘다.
+
+방법을 조금 더 자세히 보면, 이 작업에서는 사전 훈련된 SAM의 가중치를 사용하여 우리 방법의 세 가지 기능 프로세서의 가중치를 초기화하고 훈련 중에 마스크 디코더를 미세 조정합니다. RGB 또는 깊이 이미지 임베딩 X를 입력으로 사용하여 어댑터 모듈 내의 계산은 잔차 구조를 통해 고주파 세부 정보가 포함된 이미지 임베딩을 얻습니다. 혼합 프롬프트 임베딩 이미지 인코딩 중에 SAM은 16×16 다운샘플링으로 인해 세부 정보가 손실됩니다. 구체적으로, 먼저 상자 프롬프트 임베딩은 깊은 컨벌루션 레이어에 의해 처리됩니다. 그런 다음 전문가 임베딩과 어댑터 임베딩을 연결하여 새로운 하이브리드 임베딩을 생성합니다. 마지막으로 조밀한 프롬프트 임베딩은 또 다른 심층 컨벌루션 레이어에 의해 업데이트됩니다.
+
+## 실험
+
+논문 표에서 SAM 기반 강한 baseline인 COMPrompter†와 SAM-DSA†를 비교하면, 네 데이터셋에서 Sm은 모두 올라가고 M은 거의 모두 개선된다. 아래 표는 dataset별 Sm과 M만 따로 뽑은 것이다.
+
+실험 파트를 조금 더 자세히 보면, 비교 결과 우리는 SAM-DSA를 SOD(Salient Object Inspection) 방법인 CDINet, DCF, CMINet, SPNet, DCMF, SPSN, PopNet에서 변환된 RGB 스트림 기반 20개 및 RGB-D 스트림 기반 SOTA(최신 기술) COD 방법 8개와 비교합니다. 또한 Norm1과 Norm2는 최종 예측 결과에 미치는 영향이 적습니다. 이는 우리 어댑터가 VFM 네트워크의 정규화된 구조에 의존하지 않음을 보여줍니다. 마지막으로, 앞에서 설명한 대로 현실적인 조건이기도 한 RGB 입력의 경우 깊이 정보의 보완이 없으면 감지 성능이 약간 저하되지만 동일한 입력 설정으로 여러 고급 방법보다 성능이 뛰어납니다. 임베딩 합계는 두 가지 유형의 입력 표현을 직접 통합하므로 더 나은 결과를 얻을 수 있음을 알 수 있습니다.
+
+## 결론
+
+SAM-DSA는 SAM을 RGB-D COD에 맞게 고치는 현실적인 방법이다. backbone을 갈아엎지 않고도 adapter와 distillation만으로 큰 개선을 만든다는 점이 실용적이다.
+
+## 논의
+
+SAM 활용 논문 중에서도 이 글은 'foundation model을 downstream에 붙이는 법'을 비교적 정직하게 보여준다. SAM을 그대로 믿지 않고, 어디를 얼마나 수정해야 위장 장면에서 성능이 나는지를 모듈 수준으로 설명한다는 점이 좋다.
+
+## 출처
+
+- 논문 페이지: https://openaccess.thecvf.com/content/ICCV2025/html/Liu_Improving_SAM_for_Camouflaged_Object_Detection_via_Dual_Stream_Adapters_ICCV_2025_paper.html
+- 원문 PDF: https://openaccess.thecvf.com/content/ICCV2025/papers/Liu_Improving_SAM_for_Camouflaged_Object_Detection_via_Dual_Stream_Adapters_ICCV_2025_paper.pdf

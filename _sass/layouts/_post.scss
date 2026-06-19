@@ -1,0 +1,280 @@
+#post {
+  @extend %posts-padding;
+}
+
+.post-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 100%;
+  height: 3px;
+  background: rgba(17, 24, 39, 0.06);
+}
+
+.post-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: $theme-color;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.12s linear;
+}
+
+.post-header {
+  margin-top: 2.4rem;
+  margin-bottom: 1.7rem;
+  padding-bottom: 1.45rem;
+  border-bottom: 1px solid $divider-color;
+}
+
+.post-title {
+  margin-top: 0.5rem;
+  font-size: 2.55rem;
+  line-height: 1.14;
+}
+
+.post-subtitle {
+  max-width: 58ch;
+  margin-top: 0.95rem;
+  color: $text-gray;
+  font-size: 1.03rem;
+  line-height: 1.76;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  margin-top: 1rem;
+  color: $text-gray;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.36rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.post-tags li {
+  margin-bottom: 0;
+  padding: 0.14rem 0.42rem;
+  border: 1px solid $divider-color;
+  border-radius: 6px;
+  background: $surface-bg;
+  color: $text-gray;
+  font-size: 0.76rem;
+  font-weight: 620;
+}
+
+.post-cover {
+  @extend %posts-padding;
+  margin-top: 0.8rem;
+  margin-bottom: 1.8rem;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.post-content {
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.post-content > h1:first-child {
+  display: none;
+}
+
+.post-content p,
+.post-content li,
+.post-content td,
+.post-content th {
+  font-size: 1rem;
+  line-height: 1.88;
+}
+
+.post-content a {
+  color: $theme-color;
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 17, 17, 0.3);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.post-content a:hover {
+  text-decoration-color: rgba(17, 17, 17, 0.58);
+}
+
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content table,
+.post-content pre,
+.post-content blockquote,
+.post-content figure,
+.post-content iframe {
+  margin-bottom: 1.32rem;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.25rem;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+  color: $theme-dark;
+  scroll-margin-top: 5.5rem;
+}
+
+.post-content h1 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.72rem;
+  font-size: 1.48rem;
+}
+
+.post-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.72rem;
+  font-size: 1.45rem;
+}
+
+.post-content h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.12rem;
+}
+
+.post-content img {
+  margin: 1rem auto;
+  border-radius: 8px;
+}
+
+.post-content figcaption {
+  margin-top: 0.45rem;
+  color: $text-gray;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+.post-content iframe {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 1px solid $divider-color;
+  border-radius: 8px;
+  background: $surface-bg;
+}
+
+.imported-note {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid $divider-color;
+  border-radius: 8px;
+  background: $surface-bg;
+  color: $text-gray;
+  font-size: 0.9rem !important;
+  line-height: 1.55 !important;
+}
+
+.post-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+  border: 1px solid $divider-color;
+  border-radius: 8px;
+  background: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.76rem 0.88rem;
+  border-bottom: 1px solid $divider-color;
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-content th {
+  color: $theme-dark;
+  font-weight: 720;
+  background: $surface-bg;
+}
+
+.post-content th:not(:first-child),
+.post-content td:not(:first-child) {
+  text-align: right;
+}
+
+.post-content tbody tr:nth-child(even) td {
+  background: #fafafa;
+}
+
+.post-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.top-btn {
+  transition-duration: 0.25s;
+  transition-property: opacity, transform;
+  opacity: 0;
+  display: none;
+  position: fixed;
+  bottom: 8%;
+  right: 4%;
+  width: 42px;
+  height: 42px;
+  border: 1px solid $divider-color;
+  border-radius: 8px;
+  background: #fff;
+  color: $theme-dark;
+  text-align: center;
+  line-height: 2.55rem;
+}
+
+.top-btn:hover {
+  transform: translateY(-1px);
+  background: $theme-dark;
+  color: #fff;
+}
+
+.top-btn i {
+  color: inherit;
+}
+
+#comments {
+  @extend %posts-padding;
+
+  div.border {
+    border-top: 1px solid $divider-color;
+  }
+}
+
+@media (max-width: 767px) {
+  .post-header {
+    margin-top: 1.7rem;
+    padding-bottom: 1.15rem;
+  }
+
+  .post-title {
+    font-size: 1.92rem;
+  }
+
+  .post-content p,
+  .post-content li,
+  .post-content td,
+  .post-content th {
+    font-size: 0.96rem;
+  }
+
+  .post-content iframe {
+    min-height: 360px;
+  }
+}
