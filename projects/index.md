@@ -1,7 +1,7 @@
 ---
 layout: category-archive
 title: Projects
-lead: Tools and implementation notes from the research process.
+lead: Tools and implementation records built during research.
 archive_category: projects
 archive_categories:
   - projects

@@ -8,4 +8,4 @@ list_title: Tools
 permalink: /subprojects/
 ---
 
-This page is kept as a supporting archive inside the Projects section.
+This page stays as a supporting archive under the Projects menu.

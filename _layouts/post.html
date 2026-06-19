@@ -3,17 +3,17 @@ layout: page
 ---
 {% assign word_count = content | number_of_words %}
 {% assign reading_time = word_count | divided_by: 250 | plus: 1 %}
-{% assign post_kind = 'Blog Note' %}
-{% if page.categories contains 'papers' %}{% assign post_kind = 'Paper Review' %}{% elsif page.categories contains 'subprojects' or page.categories contains 'projects' %}{% assign post_kind = 'Project Log' %}{% elsif page.categories contains 'tistory' %}{% assign post_kind = 'Archive Post' %}{% endif %}
+{% assign post_kind = 'Research Note' %}
+{% if page.categories contains 'papers' %}{% assign post_kind = 'Paper Review' %}{% elsif page.categories contains 'subprojects' or page.categories contains 'projects' %}{% assign post_kind = 'Project Log' %}{% elsif page.categories contains 'tistory' %}{% assign post_kind = 'Archive' %}{% endif %}
 {% assign is_paper = false %}{% if page.paper or page.categories contains 'papers' %}{% assign is_paper = true %}{% endif %}
 <div class="post-progress" aria-hidden="true"><span data-reading-progress-line></span></div>
 <article class="post-page" data-post-page>
   <header class="post-header reveal">
-    <nav class="post-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span>/</span><a href="{% if is_paper %}{{ '/papers/' | relative_url }}{% else %}{{ '/blog/' | relative_url }}{% endif %}">{{ post_kind }}</a></nav>
+    <nav class="post-breadcrumb" aria-label="Current location"><a href="{{ '/' | relative_url }}">Home</a><span>/</span><a href="{% if is_paper %}{{ '/papers/' | relative_url }}{% else %}{{ '/blog/' | relative_url }}{% endif %}">{{ post_kind }}</a></nav>
     <div class="post-header__meta"><span class="entry-type{% if is_paper %} entry-type--paper{% endif %}">{{ post_kind }}</span>{% if page.venue %}<span class="venue-badge">{{ page.venue }}</span>{% endif %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time></div>
     <h1>{{ page.title }}</h1>
     {% if page.subtitle %}<p class="post-header__summary">{{ page.subtitle }}</p>{% elsif page.summary %}<p class="post-header__summary">{{ page.summary }}</p>{% endif %}
-    <div class="post-header__details"><span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#clock"></use></svg>about {{ reading_time }} min</span><span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg>{{ word_count }} words</span>{% if page.tags %}<span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg>{{ page.tags | size }} tags</span>{% endif %}</div>
+    <div class="post-header__details"><span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#clock"></use></svg>{{ reading_time }} min</span><span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg>{{ word_count }} words</span>{% if page.tags %}<span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg>{{ page.tags | size }} tags</span>{% endif %}</div>
   </header>
 
   {% if is_paper or page.source_url or page.pdf_url %}
@@ -27,13 +27,13 @@ layout: page
     <aside class="post-sidebar reveal" aria-label="Table of contents">
       <div class="post-sidebar__sticky glass-surface">
         <div class="post-sidebar__head"><span>Contents</span><strong data-toc-progress>0%</strong></div>
-        <nav class="post-toc" data-post-toc><p>Building outline...</p></nav>
+        <nav class="post-toc" data-post-toc><p>Building contents...</p></nav>
         {% if page.tags %}<div class="post-tags"><span>Tags</span>{% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}</div>{% endif %}
       </div>
     </aside>
 
     <div class="post-document glass-surface reveal">
-      {% if page.source_blog %}<p class="imported-note"><strong>This post was migrated from a previous blog.</strong>{% if page.source_url %} <a href="{{ page.source_url }}" target="_blank" rel="noreferrer">View original ↗</a>{% endif %}</p>{% endif %}
+      {% if page.source_blog %}<p class="imported-note"><strong>Imported from the previous blog.</strong>{% if page.source_url %} <a href="{{ page.source_url }}" target="_blank" rel="noreferrer">View Source ↗</a>{% endif %}</p>{% endif %}
       {% if page.image %}<figure class="post-cover"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="eager"></figure>{% endif %}
       <div class="post-content" data-post-content>{{ content }}</div>
     </div>

@@ -1,18 +1,18 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <span class="site-brand__mark" aria-hidden="true"><i></i><i></i><b></b></span>
-      <div><strong>Kkubuck Blog</strong><p>Paper reviews, experiment notes, and reusable research logs.</p></div>
+      <span class="site-footer__mark" aria-hidden="true"></span>
+      <div><strong>Kkubuck Blog</strong><p>Paper notes and experiments organized for reuse.</p></div>
     </div>
-    <nav aria-label="Footer navigation">
+    <nav aria-label="Footer menu">
       <a href="{{ '/papers/' | relative_url }}">Papers</a>
       <a href="{{ '/blog/' | relative_url }}">Blog</a>
       <a href="{{ '/projects/' | relative_url }}">Projects</a>
       <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub ↗</a>
     </nav>
     <div class="site-footer__meta">
-      <span>Updated {{ site.time | date: '%Y.%m.%d' }}</span>
-      <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub</a>
+      <p>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }} · Jekyll & GitHub Pages</p>
       <button type="button" data-scroll-top>Back to top <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg></button>
     </div>
   </div>

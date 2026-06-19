@@ -517,7 +517,7 @@
     });
     if (!headings.length) {
       var emptyOutline = doc.createElement('p');
-      emptyOutline.textContent = 'No outline is available for this post.';
+      emptyOutline.textContent = 'No table of contents for this post.';
       postToc.appendChild(emptyOutline);
     }
 

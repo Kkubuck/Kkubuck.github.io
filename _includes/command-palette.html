@@ -1,34 +1,32 @@
 <div class="command-palette" data-command-palette aria-hidden="true">
   <button class="command-palette__backdrop" type="button" data-command-close tabindex="-1" aria-label="Close search"></button>
-  <div class="command-panel glass-surface" role="dialog" aria-modal="true" aria-labelledby="command-title">
+  <section class="command-panel glass-surface" role="dialog" aria-modal="true" aria-labelledby="command-title">
     <header class="command-panel__header">
-      <div><p class="eyebrow">ARCHIVE SEARCH</p><h2 id="command-title">What are you looking for?</h2></div>
+      <div><p class="eyebrow">Archive Search</p><h2 id="command-title">What are you looking for?</h2></div>
       <button type="button" class="icon-button" data-command-close aria-label="Close search"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg></button>
     </header>
-    <div class="command-search">
+    <label class="command-search" for="command-search-input">
       <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <label for="command-search-input">
-        <span class="sr-only">Search by title, tag, or venue</span>
-      </label>
-      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Search titles, tags, or venues" data-command-input>
+      <span class="sr-only">Search titles, tags, or venues</span>
+      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Search titles, tags, venues" data-command-input>
       <kbd>ESC</kbd>
-    </div>
+    </label>
     <div class="command-panel__body">
-      <section class="command-shortcuts" aria-label="Quick links">
-        <p class="command-section-label">Quick Links</p>
-        <div>
-          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>Papers</strong><small>Research paper archive</small></span></a>
-          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>Blog</strong><small>Experiments and build notes</small></span></a>
-          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>Projects</strong><small>Implementation cases</small></span></a>
-          <a href="{{ '/tags/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg><span><strong>Tags</strong><small>Browse by topic</small></span></a>
+      <div class="command-panel__quick" data-command-quick>
+        <p class="command-section-label">Shortcuts</p>
+        <div class="quick-route-grid">
+          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>Papers</strong><small>Research Paper Archive</small></span></a>
+          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>Blog</strong><small>Build and Experiment Logs</small></span></a>
+          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>Projects</strong><small>Build Records</small></span></a>
+          <a href="{{ '/tags/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#tag"></use></svg><span><strong>Tags</strong><small>Topic Index</small></span></a>
         </div>
-      </section>
-      <section class="command-results" aria-live="polite">
-        <div class="command-results__head"><p class="command-section-label">Search Results</p><span data-command-count>0 results</span></div>
-        <div class="command-results__list" data-command-results></div>
+      </div>
+      <div class="command-results" data-command-results hidden>
+        <div class="command-results__head"><p class="command-section-label">Results</p><span data-command-count>0 results</span></div>
+        <div class="command-results__list" role="listbox" data-command-list></div>
         <p class="command-empty" data-command-empty hidden>No matching records.</p>
-      </section>
+      </div>
     </div>
     <footer class="command-panel__footer"><span><kbd>↑</kbd><kbd>↓</kbd> Move</span><span><kbd>Enter</kbd> Open</span><span><kbd>ESC</kbd> Close</span></footer>
-  </div>
+  </section>
 </div>

@@ -3,10 +3,10 @@
   <div class="site-header__inner glass-surface">
     <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="Kkubuck Blog home">
       <span class="site-brand__mark" aria-hidden="true"><i></i><i></i><b></b></span>
-      <span class="site-brand__text"><strong>Kkubuck</strong><small>Blog</small></span>
+      <span class="site-brand__text"><strong>Kkubuck</strong><small>Research Archive</small></span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
+    <nav class="desktop-nav" aria-label="Primary menu">
       <a href="{{ '/' | relative_url }}"{% if current_url == '/' %} class="is-current" aria-current="page"{% endif %}>Home</a>
       <a href="{{ '/papers/' | relative_url }}"{% if current_url contains '/papers/' %} class="is-current" aria-current="page"{% endif %}>Papers</a>
       <a href="{{ '/blog/' | relative_url }}"{% if current_url contains '/blog/' %} class="is-current" aria-current="page"{% endif %}>Blog</a>
@@ -34,17 +34,17 @@
     <button class="mobile-menu__backdrop" type="button" data-mobile-menu-close tabindex="-1" aria-label="Close menu"></button>
     <div class="mobile-menu__panel glass-surface" role="dialog" aria-modal="true" aria-label="Site menu">
       <div class="mobile-menu__head">
-        <span><strong>Kkubuck</strong><small>Blog</small></span>
+        <span><strong>Kkubuck</strong><small>Research Archive</small></span>
         <button class="icon-button" type="button" data-mobile-menu-close aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg></button>
       </div>
-      <nav aria-label="Mobile primary navigation">
-        <a href="{{ '/' | relative_url }}"><span>01</span><strong>Home</strong><small>Start here</small></a>
-        <a href="{{ '/papers/' | relative_url }}"><span>02</span><strong>Papers</strong><small>Paper-by-paper notes</small></a>
-        <a href="{{ '/blog/' | relative_url }}"><span>03</span><strong>Blog</strong><small>Experiments and logs</small></a>
-        <a href="{{ '/projects/' | relative_url }}"><span>04</span><strong>Projects</strong><small>Builds and tools</small></a>
-        <a href="{{ '/tags/' | relative_url }}"><span>05</span><strong>Tags</strong><small>Browse by topic</small></a>
-        <a href="{{ '/cv/' | relative_url }}"><span>06</span><strong>CV</strong><small>Research profile</small></a>
-        <a href="{{ '/about/' | relative_url }}"><span>07</span><strong>About</strong><small>About this archive</small></a>
+      <nav aria-label="Mobile primary menu">
+        <a href="{{ '/' | relative_url }}"><span>01</span><strong>Home</strong><small>Archive Start</small></a>
+        <a href="{{ '/papers/' | relative_url }}"><span>02</span><strong>Papers</strong><small>Paper Notes</small></a>
+        <a href="{{ '/blog/' | relative_url }}"><span>03</span><strong>Blog</strong><small>Experiments</small></a>
+        <a href="{{ '/projects/' | relative_url }}"><span>04</span><strong>Projects</strong><small>Builds</small></a>
+        <a href="{{ '/tags/' | relative_url }}"><span>05</span><strong>Tags</strong><small>Topics</small></a>
+        <a href="{{ '/cv/' | relative_url }}"><span>06</span><strong>CV</strong><small>Profile</small></a>
+        <a href="{{ '/about/' | relative_url }}"><span>07</span><strong>About</strong><small>Archive Guide</small></a>
       </nav>
       <a class="mobile-menu__github" href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg><span>GitHub</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg></a>
     </div>

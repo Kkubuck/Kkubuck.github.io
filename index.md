@@ -1,6 +1,6 @@
 ---
 layout: paper-home
 title: Kkubuck
-description: A personal archive for computer vision paper reviews and research/build notes.
-lead: Paper reviews, experiment notes, and reusable research logs.
+description: A personal archive for computer vision paper notes, experiments, and build logs.
+lead: Paper notes, experiment logs, and implementation records organized for reuse.
 ---

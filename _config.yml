@@ -6,7 +6,7 @@ timezone: Asia/Seoul
 
 title: Kkubuck Blog
 tagline: Paper reviews, experiment notes, and computer vision research logs
-description: A personal archive for computer vision paper reviews and research/build notes.
+description: A personal archive for computer vision paper notes, experiments, and build logs.
 author: Kkubuck
 locale: ko_KR
 logo: /assets/img/og-card.png
