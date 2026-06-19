@@ -62,7 +62,7 @@
   }
 
   function copyText(text, message) {
-    var done = function () { showToast(message || '링크를 복사했습니다.'); };
+    var done = function () { showToast(message || 'Link copied.'); };
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
     } else {
@@ -92,7 +92,7 @@
     root.dataset.theme = next;
     themeButtons.forEach(function (button) {
       button.setAttribute('aria-pressed', String(next === 'light'));
-      button.setAttribute('aria-label', next === 'light' ? '어두운 테마로 전환' : '밝은 테마로 전환');
+      button.setAttribute('aria-label', next === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
     });
     if (themeMeta) themeMeta.setAttribute('content', next === 'light' ? '#edf4ef' : '#07100f');
     if (persist) {
@@ -598,7 +598,7 @@
       if (!headings.length) {
         var shortNote = doc.createElement('p');
         shortNote.className = 'post-toc__empty';
-        shortNote.textContent = '목차가 없는 짧은 기록입니다.';
+        shortNote.textContent = 'Short note without an outline.';
         toc.appendChild(shortNote);
       } else {
         var tocList = doc.createElement('ol');
@@ -625,11 +625,11 @@
           var anchorButton = doc.createElement('button');
           anchorButton.type = 'button';
           anchorButton.className = 'heading-anchor';
-          anchorButton.setAttribute('aria-label', heading.textContent.trim() + ' 섹션 링크 복사');
+          anchorButton.setAttribute('aria-label', 'Copy section link: ' + heading.textContent.trim());
           anchorButton.textContent = '#';
           anchorButton.addEventListener('click', function () {
             var url = window.location.origin + window.location.pathname + '#' + uniqueId;
-            copyText(url, '섹션 링크를 복사했습니다.');
+            copyText(url, 'Section link copied.');
             history.replaceState(null, '', '#' + uniqueId);
           });
           heading.appendChild(anchorButton);
@@ -672,7 +672,7 @@
         navigator.share({ title: doc.title, text: qs('meta[name="description"]') ? qs('meta[name="description"]').content : '', url: window.location.href })
           .catch(function () { /* user cancellation */ });
       } else {
-        copyText(window.location.href.split('#')[0], '공유 링크를 복사했습니다.');
+        copyText(window.location.href.split('#')[0], 'Share link copied.');
       }
     });
   });

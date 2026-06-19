@@ -4,8 +4,8 @@
     url: https://github.com/Kkubuck/Kkubuck.github.io
     image:
       path: "portfolio.png"
-      alt: "논문 블로그 예시"
+      alt: "Paper review archive preview"
     date: 2026 &ndash; now
     title: Paper Reviews
-    summary: 읽은 논문을 한국어 리뷰와 시각 자료 중심으로 정리하는 개인 아카이브.
-    description: 읽은 논문을 한국어 리뷰와 시각 자료 중심으로 차곡차곡 정리하는 개인 블로그입니다.
+    summary: A personal archive for paper reviews and visual research notes.
+    description: A compact blog for paper reviews, diagrams, and research notes.

@@ -20,8 +20,8 @@ layout: page
   <section class="archive-console glass-surface reveal" data-archive-console>
     <div class="archive-console__search">
       <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <label class="sr-only" for="blog-filter-search">전체 글 검색</label>
-      <input id="blog-filter-search" type="search" placeholder="제목, 요약, 태그 검색" data-filter-search autocomplete="off">
+      <label class="sr-only" for="blog-filter-search">Search notes</label>
+      <input id="blog-filter-search" type="search" placeholder="Search title, summary, tag" data-filter-search autocomplete="off">
       <kbd>/</kbd>
     </div>
     <div class="archive-console__filters">
@@ -33,7 +33,7 @@ layout: page
     <div class="archive-console__status"><span class="signal-dot"></span><strong data-filter-count>{{ posts.size }}</strong><span>records in view</span></div>
   </section>
 
-  <section class="chronicle" data-filter-list aria-label="전체 글 목록">
+  <section class="chronicle" data-filter-list aria-label="All notes">
     {% for post in posts %}
     {% assign entry_type = 'Note' %}
     {% if post.categories contains 'papers' %}{% assign entry_type = 'Paper' %}{% elsif post.categories contains 'subprojects' or post.categories contains 'projects' %}{% assign entry_type = 'Project' %}{% elsif post.categories contains 'tistory' %}{% assign entry_type = 'Archive' %}{% endif %}
@@ -54,11 +54,11 @@ layout: page
         <p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 38, '…' }}</p>
         <footer>
           <ul class="compact-tags">{% for tag in post.tags limit: 5 %}<li>{{ tag }}</li>{% endfor %}</ul>
-          <a href="{{ post.url | relative_url }}" aria-label="{{ post.title }} 읽기"><span>Open record</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+          <a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title }}"><span>Open record</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
         </footer>
       </div>
     </article>
     {% endfor %}
-    <div class="filter-empty glass-surface" data-filter-empty hidden><span class="filter-empty__orbit" aria-hidden="true"></span><h2>일치하는 기록이 없습니다.</h2><p>검색어 또는 필터를 조정해 보세요.</p><button type="button" data-filter-reset>필터 초기화</button></div>
+    <div class="filter-empty glass-surface" data-filter-empty hidden><span class="filter-empty__orbit" aria-hidden="true"></span><h2>No notes found.</h2><p>Adjust your search or filters.</p><button type="button" data-filter-reset>Reset filters</button></div>
   </section>
 </div>

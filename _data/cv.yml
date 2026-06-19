@@ -9,7 +9,7 @@ profile:
   last_updated: April 5, 2026
   pdf: /assets/files/CV_jisanglee.pdf
   github: https://github.com/Kkubuck
-  summary: 한밭대학교 대학원 컴퓨터공학과 석사과정으로 AIMLab에서 연구하고 있습니다. CV에 기록된 작업은 원격탐사 영상, 의료 영상, 위조 탐지, 개방어휘 탐지까지 폭넓게 이어집니다.
+  summary: M.S. student at AIMLab, Hanbat National University, working across remote sensing, medical imaging, forgery detection, and open-vocabulary vision.
 
 education:
   - institution: Hanbat National University
@@ -124,7 +124,7 @@ awards:
     date: Nov. 2022
   - category: Competition Award
     title: Chairman’s Prize, SW-univ AI Competition 2022
-    detail: 광학 문자 인식(OCR) 알고리즘 개발
+    detail: Optical character recognition algorithm development
     date: Aug. 2022
   - category: Best Paper Award
     title: President’s Award, Development of Optical Character Recognition Model for Document Leak Investigation
@@ -133,11 +133,11 @@ awards:
     title: Prize, Computer Engineering Portfolio Competition 2022
   - category: Best Paper Award
     title: Commissioner General Award, Lightweight Fingerprint Forgery Detection Technique Utilizing Median Filter and Ensemble Model
-    detail: 해양경찰청장상
+    detail: Korea Coast Guard Commissioner General Award
     date: Jun. 2023
   - category: Competition Award
     title: Corporate Prize, SW-univ AI Competition 2023
-    detail: 위성 이미지 건물 영역 분할(Image Segmentation) AI 모델 개발
+    detail: Satellite image building segmentation model
     date: Aug. 2023
   - category: Best Paper Award
     title: President’s Award, Effective Detection of Generated Images Using Fast Fourier Transform and Discrete Cosine Transform
@@ -146,7 +146,7 @@ awards:
     title: Prize, Computer Engineering Portfolio Competition 2023
   - category: Competition Award
     title: Grand Prize, Research and Development Special Zone Promotion Foundation
-    detail: "글로벌 산불 감지 챌린지: AI를 활용한 향상된 위성 이미지 분석"
+    detail: "Global wildfire detection challenge: enhanced satellite image analysis with AI"
     date: Apr. 2024
   - category: Competition Award
     title: Gold Prize, Capstone Design Exhibition (SkyPixel) 2024

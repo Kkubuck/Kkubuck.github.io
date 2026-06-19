@@ -1,20 +1,20 @@
 <div class="command-palette" data-command-palette aria-hidden="true">
-  <button class="command-palette__backdrop" type="button" data-command-close tabindex="-1" aria-label="검색 닫기"></button>
+  <button class="command-palette__backdrop" type="button" data-command-close tabindex="-1" aria-label="Close search"></button>
   <section class="command-panel glass-surface" role="dialog" aria-modal="true" aria-labelledby="command-title">
     <div class="command-panel__header">
       <div>
         <p class="micro-label">Research command</p>
-        <h2 id="command-title">아카이브 검색</h2>
+        <h2 id="command-title">Search</h2>
       </div>
-      <button type="button" class="command-close" data-command-close aria-label="검색 닫기">
+      <button type="button" class="command-close" data-command-close aria-label="Close search">
         <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg>
       </button>
     </div>
 
     <label class="command-search" for="command-search-input">
       <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <span class="sr-only">제목, 태그, 학회명 검색</span>
-      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="제목, 태그, venue를 입력하세요" data-command-input>
+      <span class="sr-only">Search by title, tag, or venue</span>
+      <input id="command-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Title, tag, or venue" data-command-input>
       <kbd>ESC</kbd>
     </label>
 
@@ -22,9 +22,9 @@
       <div class="command-panel__quick" data-command-quick>
         <p class="command-section-label">Quick routes</p>
         <div class="quick-route-grid">
-          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>논문</strong><small>Paper reviews</small></span></a>
-          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>전체 글</strong><small>Research log</small></span></a>
-          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>프로젝트</strong><small>Case studies</small></span></a>
+          <a href="{{ '/papers/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#paper"></use></svg><span><strong>Papers</strong><small>Reviews</small></span></a>
+          <a href="{{ '/blog/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#notes"></use></svg><span><strong>Notes</strong><small>Research log</small></span></a>
+          <a href="{{ '/projects/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#project"></use></svg><span><strong>Projects</strong><small>Case studies</small></span></a>
           <a href="{{ '/cv/' | relative_url }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#cv"></use></svg><span><strong>CV</strong><small>Academic dossier</small></span></a>
         </div>
       </div>
@@ -35,14 +35,14 @@
           <span data-command-count>0 results</span>
         </div>
         <div class="command-results__list" role="listbox" data-command-list></div>
-        <p class="command-empty" data-command-empty hidden>일치하는 기록을 찾지 못했습니다. 다른 키워드를 입력해 보세요.</p>
+        <p class="command-empty" data-command-empty hidden>No matching records. Try another keyword.</p>
       </div>
     </div>
 
     <footer class="command-panel__footer">
-      <span><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
-      <span><kbd>Enter</kbd> 열기</span>
-      <span>전체 포스트 인덱스</span>
+      <span><kbd>↑</kbd><kbd>↓</kbd> Move</span>
+      <span><kbd>Enter</kbd> Open</span>
+      <span>Full post index</span>
     </footer>
   </section>
 </div>

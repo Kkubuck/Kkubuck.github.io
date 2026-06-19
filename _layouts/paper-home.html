@@ -21,11 +21,11 @@ layout: page
         <time datetime="{{ recent_posts.first.date | date_to_xmlschema }}">Updated {{ recent_posts.first.date | date: '%Y.%m.%d' }}</time>
       </div>
       <p class="display-kicker">Computer vision · paper intelligence</p>
-      <h1 id="home-title">읽은 논문을<br><span>다시 사용할 수 있는 지식</span>으로.</h1>
-      <p class="home-hero__lead">{{ page.lead }} 핵심 아이디어, 설계 판단, 실험 결과를 연구 노트의 밀도로 연결합니다.</p>
+      <h1 id="home-title">Paper Notes.<br><span>Built to Reuse.</span></h1>
+      <p class="home-hero__lead">{{ page.lead }} Ideas, design choices, and evidence stay connected.</p>
       <div class="hero-actions">
         <a class="button button--primary magnetic" href="{{ '/papers/' | relative_url }}">
-          <span>논문 아카이브</span>
+          <span>Open Papers</span>
           <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg>
         </a>
         <button class="button button--ghost magnetic" type="button" data-command-open>
@@ -34,14 +34,14 @@ layout: page
           <kbd>⌘K</kbd>
         </button>
       </div>
-      <dl class="hero-metrics" aria-label="아카이브 통계">
+      <dl class="hero-metrics" aria-label="Archive statistics">
         <div><dt>Paper reviews</dt><dd>{{ paper_posts.size | prepend: '0' | slice: -2, 2 }}</dd></div>
         <div><dt>Field notes</dt><dd>{{ recent_posts.size | minus: paper_posts.size | prepend: '0' | slice: -2, 2 }}</dd></div>
         <div><dt>Knowledge tags</dt><dd>{{ site.tags | size | prepend: '0' | slice: -2, 2 }}</dd></div>
       </dl>
     </div>
 
-    <div class="knowledge-observatory reveal" data-tilt data-tilt-strength="5" aria-label="연구 주제 관측소">
+    <div class="knowledge-observatory reveal" data-tilt data-tilt-strength="5" aria-label="Research topic observatory">
       <div class="observatory__glass glass-surface">
         <div class="observatory__topline">
           <span>KNOWLEDGE OBSERVATORY</span>
@@ -69,7 +69,7 @@ layout: page
       </div>
       <div class="observatory__caption glass-surface">
         <span>Focus / 01</span>
-        <p>모델 구조보다 <strong>왜 이 설계가 필요한지</strong>를 중심으로 읽습니다.</p>
+        <p>Reading starts with <strong>why the design exists</strong>.</p>
       </div>
     </div>
   </section>
@@ -79,9 +79,9 @@ layout: page
     <div class="section-intro">
       <div>
         <p class="micro-label">Latest paper signal</p>
-        <h2 id="feature-paper-title">가장 최근에 읽은 논문</h2>
+        <h2 id="feature-paper-title">Latest Paper</h2>
       </div>
-      <a class="text-link" href="{{ '/papers/' | relative_url }}">전체 논문 <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+      <a class="text-link" href="{{ '/papers/' | relative_url }}">All Papers <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
     </div>
     <article class="feature-paper__card glass-surface" data-tilt data-tilt-strength="2.5">
       <div class="feature-paper__index" aria-hidden="true">
@@ -97,12 +97,12 @@ layout: page
         </div>
         <h3><a href="{{ latest_paper.url | relative_url }}">{{ latest_paper.title }}</a></h3>
         <p>{{ latest_paper.summary | default: latest_paper.excerpt | strip_html | truncatewords: 48, '…' }}</p>
-        <ul class="chip-list" aria-label="태그">
+        <ul class="chip-list" aria-label="Tags">
           {% for tag in latest_paper.tags limit: 5 %}<li>{{ tag }}</li>{% endfor %}
         </ul>
       </div>
       <div class="feature-paper__actions">
-        <a class="round-link" href="{{ latest_paper.url | relative_url }}" aria-label="리뷰 읽기">
+        <a class="round-link" href="{{ latest_paper.url | relative_url }}" aria-label="Read review">
           <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg>
         </a>
         {% if latest_paper.pdf_url %}<a href="{{ latest_paper.pdf_url }}" target="_blank" rel="noreferrer">PDF <span aria-hidden="true">↗</span></a>{% endif %}
@@ -116,9 +116,9 @@ layout: page
     <div class="section-intro reveal">
       <div>
         <p class="micro-label">Research index / selected</p>
-        <h2 id="paper-stream-title">최근 논문 리뷰</h2>
+        <h2 id="paper-stream-title">Recent Reviews</h2>
       </div>
-      <p class="section-intro__note">핵심 기여와 한계를 빠르게 다시 찾을 수 있도록 정리한 인덱스입니다.</p>
+      <p class="section-intro__note">A short index for claims, limits, and evidence.</p>
     </div>
     <div class="paper-grid">
       {% for post in paper_posts offset: 1 limit: 6 %}
@@ -129,7 +129,7 @@ layout: page
         <p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 29, '…' }}</p>
         <footer>
           <ul class="compact-tags">{% for tag in post.tags limit: 3 %}<li>{{ tag }}</li>{% endfor %}</ul>
-          <a href="{{ post.url | relative_url }}" aria-label="{{ post.title }} 읽기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+          <a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
         </footer>
       </article>
       {% endfor %}
@@ -139,9 +139,9 @@ layout: page
   <section class="home-index section-space" aria-labelledby="field-notes-title">
     <div class="home-index__heading reveal">
       <p class="micro-label">Field log / chronology</p>
-      <h2 id="field-notes-title">연구와 구현 사이의 기록</h2>
-      <p>강의 메모, 구현 과정, 프로젝트 도구처럼 논문 밖에서 축적한 판단을 시간순으로 남깁니다.</p>
-      <a class="button button--small button--ghost" href="{{ '/blog/' | relative_url }}">전체 기록 보기 <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
+      <h2 id="field-notes-title">Field Notes</h2>
+      <p>Build logs, class notes, and small tools outside the paper stream.</p>
+      <a class="button button--small button--ghost" href="{{ '/blog/' | relative_url }}">Open Notes <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a>
     </div>
     <div class="journal-index glass-surface reveal">
       {% assign note_count = 0 %}
@@ -168,7 +168,7 @@ layout: page
     <div class="manifesto-orbit" aria-hidden="true"><span></span><span></span><i></i></div>
     <div>
       <p class="micro-label">Archive protocol</p>
-      <blockquote>“요약보다 중요한 것은, 나중의 내가 같은 판단을 다시 내릴 수 있게 만드는 맥락이다.”</blockquote>
+      <blockquote>"Context beats summary."</blockquote>
     </div>
     <dl>
       <div><dt>01</dt><dd>Problem framing</dd></div>

@@ -20,8 +20,8 @@ layout: page
   <section class="archive-console glass-surface reveal" data-archive-console>
     <div class="archive-console__search">
       <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-      <label class="sr-only" for="paper-filter-search">논문 검색</label>
-      <input id="paper-filter-search" type="search" placeholder="제목, 요약, 태그, venue 검색" data-filter-search autocomplete="off">
+      <label class="sr-only" for="paper-filter-search">Search papers</label>
+      <input id="paper-filter-search" type="search" placeholder="Search title, summary, tag, venue" data-filter-search autocomplete="off">
       <kbd>/</kbd>
     </div>
     <div class="archive-console__filters">
@@ -48,7 +48,7 @@ layout: page
 
   {% if content and content != '' %}<div class="archive-preface reveal">{{ content }}</div>{% endif %}
 
-  <section class="research-catalog" aria-label="논문 리뷰 목록" data-filter-list>
+  <section class="research-catalog" aria-label="Paper review list" data-filter-list>
     {% for post in papers %}
     <article class="catalog-entry glass-surface reveal"
       data-filter-item
@@ -76,9 +76,9 @@ layout: page
     {% endfor %}
     <div class="filter-empty glass-surface" data-filter-empty hidden>
       <span class="filter-empty__orbit" aria-hidden="true"></span>
-      <h2>일치하는 논문이 없습니다.</h2>
-      <p>검색어 또는 필터를 조정해 보세요.</p>
-      <button type="button" data-filter-reset>필터 초기화</button>
+      <h2>No papers found.</h2>
+      <p>Adjust your search or filters.</p>
+      <button type="button" data-filter-reset>Reset filters</button>
     </div>
   </section>
 </div>

@@ -35,7 +35,7 @@ layout: page
   </header>
 
   {% if is_paper or page.source_url or page.pdf_url %}
-  <section class="post-source-panel glass-surface reveal" aria-label="문서 메타데이터">
+  <section class="post-source-panel glass-surface reveal" aria-label="Document metadata">
     <div><p class="micro-label">Document access</p><strong>{% if page.venue %}{{ page.venue }}{% else %}Reference material{% endif %}</strong></div>
     <div class="post-source-panel__links">
       {% if page.source_url %}<a href="{{ page.source_url }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg><span>Original source</span></a>{% endif %}
@@ -47,10 +47,10 @@ layout: page
   {% endif %}
 
   <div class="post-layout">
-    <aside class="post-rail reveal" aria-label="문서 탐색">
+    <aside class="post-rail reveal" aria-label="Document navigation">
       <div class="post-rail__sticky glass-surface">
         <div class="post-rail__head"><p class="micro-label">On this page</p><span data-toc-progress>00%</span></div>
-        <nav class="post-toc" data-post-toc><p>목차를 구성하는 중입니다.</p></nav>
+        <nav class="post-toc" data-post-toc><p>Building outline...</p></nav>
         {% if page.tags %}
         <div class="post-rail__tags"><p class="micro-label">Coordinates</p>{% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}</div>
         {% endif %}
@@ -58,28 +58,28 @@ layout: page
     </aside>
 
     <div class="post-document glass-surface reveal">
-      {% if page.source_blog %}<p class="imported-note"><span>Archive transfer</span> 이 글은 {{ page.source_blog }}에서 이전한 기록입니다.{% if page.source_url %} <a href="{{ page.source_url }}" target="_blank" rel="noreferrer">원문 보기 ↗</a>{% endif %}</p>{% endif %}
+      {% if page.source_blog %}<p class="imported-note"><span>Archive transfer</span> Migrated from {{ page.source_blog }}.{% if page.source_url %} <a href="{{ page.source_url }}" target="_blank" rel="noreferrer">Original ↗</a>{% endif %}</p>{% endif %}
       {% if page.image %}<figure class="post-cover"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="eager"></figure>{% endif %}
       <div class="post-content" data-post-content>
         {{ content }}
       </div>
     </div>
 
-    <aside class="post-actions-rail" aria-label="문서 작업">
+    <aside class="post-actions-rail" aria-label="Document actions">
       <div class="post-actions-rail__sticky">
-        <button type="button" data-copy-url aria-label="링크 복사"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#copy"></use></svg><span>Copy</span></button>
-        <button type="button" data-share-page aria-label="공유"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#share"></use></svg><span>Share</span></button>
+        <button type="button" data-copy-url aria-label="Copy link"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#copy"></use></svg><span>Copy</span></button>
+        <button type="button" data-share-page aria-label="Share"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#share"></use></svg><span>Share</span></button>
       </div>
     </aside>
   </div>
 
-  <nav class="post-neighbors" aria-label="이전 및 다음 글">
+  <nav class="post-neighbors" aria-label="Previous and next records">
     {% if page.previous %}<a class="post-neighbor post-neighbor--previous glass-surface reveal" href="{{ page.previous.url | relative_url }}"><span>Previous record</span><strong>{{ page.previous.title }}</strong><time>{{ page.previous.date | date: '%Y.%m.%d' }}</time></a>{% else %}<span></span>{% endif %}
     {% if page.next %}<a class="post-neighbor post-neighbor--next glass-surface reveal" href="{{ page.next.url | relative_url }}"><span>Next record</span><strong>{{ page.next.title }}</strong><time>{{ page.next.date | date: '%Y.%m.%d' }}</time></a>{% endif %}
   </nav>
 </article>
 
-<button class="reading-dock glass-surface" type="button" data-scroll-top aria-label="맨 위로 이동">
+<button class="reading-dock glass-surface" type="button" data-scroll-top aria-label="Back to top">
   <svg class="reading-dock__progress" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18"></circle><circle cx="22" cy="22" r="18" data-reading-progress-ring></circle></svg>
   <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg>
 </button>

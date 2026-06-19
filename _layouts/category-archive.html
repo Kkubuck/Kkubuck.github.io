@@ -34,7 +34,7 @@ layout: page
   <section class="project-lab" aria-labelledby="project-list-title">
     <div class="section-intro reveal">
       <div><p class="micro-label">Lab notebook</p><h2 id="project-list-title">{{ page.list_title | default: page.title }}</h2></div>
-      <p class="section-intro__note">문제 정의부터 구현 선택, 자동화와 운영 메모까지 프로젝트 단위로 묶었습니다.</p>
+      <p class="section-intro__note">Project records are grouped from problem framing to implementation notes.</p>
     </div>
     {% if archive_posts.size > 0 %}
     <div class="project-case-grid">
@@ -48,12 +48,12 @@ layout: page
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
         <p>{{ post.summary | default: post.excerpt | strip_html | truncatewords: 40, '…' }}</p>
         <ul class="compact-tags">{% for tag in post.tags limit: 5 %}<li>{{ tag }}</li>{% endfor %}</ul>
-        <footer><span>{% if post.categories contains 'subprojects' %}Tooling note{% else %}Project record{% endif %}</span><a href="{{ post.url | relative_url }}" aria-label="{{ post.title }} 읽기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a></footer>
+        <footer><span>{% if post.categories contains 'subprojects' %}Tooling note{% else %}Project record{% endif %}</span><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title }}"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow"></use></svg></a></footer>
       </article>
       {% endfor %}
     </div>
     {% else %}
-    <div class="empty-lab glass-surface reveal"><span aria-hidden="true">∅</span><h2>아직 공개된 프로젝트가 없습니다.</h2><p>새 프로젝트 기록이 추가되면 이곳에 나타납니다.</p></div>
+    <div class="empty-lab glass-surface reveal"><span aria-hidden="true">∅</span><h2>No projects yet.</h2><p>New project records will appear here.</p></div>
     {% endif %}
   </section>
 </div>
