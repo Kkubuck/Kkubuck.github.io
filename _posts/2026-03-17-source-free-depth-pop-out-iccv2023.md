@@ -1,96 +1,69 @@
 ---
-layout: "post"
-title: "Source-free Depth for Object Pop-out"
-subtitle: "Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다."
-summary: "Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다."
-description: "Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다."
-date: "2026-03-17 09:00:00 +0900"
-slug: "source-free-depth-pop-out-iccv2023"
-lang: "ko"
+layout: post
+title: Source-free Depth for Object Pop-out
+subtitle: 원래 depth 모델을 학습한 source data 없이도, 객체가 배경 표면에서 튀어나온다는 3D composition prior와 contact surface를 이용해 depth 지식을 객체 분할로
+  옮긴 연구.
+summary: PopNet은 pretrained monocular depth model을 source-free로 적응시킨다. contact surface를 약한 mask supervision으로 학습해 3D에서 객체와
+  배경을 분리한다.
+description: PopNet은 pretrained monocular depth model을 source-free로 적응시킨다. contact surface를 약한 mask supervision으로 학습해 3D에서
+  객체와 배경을 분리한다.
+date: 2026-03-17 09:00:00 +0900
+slug: source-free-depth-pop-out-iccv2023
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "depth"
-  - "iccv2023"
-venue: "ICCV 2023"
-source_url: "https://openaccess.thecvf.com/content/ICCV2023/html/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/ICCV2023/papers/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.pdf"
+- paper
+- depth
+- source-free-adaptation
+- cod
+- sod
+- iccv-2023
+venue: ICCV 2023
+paper_year: 2023
+paper_authors: Zongwei Wu, Danda Pani Paudel, Deng-Ping Fan, Jingjing Wang, Shuo Wang, Cédric Demonceaux, Radu Timofte, Luc
+  Van Gool
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/ICCV2023/html/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.html
+pdf_url: https://openaccess.thecvf.com/content/ICCV2023/papers/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.pdf
+code_url: https://github.com/Zongwei97/PopNet
+takeaways:
+- RGB 외형이 아닌 3D pop-out prior로 객체를 분리하고, 실제 depth sensor 대신 monocular depth model을 활용한다.
+- 원 depth 학습 데이터 없이 모델만 가져와 적응하는 source-free 설정을 택한다.
+- 객체가 배경 표면 위에 놓인다는 가정이 깨지는 평면 그림·구멍·투명체에서는 3D prior가 오해를 낳을 수 있다.
 ---
-## 오버뷰
 
-Source-free Depth for Object Pop-out은 직접 측정한 depth 없이도, 추론된 depth map과 3D pop-out prior만으로 object segmentation을 돕겠다는 작업입니다. COD와 SOD를 함께 다루는 generalization 관점이 강합니다.
+## 색이 같아도 깊이는 다를 수 있다
 
-## 핵심 주장
+위장 객체가 배경과 같은 색과 질감을 가져도 실제 3차원 공간에서는 배경 표면보다 앞에 놓이는 경우가 많다. 이 논문은 그 단순한 **object pop-out prior**를 이용한다. 객체가 배경 surface 위에 존재한다면, depth geometry만으로도 외형에 묻힌 경계를 찾을 수 있다는 생각이다.
 
-- source data 없이 depth model만 이용해 object pop-out prior를 segmentation에 이식할 수 있다.
-- contact surface representation을 통해 3D reasoning을 segmentation으로 연결한다.
-- SOD와 COD 두 과제의 여덟 개 데이터셋에서 성능과 generalizability를 함께 개선한다.
+문제는 실제 depth sensor가 없는 이미지가 훨씬 많다는 점이다. 저자들은 monocular depth estimation model이 예측한 depth를 사용하되, 그 모델을 원래 학습한 source data는 요구하지 않는 source-free adaptation을 제안한다.
 
-## 초록
+## depth map을 그대로 쓰지 않는 이유
 
-이 논문은 depth cue가 useful하지만 직접 depth를 구하기 어렵다는 현실에서 출발합니다. 저자들은 inferred depth map을 object pop-out prior와 결합해 3D space에서 객체를 reasoning하고, segmentation mask의 약한 supervision으로 contact surface를 학습합니다.
+범용 depth 모델은 장면의 상대 깊이는 잘 예측해도, segmentation에 필요한 객체 경계를 정확히 보존한다고 보장할 수 없다. 특히 위장 객체는 RGB 단서가 약해 monocular depth도 표면을 배경과 합칠 수 있다. 따라서 예측 depth를 보조 채널로 단순 concatenation하는 것만으로는 충분하지 않다.
 
-초록을 조금 더 풀어보면, 깊이 단서는 시각적 인식에 유용한 것으로 알려져 있습니다. 그러나 깊이를 직접 측정하는 것은 종종 불가능합니다. 하지만 다행히도 최신 학습 기반 방법은 실제 추론을 통해 유망한 깊이 지도를 제공합니다. 이 작업에서 우리는 3D에서 사전에 객체의 "팝아웃"을 사용하여 객체 분할을 위한 깊이 추론 모델을 적용합니다.
+PopNet은 객체가 놓인 **contact surface**라는 중간 표현을 도입한다. 어떤 배경 표면과 객체가 접하는지를 알면, 3D에서 그 표면보다 앞으로 나온 영역을 객체 후보로 분리할 수 있다. 이 contact surface는 segmentation mask의 약한 supervision으로 학습된다.
 
-## 서론
+## source-free adaptation
 
-COD에서 depth는 종종 보조 modality처럼 다뤄지지만, 이 논문은 RGB-D sensor가 없어도 얻을 수 있는 inferred depth를 적극 활용합니다. 그래서 source-free라는 표현이 붙습니다.
+source-free라는 말은 depth backbone의 weight는 사용할 수 있지만, 원래 depth dataset의 이미지와 라벨은 다시 볼 수 없다는 뜻이다. 데이터 라이선스, 저장 공간, 개인정보 문제 때문에 실제 배포 환경에서 의미 있는 설정이다.
 
-서론에서는 특히, 장면에 대한 3D 지식은 시각적 인식 작업을 보완하는 것으로 오랫동안 알려져 왔습니다. 그러나 실제로는 시각적 인식이 2D 이미지만을 사용하여 수행되어야 하는 경우가 많습니다. 또한 우리는 작업 전문화에도 불구하고 최첨단 결과를 제공하는 24가지 방법(•)을 비교합니다. 제안된 방법은 소스가 없는 깊이를 활용하여 깊이 있는 객체가 배경에 비해 더 잘 보이는 공간으로 매핑합니다.
+저자들은 target segmentation 데이터만으로 depth representation을 조정한다. 목표는 절대 깊이 정확도를 높이는 것이 아니라, **객체와 배경을 3D에서 분리하기 좋은 depth**로 바꾸는 것이다. source task의 지식을 보존하면서 target task에 필요한 geometry를 강조한다.
 
-## 본론
+## SOD와 COD를 함께 평가한 이유
 
-핵심 아이디어는 객체가 배경 표면 위로 도드라져 나온다는 3D composition prior입니다. 이 prior를 잘 쓰면 appearance similarity가 큰 장면에서도 object boundaries를 더 잘 reasoning할 수 있습니다.
+논문은 salient object detection과 camouflaged object detection의 여러 데이터셋에서 방법을 평가한다. 두 작업은 RGB 대비가 서로 다르지만, 객체가 배경 표면에서 분리된다는 3D composition prior는 공유할 수 있다. 양쪽에서 이득이 나타난다면 depth cue가 특정 COD 데이터셋의 질감 편향에만 의존한 것이 아니라는 근거가 된다.
 
-## 제안방법
+실험을 볼 때는 RGB-only baseline, raw predicted depth를 넣은 baseline, source-free adaptation을 적용한 모델을 구분해야 한다. 단순히 modality가 하나 늘어난 효과와 contact-surface reasoning의 효과를 분리하는 것이 핵심이다.
 
-저자들은 inferred depth map을 adaptation하고, contact surface intermediate representation을 학습해 purely 3D reasoning으로 object localization을 수행합니다. 이후 이 정보를 semantics와 연결해 segmentation 성능을 높입니다.
+## 좋은 점과 활용 범위
 
-방법을 조금 더 자세히 보면, 소스가 없는 깊이 맵의 도메인 격차를 해결하기 위해 우리는 자체 감독 손실과 약한 의미 감독을 모두 사용하여 엔드 투 엔드 방식으로 의미 네트워크와 소스 없는 깊이를 공동으로 미세 조정할 것을 제안합니다. Local Depth Smoothing: 의사 깊이 감독 외에도 의미론적으로 깊이를 제한하는 두 가지 손실을 제안합니다. 따라서 우리는 기하학적 사전확률과 함께 약한 의미론적 단서를 활용할 것을 제안합니다. 제안된 각 손실이 적절하게 동작하는 것을 볼 수 있습니다. 즉, 기준선에 비해 성능이 향상됩니다.
+이 연구는 대형 pretrained model을 새 과업에 옮길 때 source data가 반드시 필요하지 않다는 실용적인 경로를 보여 준다. depth model의 출력 자체보다 그 안의 3D 지식을 semantic segmentation에 맞게 재구성한다는 점도 중요하다.
 
-## 실험
+원격탐사, 로봇, 의료 영상처럼 RGB appearance가 불안정한 분야에서도 geometry prior를 찾을 수 있다면 비슷한 접근이 가능하다. 다만 각 도메인에서 ‘배경 표면’이 무엇인지 먼저 정의해야 한다.
 
-이 논문은 여덟 개 데이터셋에 걸친 breadth를 강조합니다. COD 하나의 benchmark에 특화했다기보다, pop-out prior가 여러 related tasks에 통한다는 점을 보여줍니다.
+## prior가 깨지는 경우
 
-실험 파트를 조금 더 자세히 보면, 또한 우리는 작업 전문화에도 불구하고 최첨단 결과를 제공하는 24가지 방법(•)을 비교합니다. GT 깊이를 사용하는 우리의 방법은 SOTA 방법보다 성능이 뛰어납니다. 소스가 없는 깊이를 사용하는 방법은 SOTA COD 모델에 비해 훨씬 더 잘 일반화됩니다. 마찬가지로 SOTA RGB-D 모델 중 하나인 SPNet의 경우에도 RGB 전용 입력을 사용하는 NC4K 데이터 세트의 성능은 소스가 없는 추가 깊이를 사용하는 것보다 더 좋습니다.
-
-### 메인 실험 결과
-
-Table 2. Quantitative comparison on COD datasets.
-
-| 깊이 사용 | 학회 | 모델 | CAMO (M↓ Fm↑ Sm↑ Em↑) | CHAMELEON (M↓ Fm↑ Sm↑ Em↑) | COD10K (M↓ Fm↑ Sm↑ Em↑) | NC4K (M↓ Fm↑ Sm↑ Em↑) |
-| --- | --- | --- | --- | --- | --- | --- |
-| RGB | CVPR20 [9] | SINet | .099 .762 .751 .790 | .044 .845 .868 .908 | .051 .708 .771 .832 | .058 .804 .808 .873 |
-| RGB | CVPR21 [42] | SLSR | .080 .791 .787 .843 | .030 .866 .889 .938 | .037 .756 .804 .854 | .048 .836 .839 .898 |
-| RGB | CVPR21 [78] | MGL-R | .088 .791 .775 .820 | .031 .868 .893 .932 | .035 .767 .813 .874 | .053 .828 .832 .876 |
-| RGB | CVPR21 [44] | PFNet | .085 .793 .782 .845 | .033 .859 .882 .927 | .040 .747 .800 .880 | .053 .820 .829 .891 |
-| RGB | CVPR21 [32] | UJSC | .072 .812 .800 .861 | .030 .874 .891 .948 | .035 .761 .808 .886 | .047 .838 .841 .900 |
-| RGB | IJCAI21 [59] | C2FNet | .079 .802 .796 .856 | .032 .871 .888 .936 | .036 .764 .813 .894 | .049 .831 .838 .898 |
-| RGB | ICCV21 [74] | UGTR | .086 .800 .783 .829 | .031 .862 .887 .926 | .036 .769 .816 .873 | .052 .831 .839 .884 |
-| RGB | CVPR22 [21] | SegMAR | .080 .799 .794 .857 | .032 .871 .887 .935 | .039 .750 .799 .876 | .050 .828 .836 .893 |
-| RGB | CVPR22 [47] | ZoomNet | .074 .818 .801 .858 | .033 .829 .859 .915 | .034 .771 .808 .872 | .045 .841 .843 .893 |
-| Source-free RGB-D | MM21 [80] | CDINet | .100 .638 .732 .766 | .036 .787 .879 .903 | .044 .610 .778 .821 | .067 .697 .793 .830 |
-| Source-free RGB-D | CVPR21 [19] | DCF | .089 .724 .749 .834 | .037 .821 .850 .923 | .040 .685 .766 .864 | .061 .765 .791 .878 |
-| Source-free RGB-D | ICCV21 [81] | CMINet | .087 .798 .782 .827 | .032 .881 .891 .930 | .039 .768 .811 .868 | .053 .832 .839 .888 |
-| Source-free RGB-D | ICCV21 [92] | SPNet | .083 .807 .783 .831 | .033 .872 .888 .930 | .037 .776 .808 .869 | .054 .828 .825 .874 |
-| Source-free RGB-D | TIP22 [63] | DCMF | .115 .737 .728 .757 | .059 .807 .830 .853 | .063 .679 .748 .776 | .077 .782 .794 .820 |
-| Source-free RGB-D | ECCV22 [31] | SPSN | .084 .782 .773 .829 | .032 .866 .887 .932 | .042 .727 .789 .854 | .059 .803 .813 .867 |
-| Source-free RGB-D | Ours | PopNet | .073 .821 .806 .869 | .022 .893 .910 .962 | .031 .789 .827 .897 | .043 .852 .852 .908 |
-
-표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
-
-## 결론
-
-이 논문은 depth를 보조 input이 아니라, segmentation reasoning을 재구성하는 prior로 다룹니다. COD를 더 넓은 pop-out 문제로 보는 데 도움이 됩니다.
-
-## 논의
-
-최근 COD가 multimodal로 확장되는 흐름에서, 실제 센서가 없어도 쓸 수 있는 inferred depth prior라는 점이 꽤 매력적입니다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/ICCV2023/html/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/ICCV2023/papers/WU_Source-free_Depth_for_Object_Pop-out_ICCV_2023_paper.pdf
+벽에 그려진 그림, 구멍, 그림자, 투명체처럼 시각적 객체가 배경 surface보다 앞에 있지 않은 장면에서는 pop-out 가정이 맞지 않는다. monocular depth의 scale ambiguity와 얇은 구조 손실도 남는다. mask supervision을 사용하므로 완전한 무감독 학습은 아니다. 실제 일반화를 판단하려면 depth model 종류가 바뀌었을 때의 민감도와 3D prior가 실패하는 장면별 분석이 필요하다.

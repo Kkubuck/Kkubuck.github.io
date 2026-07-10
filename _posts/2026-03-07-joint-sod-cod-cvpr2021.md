@@ -1,112 +1,66 @@
 ---
-layout: "post"
-title: "Uncertainty-Aware Joint Salient Object and Camouflaged Object Detection"
-subtitle: "이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다."
-summary: "이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다."
-description: "이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다."
-date: "2026-03-07 09:00:00 +0900"
-slug: "joint-sod-cod-cvpr2021"
-lang: "ko"
+layout: post
+title: Uncertainty-Aware Joint Salient Object and Camouflaged Object Detection
+subtitle: 서로 반대처럼 보이는 salient object detection과 camouflaged object detection을 함께 학습해, 쉬운 단서와 어려운 단서의 경계를 더 잘 이해하도록 만든 공동 학습
+  프레임워크.
+summary: SOD와 COD의 상반된 속성을 활용해 두 작업을 함께 개선한다. 쉬운 COD 샘플을 SOD의 어려운 양성으로 사용하고, 유사도 측정과 adversarial uncertainty 학습을 결합한다.
+description: SOD와 COD의 상반된 속성을 활용해 두 작업을 함께 개선한다. 쉬운 COD 샘플을 SOD의 어려운 양성으로 사용하고, 유사도 측정과 adversarial uncertainty 학습을 결합한다.
+date: 2026-03-07 09:00:00 +0900
+slug: joint-sod-cod-cvpr2021
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "sod"
-  - "uncertainty"
-  - "cvpr2021"
-venue: "CVPR 2021"
-source_url: "https://openaccess.thecvf.com/content/CVPR2021/html/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/CVPR2021/papers/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.pdf"
+- paper
+- cod
+- sod
+- uncertainty
+- multi-task
+- cvpr-2021
+venue: CVPR 2021
+paper_year: 2021
+paper_authors: Aixuan Li, Jing Zhang, Yunqiu Lv, Bowen Liu, Tong Zhang, Yuchao Dai
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/CVPR2021/html/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.html
+pdf_url: https://openaccess.thecvf.com/content/CVPR2021/papers/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.pdf
+code_url: https://github.com/JingZhang617/Joint_COD_SOD
+takeaways:
+- SOD와 COD를 별개가 아니라 시각적 두드러짐의 양끝으로 바라본다.
+- 쉬운 COD 양성 샘플을 SOD의 어려운 양성으로 재사용하고 두 작업의 유사성과 차이를 함께 학습한다.
+- 공동 학습 이득은 데이터 구성과 라벨 불확실성에 민감하며, 두 작업의 경계가 항상 명확한 것은 아니다.
 ---
-## 오버뷰
 
-이 논문은 SOD와 COD를 서로 반대되는 정보로 활용할 수 있다고 봅니다. easy positives와 hard positives를 교차 활용하고, similarity measure와 uncertainty-aware adversarial learning으로 두 문제를 함께 강화합니다.
+## 반대 작업을 함께 배우기
 
-## 핵심 주장
+SOD는 시선을 끄는 객체를 찾고, COD는 주변에 숨어 눈에 띄지 않는 객체를 찾는다. 표면적으로는 정반대다. 이 논문은 바로 그 대조가 좋은 학습 신호라고 본다. 두드러짐과 위장을 별개의 데이터셋 이름으로 나누기보다, **객체와 배경 사이의 시각적 대비가 연속적으로 변하는 문제**로 해석한다.
 
-- SOD와 COD는 상반된 특성을 갖지만, 서로의 hard/easy sample로 활용할 수 있다.
-- similarity measure module이 두 과제의 contradictory attributes를 명시적으로 모델링한다.
-- uncertainty-aware adversarial learning으로 두 과제 모두에서 SOTA 성능을 얻는다.
+특히 COD 데이터 안에도 비교적 쉽게 보이는 객체가 있다. 저자들은 이런 샘플을 SOD 관점에서는 어려운 양성으로 간주한다. SOD 모델이 뚜렷한 객체만 찾는 습관을 줄이는 동시에, COD 모델은 salient cue가 약해지는 지점을 더 선명하게 배울 수 있다.
 
-## 초록
+## 공동 학습의 세 단계
 
-저자들은 COD의 easy positives를 SOD의 hard positives로, 반대로도 활용하며 두 과제의 상반성을 학습 신호로 바꿉니다. 여기에 higher-order similarity measure와 confidence estimation을 결합해 joint detection framework를 구성합니다.
+첫 단계는 샘플 재사용이다. 쉬운 COD 양성을 SOD 학습에 넣어 salient detector의 결정 경계를 넓힌다. 단순히 두 데이터셋을 합치면 작업 정체성이 흐려질 수 있으므로, 두 번째로 **similarity measure module**을 두어 SOD와 COD 특징의 공통점과 상반된 속성을 명시적으로 측정한다.
 
-초록을 조금 더 풀어보면, 시각적 돌출 객체 탐지(SOD)는 사람의 관심을 끄는 두드러진 객체를 찾는 것이 목표인 반면, 위장 객체 탐지(COD)는 주변에 숨겨져 있는 위장 객체를 찾아내는 것이 목표입니다. 본 논문에서는 돌출 객체 탐지와 위장 객체 탐지 모두의 탐지 능력을 향상시키기 위해 모순되는 정보를 활용하는 패러다임을 제안합니다. 우리는 SOD 모델의 견고성을 향상시키기 위해 SOD 작업에서 하드 포지티브 샘플 역할을 하기 위해 COD 데이터세트의 쉬운 포지티브 샘플을 활용하는 것부터 시작합니다. 그런 다음 이 두 작업의 모순되는 속성을 명시적으로 모델링하기 위해 "유사성 측정" 모듈을 도입합니다.
+세 번째는 uncertainty-aware adversarial learning이다. 두 데이터셋의 라벨은 항상 완벽하지 않고, SOD와 COD의 경계에 놓인 장면은 어느 쪽으로도 단정하기 어렵다. adversarial 학습을 이용해 더 높은 수준의 작업 관계를 맞추는 동시에 네트워크의 confidence를 추정한다. 불확실한 샘플을 무조건 확정적인 정답처럼 밀어붙이지 않으려는 장치다.
 
-## 서론
+## 무엇이 흥미로운가
 
-COD와 SOD를 같이 보는 시도는 지금도 반복되지만, 이 논문은 가장 초기에 그 관계를 구조적으로 다룬 축에 가깝습니다.
+이 설계의 강점은 보조 작업을 임의로 붙이지 않았다는 데 있다. SOD와 COD는 출력 형태가 모두 이진 분할이라 아키텍처를 공유하기 쉽고, 시각적 대비라는 공통 축에서 서로 다른 난도를 제공한다. 한 작업의 쉬운 샘플이 다른 작업의 hard positive가 된다는 관찰도 데이터 효율 측면에서 설득력이 있다.
 
-서론에서는 특히, 시각적 두드러진 객체 감지(SOD)는 인간의 관심을 끄는 이미지의 가장 두드러진 영역을 파악하는 것을 목표로 합니다. "주요" 개체로 자격을 얻으려면 글로벌 및 로컬 컨텍스트에 비해 대비가 높아야 합니다. 기존 SOD 모델은 주로 두 가지 방향에 중점을 둡니다. 1) 픽셀별 정확도 제약 조건을 사용하여 정확한 돌출 감지를 위한 효과적인 돌출 네트워크를 구축합니다. 2) 구조 보존 돌출성 탐지를 달성하기 위해 적절한 손실 함수를 설계합니다.
+또한 공동 학습은 “위장 객체 전용 특징”이 실제로 존재하는지 생각하게 한다. 경계, 지역 대비, 전역 문맥 같은 단서는 두 작업 모두 필요하고, 중요한 것은 어떤 조건에서 그 단서를 신뢰할지일 수 있다.
 
-## 본론
+## 실험에서 확인할 부분
 
-중요한 포인트는 두 과제를 같은 문제로 합치지 않는다는 점입니다. 서로 반대되는 속성을 이용해 representation을 더 탄탄하게 만드는 방식입니다.
+논문은 SOD와 COD의 여러 벤치마크에서 각각 단독 모델보다 공동 학습 모델이 개선된다고 보고한다. 수치보다 먼저 봐야 할 것은 한쪽 성능을 희생해 다른 쪽만 올린 것이 아닌지다. 결과는 두 작업 모두에서 이득을 보여 상반된 정보의 공유가 단순한 타협은 아니라는 근거를 제공한다.
 
-## 제안방법
+절제 실험에서는 COD 샘플 재사용, similarity modeling, uncertainty-aware adversarial component가 순차적으로 기여하는지를 확인한다. 공동 학습 논문은 데이터 양이 늘어난 효과와 구조의 효과가 섞이기 쉬우므로, 이런 분해가 특히 중요하다.
 
-easy/hard sample transfer, similarity measure module, adversarial learning 기반 confidence estimation을 결합해 joint framework를 설계합니다.
+## 오늘의 관점에서 읽기
 
-방법을 조금 더 자세히 보면, 세 가지 데이터 세트(COD 데이터 세트 Dc, 증강 SOD 데이터 세트 Ds 및 연결 모델링 데이터 세트 Dp)를 사용하여 모순되는 모델링 프레임워크는 "특징 인코더" 모듈을 사용하여 위장 기능과 돌출 기능을 모두 추출한 다음 "유사성 측정" 모듈을 사용하여 연결 모델링 데이터 세트로 두 작업의 연결을 모델링합니다. 구체적으로, 우리는 더 미세한 특징을 추출하기 위해 잔여 채널 주의 모듈 Re를 사용하여 하향식 연결 네트워크를 설계합니다. 구체적으로, 우리는 "예측 디코더" 모듈의 예측 신뢰도를 평가하기 위해 완전 컨벌루션 판별기 네트워크를 설계합니다. 입력 채널 출력 채널 커널 크기 스트라이드 패딩 예측 디코더 모듈의 경우 먼저 각 작업을 학습하기 위한 작업별 손실 함수를 갖습니다.
+최근 foundation model은 하나의 백본으로 여러 분할 작업을 다룬다. 이 논문은 그보다 앞서 **작업 사이의 모순을 제거하지 말고 감독 신호로 사용하라**는 방향을 보여준다. prompt나 task token만 바꾸는 모델에서도 SOD와 COD가 무엇을 공유하고 어디서 갈라지는지 분석할 때 좋은 기준이 된다.
 
-## 실험
+내가 가져갈 아이디어는 hard positive의 재정의다. 새로운 데이터를 만들지 않아도, 한 작업의 쉬운 예시를 다른 작업의 어려운 예시로 재배치하면 결정 경계를 풍부하게 만들 수 있다.
 
-논문은 SOD와 COD 두 영역의 benchmark에서 모두 좋은 성능을 내는 점을 강조합니다. joint learning이 한쪽만 희생하지 않는다는 메시지입니다.
+## 조심해서 볼 지점
 
-실험 파트를 조금 더 자세히 보면, COD 성능 비교 오픈 소스 심층 위장 개체 탐지 네트워크(특히 SINet)가 하나만 존재하므로 위장 개체 탐지 훈련 데이터 세트로 기존 돌출 탐지 모델을 재훈련하고 기존 위장 개체 탐지 테스트 세트에서 테스트합니다. 일반적으로 유사성 측정 모듈의 효율성을 검증하는 COD10K 데이터 세트의 경우 향상된 성능을 관찰할 수 있습니다. SOD 훈련 데이터 세트에는 COD 데이터 세트의 2.5배인 10,553개의 이미지가 포함되어 있습니다(COD의 훈련 데이터 세트 크기는 4,040입니다). 유사성 측정 모듈의 경우 PASCAL VOC 2007 데이터세트에 눈에 띄고 위장된 일부 샘플이 포함되어 있으며 이는 유사성 측정 목표와 모순됩니다.
-
-### 메인 실험 결과
-
-Table 2-3. Joint benchmark comparison for SOD and COD.
-
-**SOD benchmark 비교표**
-
-| 모델 | DUTS (Sα↑ Fβ↑ Eξ↑ M↓) | ECSSD (Sα↑ Fβ↑ Eξ↑ M↓) | DUT (Sα↑ Fβ↑ Eξ↑ M↓) | HKU-IS (Sα↑ Fβ↑ Eξ↑ M↓) | THUR (Sα↑ Fβ↑ Eξ↑ M↓) | SOC (Sα↑ Fβ↑ Eξ↑ M↓) |
-| --- | --- | --- | --- | --- | --- | --- |
-| NLDF [33] | .816 .757 .851 .065 | .870 .871 .896 .066 | .770 .683 .798 .080 | .879 .871 .914 .048 | .801 .711 .827 .081 | .816 .319 .837 .106 |
-| PiCANet [30] | .842 .757 .853 .062 | .898 .872 .909 .054 | .817 .711 .823 .072 | .895 .854 .910 .046 | .818 .710 .821 .084 | .801 .332 .810 .133 |
-| CPD [47] | .869 .821 .898 .043 | .913 .909 .937 .040 | .825 .742 .847 .056 | .906 .892 .938 .034 | .835 .750 .853 .068 | .841 .356 .862 .093 |
-| SCRN [48] | .885 .833 .900 .040 | .920 .910 .933 .041 | .837 .749 .847 .056 | .916 .894 .935 .034 | .845 .758 .858 .066 | .838 .363 .859 .099 |
-| PoolNet [29] | .887 .840 .910 .037 | .919 .913 .938 .038 | .831 .748 .848 .054 | .919 .903 .945 .030 | .834 .745 .850 .070 | .829 .355 .846 .106 |
-| BASNet [38] | .876 .823 .896 .048 | .910 .913 .938 .040 | .836 .767 .865 .057 | .909 .903 .943 .032 | .823 .737 .841 .073 | .841 .359 .864 .092 |
-| EGNet [57] | .878 .824 .898 .043 | .914 .906 .933 .043 | .840 .755 .855 .054 | .917 .900 .943 .031 | .839 .752 .854 .068 | .858 .353 .873 .078 |
-| AFNet [12] | .867 .812 .893 .046 | .907 .901 .929 .045 | .826 .743 .846 .057 | .905 .888 .934 .036 | .825 .733 .840 .072 | .700 .062 .684 .115 |
-| CSNet [15] | .884 .834 .907 .040 | .920 .911 .940 .038 | .836 .750 .852 .055 | .918 .900 .944 .031 | .841 .756 .856 .068 | .834 .352 .850 .103 |
-| F3Net [46] | .888 .852 .920 .035 | .919 .921 .943 .036 | .839 .766 .864 .053 | .917 .910 .952 .028 | .838 .761 .858 .066 | .828 .340 .846 .098 |
-| ITSD [59] | .886 .841 .917 .039 | .920 .916 .943 .037 | .842 .767 .867 .056 | .921 .906 .950 .030 | .836 .753 .852 .070 | .773 .361 .792 .166 |
-| Ours | .899 .866 .937 .032 | .933 .935 .960 .030 | .850 .782 .884 .051 | .931 .924 .867 .026 | .849 .774 .872 .065 | .845 .374 .856 .092 |
-
-**COD benchmark 비교표**
-
-| 모델 | CAMO (Sα↑ Fβ↑ Eξ↑ M↓) | CHAMELEON (Sα↑ Fβ↑ Eξ↑ M↓) | COD10K (Sα↑ Fβ↑ Eξ↑ M↓) |
-| --- | --- | --- | --- |
-| NLDF[33] | 0.665 0.564 0.664 0.123 | 0.798 0.714 0.809 0.063 | 0.701 0.539 0.709 0.059 |
-| PiCANet[30] | 0.701 0.573 0.716 0.125 | 0.765 0.618 0.779 0.085 | 0.696 0.489 0.712 0.081 |
-| CPD [47] | 0.716 0.618 0.723 0.113 | 0.857 0.771 0.874 0.048 | 0.750 0.595 0.776 0.053 |
-| SCRN [48] | 0.779 0.705 0.796 0.090 | 0.876 0.787 0.889 0.042 | 0.789 0.651 0.817 0.047 |
-| PoolNet [29] | 0.730 0.643 0.746 0.105 | 0.845 0.749 0.864 0.054 | 0.740 0.576 0.776 0.056 |
-| BASNet [38] | 0.615 0.503 0.671 0.124 | 0.847 0.795 0.883 0.044 | 0.661 0.486 0.729 0.071 |
-| EGNet [57] | 0.737 0.655 0.758 0.102 | 0.856 0.766 0.883 0.049 | 0.751 0.595 0.793 0.053 |
-| CSNet[15] | 0.771 0.705 0.795 0.092 | 0.856 0.766 0.869 0.047 | 0.778 0.635 0.810 0.047 |
-| F3Net [46] | 0.711 0.616 0.741 0.109 | 0.848 0.770 0.894 0.047 | 0.739 0.593 0.795 0.051 |
-| ITSD[59] | 0.750 0.663 0.779 0.102 | 0.814 0.705 0.844 0.057 | 0.767 0.615 0.808 0.051 |
-| SINet [11] | 0.745 0.702 0.804 0.092 | 0.872 0.827 0.936 0.034 | 0.776 0.679 0.864 0.043 |
-| Ours | 0.803 0.759 0.853 0.076 | 0.894 0.848 0.943 0.030 | 0.817 0.726 0.892 0.035 |
-
-표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
-
-## 결론
-
-이 논문은 COD를 반대 과제와 함께 읽는 관점을 만든 작업입니다. 이후 generalist 논문을 볼 때도 자주 되짚게 됩니다.
-
-## 논의
-
-최근 USCNet이나 VSCode 같은 논문이 왜 자연스럽게 읽히는지 이해하려면, 이런 초기 joint-task 논문을 같이 보는 편이 좋습니다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/CVPR2021/html/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/CVPR2021/papers/Li_Uncertainty-Aware_Joint_Salient_Object_and_Camouflaged_Object_Detection_CVPR_2021_paper.pdf
+salient와 camouflaged는 완전한 이분법이 아니다. 한 장면에서도 관찰자, 크롭, 해상도에 따라 객체가 두드러져 보일 수 있다. 데이터셋별 촬영 스타일이나 배경 편향을 작업 차이로 오인할 위험도 있다. 불확실성 추정이 이런 분포 차이까지 제대로 반영하는지, 새로운 데이터셋에서도 같은 공동 학습 이득이 유지되는지는 별도 검증이 필요하다.

@@ -1,71 +1,64 @@
 ---
-layout: "post"
-title: "Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection"
-subtitle: "ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다."
-summary: "ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다."
-description: "ARM은 외부 foundation model의 정보를 그대로 끌어오지 않고, COD에 맞게 정제된 prompt와 auxiliary embedding으로 SAM을 보강한다."
-date: "2026-03-31 09:00:00 +0900"
-slug: "adaptive-refinement-arm-cod"
-lang: "ko"
+layout: post
+title: Enhancing Prompt Generation with Adaptive Refinement for Camouflaged Object Detection
+subtitle: 다른 foundation model이 만든 multimodal prompt를 그대로 SAM에 넣지 않고, domain-shift bias를 걸러 mask prompt와 intermediate embedding을
+  함께 정제하는 Adaptive Refinement Module.
+summary: ARM은 multimodal 정보와 mask prompt를 동시에 보정하고, refinement 과정의 중간 표현을 auxiliary embedding으로 재사용해 SAM에 더 풍부한 조건을 제공한다.
+description: ARM은 multimodal 정보와 mask prompt를 동시에 보정하고, refinement 과정의 중간 표현을 auxiliary embedding으로 재사용해 SAM에 더 풍부한 조건을 제공한다.
+date: 2026-03-31 09:00:00 +0900
+slug: adaptive-refinement-arm-cod
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "sam"
-  - "iccv2025"
-venue: "ICCV 2025"
-source_url: "https://openaccess.thecvf.com/content/ICCV2025/html/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/ICCV2025/papers/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.pdf"
+- paper
+- sam
+- prompt-refinement
+- multimodal
+- iccv-2025
+venue: ICCV 2025
+paper_year: 2025
+paper_authors: Xuehan Chen, Guangyu Ren, Tianhong Dai, Tania Stathaki, Hengyan Liu
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/ICCV2025/html/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.html
+pdf_url: https://openaccess.thecvf.com/content/ICCV2025/papers/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.pdf
+takeaways:
+- foundation model의 추가 정보도 domain shift로 인한 bias를 가질 수 있으므로 곧바로 prompt로 쓰지 않는다.
+- ARM이 multimodal feature를 필터링하며 mask prompt를 갱신하고, intermediate 정보는 auxiliary embedding으로 SAM에 전달한다.
+- 개선이 refinement 자체인지 더 많은 foundation model과 파라미터 때문인지 자원 맞춤 비교가 필요하다.
 ---
-## 오버뷰
 
-SAM 계열 COD 논문이 많아졌지만, 외부 foundation model의 정보를 그대로 가져오면 domain shift로 오히려 편향이 커질 수 있다. 이 논문은 Adaptive Refinement Module(ARM)로 그 정보를 정제한 뒤 prompt와 auxiliary embedding 형태로 다시 넣는다.
+## 더 많은 modality가 항상 더 좋은 prompt는 아니다
 
-## 핵심 주장
+SAM을 COD에 적용하는 연구는 caption, depth, edge, 다른 vision foundation model의 feature를 자동 prompt로 자주 사용한다. 그러나 이 모델들은 일반 이미지나 다른 task에서 학습되었기 때문에 위장 장면에 그대로 넣으면 domain-shift bias를 전달할 수 있다. 잘못된 semantic이나 거친 mask가 강한 prompt가 되면 SAM은 오히려 자신 있게 틀린다.
 
-- 외부 foundation model의 멀티모달 정보를 직접 붙이면 COD에서는 오히려 bias가 커질 수 있다.
-- ARM은 멀티모달 정보를 COD 친화적으로 정제하면서 mask prompt를 함께 다듬는다.
-- COMPrompter와 비교해 네 데이터셋 모두에서 Sm을 개선했고, MAE 성격의 M도 대체로 더 낮췄다.
+이 논문은 문제를 “추가 정보를 얼마나 많이 모을까”가 아니라 **들어온 정보를 어떻게 정제할까**로 바꾼다. Adaptive Refinement Module(ARM)이 외부 multimodal feature와 mask prompt를 함께 처리한다.
 
-## 초록
+## ARM의 두 출력
 
-논문은 Segment Anything Model이 일반 분할에는 강하지만 COD 같은 다운스트림 태스크에서는 여전히 한계가 있다고 본다. 기존 연구는 다른 foundation model에서 온 멀티모달 정보를 결합해 성능을 높이려 했지만, 이 논문은 그 정보가 그대로 들어오면 domain shift로 편향이 생길 수 있다고 지적한다. 이를 위해 ARM과 auxiliary embedding을 제안한다.
+첫 번째 출력은 refined mask prompt다. 외부 모델이 만든 초기 mask에서 배경으로 번진 부분과 누락된 구조를 multimodal context를 이용해 갱신한다. 장면마다 modality 신뢰도가 다르므로 고정 fusion 대신 adaptive weighting이 필요하다.
 
-초록을 조금 더 풀어보면, SAM(Segment Anything Model)과 같은 기초 모델은 주로 대규모 데이터 세트에 대한 교육으로 인해 기존 분할 작업에서 놀라운 성능을 보여왔습니다. 그럼에도 불구하고 COD(위장 물체 탐지)와 같은 특정 다운스트림 작업에는 여전히 과제가 남아 있습니다. 기존 연구는 주로 다른 기초 모델에서 파생된 추가 다중 모드 정보를 통합하여 성능을 향상시키는 것을 목표로 합니다. 그러나 이러한 모델에서 생성된 정보를 직접 활용하면 영역 이동으로 인해 추가적인 편향이 발생할 수 있습니다.
+두 번째 출력은 refinement 중간에 생긴 **auxiliary embedding**이다. 보통 prompt refinement는 최종 mask만 남기고 내부 정보는 버리지만, 저자들은 그 과정에서 추출된 semantic과 boundary cue를 SAM의 추가 조건으로 전달한다. 최종 prompt가 압축하면서 잃은 정보를 보완한다.
 
-## 서론
+## mask와 embedding을 같이 쓰는 이유
 
-이 논문이 짚는 지점은 꽤 중요하다. foundation model을 많이 붙일수록 좋아질 것처럼 보이지만, 실제로는 분포가 다른 정보가 prompt를 흐릴 수 있다. COD는 객체와 배경이 원래 비슷해서, 작은 편향도 최종 마스크 품질에 크게 영향을 준다.
+mask prompt는 어디가 객체인지 직접 알려 주지만 오류에도 민감하다. embedding은 위치가 덜 명시적인 대신 어떤 특징을 신뢰해야 하는지 더 풍부하게 담을 수 있다. 둘을 함께 쓰면 하나는 spatial constraint, 다른 하나는 representation guidance 역할을 한다.
 
-서론에서는 특히, 위장 개체 감지(COD)는 주변 환경과 거의 동일한 개체를 분할하는 까다로운 컴퓨터 비전 작업입니다. 물체 감지, 저고도 경제, 동물학 연구, 의료 영상 분할 등 광범위한 실제 적용으로 인해 해당 분야에서 중요한 역할을 합니다. 또한, 다른 양식의 데이터가 부족하면 모델이 의미 있는 특징을 획득하는 능력이 더욱 제한되어 배경에 매우 민감해지고 위장된 물체를 정확하게 감지할 수 없게 됩니다. 한편, 배경의 시각적 노이즈는 작업의 복잡성을 증가시켜 객체 경계가 모호해지고 특징 학습이 약화됩니다.
+ARM은 이 두 출력을 같은 refinement 과정에서 만들므로 서로 불일치할 가능성을 줄인다. 외부 modality를 단순 concat한 뒤 SAM decoder에 맡기는 것보다 prompt 생성 단계에서 bias를 먼저 걸러내는 설계다.
 
-## 본론
+## structured target에서의 의미
 
-ARM의 아이디어는 멀티모달 정보를 그냥 전달하지 않고 refinement 단계를 먼저 거치는 것이다. 즉, prompt engineering이라기보다 prompt filtering에 가깝다. 그리고 intermediate information으로 auxiliary embedding을 만들어 SAM이 richer representation을 가지게 한다.
+논문은 특히 구조가 복잡한 target segmentation에서 강점을 보고한다. 이는 prompt refinement가 넓은 객체 내부보다 가는 부분과 경계 누락을 복원하는 데 도움을 준다는 해석과 맞는다. 평균 지표와 함께 thin structure, multiple components, occlusion subset을 보면 주장이 더 선명해진다.
 
-## 제안방법
+절제에서는 raw multimodal prompt, refined mask만 사용, auxiliary embedding만 사용, 둘 다 사용하는 설정을 나눠야 한다. 또한 외부 foundation model을 동일하게 둔 baseline과 비교해야 ARM의 순수 기여를 알 수 있다.
 
-논문은 ARM이 멀티모달 feature를 효율적으로 처리하면서 동시에 mask prompt를 refine한다고 설명한다. 또 ARM 내부 중간 정보를 auxiliary embedding으로 구성해 SAM 쪽으로 넘겨 richer feature representation을 만든다. 구조가 과하게 복잡하기보다는, foundation model 정보를 COD 목적에 맞게 다듬는 모듈 설계에 집중한 형태다.
+## 다른 연구와의 차이
 
-방법을 조금 더 자세히 보면, ARM은 처음 생성된 마스크 프롬프트가 객체의 일부만 덮거나 배경을 많이 끌어오는 문제를 먼저 해결하려고 합니다. 이를 위해 어댑터가 모아 둔 멀티모달 정보를 이용해 attention을 다시 조정하고, 초기 프롬프트를 더 넓고 안정적인 형태로 재구성합니다. 동시에 refinement 과정에서 나온 중간 표현을 auxiliary embedding으로 넘겨, SAM 쪽이 더 풍부한 문맥 정보를 가지고 최종 마스크를 예측하도록 만든다는 점이 핵심입니다.
+Vision-Language-SAM이 BLIP의 text·visual embedding을 SAM에 넣는 경로를 설계했다면, ARM은 **그 입력이 틀릴 수 있다는 전제**를 더 강하게 둔다. modality 추가가 아니라 domain adaptation과 prompt quality control에 초점을 맞춘다.
 
-## 실험
+이 아이디어는 자동 prompt pipeline 전반에 중요하다. upstream model의 오류를 downstream foundation model이 알아서 고칠 것이라 기대하지 말고, 두 모델 사이에 uncertainty-aware interface를 설계해야 한다.
 
-아래 표는 COMPrompter와 제안 방법을 dataset별 Sm, M 기준으로 다시 정리한 것이다.
+## 한계
 
-실험 파트를 조금 더 자세히 보면, 최첨단 방법과의 비교 COD 작업의 성과를 효과적으로 평가하기 위해 먼저 현재의 최첨단(SOTA) 모델과 비교 분석을 수행했습니다. 1은 4개의 서로 다른 데이터 세트에 대한 우리 작업과 다른 SOTA 모델의 평가 결과를 비교합니다. 4에서 우리의 방법(빨간색 실선)은 세 가지 데이터 세트 모두에서 뛰어난 성능을 나타내며 특히 COD10K 데이터 세트에서 놀라운 결과를 나타냄이 분명합니다. 2에서 제안된 ARM은 COD 작업에서 SAM의 성능을 크게 향상시켜 세 가지 데이터 세트에 대한 모든 평가 지표에서 상당한 개선을 달성했습니다.
-
-## 결론
-
-이 논문은 SAM을 위한 prompt를 더 많이 만드는 것보다, 더 잘 정제하는 편이 COD에는 유리하다고 말한다. 그 메시지가 수치로도 꽤 설득력 있게 나온다.
-
-## 논의
-
-SAM 기반 COD 논문이 쌓이는 흐름 안에서 보면, ARM은 멀티모달 정보를 '붙이는 방법'보다 '거르는 방법'을 강조한 점이 인상적이다. foundation model integration이 언제나 정답이 아니라는 점을 차분히 보여주는 논문이다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/ICCV2025/html/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/ICCV2025/papers/Chen_Enhancing_Prompt_Generation_with_Adaptive_Refinement_for_Camouflaged_Object_Detection_ICCV_2025_paper.pdf
+ARM이 어떤 modality를 왜 억제했는지 해석이 어렵고, training domain에서 배운 weighting이 새로운 sensor나 장면에 그대로 맞지 않을 수 있다. 여러 foundation model을 동시에 실행하는 비용도 크다. 실제 배포에서는 prompt 품질 개선이 latency와 memory 증가를 정당화하는지, 모든 modality가 없는 상황에서도 graceful degradation을 보이는지 확인해야 한다.

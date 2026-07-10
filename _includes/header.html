@@ -1,52 +1,50 @@
 {% assign current_url = page.url | default: '/' %}
 <header class="site-header" data-site-header>
-  <div class="site-header__inner glass-surface">
-    <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="Kkubuck Blog home">
-      <span class="site-brand__mark" aria-hidden="true"><i></i><i></i><b></b></span>
-      <span class="site-brand__text"><strong>Kkubuck</strong><small>Research Archive</small></span>
+  <div class="site-header__inner">
+    <a class="site-brand" href="{{ '/' | relative_url }}" aria-label="Kkubuck 연구 노트 홈">
+      <span class="site-brand__mark" aria-hidden="true"></span>
+      <span class="site-brand__text"><strong>Kkubuck</strong><small>연구 노트</small></span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary menu">
-      <a href="{{ '/' | relative_url }}"{% if current_url == '/' %} class="is-current" aria-current="page"{% endif %}>Home</a>
-      <a href="{{ '/papers/' | relative_url }}"{% if current_url contains '/papers/' %} class="is-current" aria-current="page"{% endif %}>Papers</a>
-      <a href="{{ '/blog/' | relative_url }}"{% if current_url contains '/blog/' %} class="is-current" aria-current="page"{% endif %}>Blog</a>
-      <a href="{{ '/projects/' | relative_url }}"{% if current_url contains '/projects/' or current_url contains '/subprojects/' %} class="is-current" aria-current="page"{% endif %}>Projects</a>
-      <a href="{{ '/tags/' | relative_url }}"{% if current_url contains '/tags/' %} class="is-current" aria-current="page"{% endif %}>Tags</a>
+    <nav class="desktop-nav" aria-label="주 메뉴">
+      <a href="{{ '/' | relative_url }}"{% if current_url == '/' %} class="is-current" aria-current="page"{% endif %}>홈</a>
+      <a href="{{ '/papers/' | relative_url }}"{% if current_url contains '/papers/' %} class="is-current" aria-current="page"{% endif %}>논문</a>
+      <a href="{{ '/blog/' | relative_url }}"{% if current_url contains '/blog/' %} class="is-current" aria-current="page"{% endif %}>기록</a>
+      <a href="{{ '/projects/' | relative_url }}"{% if current_url contains '/projects/' or current_url contains '/subprojects/' %} class="is-current" aria-current="page"{% endif %}>프로젝트</a>
+      <a href="{{ '/tags/' | relative_url }}"{% if current_url contains '/tags/' %} class="is-current" aria-current="page"{% endif %}>주제</a>
       <a href="{{ '/cv/' | relative_url }}"{% if current_url contains '/cv/' %} class="is-current" aria-current="page"{% endif %}>CV</a>
     </nav>
 
     <div class="site-header__actions">
-      <button class="header-search" type="button" data-command-open aria-label="Open search">
+      <button class="header-search" type="button" data-command-open aria-label="전체 검색 열기">
         <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#search"></use></svg>
-        <span>Search</span><kbd>⌘K</kbd>
+        <span>검색</span><kbd>⌘K</kbd>
       </button>
-      <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle color mode" aria-pressed="false">
+      <button class="icon-button" type="button" data-theme-toggle aria-label="색상 모드 전환" aria-pressed="false">
         <svg class="icon theme-icon theme-icon--moon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#moon"></use></svg>
         <svg class="icon theme-icon theme-icon--sun" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#sun"></use></svg>
       </button>
-      <button class="mobile-menu-button" type="button" data-mobile-menu-open aria-label="Open menu" aria-controls="mobile-navigation" aria-expanded="false">
-        <span></span><span></span>
-      </button>
+      <button class="mobile-menu-button" type="button" data-mobile-menu-open aria-label="메뉴 열기" aria-controls="mobile-navigation" aria-expanded="false"><span></span><span></span></button>
     </div>
   </div>
 
   <div class="mobile-menu" id="mobile-navigation" data-mobile-menu aria-hidden="true">
-    <button class="mobile-menu__backdrop" type="button" data-mobile-menu-close tabindex="-1" aria-label="Close menu"></button>
-    <div class="mobile-menu__panel glass-surface" role="dialog" aria-modal="true" aria-label="Site menu">
+    <button class="mobile-menu__backdrop" type="button" data-mobile-menu-close tabindex="-1" aria-label="메뉴 닫기"></button>
+    <div class="mobile-menu__panel" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
       <div class="mobile-menu__head">
-        <span><strong>Kkubuck</strong><small>Research Archive</small></span>
-        <button class="icon-button" type="button" data-mobile-menu-close aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg></button>
+        <span><strong>Kkubuck</strong><small>읽기와 실험의 기록</small></span>
+        <button class="icon-button" type="button" data-mobile-menu-close aria-label="메뉴 닫기"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#close"></use></svg></button>
       </div>
-      <nav aria-label="Mobile primary menu">
-        <a href="{{ '/' | relative_url }}"><span>01</span><strong>Home</strong><small>Archive Start</small></a>
-        <a href="{{ '/papers/' | relative_url }}"><span>02</span><strong>Papers</strong><small>Paper Notes</small></a>
-        <a href="{{ '/blog/' | relative_url }}"><span>03</span><strong>Blog</strong><small>Experiments</small></a>
-        <a href="{{ '/projects/' | relative_url }}"><span>04</span><strong>Projects</strong><small>Builds</small></a>
-        <a href="{{ '/tags/' | relative_url }}"><span>05</span><strong>Tags</strong><small>Topics</small></a>
-        <a href="{{ '/cv/' | relative_url }}"><span>06</span><strong>CV</strong><small>Profile</small></a>
-        <a href="{{ '/about/' | relative_url }}"><span>07</span><strong>About</strong><small>Archive Guide</small></a>
+      <nav aria-label="모바일 주 메뉴">
+        <a href="{{ '/' | relative_url }}"><span>01</span><strong>홈</strong><small>최근 기록과 연구 주제</small></a>
+        <a href="{{ '/papers/' | relative_url }}"><span>02</span><strong>논문</strong><small>논문 읽기와 비평</small></a>
+        <a href="{{ '/blog/' | relative_url }}"><span>03</span><strong>기록</strong><small>공부와 구현 과정</small></a>
+        <a href="{{ '/projects/' | relative_url }}"><span>04</span><strong>프로젝트</strong><small>도구와 실험 결과</small></a>
+        <a href="{{ '/tags/' | relative_url }}"><span>05</span><strong>주제</strong><small>태그별 모아보기</small></a>
+        <a href="{{ '/cv/' | relative_url }}"><span>06</span><strong>CV</strong><small>연구 및 학술 이력</small></a>
+        <a href="{{ '/about/' | relative_url }}"><span>07</span><strong>소개</strong><small>이 아카이브의 기준</small></a>
       </nav>
-      <a class="mobile-menu__github" href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg><span>GitHub</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg></a>
+      <a class="mobile-menu__github" href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#github"></use></svg><span>GitHub에서 보기</span><svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#external"></use></svg></a>
     </div>
   </div>
 </header>

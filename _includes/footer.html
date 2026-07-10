@@ -2,18 +2,18 @@
   <div class="site-footer__inner">
     <div class="site-footer__brand">
       <span class="site-footer__mark" aria-hidden="true"></span>
-      <div><strong>Kkubuck Blog</strong><p>Paper notes and experiments organized for reuse.</p></div>
+      <div><strong>Kkubuck 연구 노트</strong><p>논문을 읽고, 실험하고, 다시 설명할 수 있을 때까지 정리합니다.</p></div>
     </div>
-    <nav aria-label="Footer menu">
-      <a href="{{ '/papers/' | relative_url }}">Papers</a>
-      <a href="{{ '/blog/' | relative_url }}">Blog</a>
-      <a href="{{ '/projects/' | relative_url }}">Projects</a>
-      <a href="{{ '/about/' | relative_url }}">About</a>
+    <nav aria-label="푸터 메뉴">
+      <a href="{{ '/papers/' | relative_url }}">논문</a>
+      <a href="{{ '/blog/' | relative_url }}">기록</a>
+      <a href="{{ '/projects/' | relative_url }}">프로젝트</a>
+      <a href="{{ '/about/' | relative_url }}">소개</a>
       <a href="{{ site.data.profile.webpage }}" target="_blank" rel="noreferrer">GitHub ↗</a>
     </nav>
     <div class="site-footer__meta">
-      <p>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }} · Jekyll & GitHub Pages</p>
-      <button type="button" data-scroll-top>Back to top <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg></button>
+      <p>© {{ 'now' | date: '%Y' }} {{ site.data.profile.username }} · Jekyll과 GitHub Pages로 운영합니다.</p>
+      <button type="button" data-scroll-top>맨 위로 <svg class="icon" aria-hidden="true"><use href="{{ '/assets/icons.svg' | relative_url }}#arrow-up"></use></svg></button>
     </div>
   </div>
 </footer>

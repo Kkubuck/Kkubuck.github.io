@@ -1,92 +1,65 @@
 ---
-layout: "post"
-title: "The Making and Breaking of Camouflage"
-subtitle: "이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다."
-summary: "이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다."
-description: "이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다."
-date: "2026-03-18 09:00:00 +0900"
-slug: "making-and-breaking-of-camouflage-iccv2023"
-lang: "ko"
+layout: post
+title: The Making and Breaking of Camouflage
+subtitle: 탐지 모델을 바로 설계하기보다 무엇이 위장을 성공시키고 깨뜨리는지 점수화하고, 그 점수를 합성 데이터 생성과 비디오 분할 학습에 다시 연결한 분석 중심 연구.
+summary: foreground–background feature similarity와 boundary visibility로 camouflage effectiveness를 측정하고, 이를 생성 모델의 auxiliary
+  loss로 사용해 VCOD 학습 데이터를 만든다.
+description: foreground–background feature similarity와 boundary visibility로 camouflage effectiveness를 측정하고, 이를 생성 모델의 auxiliary
+  loss로 사용해 VCOD 학습 데이터를 만든다.
+date: 2026-03-18 09:00:00 +0900
+slug: making-and-breaking-of-camouflage-iccv2023
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "vcod"
-  - "iccv2023"
-venue: "ICCV 2023"
-source_url: "https://openaccess.thecvf.com/content/ICCV2023/html/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/ICCV2023/papers/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.pdf"
+- paper
+- camouflage-analysis
+- synthetic-data
+- video-cod
+- iccv-2023
+venue: ICCV 2023
+paper_year: 2023
+paper_authors: Hala Lamdouar, Weidi Xie, Andrew Zisserman
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/ICCV2023/html/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.html
+pdf_url: https://openaccess.thecvf.com/content/ICCV2023/papers/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.pdf
+takeaways:
+- 모든 위장 샘플이 같은 난도라는 가정을 버리고, 객체·배경 유사성과 경계 가시성으로 효과를 측정한다.
+- 측정 점수를 dataset 진단에만 쓰지 않고 생성 모델의 loss로 연결해 더 어려운 합성 데이터를 만든다.
+- 학습된 perceptual feature로 정의한 점수가 인간의 실제 탐지 난도를 완전히 대변하는지는 별도 검증이 필요하다.
 ---
-## 오버뷰
 
-이 논문은 단순히 위장 객체를 찾는 모델을 제안하는 데서 멈추지 않고, 무엇이 camouflage를 성공하게 만들고 무엇이 그것을 깨뜨리는지를 score로 정의합니다. 그 score를 synthetic data generation과 video segmentation에 다시 연결한 점이 인상적입니다.
+## “무엇이 잘 숨은 것인가”부터 묻기
 
-## 핵심 주장
+많은 COD 논문은 주어진 데이터셋에서 마스크 점수를 올리는 데 집중한다. 이 연구는 한 단계 뒤로 물러나 **위장이 효과적이라는 말의 의미**를 정량화한다. 객체 내부의 색이 비슷해도 윤곽 일부가 보이면 쉽게 발견되고, 경계가 사라져도 내부 질감이 배경과 다르면 눈에 띈다.
 
-- camouflage effectiveness는 foreground-background feature similarity와 boundary visibility로 자동 측정할 수 있다.
-- 제안한 score를 generative model auxiliary loss로 써서 더 어려운 camouflage 데이터를 합성할 수 있다.
-- 합성 데이터를 학습에 활용해 MoCA-Mask에서 state-of-the-art camouflage breaking 성능을 달성한다.
+따라서 camouflage effectiveness는 하나의 픽셀 차이로 설명되지 않는다. 논문은 foreground와 background의 feature similarity, 그리고 boundary visibility를 바탕으로 세 가지 score를 구성한다. 서로 다른 실패 원인을 분리해 데이터셋과 샘플 난도를 비교할 수 있게 한다.
 
-## 초록
+## 데이터셋을 모델 밖에서 진단하기
 
-저자들은 모든 camouflage가 같은 난도를 갖지 않는다는 점에서 출발합니다. foreground와 background의 feature similarity, boundary visibility를 기반으로 camouflage score를 만들고, 이를 통해 기존 데이터셋을 평가하며 synthetic camouflage 데이터도 생성합니다.
+제안 score를 기존 camouflage dataset 전체에 적용하면, 데이터셋마다 실제 위장 강도의 분포가 다르다는 점을 볼 수 있다. 이미지 수가 많다고 해서 어려운 위장 사례가 많은 것은 아니고, 특정 종류의 배경이나 선명한 윤곽이 반복될 수 있다.
 
-초록을 조금 더 풀어보면, 모든 위장이 똑같이 효과적인 것은 아닙니다. 부분적으로 보이는 윤곽이나 약간의 색상 차이로 인해 동물이 눈에 띄고 위장이 깨질 수 있습니다. 본 논문에서는 위장의 효과를 자동으로 평가하기 위한 세 가지 점수를 제안함으로써 위장이 성공하는 이유에 대한 질문을 다룹니다. 특히, 우리는 위장이 배경과 전경 특징 사이의 유사성과 경계 가시성에 의해 측정될 수 있음을 보여줍니다. 우리는 이러한 위장 점수를 사용하여 사용 가능한 모든 위장 데이터 세트를 평가하고 비교합니다.
+이 분석은 benchmark 점수를 읽는 방식을 바꾼다. 모델 A가 데이터셋 X에서 좋고 Y에서 나쁜 이유가 단순 규모 차이가 아니라, X와 Y가 요구하는 camouflage cue가 다르기 때문일 수 있다. sample-level score는 hard subset을 만들고 curriculum을 설계하는 데도 사용할 수 있다.
 
-## 서론
+## camouflage를 ‘만드는’ 쪽으로
 
-이 논문은 detection architecture보다 dataset difficulty와 camouflage quality 자체를 분석 대상으로 삼습니다. 그래서 benchmark 해석에도 도움이 되는 작업입니다.
+논문은 측정에서 멈추지 않는다. camouflage score를 generative model의 auxiliary loss로 넣어, 객체가 배경과 더 자연스럽게 섞이고 경계가 덜 드러나는 이미지와 비디오를 합성한다. 생성기는 단순 복사·붙여넣기보다 “얼마나 잘 숨었는가”라는 학습 신호를 직접 받는다.
 
-서론에서는 특히, 위장은 오랫동안 과학계, 특히 위장을 종 적응의 훌륭한 사례로 여기는 진화생물학자들의 관심과 매혹의 대상이었습니다. 포식자를 혼란스럽게 하거나 먹이로부터 숨고 자연 서식지에서 생존 가능성을 높이기 위해 동물은 파괴적인 색상 및 배경 일치와 같은 수많은 위장 메커니즘을 개발했습니다. 이미지 a와 c는 이미지 b보다 더 나은 배경 유사성을 나타내지만 여우 경계는 이미지 c보다 이미지 a에서 더 잘 보입니다. 우리는 배경과 관련하여 위장이 만들어내는 모호함의 정도를 측정하여 위장의 효과를 평가합니다. 의 까다로운 객체 분할 작업입니다.
+이렇게 만든 synthetic dataset으로 transformer 기반 video segmentation model을 학습하고 MoCA-Mask에서 평가한다. 분석 지표 → 생성 목표 → 탐지 모델 학습으로 이어지는 닫힌 고리가 이 논문의 가장 독특한 부분이다.
 
-## 본론
+## 합성 데이터의 가치
 
-흥미로운 부분은 score를 단순 분석 지표로 두지 않고, 생성 모델 loss로 다시 넣는다는 점입니다. 즉 camouflage를 이해하는 것과 깨뜨리는 것을 하나의 루프로 묶습니다.
+VCOD는 프레임별 정밀 마스크가 비싸고, 실제 동물 영상의 장면 다양성을 통제하기 어렵다. 합성 데이터는 배경, 객체, 움직임, 위장 강도를 조합해 긴 꼬리 조건을 만들 수 있다. 특히 score를 이용하면 쉬운 붙여넣기 영상이 아니라 모델을 실제로 어렵게 하는 샘플을 선택적으로 생성할 수 있다.
 
-## 제안방법
+실험에서 볼 것은 합성 영상의 시각적 자연스러움만이 아니다. 실제 benchmark 성능이 단순 데이터 양 증가보다 좋아지는지, 어떤 score를 제거했을 때 이득이 사라지는지, 실제 영상과 합성 영상의 domain gap이 얼마나 남는지가 중요하다.
 
-세 가지 camouflage score를 설계하고, 이를 synthetic image/video generation에 보조 loss로 넣습니다. 이후 생성 데이터를 활용해 transformer 기반 video segmentation 모델을 학습합니다.
+## 이 논문이 남긴 관점
 
-방법을 조금 더 자세히 보면, 또한 제안된 위장 점수를 생성 모델에 보조 손실로 통합하고 효과적인 위장 이미지 또는 비디오를 확장 가능한 방식으로 합성할 수 있음을 보여줍니다. 위장 비디오 시퀀스 생성 이 섹션에서는 숨겨진 동물이 포함된 이미지를 생성하기 위한 확장 가능한 파이프라인을 제안합니다. 우리의 실험은 제안된 위장 점수에 대한 철저한 분석을 제시하고 훈련 프레임워크에서의 효율성을 보여줍니다. 위장된 객체 분할을 위한 Anabranch 네트워크.
+위장을 깨는 모델을 만들려면 먼저 위장을 구성하는 요인을 알아야 한다. 이 연구는 COD를 순수 segmentation 문제가 아니라 **perception, dataset design, generation이 연결된 문제**로 확장한다. 난도 score를 이용해 모델별 실패를 분석하거나 annotation 우선순위를 정하는 후속 아이디어도 자연스럽다.
 
-## 실험
+또한 정답 마스크만으로는 알 수 없는 데이터 품질을 측정하려는 시도라는 점에서 가치가 있다. 같은 객체와 배경이라도 경계 처리 하나가 난도를 크게 바꾼다는 사실을 명시적으로 다룬다.
 
-대표 결과는 public MoCA-Mask benchmark에서의 state-of-the-art camouflage breaking 성능입니다. score 기반 synthetic data가 실제 benchmark generalization에 도움을 준다는 점이 핵심입니다.
+## 조심할 점
 
-실험 파트를 조금 더 자세히 보면, 결과 이 섹션에서는 점수 기능의 효율성과 훈련 루프에 d2 F를 포함하는 이점을 보여주기 위해 정성적 및 정량적 결과를 제시합니다. 모든 위장 이미지 및 비디오 데이터 세트에 대한 위장 점수를 계산하고 결과를 Tab에 보고합니다. 위장 비디오 비디오 0.658 0.430 0.578 1.18 자연 위장 데이터 세트(상단) 및 합성 생성된 위장 데이터 세트(하단)에 대해 제안된 점수의 결과입니다. LF 손실을 추가하면 탭의 이미지 내 FrÂchet 거리가 있거나 없는 두 데이터 세트에 대해 계산된 Sα에 표시된 것처럼 질적 및 양적으로 배경에서 더 나은 혼합이 포함된 이미지가 생성됩니다.
-
-### 메인 실험 결과
-
-Table 1. Results of the proposed camouflage scores on natural and synthetic datasets.
-
-| 데이터셋 | 유형 | SRf↑ | Sb↑ | Sα↑ | d²F↓ |
-| --- | --- | --- | --- | --- | --- |
-| CHAMELEON [32] | Image | 0.694 | 0.445 | 0.607 | 0.70 |
-| CAMO Train [20] | Image | 0.672 | 0.451 | 0.595 | 1.01 |
-| CAMO Test [20] | Image | 0.683 | 0.470 | 0.608 | 1.00 |
-| COD10K Train [9] | Image | 0.655 | 0.433 | 0.577 | 0.90 |
-| COD10K Test [9] | Image | 0.657 | 0.431 | 0.578 | 0.90 |
-| Camouflaged Animals [1] | Video | 0.674 | 0.536 | 0.626 | 1.60 |
-| MoCA-Mask Train [5, 19] | Video | 0.850 | 0.443 | 0.707 | 1.14 |
-| MoCA-Mask Test [5, 19] | Video | 0.733 | 0.464 | 0.639 | 2.51 |
-| Camouflaged cuboids[12, 27] | Multi-view | 0.894 | 0.433 | 0.733 | 6.2 |
-| Syn. Camouflage w.o. LF | Image | 0.608 | 0.432 | 0.546 | 1.36 |
-| Syn. Camouflage w. LF | Image | 0.679 | 0.447 | 0.598 | 1.13 |
-| Syn. Camouflage Video | Video | 0.658 | 0.430 | 0.578 | 1.18 |
-
-표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
-
-## 결론
-
-이 논문은 COD를 단순 segmentation task가 아니라, camouflage quality 자체를 분석하고 조절하는 문제로 확장합니다.
-
-## 논의
-
-최근 benchmark를 읽을 때도 이 논문이 유용한 이유는, 어떤 데이터가 왜 더 어려운지를 score 관점에서 생각하게 해주기 때문입니다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/ICCV2023/html/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/ICCV2023/papers/Lamdouar_The_Making_and_Breaking_of_Camouflage_ICCV_2023_paper.pdf
+score가 pretrained feature에 의존하면 그 모델의 편향을 그대로 이어받는다. feature similarity가 높다고 사람이 반드시 못 찾는 것은 아니고, 의미적 기대나 움직임 같은 단서가 탐지를 쉽게 만들 수 있다. 생성 모델이 score의 허점을 이용해 부자연스러운 artifact를 만들 가능성도 있다. 인간 반응 시간과의 상관, 다른 종·환경에서의 안정성, 합성 데이터의 다양성을 함께 검증해야 한다.

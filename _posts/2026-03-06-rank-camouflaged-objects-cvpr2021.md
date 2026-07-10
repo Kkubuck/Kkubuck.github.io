@@ -1,86 +1,63 @@
 ---
-layout: "post"
-title: "Simultaneously Localize, Segment and Rank the Camouflaged Objects"
-subtitle: "이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다."
-summary: "이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다."
-description: "이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다."
-date: "2026-03-06 09:00:00 +0900"
-slug: "rank-camouflaged-objects-cvpr2021"
-lang: "ko"
+layout: post
+title: Simultaneously Localize, Segment and Rank the Camouflaged Objects
+subtitle: 모든 위장 객체를 같은 난도로 취급하지 않고, 보이게 만드는 부분과 전체 마스크, 탐지 난도를 함께 예측해 COD를 해석 가능한 다중 작업으로 확장한 연구.
+summary: 이 논문은 객체 위치·분할·위장 난도 순위를 동시에 학습한다. 이진 마스크만으로는 표현할 수 없던 “얼마나 잘 숨었는가”를 COD의 명시적 출력으로 만든다.
+description: 이 논문은 객체 위치·분할·위장 난도 순위를 동시에 학습한다. 이진 마스크만으로는 표현할 수 없던 “얼마나 잘 숨었는가”를 COD의 명시적 출력으로 만든다.
+date: 2026-03-06 09:00:00 +0900
+slug: rank-camouflaged-objects-cvpr2021
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "ranking"
-  - "cvpr2021"
-venue: "CVPR 2021"
-source_url: "https://openaccess.thecvf.com/content/CVPR2021/html/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/CVPR2021/papers/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.pdf"
+- paper
+- cod
+- ranking
+- multi-task
+- cvpr-2021
+venue: CVPR 2021
+paper_year: 2021
+paper_authors: Yunqiu Lv, Jing Zhang, Yuchao Dai, Aixuan Li, Bowen Liu, Nick Barnes, Deng-Ping Fan
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/CVPR2021/html/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.html
+pdf_url: https://openaccess.thecvf.com/content/CVPR2021/papers/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.pdf
+takeaways:
+- 이진 마스크에 더해 객체가 얼마나 눈에 띄는지 순위를 예측한다.
+- 판별적인 일부 영역을 찾는 localization과 전체 형태를 복원하는 segmentation을 분리해 학습한다.
+- 순위 라벨은 해석력을 높이지만 관찰자와 촬영 조건에 따라 달라질 수 있는 주관적 신호다.
 ---
-## 오버뷰
 
-이 논문은 COD가 단순 binary mask 예측만으로는 camouflage의 강도를 충분히 설명하지 못한다고 봅니다. 그래서 localization, segmentation, ranking을 동시에 수행해 detectability까지 모델링합니다.
+## 이진 마스크가 놓치는 것
 
-## 핵심 주장
+일반적인 COD 데이터는 객체 픽셀을 1, 배경을 0으로 표시한다. 하지만 같은 정답 마스크를 가진 객체라도 사람에게 드러나는 정도는 크게 다르다. 윤곽 하나가 선명한 개체가 있는가 하면, 오래 봐도 어디에 있는지 알기 어려운 개체도 있다. 이 논문은 그 차이를 **위장의 정도, 즉 detectability**로 모델링한다.
 
-- camouflaged object는 보이는 정도가 다르므로 ranking까지 포함해야 해석력이 좋아진다.
-- 특정 part가 object를 더 눈에 띄게 만든다는 관찰이 localization 모델 설계로 이어진다.
-- 대형 COD testing set을 함께 제공해 generalization 평가를 강화한다.
+문제 설정부터 흥미롭다. 목표는 단순히 “숨은 객체를 분할하라”가 아니라, **어디가 객체를 들키게 하는지 찾고(localize), 전체 객체를 복원하며(segment), 얼마나 쉽게 발견되는지 순위를 매기는(rank)** 것이다. 세 출력이 함께 있어야 예측이 왜 나왔는지 설명할 여지가 생긴다.
 
-## 초록
+## 세 작업이 맡는 역할
 
-저자들은 camouflage conspicuousness를 명시적으로 모델링하면 COD를 더 잘 이해할 수 있다고 주장합니다. 그래서 localization model, segmentation model, ranking model을 함께 둬서 객체 위치, 전체 mask, detectability를 동시에 추론합니다.
+localization 분기는 객체 전체가 아니라 사람의 시선이 먼저 머무를 법한 판별 영역을 찾는다. 배경과 완벽히 섞이지 않은 무늬, 끊어진 윤곽, 눈처럼 두드러지는 작은 부위가 여기에 해당한다. segmentation 분기는 이 국소 단서를 출발점으로 전체 객체 범위를 채운다.
 
-초록을 조금 더 풀어보면, 위장은 생존에 중요한 종 전체의 주요 방어 메커니즘입니다. 위장의 일반적인 전략에는 배경 일치, 환경의 색상과 패턴 모방, 파괴적인 색상, 신체 윤곽 위장 등이 포함됩니다. 위장 객체 감지(COD)는 주변에 숨어 있는 위장 객체를 분할하는 것을 목표로 합니다. 기존 COD 모델은 위장 수준을 표시하지 않고 위장된 개체를 분할하기 위해 이진 지상 진실을 기반으로 구축되었습니다.
+ranking 분기는 객체별 탐지 난도를 상대적인 순서로 추정한다. 이 출력은 확률 마스크와 다른 정보를 준다. 마스크 confidence가 모델의 확신이라면, camouflage rank는 장면 속 객체가 관찰자에게 얼마나 드러나는지를 표현하려는 값이다. 저자들은 이 세 작업을 공동 학습해 판별 부위와 전체 형태, 난도 판단이 서로 영향을 주도록 한다.
 
-## 서론
+## 데이터셋 기여를 같이 봐야 하는 이유
 
-많은 COD 논문이 segmentation score에만 집중하지만, 실제로는 어떤 객체는 조금만 봐도 드러나고 어떤 객체는 거의 보이지 않습니다. 이 논문은 그 차이를 모델에 넣습니다.
+논문은 모델뿐 아니라 더 큰 COD 테스트 세트를 제안한다. 새로운 평가 장면을 늘린 이유는 기존의 작은 테스트셋에서 얻은 성능이 다른 생물·배경·크기의 객체에도 유지되는지 확인하기 위해서다. COD처럼 장면 편향이 큰 분야에서는 모델 구조만큼 평가 데이터의 폭이 중요하다.
 
-서론에서는 특히, 위장은 먹이가 포식자에게 인식되는 것을 방지하는 가장 중요한 포식자 방지 방어 수단 중 하나입니다. 위장하기 위해 먹이 사이에서 두 가지 주요 전략, 즉 배경 일치와 파괴적인 착색이 널리 사용되었습니다. 기존 이진 실측 기반 모델과 달리 인스턴스 수준 순위 기반 위장 객체 예측을 생성할 수 있으며 이는 인간이 위장 객체를 관찰하기가 전체적으로 어렵다는 것을 나타냅니다. 3) 위장된 객체의 위치 파악, 분할 및 순위 지정을 동시에 수행하는 삼중 작업 학습 모델을 제안합니다.
+또한 fixation과 rank를 위한 주석은 기존 이진 마스크보다 풍부한 감독 신호다. 덕분에 모델이 맞았는지뿐 아니라 어떤 부분을 근거로 삼았는지, 예측한 난도 순서가 사람의 판단과 얼마나 비슷한지를 별도로 살필 수 있다.
 
-## 본론
+## 결과를 읽는 관점
 
-ranking이라는 축이 들어가면서, COD는 단순 pixel classification이 아니라 camouflage strength estimation 문제로도 읽히게 됩니다. 이 관점이 이후 dataset discussion에도 영향을 줍니다.
+정량 비교에서 제안 모델은 기존 COD 방식과 경쟁하면서, 추가로 위치와 순위 출력을 제공한다. 여기서 핵심 성과는 segmentation 점수 하나의 최고 기록이라기보다 **COD를 해석 가능한 다중 작업으로 재정의했다는 것**이다. 판별 영역을 명시적으로 찾으면 모델이 객체의 어떤 부분에 의존하는지 시각적으로 점검할 수 있다.
 
-## 제안방법
+다만 세 작업의 이득을 분리해서 볼 필요가 있다. ranking supervision이 segmentation 자체를 얼마나 개선하는지, localization 라벨 없이도 같은 효과를 얻을 수 있는지, 서로 다른 관찰자 사이에서 순위가 얼마나 일치하는지가 실제 활용 가능성을 좌우한다.
 
-localization branch가 discriminative region을 찾고, segmentation branch가 full object mask를 예측하며, ranking branch가 detectability를 추정합니다. 세 branch가 함께 camouflage understanding을 구성합니다.
+## 내가 남긴 해석
 
-방법을 조금 더 자세히 보면, 새로운 데이터 세트를 사용한 모델 설계: 새로운 데이터 세트를 기반으로 위장된 개체의 위치 파악, 분할 및 순위 지정을 동시에 제안합니다. 제안된 "Fixation Decoder" 모듈을 사용하여 판별 영역을 얻습니다. 이 영역은 제공된 Ground Truth 고정 맵과 비교되어 고정 분기에 대한 손실 함수를 생성합니다. 목적 함수: 공동 학습 프레임워크에는 식별 영역 위치 파악 손실과 위장된 개체 감지 손실이라는 두 가지 손실 함수가 있습니다. FPN에서 생성된 기능을 사용하면 ROIAlign 모듈을 사용하여 ROI의 기능 맵을 추출합니다.
+이 논문은 “정답 마스크가 같으면 같은 문제인가?”라는 좋은 반문을 던진다. 어려운 샘플과 쉬운 샘플을 같은 이진 목표로만 학습하면, 모델은 위장이 깨지는 이유를 배울 기회를 잃는다. 난도와 판별 부위를 별도 신호로 주는 방식은 hard-example mining이나 uncertainty modeling과도 연결된다.
 
-## 실험
+최근의 prompt 기반 모델을 평가할 때도 이 관점이 유용하다. 마스크가 정확하더라도 모델이 실제로 위장이 깨진 단서를 찾았는지, 아니면 데이터셋의 배경 편향을 외운 것인지 확인해야 한다.
 
-실험에서는 새로운 large COD testing set과 함께, 단순 segmentation score뿐 아니라 interpretability 측면의 이점을 강조합니다.
+## 남는 한계
 
-실험 파트를 조금 더 자세히 보면, 또한 성능을 벤치마크 모델과 비교하기 위해 COD10K의 3,040개 이미지와 CAMO의 1,000개 이미지가 포함된 기존 교육 데이터 세트를 사용하여 단일 위장 개체 감지 모델(우리의 cod full)을 추가로 교육하고 CAMO, COD10K, CHAMELEMON 및 NC4K 테스트 데이터 세트를 포함한 기존 테스트 데이터 세트에서 테스트합니다. 위의 4가지 평가 지표로는 순위 기반 예측의 성능을 평가할 수 없음을 확인했습니다. SIM ↑CC ↑EMD ↓KLD ↓NSS ↑AUC J ↑AUC B ↑sAUC ↑ 0.622 0.776 3.361 0.995 2.608 0.901 0.844 0.658 MAE rMAE 당사 순위 신규 0.049 0.139 SOLOv2 0.049 0.210 MS-RCNN 0.053 0.142 RSDNet 0.074 0.293 위장된 객체 감지 데이터 세트에 대한 객체 감지 모델을 사용하고 이를 경쟁 방법으로 처리합니다. 5는 순위 데이터 세트를 사용하여 훈련되었습니다.
-
-### 메인 실험 결과
-
-Table 1. Performance of baseline models trained with CAM-FR on benchmark testing sets.
-
-| 모델 | CAMO (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | CHAMELEON (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | COD10K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) | NC4K (Sα↑ Fmeanβ↑ Emeanξ↑ M↓) |
-| --- | --- | --- | --- | --- |
-| SCRN [55] | 0.702 0.632 0.731 0.106 | 0.822 0.726 0.833 0.060 | 0.756 0.623 0.793 0.052 | 0.793 0.729 0.823 0.068 |
-| CSNet[14] | 0.704 0.633 0.753 0.106 | 0.819 0.759 0.859 0.051 | 0.745 0.615 0.808 0.048 | 0.785 0.729 0.834 0.065 |
-| UCNet [63] | 0.703 0.640 0.740 0.107 | 0.833 0.781 0.890 0.049 | 0.756 0.650 0.823 0.047 | 0.792 0.751 0.854 0.065 |
-| BASNet [38] | 0.644 0.578 0.588 0.143 | 0.761 0.657 0.797 0.080 | 0.640 0.579 0.713 0.072 | 0.724 0.648 0.780 0.089 |
-| SINet [10] | 0.697 0.579 0.693 0.130 | 0.820 0.731 0.835 0.069 | 0.733 0.588 0.768 0.069 | 0.779 0.696 0.800 0.086 |
-| Ours cod new | 0.708 0.645 0.755 0.105 | 0.842 0.794 0.896 0.046 | 0.760 0.658 0.831 0.045 | 0.797 0.758 0.854 0.061 |
-
-표는 논문의 메인 정량 비교표를 기준으로 줄바꿈과 열 이름만 읽기 좋게 정리했습니다.
-
-## 결론
-
-이 논문은 COD를 더 해석 가능하게 만들려는 초창기 중요한 시도입니다.
-
-## 논의
-
-지금 benchmark 글을 읽을 때도 이 논문이 자주 떠오르는 이유는, 단순 점수보다 camouflage 강도 자체를 보려는 관점을 줬기 때문입니다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/CVPR2021/html/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/CVPR2021/papers/Lv_Simultaneously_Localize_Segment_and_Rank_the_Camouflaged_Objects_CVPR_2021_paper.pdf
+위장 난도는 객체의 고정 속성이 아니다. 관찰 시간, 화면 크기, 색각, 촬영 거리와 배경 문맥에 따라 달라진다. 단일 순위 라벨은 이런 변동을 압축한다. 따라서 이 연구를 확장하려면 여러 관찰자의 분포, 시선 추적, 시간에 따른 발견 확률처럼 더 풍부한 인간 인지 신호가 필요하다. 그럼에도 이진 분할 밖의 질문을 COD에 도입했다는 점에서 기준점이 되는 작업이다.

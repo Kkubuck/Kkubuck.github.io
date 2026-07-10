@@ -1,71 +1,68 @@
 ---
-layout: "post"
-title: "Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection"
-subtitle: "RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다."
-summary: "RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다."
-description: "RISE는 한 장의 이미지 안에서만 위장 객체를 찾지 않고, 전체 데이터셋에서 프로토타입을 검색해 pseudo-mask를 만든다."
-date: "2026-04-02 09:00:00 +0900"
-slug: "rise-unsupervised-cod"
-lang: "ko"
+layout: post
+title: 'Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection'
+subtitle: 한 이미지 안의 cue만으로 pseudo label을 만들지 않고, 전체 training set에서 환경·객체 prototype을 구축해 KNN으로 검색하며 서로의 약한 단서를 보완하는 RISE.
+summary: RISE는 annotation 없이 dataset-level prototype library를 만들고, Clustering-then-Retrieval과 Multi-View KNN Retrieval로 더
+  안정적인 pseudo mask를 생성한다.
+description: RISE는 annotation 없이 dataset-level prototype library를 만들고, Clustering-then-Retrieval과 Multi-View KNN Retrieval로
+  더 안정적인 pseudo mask를 생성한다.
+date: 2026-04-02 09:00:00 +0900
+slug: rise-unsupervised-cod
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "unsupervised"
-  - "iccv2025"
-venue: "ICCV 2025"
-source_url: "https://openaccess.thecvf.com/content/ICCV2025/html/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/ICCV2025/papers/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.pdf"
+- paper
+- unsupervised-cod
+- retrieval
+- prototype-learning
+- iccv-2025
+venue: ICCV 2025
+paper_year: 2025
+paper_authors: Ji Du, Xin Wang, Fangwei Hao, Mingyang Yu, Chunyuan Chen, Jiesheng Wu, Bin Wang, Jing Xu, Ping Li
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/ICCV2025/html/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.html
+pdf_url: https://openaccess.thecvf.com/content/ICCV2025/papers/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.pdf
+code_url: https://github.com/xiaohainku/RISE
+takeaways:
+- 개별 이미지의 불확실한 foreground cue를 training set 전체의 반복 환경·객체 패턴으로 보완한다.
+- CR이 coarse clustering과 filtering으로 prototype을 정리하고, MVKR이 여러 view의 KNN 결과를 합쳐 artifact를 줄인다.
+- dataset 전체를 참조하는 transductive retrieval의 범위와 test-time 정보 사용 여부를 명확히 해야 공정하다.
 ---
-## 오버뷰
 
-RISE는 위장 객체를 한 장의 이미지 안에서만 분리하려는 기존 비지도 접근을 넘어, 데이터셋 전체 정보를 retrieval 형태로 끌어와 pseudo-label을 만든다. 핵심은 이미지 내부 유사도보다 데이터셋 수준의 문맥이 COD에 더 유용하다는 주장이다.
+## 한 장만 보면 단서가 너무 약하다
 
-## 핵심 주장
+unsupervised COD는 보통 각 이미지 안에서 saliency, edge, foundation feature를 이용해 pseudo mask를 만든다. 위장 객체가 그 이미지에서 거의 보이지 않으면 복구할 외부 근거가 없다. RISE는 training dataset 전체를 **상호 참조 가능한 기억**으로 사용한다.
 
-- 비지도 COD의 병목은 단일 이미지 내부 유사도만으로 foreground/background를 나누려는 데 있다.
-- RISE는 environment/object prototype library, clustering-then-retrieval, multi-view KNN retrieval을 통해 더 신뢰도 높은 pseudo-mask를 생성한다.
-- 대표 비교에서 DiffCut보다 훨씬 낮은 MAE와 높은 Sα를 보여, retrieval 기반 비지도 학습의 효과를 입증한다.
+비슷한 환경이나 객체가 다른 이미지에서는 조금 더 잘 드러날 수 있다. 개별 샘플의 약한 신호를 dataset-level context와 retrieval로 보강한다는 아이디어다.
 
-## 초록
+## 두 prototype library
 
-논문은 라벨 없이 COD 모델을 학습할 때, 데이터셋 전체에서 얻을 수 있는 문맥 정보를 적극 활용해야 한다고 말한다. RISE는 환경과 객체의 프로토타입 라이브러리를 만들고, 각 이미지에 대해 KNN retrieval을 수행해 pseudo-mask를 생성한다. 이어 clustering-then-retrieval과 multi-view retrieval로 노이즈를 줄인다.
+RISE는 annotation 없이 environment prototype과 camouflaged object prototype library를 만든다. environment library는 반복되는 배경 패턴을, object library는 여러 이미지에서 공통적으로 나타나는 foreground 후보를 담는다. 각 이미지 feature는 두 library와 KNN matching되어 pixel별 pseudo mask를 얻는다.
 
-초록을 조금 더 풀어보면, 위장 개체 탐지(COD)의 핵심은 매우 유사한 주변 환경에서 개체를 분할하는 것입니다. 이전의 노력은 주로 이미지 수준 모델링 또는 주석 기반 최적화를 통해 이 문제를 해결했습니다. 상당히 발전했음에도 불구하고 이러한 일반적인 관행은 귀중한 데이터세트 수준의 상황별 정보를 거의 활용하지 않거나 힘든 주석에 의존하지 않습니다. 본 논문에서는 전체 훈련 데이터 세트를 활용하여 COD 모델을 훈련하는 데 사용할 수 있는 단일 이미지에 대한 의사 레이블을 생성하는 RetrIeval SElf 확장 패러다임인 RISE를 제안합니다.
+이 접근은 EASE의 environment-first 관점을 객체 prototype까지 확장한다. background와 foreground를 모두 retrieval space에 놓아 어느 쪽과 더 가까운지 상대적으로 판단한다.
 
-## 서론
+## Clustering-then-Retrieval
 
-기존 비지도 COD는 이미지 한 장만 보고 foreground와 background를 나누려는 경우가 많다. 하지만 위장 객체는 배경과 너무 비슷해서, 단일 이미지 내부 유사도만으로는 쉽게 실패한다. 저자들은 이 한계를 dataset-level retrieval로 돌파한다.
+GT가 없으면 초기 library에 배경 artifact와 잘못된 객체 후보가 많이 들어간다. **CR strategy**는 먼저 coarse mask를 clustering으로 만들고, histogram 기반 image filtering과 cross-category retrieval을 이용해 더 높은 confidence의 prototype을 고른다.
 
-서론에서는 특히, 위장 개체 감지(COD)는 주변 환경에 꼼꼼하게 숨겨진 개체를 분할하는 데 사용됩니다. 기존 연구 노력은 시각적으로 동질적인 배경에서 위장된 개체를 정확하게 묘사하고 추출하기 위해 개별 이미지 내의 상황 정보를 활용하는 데 주로 집중되었습니다. 개별 이미지의 특징에 의존하는 기존 방법과 달리, 우리의 접근 방식은 데이터 세트 수준에서 전체 정보를 활용하여 위장된 개체와 배경 간의 미묘한 차이를 보다 정확하게 캡처할 수 있습니다. • 우리는 COD 데이터세트에서 환경 및 위장 개체 프로토타입을 추출하기 위한 CR을 제안합니다. 프로토타입 라이브러리를 기반으로 환경에서 위장된 객체를 분할하기 위한 다중 뷰 KNN 검색을 제안합니다. • 우리의 광범위한 실험은 제안된 방법의 효율성을 검증합니다.
+바로 KNN을 수행하기 전에 library를 정제하는 단계다. 같은 image 안의 self-confirmation을 줄이고, 서로 다른 category에서도 반복되는 진짜 environment/object pattern을 찾는다. prototype purity가 이후 모든 pseudo mask 품질을 좌우한다.
 
-## 본론
+## Multi-View KNN Retrieval
 
-RISE의 관점은 COD를 retrieval-augmented pseudo-labeling 문제로 다시 쓰는 데 있다. 같은 데이터셋 안에도 비슷한 환경, 비슷한 위장 패턴이 반복되므로, 그 정보를 묶어 쓰면 한 장에서는 보이지 않던 구조가 드러난다는 것이다.
+foundation feature map에는 patch artifact, 특정 crop과 scale의 편향이 생길 수 있다. **MVKR**은 원본 한 view의 nearest neighbor만 믿지 않고 여러 augmentation 또는 representation view에서 retrieval한 결과를 합친다. 여러 관점에서 일치하는 영역은 confidence를 높이고 한 view에만 나타난 artifact는 약화한다.
 
-## 제안방법
+이는 pseudo-label ensemble과 비슷하지만, prediction probability가 아니라 retrieval neighborhood의 안정성을 이용한다. 최종 mask는 이렇게 생성된 pseudo label로 일반 COD model을 학습하는 데 사용된다.
 
-RISE는 먼저 training image만으로 environment prototype과 object prototype library를 만든다. 이때 clustering-then-retrieval 전략을 사용해 고신뢰 프로토타입을 정제한다. 이후 KNN retrieval을 통해 각 이미지용 pseudo-mask를 만들고, multi-view KNN retrieval로 feature artifact 영향을 줄인다.
+## 실험에서 확인할 경계
 
-방법을 조금 더 자세히 보면, 이러한 방법은 주로 단일 이미지 내의 특징 유사성에 중점을 두는 반면, 제안된 검색 기반 접근 방식은 데이터 세트 수준 정보를 활용하여 위장된 개체를 효과적으로 분할합니다. 이를 위해 우리는 데이터 세트에서 고품질 프로토타입을 마이닝하는 CR을 제안합니다. 잘못된 군집화로 인해 전경과 배경의 차이가 감소하여 전역 특징 간의 유사성이 증가한다는 점을 고려하여 유사성이 높은 이미지를 필터링하는 히스토그램 기반 적응형 임계값 방법을 제안합니다. 이러한 아티팩트의 위치는 이미지의 시점에 따라 달라지므로 미세 조정이 필요하지 않은 MVKR(Multi-View KNN Retrieval) 방법을 제안합니다.
+논문은 unsupervised와 prompt-based 방법보다 높은 결과를 보고한다. 하지만 dataset-level retrieval은 single-image baseline보다 더 많은 target distribution 정보를 본다. library 구축에 train image만 쓰는지, test image가 retrieval pool에 들어가는지, image별 split을 엄격히 지키는지 명시해야 한다.
 
-## 실험
+CR 없는 raw library, single-view KNN, object-only와 environment-only library를 비교하면 각 요소의 기여를 알 수 있다. category imbalance와 rare object에서 neighbor가 부족할 때의 실패도 중요하다.
 
-논문 표에서 DiffCut과 RISE DINOv2-ViT-L14를 비교하면 차이가 매우 크다. 아래 표는 각 데이터셋의 Sα와 MAE만 뽑아 다시 적은 것이다.
+## 장점과 위험
 
-실험 파트를 조금 더 자세히 보면, 실험 설정 데이터 세트 및 평가 지표 이전 작업에 따라 훈련 데이터 세트는 COD10K의 3,040개 이미지와 CAMO의 1,000개 이미지로 구성됩니다. 최첨단 비교 방법과의 비교 우리는 우리의 방법을 비지도 기반 분할 접근 방식과 프롬프트 기반 분할 접근 방식과 비교합니다. COD10K 데이터 세트에서 우리의 방법은 메트릭 Eψ 및 F Ω β에서 각각 8% 및 9%의 최소 개선을 달성했습니다. 2, 우리의 방법은 모든 데이터 세트와 지표에서 평균적으로 기준보다 10% 이상 더 뛰어납니다.
+RISE는 annotation 대신 데이터 자체의 중복성과 문맥을 자원으로 쓴다. large unlabeled collection이 있는 실제 환경에서 매력적이며, retrieval 결과를 시각화해 pseudo mask의 근거를 어느 정도 추적할 수 있다.
 
-## 결론
-
-RISE는 비지도 COD를 retrieval-augmented 학습으로 재정의한 논문이다. 라벨이 없어도 데이터셋 자체를 외부 메모리처럼 쓰면 훨씬 강한 pseudo-label을 만들 수 있다는 메시지가 선명하다.
-
-## 논의
-
-비지도 COD 쪽에서 이 논문은 꽤 중요한 분기점처럼 보인다. 성능 개선 자체도 크지만, 더 중요한 것은 dataset-level information을 적극적으로 쓰는 설계가 이후 방법들의 기본 아이디어가 될 수 있다는 점이다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/ICCV2025/html/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/ICCV2025/papers/Du_Beyond_Single_Images_Retrieval_Self-Augmented_Unsupervised_Camouflaged_Object_Detection_ICCV_2025_paper.pdf
+반면 dataset bias를 강하게 활용한다. 비슷한 배경이 반복되면 잘 작동하지만 완전히 새로운 environment나 singleton object에서는 잘못된 neighbor가 오히려 해를 준다. library 업데이트 비용, KNN 검색 지연, privacy-sensitive 이미지 간 feature 공유도 배포 시 고려해야 한다.

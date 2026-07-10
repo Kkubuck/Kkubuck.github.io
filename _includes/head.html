@@ -1,25 +1,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#07101f" id="theme-color-meta">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f3f0e8" id="theme-color-meta">
   <meta name="format-detection" content="telephone=no">
 
   {% include favicon.html %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css">
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.asset_version | default: '2026-07' }}">
   <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
 
   <script>
     (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
       try {
         var saved = localStorage.getItem('kkubuck-theme');
-        var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.classList.add('js');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.dataset.theme = saved || (systemDark ? 'dark' : 'light');
       } catch (error) {
-        document.documentElement.dataset.theme = 'dark';
+        root.dataset.theme = 'light';
       }
     }());
   </script>

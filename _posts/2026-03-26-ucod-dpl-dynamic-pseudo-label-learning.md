@@ -1,71 +1,67 @@
 ---
-layout: "post"
-title: "UCOD-DPL: Unsupervised Camouflaged Object Detection via Dynamic Pseudo-label Learning"
-subtitle: "UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다."
-summary: "UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다."
-description: "UCOD-DPL은 고정 pseudo-label 대신 teacher-student 동적 결합과 DBA decoder로 비지도 COD의 노이즈 문제를 줄인다."
-date: "2026-03-26 09:00:00 +0900"
-slug: "ucod-dpl-dynamic-pseudo-label-learning"
-lang: "ko"
+layout: post
+title: 'UCOD-DPL: Unsupervised Camouflaged Object Detection via Dynamic Pseudo-label Learning'
+subtitle: 고정 pseudo label을 그대로 외우지 않도록 teacher 예측과 동적으로 섞고, foreground–background 혼동과 작은 객체를 각각 adversarial decoder와 재관찰 단계로
+  보완한 UCOD 프레임워크.
+summary: UCOD-DPL은 teacher–student 구조 안에서 Adaptive Pseudo-label Module, Dual-Branch Adversarial decoder, Look-Twice refinement를
+  결합한다.
+description: UCOD-DPL은 teacher–student 구조 안에서 Adaptive Pseudo-label Module, Dual-Branch Adversarial decoder, Look-Twice refinement를
+  결합한다.
+date: 2026-03-26 09:00:00 +0900
+slug: ucod-dpl-dynamic-pseudo-label-learning
+lang: ko
 paper: true
 categories:
-  - "papers"
+- papers
 tags:
-  - "paper"
-  - "cod"
-  - "unsupervised"
-  - "cvpr2025"
-venue: "CVPR 2025"
-source_url: "https://openaccess.thecvf.com/content/CVPR2025/html/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.html"
-pdf_url: "https://openaccess.thecvf.com/content/CVPR2025/papers/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.pdf"
+- paper
+- unsupervised-cod
+- pseudo-label
+- teacher-student
+- cvpr-2025
+venue: CVPR 2025
+paper_year: 2025
+paper_authors: Weiqi Yan, Lvhai Chen, Huaijia Kou, Shengchuan Zhang, Yan Zhang, Liujuan Cao
+reviewed_on: '2026-07-10'
+source_url: https://openaccess.thecvf.com/content/CVPR2025/html/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.html
+pdf_url: https://openaccess.thecvf.com/content/CVPR2025/papers/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.pdf
+code_url: https://github.com/Heartfirey/UCOD-DPL
+takeaways:
+- 고정 규칙의 pseudo label과 teacher prediction을 학습 상태에 따라 섞어 self-correction 여지를 남긴다.
+- DBA decoder는 서로 다른 segmentation objective를 adversarial하게 학습하고 Look-Twice는 작은 객체를 한 번 더 정제한다.
+- 무감독이라는 이름과 별개로 pretrained model·초기 pseudo-label strategy가 제공하는 외부 지식과 편향을 명시해야 한다.
 ---
-## 오버뷰
 
-UCOD-DPL은 기존 비지도 COD의 고정 pseudo-label 전략이 노이즈를 너무 많이 안고 간다고 본다. 그래서 teacher-student 구조 안에서 pseudo-label을 동적으로 섞고, 작은 객체와 foreground/background confusion을 더 잘 다루는 decoder를 붙인다.
+## UCOD의 병목은 pseudo label 이후에 시작된다
 
-## 핵심 주장
+pixel annotation 없이 COD를 학습하려면 먼저 어떤 방식으로든 foreground 후보를 만들어야 한다. 기존 UCOD는 handcrafted cue나 pretrained model에서 만든 pseudo label을 고정한 뒤, 얕은 1×1 convolution decoder를 학습하는 경우가 많았다. 문제는 위장 장면의 pseudo mask에 경계 누락과 배경 혼입이 매우 많다는 점이다.
 
-- 고정 pseudo-label은 잘못된 지식을 계속 강화하기 쉬워 비지도 COD의 큰 병목이 된다.
-- Adaptive Pseudo-label Module, Dual-Branch Adversarial decoder, Look-Twice refinement가 이 문제를 줄인다.
-- UCOS-DA23-DINOv2 baseline 대비 네 데이터셋 모두에서 Sm을 크게 높이고 M을 현저히 낮췄다.
+UCOD-DPL은 두 약점을 함께 다룬다. pseudo label을 학습 내내 갱신해 잘못된 지식을 외우는 것을 줄이고, 단순 decoder 대신 위장 객체의 semantic과 작은 구조를 복원할 수 있는 경로를 만든다.
 
-## 초록
+## Adaptive Pseudo-label Module
 
-논문은 기존 UCOD가 고정 pseudo-label과 1×1 convolution decoder에 의존해 fully-supervised보다 성능이 크게 낮다고 본다. 이에 APM으로 pseudo-label을 동적으로 결합하고, DBA decoder로 서로 다른 segmentation objective를 adversarial하게 학습시키며, Look-Twice로 작은 객체를 두 번 살피는 구조를 제안한다.
+**APM**은 고정 전략으로 만든 초기 pseudo label과 teacher model의 현재 예측을 adaptive하게 결합한다. 초기에는 teacher가 불안정하므로 외부 규칙의 신호가 기준점이 되고, 학습이 진행되면 teacher가 데이터에서 배운 정보를 더 반영해 잘못된 초기 mask를 고칠 수 있다.
 
-초록을 조금 더 풀어보면, UCOD(Unsupervised Camoflaged ObjectDetection)는 광범위한 픽셀 수준 레이블에 의존할 필요가 없기 때문에 주목을 받았습니다. 기존 UCOD 방법은 일반적으로 고정 전략을 사용하여 의사 레이블을 생성하고 1×1 컨벌루션 레이어를 간단한 디코더로 학습하므로 완전 감독 방법에 비해 성능이 낮습니다. 우리는 이러한 접근법의 두 가지 단점을 강조합니다: 1). 모델은 상당한 노이즈가 포함된 의사 라벨로 인해 잘못된 지식을 적합하기 쉽습니다.
+한쪽만 신뢰하지 않는 것이 중요하다. 고정 label만 쓰면 오류가 영구히 남고, teacher prediction만 쓰면 student와 같은 편향이 순환 강화된다. 두 source의 동적 균형은 안정성과 self-correction 사이의 절충이다.
 
-## 서론
+## Dual-Branch Adversarial decoder
 
-비지도 COD에서 가장 어려운 문제는 결국 noisy supervision이다. pseudo-label이 틀리면 모델은 그 오류를 반복해서 학습한다. UCOD-DPL은 pseudo-label 생성과 decoder 설계 둘 다 바꾸지 않으면 개선이 어렵다고 본다.
+위장 객체의 전경·배경 특징은 매우 비슷해 하나의 segmentation objective만으로는 결정 경계가 쉽게 흐려진다. **DBA decoder**는 서로 다른 목표를 가진 두 branch를 adversarial하게 학습해, 한 branch가 놓치는 구분 단서를 다른 branch가 드러내도록 한다.
 
-서론에서는 특히, "위장"은 "포식자"를 피하기 위해 비슷한 질감과 색상을 사용하여 주변 환경에 섞이는 물체의 자연스러운 행동에서 비롯됩니다. 위장된 객체 감지(COD)는 배경에 시각적으로 숨겨진 객체를 분할하는 방법을 학습하는 것을 목표로 하는 도전적인 의미론적 분할 작업으로, 여러 중요한 분야에 중요한 응용 프로그램이 있습니다. 그러나 복잡한 시각적 속성으로 인해 위장된 개체에 대한 픽셀 수준의 인간 라벨을 얻는 것은 어렵습니다. 결과는 우리의 방법이 DINOv2를 백본으로 사용할 때 완전히 감독된 일부 COD 방법과 비교할 수 있는 뛰어난 성능을 달성한다는 것을 보여줍니다.
+여기서 adversarial은 이미지 생성이 아니라 segmentation representation 사이의 긴장을 만드는 장치다. 두 예측이 무조건 같아지게 하는 consistency보다, 서로 다른 관점으로 어려운 픽셀을 밀어내면서 최종 마스크에서 합의하게 한다.
 
-## 본론
+## Look-Twice
 
-이 논문은 pseudo-label을 단순한 사전 생성 결과물이 아니라, 학습 중 계속 갱신되고 혼합되는 supervision으로 취급한다. 여기에 adversarial decoder를 결합해 foreground/background confusion을 더 직접적으로 완화한다.
+저해상도 pseudo label은 작은 객체를 통째로 놓치기 쉽다. Look-Twice는 첫 예측에서 관심 영역을 찾고 작은 객체를 확대해 두 번째 refinement를 수행한다. 전체 이미지를 고해상도로 처리하지 않으면서 어려운 영역에 계산을 더 배분한다는 점에서 SegMaR의 재관찰 아이디어와 닿아 있다.
 
-## 제안방법
+다만 첫 번째 관찰에서 객체 후보가 완전히 사라지면 두 번째 단계도 복구할 수 없다. small-object recall을 얼마나 유지하는지가 구조의 실제 성패를 좌우한다.
 
-APM은 고정 전략에서 나온 pseudo-label과 teacher prediction을 adaptive하게 결합한다. DBA decoder는 서로 다른 segmentation objective를 adversarial하게 학습해 위장 객체의 semantic feature를 더 강하게 끌어낸다. Look-Twice는 작은 객체를 확대해서 다시 보는 식으로 secondary refinement를 수행한다.
+## 결과를 읽는 기준
 
-방법을 조금 더 자세히 보면, 3에는 APM(Adaptive Pseudo-label Mixing) 모듈, DBA(Dual-Branch Adversarial) 디코더 및 Look-Twice 전략을 갖춘 교사-학생 프레임워크가 포함되어 있습니다. 적응형 의사 라벨 병합 모듈 기존의 비지도 의미론적 분할 방법은 일반적으로 고정 전략(예: 유사성 비교)을 채택하거나 분할 마스크를 생성하기 위해 자가 지도 학습을 위한 이중 분기 모델(예: 고정 전략 또는 학습 가능한 분기) 구조를 활용합니다. Dual-Branch Adversarial Decoder 이전 방법에서는 일반적으로 간단한 1×1 컨볼루션으로 예측이 생성되므로 위장 기능을 철저하게 캡처하는 기능이 제한됩니다. 우리는 이 작업의 정확성과 견고성을 향상시키기 위해 Dual-Branch Adversarial 디코더를 제안합니다.
+논문은 표준 네 COD test set에서 unsupervised 방법을 비교하고 일부 fully supervised 모델보다 높은 결과를 보고한다. 이 비교는 흥미롭지만 supervision budget을 동일하게 봐야 한다. 초기 pseudo label에 사용한 pretrained network, foundation model, 외부 데이터가 무엇인지가 결과에 큰 영향을 준다.
 
-## 실험
+절제 실험에서는 고정 label, teacher-only, adaptive mixing을 나눠 APM의 효과를 확인하고, DBA와 Look-Twice가 각각 boundary confusion과 작은 객체에서 실제로 기여하는지 봐야 한다. 평균 지표만으로는 두 모듈의 역할이 분리되지 않는다.
 
-대표 비교는 *UCOS-DA23-DINOv2와 OursDINOv2를 Sm, M 기준으로 보는 것이 가장 간단하다.
+## 남는 질문
 
-실험 파트를 조금 더 자세히 보면, 결과는 우리 모델이 모든 측정항목과 데이터 세트에서 기존의 모든 USS 및 UCOD 방법보다 성능이 뛰어나 SOTA(최첨단 기술) 성능을 달성했음을 보여줍니다. 절제 연구 방법의 효율성을 검증하기 위해 DINOv2를 백본으로 사용하고 2,026개의 이미지가 포함된 COD10K-Test 데이터 세트에 대한 포괄적인 절제 연구를 수행합니다. 우리는 교체된 고정 전략으로 모델을 재교육하고 COD10K-Test 데이터 세트에서 벤치마킹했습니다. 혼합 전략에 관한 연구. 우리는 테스트 세트를 2% 간격으로 테스트 세트 전망의 비율로 나눈 다음, 우리 방법과 일부 이전 SOTA 방법 간의 성능을 벤치마킹했습니다.
-
-## 결론
-
-UCOD-DPL은 비지도 COD에서 pseudo-label을 더 정교하게 다루는 것이 얼마나 중요한지를 잘 보여준다. fully-supervised 일부 방법을 넘는다는 초록의 주장도 어느 정도 납득할 만한 수치가 나온다.
-
-## 논의
-
-비지도 COD 논문을 빠르게 훑을 때 이 논문은 기준점으로 잡기 좋다. retrieval 계열인 RISE, EASE와는 조금 다른 방향이지만, noisy supervision을 다루는 방식이 분명하고 결과도 강하다.
-
-## 출처
-
-- 논문 페이지: https://openaccess.thecvf.com/content/CVPR2025/html/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.html
-- 원문 PDF: https://openaccess.thecvf.com/content/CVPR2025/papers/Yan_UCOD-DPL_Unsupervised_Camouflaged_Object_Detection_via_Dynamic_Pseudo-label_Learning_CVPR_2025_paper.pdf
+teacher–student는 confirmation bias를 완전히 없애지 못한다. 두 label source가 같은 배경 편향을 공유하면 adaptive mixing도 틀린 합의를 만들 수 있다. pseudo label 품질을 GT 없이 어떻게 추정하는지, 다른 초기화 전략에서도 성능이 유지되는지, 반복 refinement의 비용이 fully supervised baseline보다 합리적인지가 후속 평가 포인트다.
