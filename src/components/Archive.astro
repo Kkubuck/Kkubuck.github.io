@@ -1,0 +1,37 @@
+---
+import type { Post } from '../lib/content';
+import PostRow from './PostRow.astro';
+
+interface Props { posts: Post[]; kind: 'paper' | 'note'; }
+const { posts, kind } = Astro.props;
+const years = [...new Set(posts.map((post) => String(post.data.paperYear || post.data.pubDate.getFullYear())))].sort((a, b) => Number(b) - Number(a));
+const venues = [...new Set(posts.map((post) => post.data.venue || (kind === 'paper' ? 'Paper review' : 'Research note')))].sort();
+---
+<div data-archive>
+  <div class="archive-tools" aria-label="Archive filters">
+    <label class="field">
+      <span class="sr-only">Search this archive</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+      <input type="search" data-filter-query placeholder={`Search ${kind === 'paper' ? 'papers' : 'notes'}…`} autocomplete="off" />
+    </label>
+    <label class="field">
+      <span class="sr-only">Filter by year</span>
+      <select data-filter-year>
+        <option value="">All years</option>
+        {years.map((year) => <option value={year}>{year}</option>)}
+      </select>
+    </label>
+    <label class="field">
+      <span class="sr-only">Filter by venue or type</span>
+      <select data-filter-venue>
+        <option value="">All {kind === 'paper' ? 'venues' : 'types'}</option>
+        {venues.map((venue) => <option value={venue}>{venue}</option>)}
+      </select>
+    </label>
+  </div>
+  <div class="archive-status"><span data-filter-count>{posts.length} entries</span><span>Newest first</span></div>
+  <div class="post-list">
+    {posts.map((post, index) => <PostRow post={post} index={index} filterable />)}
+  </div>
+  <p class="empty-state" data-filter-empty hidden>No entries match these filters.</p>
+</div>

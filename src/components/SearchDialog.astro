@@ -1,0 +1,22 @@
+---
+import { withBase } from '../lib/paths';
+---
+<dialog class="search-dialog" data-search-dialog data-index-url={withBase('/search.json')} aria-labelledby="search-title">
+  <div class="search-dialog__header">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+    <label id="search-title" class="sr-only" for="global-search">Search all writing</label>
+    <input id="global-search" type="search" data-search-input placeholder="Search papers, notes, venues, or tags…" autocomplete="off" spellcheck="false" />
+    <button class="icon-button" type="button" data-search-close aria-label="Close search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <div class="search-dialog__body">
+    <p class="search-dialog__hint" data-search-hint>Start typing to search the complete archive.</p>
+    <p class="search-dialog__empty" data-search-empty hidden>No matching entry found.</p>
+    <ul class="search-results" data-search-results aria-live="polite"></ul>
+  </div>
+  <div class="search-dialog__footer">
+    <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate · <kbd>Enter</kbd> Open</span>
+    <span><kbd>Esc</kbd> Close</span>
+  </div>
+</dialog>

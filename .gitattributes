@@ -1,0 +1,9 @@
+# Imported Markdown bodies intentionally preserve source whitespace inside code samples.
+src/content/posts/*.md -whitespace
+
+# Keep text files normalized across platforms.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary

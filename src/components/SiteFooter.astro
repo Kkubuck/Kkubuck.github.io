@@ -1,0 +1,28 @@
+---
+import { NAV_ITEMS, SITE } from '../data/site';
+import { withBase } from '../lib/paths';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="site-footer__main">
+    <p class="site-footer__statement">Clear notes for difficult visual problems.</p>
+    <div class="site-footer__nav">
+      <div>
+        <p>Explore</p>
+        {NAV_ITEMS.slice(1).map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
+        <a href={withBase('/tags/')}>Tags</a>
+      </div>
+      <div>
+        <p>Connect</p>
+        <a href={SITE.github} rel="me noopener" target="_blank">GitHub ↗</a>
+        <a href={`mailto:${SITE.email}`}>Email</a>
+        <a href={withBase('/cv/')}>Curriculum vitae</a>
+        <a href={withBase('/rss.xml')}>RSS feed</a>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>© {year} {SITE.author}</span>
+    <span>Built with Astro · Deployed on GitHub Pages</span>
+  </div>
+</footer>

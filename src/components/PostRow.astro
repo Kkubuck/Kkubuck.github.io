@@ -1,0 +1,41 @@
+---
+import type { Post } from '../lib/content';
+import { formatDate, getPostUrl, titleCaseTag } from '../lib/content';
+
+interface Props {
+  post: Post;
+  index: number;
+  filterable?: boolean;
+}
+const { post, index, filterable = false } = Astro.props;
+const summary = post.data.summary || post.data.description;
+const year = String(post.data.paperYear || post.data.pubDate.getFullYear());
+const venue = post.data.venue || (post.data.kind === 'paper' ? 'Paper review' : 'Research note');
+const search = [post.data.title, summary, venue, ...post.data.tags].join(' ');
+---
+<a
+  class="post-row"
+  href={getPostUrl(post)}
+  data-tilt
+  data-filter-row={filterable ? '' : undefined}
+  data-search={filterable ? search : undefined}
+  data-year={filterable ? year : undefined}
+  data-venue={filterable ? venue : undefined}
+>
+  <span class="post-row__index">{String(index + 1).padStart(2, '0')}</span>
+  <span>
+    <h2 class="post-row__title">{post.data.title}</h2>
+    {summary && <p class="post-row__summary">{summary}</p>}
+    {post.data.tags.length > 0 && (
+      <span class="tag-list" aria-label="Tags">
+        {post.data.tags.slice(0, 4).map((tag) => <span class="tag">{titleCaseTag(tag)}</span>)}
+      </span>
+    )}
+  </span>
+  <span class="post-row__meta">
+    <span>{venue}<br />{formatDate(post.data.pubDate)}</span>
+    <span class="post-row__arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+    </span>
+  </span>
+</a>

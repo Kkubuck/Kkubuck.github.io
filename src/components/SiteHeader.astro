@@ -1,0 +1,56 @@
+---
+import { NAV_ITEMS, SITE } from '../data/site';
+import { withBase } from '../lib/paths';
+
+const pathname = Astro.url.pathname;
+const isCurrent = (href: string) => {
+  const resolved = withBase(href);
+  if (href === '/') return pathname === resolved;
+  return pathname.startsWith(resolved);
+};
+---
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span class="scroll-progress__bar"></span></div>
+<header class="site-header" data-site-header data-scrolled="false" data-hidden="false">
+  <div class="site-header__inner">
+    <a class="brand" href={withBase('/')} aria-label={`${SITE.name} home`}>
+      <span class="brand__mark" aria-hidden="true">K.</span>
+      <span class="brand__text">
+        <span class="brand__name">{SITE.name}</span>
+        <span class="brand__descriptor">Research interface</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      {NAV_ITEMS.map((item) => (
+        <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-search-open aria-label="Open search" title="Search (Ctrl/⌘ K)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path>
+        </svg>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch theme">
+        <svg class="theme-icon theme-icon--light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.75"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"></path>
+        </svg>
+      </button>
+      <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path class="menu-line menu-line--top" d="M4 8h16"></path>
+          <path class="menu-line menu-line--bottom" d="M4 16h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="mobile-navigation" class="mobile-nav" data-mobile-nav data-open="false" aria-label="Mobile navigation">
+  {NAV_ITEMS.map((item) => (
+    <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+  ))}
+  <a href={withBase('/cv/')} aria-current={pathname.startsWith(withBase('/cv/')) ? 'page' : undefined}>CV</a>
+</nav>

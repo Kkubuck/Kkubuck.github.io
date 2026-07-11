@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import cv from '../../data/cv.json';
+import projects from '../../data/projects.json';
+import { SITE } from '../../data/site';
+---
+<BaseLayout title="Projects" description="Research projects and software systems by Jisang Lee.">
+  <div class="container">
+    <header class="page-intro">
+      <div><span class="eyebrow">Selected work</span><h1>Research turned into working systems.</h1></div>
+      <p class="page-intro__copy">A compact record of research programs, experimental pipelines, and tools built to make the underlying work inspectable.</p>
+    </header>
+    <section class="section--compact">
+      <div class="project-grid">
+        {projects.map(({ project }, index) => (
+          <a class="project-card" href={project.url || SITE.github} target="_blank" rel="noopener noreferrer" data-reveal>
+            <span class="project-card__index">Project {String(index + 1).padStart(2, '0')} · {project.date}</span>
+            <h2>{project.title}</h2>
+            <p>{project.summary || project.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+    <section class="section--compact">
+      <div class="section-heading"><div><span class="eyebrow">Research programs</span><h2>Longer arcs of investigation.</h2></div><p>Projects are described by the problem and contribution rather than by a stack of technology logos.</p></div>
+      <div class="research-grid">
+        {cv.research_projects.map((project) => (
+          <article class="research-card" data-reveal>
+            <span class="research-card__period">{project.period} · {project.organization}</span>
+            <h2>{project.title}</h2>
+            <ul>{project.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

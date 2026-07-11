@@ -1,103 +1,81 @@
-# Kkubuck 연구 노트
+# Kkubuck Research Interface
 
-컴퓨터 비전 논문 리뷰, 연구 과정, 구현 기록을 연결하는 Jekyll 기반 GitHub Pages 블로그입니다. 기존 글의 날짜·URL·정적 자산은 유지하면서 화면 구조, 타이포그래피, 검색, 읽기 경험과 논문 콘텐츠를 전면 정비했습니다.
+A static research archive for computer-vision paper reviews, implementation notes, and research history. This version replaces the previous Jekyll theme with an Astro 7 architecture, an English interface, a sans-serif visual system, and progressively enhanced interaction.
 
-## 이번 리뉴얼에서 바뀐 점
+## What changed
 
-- 따뜻한 종이색과 잉크색을 바탕으로 한 편집형 디자인 시스템
-- `clamp()` 기반 유동 타이포그래피, 760px 읽기 폭, 모바일 재배치
-- `⌘/Ctrl + K` 통합 검색, `/` 아카이브 검색 포커스, 연도·학회·주제 필터
-- 자동 목차, 현재 섹션 표시, 읽기 진행률, 원문·PDF·코드 링크 도구막대
-- 포인터에 반응하는 홈 주제 지도와 가벼운 빗방울·물결 캔버스
-- 라이트·다크 모드, 선택 상태 저장, 키보드 포커스 관리, 모션 감소 지원
-- 논문·벤치마크 리뷰 38편을 공식 논문/프로젝트 자료 기준으로 재작성
-- Jekyll + Liquid + SCSS + Vanilla JavaScript만 사용하여 별도 프런트엔드 빌드 단계 없이 배포
+- Entire site shell and navigation are in English.
+- Jekyll, Ruby gems, theme inheritance, and Liquid templates were removed.
+- All 65 previously edited posts are preserved as Markdown content entries.
+- Paper reviews and general notes have separate routes and searchable archives.
+- The visual system uses a compact sans-serif stack, restrained cobalt accent, low-noise surfaces, and fluid type.
+- Interaction includes a pointer-responsive canvas field, a wheel/scroll-driven research narrative, view transitions, filtering, global search, reading progress, and automatic article navigation.
+- Motion is disabled or reduced when `prefers-reduced-motion` is enabled.
+- The production build verifies output counts, internal links, assets, metadata, navigation language, and legacy redirects.
 
-구현 원칙과 참고한 디자인 시스템, 반응형 기준은 [`DESIGN_PROMPT.md`](./DESIGN_PROMPT.md)에 정리했습니다.
+## Stack
 
-## 로컬 실행
+- Astro 7.0.7
+- TypeScript 6.0.3
+- Semantic HTML
+- Modern CSS: cascade layers, custom properties, `clamp()`, container-safe responsive layout, Scroll-Driven Animations, View Transitions
+- Canvas 2D for the live signal field
+- GitHub Pages via the official Astro action
 
-Ruby 3.3과 Bundler를 사용합니다.
+No React, Vue, Tailwind, animation runtime, WebGL engine, external font binary, analytics SDK, or client-side router is required.
 
-```bash
-bundle install
-bundle exec jekyll serve --livereload
-```
+## Local development
 
-브라우저에서 `http://127.0.0.1:4000`을 엽니다.
-
-## 전체 검증
-
-```bash
-bash _scripts/verify.sh
-```
-
-검증 스크립트는 front matter·Liquid·레이아웃/인클루드 참조와 논문 메타데이터를 먼저 검사한 뒤, JavaScript·Python·Ruby·셸 문법, 프로덕션 Jekyll 빌드, 생성 HTML의 기본 구조, 내부 링크·프래그먼트·정적 자산, 검색 JSON과 웹 매니페스트를 확인합니다.
-
-## 글 작성
-
-`_posts/YYYY-MM-DD-slug.md` 파일을 만들고 다음 front matter를 사용합니다.
-
-```yaml
----
-layout: post
-title: "논문 또는 기록 제목"
-date: 2026-06-19
-summary: "목록과 검색에 표시될 짧은 요약"
-categories:
-  - papers
-tags:
-  - COD
-  - segmentation
-venue: CVPR 2026
-paper_year: 2026
-paper_authors: Author A, Author B
-source_url: https://example.com/paper
-pdf_url: https://example.com/paper.pdf
-code_url: https://github.com/example/repository
-takeaways:
-  - 가장 먼저 남길 핵심 문장
-  - 설계의 중요한 차이
-  - 실험을 읽을 때 확인할 한계
----
-```
-
-`categories`에 `papers`를 넣으면 논문 아카이브에 포함됩니다. 직접 재현한 결과가 아니라면 본문에서 원 논문의 보고와 개인 해석을 구분합니다.
-
-## 주요 경로
-
-```text
-_layouts/                  페이지와 포스트 구조
-_includes/                 헤더, 푸터, 검색 팔레트
-_sass/_field-notes.scss    전체 디자인 시스템
-assets/js/app.js           검색, 필터, 읽기, 인터랙션
-assets/img/og-card.png     공유용 대표 이미지
-search.json                빌드 시 생성되는 검색 인덱스
-_data/cv.yml               CV 콘텐츠
-DESIGN_PROMPT.md           디자인 원칙과 유지보수 기준
-_scripts/verify_source.rb  빌드 전 소스·글 메타데이터 검증
-_scripts/verify.sh         로컬 통합 검증
-```
-
-## GitHub Pages 배포
-
-`main` 또는 `master` 브랜치에 push하면 `.github/workflows/pages.yml`이 Jekyll을 빌드하고 Pages artifact를 배포합니다. 저장소 **Settings → Pages → Source**는 **GitHub Actions**로 설정합니다.
+Requirements: Node.js 22.12 or newer. GitHub Actions uses Node.js 24.
 
 ```bash
-git add .
-git commit -m "Redesign research blog"
-git push
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
-사이트 주소나 저장소명이 달라질 때는 `_config.yml`의 `url`과 `baseurl`을 조정합니다.
+Open the local URL printed by Astro.
 
-## 보존 범위
+## Verification
 
-- 기존 `_posts/`와 Tistory 로컬 이미지
-- `/papers/`, `/blog/`, `/projects/`, `/tags/`, `/cv/`, `/about/`
-- 기존 포스트 날짜와 개별 URL 규칙
-- CV PDF, 연구 데이터, 프로젝트 이미지
+```bash
+pnpm run verify
+```
 
-## License
+This command performs:
 
-콘텐츠의 권리는 작성자에게 있습니다. 코드 관련 고지와 기존 프로젝트의 MIT 라이선스 표기는 [`LICENSE.txt`](./LICENSE.txt)를 따릅니다.
+1. Astro and TypeScript diagnostics.
+2. A production static build.
+3. Legacy Jekyll URL generation.
+4. Output validation for pages, posts, search, RSS, sitemap, metadata, local links, assets, and English navigation.
+
+## Deployment
+
+1. Replace the contents of the `Kkubuck.github.io` repository with this project.
+2. Commit `pnpm-lock.yaml` and `pnpm-workspace.yaml` along with the source.
+3. Push to `main`.
+4. In **Settings → Pages**, choose **GitHub Actions** as the source.
+5. The workflow at `.github/workflows/deploy.yml` verifies and deploys the site.
+
+Because this repository follows the special `<username>.github.io` naming pattern, no `base` path is required. For a project repository, set `BASE_PATH=/repository-name` and update any root-relative URLs in legacy Markdown before deployment.
+
+## Content
+
+Posts live in `src/content/posts/`. A post must contain front matter validated by `src/content.config.ts`.
+
+- `kind: paper` publishes to `/papers/<slug>/`
+- `kind: note` publishes to `/notes/<slug>/`
+- `takeaways` renders the article summary panel
+- `sourceUrl`, `pdfUrl`, and `codeUrl` render source actions
+- `venue`, `paperYear`, and `authors` enrich archive filters and metadata
+
+## Architecture and design documents
+
+- [`docs/DESIGN_PHILOSOPHY.md`](docs/DESIGN_PHILOSOPHY.md)
+- [`docs/DESIGN_RESEARCH.md`](docs/DESIGN_RESEARCH.md)
+- [`docs/TECH_STACK.md`](docs/TECH_STACK.md)
+- [`docs/INTERACTION_SPEC.md`](docs/INTERACTION_SPEC.md)
+- [`docs/ACCESSIBILITY_AND_PERFORMANCE.md`](docs/ACCESSIBILITY_AND_PERFORMANCE.md)
+- [`docs/DEPLOYMENT_CHECKLIST.md`](docs/DEPLOYMENT_CHECKLIST.md)
+- [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)
+- [`MIGRATION.md`](MIGRATION.md)

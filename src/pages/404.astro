@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
+---
+<BaseLayout title="Page Not Found" description="The requested page could not be found." noindex>
+  <section class="not-found container">
+    <div>
+      <p class="not-found__code">ERROR · 404</p>
+      <h1>This route has no signal.</h1>
+      <p>The address may have changed, or the entry may no longer exist. Search the archive or return to the interface.</p>
+      <a class="button button--primary" href={withBase('/')}>Return home</a>
+    </div>
+  </section>
+</BaseLayout>

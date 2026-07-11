@@ -1,0 +1,95 @@
+---
+import type { MarkdownHeading } from 'astro';
+import type { Post } from '../lib/content';
+import { formatDate, getPostUrl, readingTime, tagSlug, titleCaseTag } from '../lib/content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+  previous?: Post | undefined;
+  next?: Post | undefined;
+}
+
+const { post, headings, previous, next } = Astro.props;
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const summary = post.data.subtitle || post.data.summary || post.data.description;
+const label = post.data.kind === 'paper' ? 'Paper review' : 'Research note';
+const venue = post.data.venue || label;
+---
+<BaseLayout title={post.data.title} description={post.data.description || post.data.summary} lang={post.data.lang} type="article">
+  <article class="article-shell" data-article>
+    <header class="article-hero">
+      <div class="article-hero__inner">
+        <div class="article-hero__rail">
+          <p>{label}<br />{venue}<br />{post.data.paperYear || post.data.pubDate.getFullYear()}</p>
+        </div>
+        <div class="article-hero__content">
+          <span class="eyebrow">{label}</span>
+          <h1>{post.data.title}</h1>
+          {summary && <p class="article-hero__subtitle">{summary}</p>}
+          <div class="article-meta" aria-label="Article metadata">
+            <span><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
+            <span>{readingTime(post.body)}</span>
+            {post.data.authors && <span>{post.data.authors}</span>}
+          </div>
+          {post.data.tags.length > 0 && (
+            <div class="tag-list" aria-label="Tags">
+              {post.data.tags.map((tag) => <a class="tag" href={`/tags/#tag-${tagSlug(tag)}`}>{titleCaseTag(tag)}</a>)}
+            </div>
+          )}
+          <div class="article-actions">
+            {post.data.sourceUrl && <a class="article-action" href={post.data.sourceUrl} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+            {post.data.pdfUrl && <a class="article-action" href={post.data.pdfUrl} target="_blank" rel="noopener noreferrer">PDF ↗</a>}
+            {post.data.codeUrl && <a class="article-action" href={post.data.codeUrl} target="_blank" rel="noopener noreferrer">Code ↗</a>}
+            <button class="article-action" type="button" data-copy-link>Copy link</button>
+            <button class="article-action" type="button" data-share>Share</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {post.data.takeaways.length > 0 && (
+      <section class="takeaways" aria-labelledby="takeaways-title">
+        <p class="takeaways__label" id="takeaways-title">Key takeaways</p>
+        <ol>{post.data.takeaways.map((item) => <li>{item}</li>)}</ol>
+      </section>
+    )}
+
+    <div class="article-grid">
+      <nav class="article-toc" aria-label="On this page">
+        <p class="article-toc__title">On this page</p>
+        {toc.length ? (
+          <ol>
+            {toc.map((heading) => (
+              <li style={heading.depth === 3 ? 'padding-left: 10px' : undefined}>
+                <a href={`#${heading.slug}`} data-toc-link>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        ) : <p class="muted">Single-section note</p>}
+      </nav>
+      <div class="prose"><slot /></div>
+      <aside class="article-aside">
+        <p>Reviewed<br />{post.data.reviewedOn ? formatDate(post.data.reviewedOn) : formatDate(post.data.pubDate)}<br /><br />Language<br />{post.data.lang.toUpperCase()}</p>
+      </aside>
+    </div>
+
+    <footer class="article-footer">
+      <nav class="article-nav" aria-label="Adjacent writing">
+        {previous ? (
+          <a href={getPostUrl(previous)}>
+            <span class="article-nav__label">Previous</span>
+            <p class="article-nav__title">{previous.data.title}</p>
+          </a>
+        ) : <span aria-hidden="true"></span>}
+        {next ? (
+          <a href={getPostUrl(next)}>
+            <span class="article-nav__label">Next</span>
+            <p class="article-nav__title">{next.data.title}</p>
+          </a>
+        ) : <span aria-hidden="true"></span>}
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>

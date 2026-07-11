@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import cv from '../../data/cv.json';
+import { withBase } from '../../lib/paths';
+---
+<BaseLayout title="Curriculum Vitae" description="Curriculum vitae of Jisang Lee, computer vision researcher at Hanbat National University.">
+  <div class="container section">
+    <div class="cv-layout">
+      <aside class="cv-sidebar">
+        <span class="eyebrow">Curriculum vitae</span>
+        <h1>{cv.profile.name}</h1>
+        <p>{cv.profile.role}<br />{cv.profile.affiliation}</p>
+        <p>{cv.profile.location}<br /><a href={`mailto:${cv.profile.email}`}>{cv.profile.email}</a></p>
+        <div class="hero__actions">
+          <a class="button button--primary" href={withBase(cv.profile.pdf)} target="_blank">Download PDF</a>
+          <a class="button" href={cv.profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
+        <p class="mono" style="font-size: 10px; margin-top: 28px">Last updated {cv.profile.last_updated}</p>
+      </aside>
+
+      <div>
+        <section class="cv-section">
+          <h2>Education</h2>
+          {cv.education.map((item) => (
+            <article class="cv-item">
+              <p class="cv-item__date">{item.period}</p>
+              <div><h3>{item.degree}</h3><p>{item.institution} · {item.location}</p><p>Advisor: {item.advisor}</p>{item.details.length > 0 && <ul>{item.details.map((detail) => <li>{detail}</li>)}</ul>}</div>
+            </article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Journal Publications</h2>
+          {cv.publications.journal.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.date}</p><div><h3>{item.title}</h3><p>{item.authors}</p><p>{item.venue}</p></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Conference Publications</h2>
+          {cv.publications.conference.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.date}</p><div><h3>{item.title}</h3><p>{item.authors}</p><p>{item.venue}</p></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Research Experience</h2>
+          {cv.research_experience.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.period}</p><div><h3>{item.role}</h3><p>{item.organization} · {item.location}</p><ul>{item.bullets.map((bullet) => <li>{bullet}</li>)}</ul></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Research Projects</h2>
+          {cv.research_projects.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.period}</p><div><h3>{item.title}</h3><p>{item.organization}</p><ul>{item.bullets.map((bullet) => <li>{bullet}</li>)}</ul></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Awards</h2>
+          {cv.awards.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.date}</p><div><h3>{item.title}</h3><p>{item.category}{'detail' in item && item.detail ? ` · ${item.detail}` : ''}</p></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Teaching</h2>
+          {cv.teaching.map((item) => (
+            <article class="cv-item"><p class="cv-item__date">{item.period}</p><div><h3>{item.course}</h3><p>{item.role} · {item.institution}</p></div></article>
+          ))}
+        </section>
+
+        <section class="cv-section">
+          <h2>Skills</h2>
+          {Object.entries(cv.skills).map(([group, skills]) => (
+            <article class="cv-item"><p class="cv-item__date">{group}</p><div><h3>{(skills as string[]).join(' · ')}</h3></div></article>
+          ))}
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
