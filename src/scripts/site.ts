@@ -479,6 +479,30 @@ function enhanceCodeBlocks(article: HTMLElement): void {
   }
 }
 
+/**
+ * The contents list is one `<details>` serving two layouts: a collapsed
+ * disclosure on small screens, an always-open sticky rail from 1024px. CSS
+ * cannot force a `<details>` open, so the state is set here.
+ */
+function initTocDisclosure(): void {
+  const toc = document.querySelector<HTMLDetailsElement>('[data-toc]');
+  if (!toc) return;
+
+  const wide = matchMedia('(min-width: 1024px)');
+  const sync = () => {
+    toc.open = wide.matches;
+  };
+
+  sync();
+  wide.addEventListener('change', sync);
+
+  // On a phone the list has done its job once a section is chosen.
+  toc.addEventListener('click', (event) => {
+    if (wide.matches) return;
+    if ((event.target as Element | null)?.closest('a')) toc.open = false;
+  });
+}
+
 function initTocHighlight(): void {
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
   if (links.length < 2) return;
@@ -574,6 +598,7 @@ function initArticle(): void {
   enhanceTables(article);
   enhanceExternalLinks(article);
   enhanceCodeBlocks(article);
+  initTocDisclosure();
   initTocHighlight();
   initReadProgress();
 }

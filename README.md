@@ -12,7 +12,20 @@ The interface is an editorial archive, not a landing page.
 - Hairline rules instead of cards and shadows.
 - Local font stacks only. No webfont download, no layout shift.
 - Motion is limited to colour and opacity changes under 200 ms on direct interaction. There are no scroll-triggered reveals, no parallax, and no decorative canvas.
-- Breakpoints at 640, 840, and 1024 px using classic `min-width` / `max-width` queries.
+
+## Mobile
+
+The stylesheet is mobile-first and layered by capability rather than by screen size alone.
+
+- Breakpoints at 640, 840, and 1024 px, written as `min-width` / `max-width`. Range syntax (`width >= 40rem`) is discarded outright by browsers older than 2023, which would drop every layout rule at once.
+- Hover styling lives behind `(hover: hover) and (pointer: fine)`. Touch devices report a hover state that persists after a tap, so an untouched rule leaves rows and tiles highlighted after navigation.
+- Touch targets are raised to 44 px behind `(pointer: coarse)`. Header controls only shrink under `(min-width: 1024px) and (pointer: fine)`, so a large tablet keeps full-size buttons.
+- Every filter and search input is 16 px on small screens. Below that, iOS Safari zooms the viewport on focus and does not zoom back out.
+- Search opens full screen on phones. A centred sheet competes with the on-screen keyboard and leaves too little room for results.
+- The table of contents is a `<details>` disclosure below 1024 px and a sticky rail above it. One set of markup; the script sets the open state per breakpoint because CSS cannot force a `<details>` open.
+- Entry rows put the date and venue on a shared meta line above the title, rather than stacking the venue below the summary where it would read as an afterthought.
+- Tables and code blocks scroll inside their own container with `overscroll-behavior-x: contain`, so a horizontal swipe never turns into a page-level gesture.
+- `viewport-fit=cover` is deliberately not set. The default viewport inset keeps content clear of the notch and home indicator, and the letterboxed area picks up the page background.
 
 ## Features
 

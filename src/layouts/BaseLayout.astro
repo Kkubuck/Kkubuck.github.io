@@ -35,7 +35,9 @@ const imageUrl = absoluteUrl(image, Astro.site?.toString() || SITE.url);
 <html lang={lang} data-theme="light">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- No viewport-fit=cover: the default inset keeps content clear of the
+         notch and home indicator without safe-area plumbing on every surface. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)" />

@@ -45,8 +45,11 @@ const sources = [
       <div class="article__meta">
         <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
         <span>{readingTime(post.body)}</span>
-        {post.data.authors && <span>{post.data.authors}</span>}
       </div>
+
+      {/* Kept off the meta row: an author list wraps to several lines on a
+          phone and would break up the separators. */}
+      {post.data.authors && <p class="article__authors">{post.data.authors}</p>}
 
       {post.data.tags.length > 0 && (
         <div class="chips article__tags">
@@ -84,8 +87,8 @@ const sources = [
       </div>
 
       {toc.length > 1 && (
-        <nav class="toc" aria-labelledby="toc-title">
-          <p class="toc__title" id="toc-title">Contents</p>
+        <details class="toc" data-toc>
+          <summary class="toc__summary">Contents</summary>
           <ol class="toc__list">
             {toc.map((heading) => (
               <li class={heading.depth === 3 ? 'toc__item toc__item--sub' : 'toc__item'}>
@@ -93,7 +96,7 @@ const sources = [
               </li>
             ))}
           </ol>
-        </nav>
+        </details>
       )}
     </div>
 
