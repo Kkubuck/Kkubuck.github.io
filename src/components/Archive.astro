@@ -2,36 +2,70 @@
 import type { Post } from '../lib/content';
 import PostRow from './PostRow.astro';
 
-interface Props { posts: Post[]; kind: 'paper' | 'note'; }
+interface Props {
+  posts: Post[];
+  kind: 'paper' | 'note';
+}
+
 const { posts, kind } = Astro.props;
-const years = [...new Set(posts.map((post) => String(post.data.paperYear || post.data.pubDate.getFullYear())))].sort((a, b) => Number(b) - Number(a));
-const venues = [...new Set(posts.map((post) => post.data.venue || (kind === 'paper' ? 'Paper review' : 'Research note')))].sort();
+
+const years = [
+  ...new Set(posts.map((post) => String(post.data.paperYear || post.data.pubDate.getFullYear())))
+].sort((a, b) => Number(b) - Number(a));
+
+const venues = [
+  ...new Set(posts.map((post) => post.data.venue).filter((venue): venue is string => Boolean(venue)))
+].sort((a, b) => a.localeCompare(b));
+
+// A select with a single option is a control that cannot change anything.
+const showVenueFilter = venues.length > 1;
+const noun = kind === 'paper' ? 'reviews' : 'notes';
 ---
+
 <div data-archive>
-  <div class="archive-tools" aria-label="Archive filters">
-    <label class="field">
-      <span class="sr-only">Search this archive</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-      <input type="search" data-filter-query placeholder={`Search ${kind === 'paper' ? 'papers' : 'notes'}…`} autocomplete="off" />
-    </label>
-    <label class="field">
-      <span class="sr-only">Filter by year</span>
-      <select data-filter-year>
-        <option value="">All years</option>
-        {years.map((year) => <option value={year}>{year}</option>)}
-      </select>
-    </label>
-    <label class="field">
-      <span class="sr-only">Filter by venue or type</span>
-      <select data-filter-venue>
-        <option value="">All {kind === 'paper' ? 'venues' : 'types'}</option>
-        {venues.map((venue) => <option value={venue}>{venue}</option>)}
-      </select>
-    </label>
+  <div class="filters" role="search">
+    <div class="filters__search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.5"></circle><path d="m10.5 10.5 3 3" stroke-linecap="round"></path>
+      </svg>
+      <label class="sr-only" for="archive-query">Filter these {noun}</label>
+      <input
+        id="archive-query"
+        type="search"
+        data-filter-query
+        placeholder={`Filter ${noun} by title, method, or tag`}
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <label class="sr-only" for="archive-year">Year</label>
+    <select id="archive-year" data-filter-year>
+      <option value="">All years</option>
+      {years.map((year) => <option value={year}>{year}</option>)}
+    </select>
+
+    {showVenueFilter && (
+      <Fragment>
+        <label class="sr-only" for="archive-venue">Venue</label>
+        <select id="archive-venue" data-filter-venue>
+          <option value="">All venues</option>
+          {venues.map((venue) => <option value={venue}>{venue}</option>)}
+        </select>
+      </Fragment>
+    )}
+
+    <button class="filters__reset" type="button" data-filter-reset hidden>Clear</button>
   </div>
-  <div class="archive-status"><span data-filter-count>{posts.length} entries</span><span>Newest first</span></div>
-  <div class="post-list">
-    {posts.map((post, index) => <PostRow post={post} index={index} filterable />)}
-  </div>
-  <p class="empty-state" data-filter-empty hidden>No entries match these filters.</p>
+
+  <p class="filters-status">
+    <span data-filter-count>{posts.length} entries</span>
+    <span>Newest first</span>
+  </p>
+
+  <ul class="entry-list">
+    {posts.map((post) => <PostRow post={post} filterable />)}
+  </ul>
+
+  <p class="empty-state" data-filter-empty hidden>No entry matches these filters.</p>
 </div>

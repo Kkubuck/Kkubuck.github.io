@@ -1,40 +1,56 @@
-# Kkubuck Research Interface
+# Kkubuck
 
-A static research archive for computer-vision paper reviews, implementation notes, and research history. This version replaces the previous Jekyll theme with an Astro 7 architecture, an English interface, a sans-serif visual system, and progressively enhanced interaction.
+A static archive of computer-vision paper reviews, implementation notes, and research history. Built with Astro, deployed to GitHub Pages.
 
-## What changed
+Live site: <https://kkubuck.github.io>
 
-- Entire site shell and navigation are in English.
-- Jekyll, Ruby gems, theme inheritance, and Liquid templates were removed.
-- All 65 previously edited posts are preserved as Markdown content entries.
-- Paper reviews and general notes have separate routes and searchable archives.
-- The visual system uses a compact sans-serif stack, restrained cobalt accent, low-noise surfaces, and fluid type.
-- Interaction includes a pointer-responsive canvas field, a wheel/scroll-driven research narrative, view transitions, filtering, global search, reading progress, and automatic article navigation.
-- Motion is disabled or reduced when `prefers-reduced-motion` is enabled.
-- The production build verifies output counts, internal links, assets, metadata, navigation language, and legacy redirects.
+## Design
+
+The interface is an editorial archive, not a landing page.
+
+- Warm paper background, near-monochrome ink, one deep accent used only for links, focus, and active state.
+- Hairline rules instead of cards and shadows.
+- Local font stacks only. No webfont download, no layout shift.
+- Motion is limited to colour and opacity changes under 200 ms on direct interaction. There are no scroll-triggered reveals, no parallax, and no decorative canvas.
+- Breakpoints at 640, 840, and 1024 px using classic `min-width` / `max-width` queries.
+
+## Features
+
+Reader-facing:
+
+- Global search over every entry (`⌘K` / `Ctrl K`, or `/`), with arrow-key navigation.
+- Archive filtering by text, year, and venue. Filter state is mirrored into the URL, so a filtered view is shareable.
+- Table of contents with active-section highlighting on articles that have more than one section.
+- Reading progress indicator on article pages only, driven by CSS Scroll-Driven Animations where available.
+- Copy buttons on code blocks, and a copy-link action per article.
+- Light and dark themes, defaulting to the system preference and remembered per browser.
+- Topic index that routes each topic to the archive actually containing its entries.
+- RSS feed, sitemap, and `robots.txt`.
+
+Not included, by choice: comment widgets, analytics SDKs, view counters, share buttons beyond copy-link, and animated hero graphics.
 
 ## Stack
 
-- Astro 7.0.7
-- TypeScript 6.0.3
-- Semantic HTML
-- Modern CSS: cascade layers, custom properties, `clamp()`, container-safe responsive layout, Scroll-Driven Animations, View Transitions
-- Canvas 2D for the live signal field
+- Astro 7 (static output)
+- TypeScript
+- Semantic HTML and modern CSS: cascade layers, custom properties, `clamp()`, Scroll-Driven Animations, View Transitions
 - GitHub Pages via the official Astro action
 
-No React, Vue, Tailwind, animation runtime, WebGL engine, external font binary, analytics SDK, or client-side router is required.
+No UI framework, CSS framework, animation runtime, or client-side router.
 
 ## Local development
 
-Requirements: Node.js 22.12 or newer. GitHub Actions uses Node.js 24.
+Requires Node.js 22.12 or newer. CI builds on Node 24, so that is the version to match locally.
 
 ```bash
-corepack enable
+npm install -g pnpm@10.13.1
 pnpm install --frozen-lockfile
 pnpm run dev
 ```
 
-Open the local URL printed by Astro.
+Astro prints the local URL, normally <http://localhost:4321>.
+
+Corepack is no longer distributed with Node.js 25 and later, so `corepack enable` is not a reliable way to obtain pnpm. Installing the pinned version through npm works on every supported Node release. If Corepack is available and preferred, `corepack enable && corepack use pnpm@10.13.1` is equivalent.
 
 ## Verification
 
@@ -42,40 +58,63 @@ Open the local URL printed by Astro.
 pnpm run verify
 ```
 
-This command performs:
+## Packaging
 
-1. Astro and TypeScript diagnostics.
-2. A production static build.
-3. Legacy Jekyll URL generation.
-4. Output validation for pages, posts, search, RSS, sitemap, metadata, local links, assets, and English navigation.
+```bash
+pnpm run package
+```
+
+Writes `../<folder>-source.zip` containing the repository-ready source. Dependencies, build output, caches, and every dotenv file are excluded; `.env.example` is kept.
+
+This runs Astro and TypeScript diagnostics, a production build, legacy URL generation, and `scripts/verify-build.mjs`, which checks:
+
+- every required route, feed, and manifest exists;
+- the expected number of papers, notes, and search records;
+- the shell still ships search, the theme toggle, and the mobile navigation;
+- articles still ship the table of contents hooks, reading indicator, and copy-link action;
+- retired effects have not returned through a stale import;
+- per-page `lang`, `title`, `description`, and canonical URL;
+- no duplicate element ids, no `http://` references, and no `target="_blank"` without `rel="noopener"`;
+- every local `href` and `src` resolves to a real file in `dist/`;
+- CSS and JavaScript stay inside the payload budget.
 
 ## Deployment
 
-1. Replace the contents of the `Kkubuck.github.io` repository with this project.
-2. Commit `pnpm-lock.yaml` and `pnpm-workspace.yaml` along with the source.
-3. Push to `main`.
-4. In **Settings → Pages**, choose **GitHub Actions** as the source.
-5. The workflow at `.github/workflows/deploy.yml` verifies and deploys the site.
+1. Push to `main`.
+2. In **Settings → Pages**, set the source to **GitHub Actions**.
+3. `.github/workflows/deploy.yml` runs `pnpm run verify` and publishes `dist/`.
 
-Because this repository follows the special `<username>.github.io` naming pattern, no `base` path is required. For a project repository, set `BASE_PATH=/repository-name` and update any root-relative URLs in legacy Markdown before deployment.
+This repository uses the `<username>.github.io` naming pattern, so no `base` path is needed. For a project repository, set `BASE_PATH=/repository-name` before building.
 
 ## Content
 
-Posts live in `src/content/posts/`. A post must contain front matter validated by `src/content.config.ts`.
+Posts live in `src/content/posts/` and are validated by `src/content.config.ts`.
 
-- `kind: paper` publishes to `/papers/<slug>/`
-- `kind: note` publishes to `/notes/<slug>/`
-- `takeaways` renders the article summary panel
-- `sourceUrl`, `pdfUrl`, and `codeUrl` render source actions
-- `venue`, `paperYear`, and `authors` enrich archive filters and metadata
+| Front matter | Effect |
+| --- | --- |
+| `kind: paper` | Publishes to `/papers/<slug>/` |
+| `kind: note` | Publishes to `/notes/<slug>/` |
+| `takeaways` | Renders the "In short" panel above the article |
+| `subtitle` | Renders as the article lede |
+| `sourceUrl`, `pdfUrl`, `codeUrl` | Render source actions |
+| `venue`, `paperYear`, `authors` | Feed the archive filters and metadata |
+| `draft: true` | Excluded from every route and feed |
 
-## Architecture and design documents
+## Project layout
 
-- [`docs/DESIGN_PHILOSOPHY.md`](docs/DESIGN_PHILOSOPHY.md)
-- [`docs/DESIGN_RESEARCH.md`](docs/DESIGN_RESEARCH.md)
-- [`docs/TECH_STACK.md`](docs/TECH_STACK.md)
-- [`docs/INTERACTION_SPEC.md`](docs/INTERACTION_SPEC.md)
-- [`docs/ACCESSIBILITY_AND_PERFORMANCE.md`](docs/ACCESSIBILITY_AND_PERFORMANCE.md)
-- [`docs/DEPLOYMENT_CHECKLIST.md`](docs/DEPLOYMENT_CHECKLIST.md)
-- [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)
-- [`MIGRATION.md`](MIGRATION.md)
+```
+src/
+  components/   SiteHeader, SiteFooter, SearchDialog, Archive, PostRow
+  content/      Markdown entries
+  data/         site.ts, cv.json, projects.json, post-manifest.json
+  layouts/      BaseLayout, PostLayout
+  lib/          content helpers, base-path helpers
+  pages/        routes, plus search.json / rss.xml / robots.txt endpoints
+  scripts/      site.ts — the only client bundle
+  styles/       global.css — the whole design system
+scripts/        create-legacy-redirects.mjs, verify-build.mjs, package-source.mjs
+```
+
+## Notes on the older documents
+
+`docs/` and `MIGRATION.md` describe the previous version of this site, including interaction patterns that have since been removed. Treat this README as the current reference.

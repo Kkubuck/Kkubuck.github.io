@@ -2,13 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/paths';
 ---
-<BaseLayout title="Page Not Found" description="The requested page could not be found." noindex>
-  <section class="not-found container">
+
+<BaseLayout title="Not Found" description="The requested page could not be found." noindex>
+  <div class="container not-found">
     <div>
-      <p class="not-found__code">ERROR · 404</p>
-      <h1>This route has no signal.</h1>
-      <p>The address may have changed, or the entry may no longer exist. Search the archive or return to the interface.</p>
-      <a class="button button--primary" href={withBase('/')}>Return home</a>
+      <p class="kicker">404</p>
+      <h1>Page not found.</h1>
+      <p>The address may have changed. Search the archive or start from the index.</p>
+      <div class="actions not-found__actions">
+        <a class="button button--solid" href={withBase('/')}>Home</a>
+        <button class="button" type="button" data-search-open>Search archive</button>
+      </div>
     </div>
-  </section>
+  </div>
 </BaseLayout>

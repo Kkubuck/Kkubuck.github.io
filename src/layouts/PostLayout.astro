@@ -2,6 +2,7 @@
 import type { MarkdownHeading } from 'astro';
 import type { Post } from '../lib/content';
 import { formatDate, getPostUrl, readingTime, tagSlug, titleCaseTag } from '../lib/content';
+import { withBase } from '../lib/paths';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -12,83 +13,108 @@ interface Props {
 }
 
 const { post, headings, previous, next } = Astro.props;
+
 const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
-const summary = post.data.subtitle || post.data.summary || post.data.description;
+const lede = post.data.subtitle || post.data.summary || post.data.description;
 const label = post.data.kind === 'paper' ? 'Paper review' : 'Research note';
-const venue = post.data.venue || label;
+const kicker = [label, post.data.venue, post.data.paperYear].filter(Boolean).join(' · ');
+
+const sources = [
+  { href: post.data.sourceUrl, label: 'Source' },
+  { href: post.data.pdfUrl, label: 'PDF' },
+  { href: post.data.codeUrl, label: 'Code' }
+].filter((source): source is { href: string; label: string } => Boolean(source.href));
 ---
-<BaseLayout title={post.data.title} description={post.data.description || post.data.summary} lang={post.data.lang} type="article">
-  <article class="article-shell" data-article>
-    <header class="article-hero">
-      <div class="article-hero__inner">
-        <div class="article-hero__rail">
-          <p>{label}<br />{venue}<br />{post.data.paperYear || post.data.pubDate.getFullYear()}</p>
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description || post.data.summary || undefined}
+  lang={post.data.lang}
+  type="article"
+>
+  <div class="read-progress" aria-hidden="true">
+    <span class="read-progress__bar" data-read-progress></span>
+  </div>
+
+  <article data-article>
+    <header class="article__head container">
+      <p class="kicker">{kicker}</p>
+      <h1 class="article__title">{post.data.title}</h1>
+      {lede && <p class="article__lede">{lede}</p>}
+
+      <div class="article__meta">
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        <span>{readingTime(post.body)}</span>
+        {post.data.authors && <span>{post.data.authors}</span>}
+      </div>
+
+      {post.data.tags.length > 0 && (
+        <div class="chips article__tags">
+          {post.data.tags.map((tag) => (
+            <a class="chip" href={`${withBase('/tags/')}#tag-${tagSlug(tag)}`}>{titleCaseTag(tag)}</a>
+          ))}
         </div>
-        <div class="article-hero__content">
-          <span class="eyebrow">{label}</span>
-          <h1>{post.data.title}</h1>
-          {summary && <p class="article-hero__subtitle">{summary}</p>}
-          <div class="article-meta" aria-label="Article metadata">
-            <span><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
-            <span>{readingTime(post.body)}</span>
-            {post.data.authors && <span>{post.data.authors}</span>}
-          </div>
-          {post.data.tags.length > 0 && (
-            <div class="tag-list" aria-label="Tags">
-              {post.data.tags.map((tag) => <a class="tag" href={`/tags/#tag-${tagSlug(tag)}`}>{titleCaseTag(tag)}</a>)}
-            </div>
-          )}
-          <div class="article-actions">
-            {post.data.sourceUrl && <a class="article-action" href={post.data.sourceUrl} target="_blank" rel="noopener noreferrer">Source ↗</a>}
-            {post.data.pdfUrl && <a class="article-action" href={post.data.pdfUrl} target="_blank" rel="noopener noreferrer">PDF ↗</a>}
-            {post.data.codeUrl && <a class="article-action" href={post.data.codeUrl} target="_blank" rel="noopener noreferrer">Code ↗</a>}
-            <button class="article-action" type="button" data-copy-link>Copy link</button>
-            <button class="article-action" type="button" data-share>Share</button>
-          </div>
-        </div>
+      )}
+
+      <div class="article__actions">
+        {sources.map((source) => (
+          <a class="action" href={source.href} target="_blank" rel="noopener noreferrer">
+            {source.label}
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <path d="M3.5 8.5 8.5 3.5M4.2 3.5h4.3v4.3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        ))}
+        <button class="action" type="button" data-copy-link>Copy link</button>
       </div>
     </header>
 
-    {post.data.takeaways.length > 0 && (
-      <section class="takeaways" aria-labelledby="takeaways-title">
-        <p class="takeaways__label" id="takeaways-title">Key takeaways</p>
-        <ol>{post.data.takeaways.map((item) => <li>{item}</li>)}</ol>
-      </section>
-    )}
+    <div class="article__body container">
+      <div class="article__column">
+        {post.data.takeaways.length > 0 && (
+          <aside class="summary-panel" aria-labelledby="summary-title">
+            <p class="kicker" id="summary-title">In short</p>
+            <ol class="summary-panel__list">
+              {post.data.takeaways.map((item) => <li>{item}</li>)}
+            </ol>
+          </aside>
+        )}
 
-    <div class="article-grid">
-      <nav class="article-toc" aria-label="On this page">
-        <p class="article-toc__title">On this page</p>
-        {toc.length ? (
-          <ol>
+        <div class="prose"><slot /></div>
+      </div>
+
+      {toc.length > 1 && (
+        <nav class="toc" aria-labelledby="toc-title">
+          <p class="toc__title" id="toc-title">Contents</p>
+          <ol class="toc__list">
             {toc.map((heading) => (
-              <li style={heading.depth === 3 ? 'padding-left: 10px' : undefined}>
+              <li class={heading.depth === 3 ? 'toc__item toc__item--sub' : 'toc__item'}>
                 <a href={`#${heading.slug}`} data-toc-link>{heading.text}</a>
               </li>
             ))}
           </ol>
-        ) : <p class="muted">Single-section note</p>}
-      </nav>
-      <div class="prose"><slot /></div>
-      <aside class="article-aside">
-        <p>Reviewed<br />{post.data.reviewedOn ? formatDate(post.data.reviewedOn) : formatDate(post.data.pubDate)}<br /><br />Language<br />{post.data.lang.toUpperCase()}</p>
-      </aside>
+        </nav>
+      )}
     </div>
 
-    <footer class="article-footer">
-      <nav class="article-nav" aria-label="Adjacent writing">
+    <footer class="article__foot container">
+      <nav class="pager" aria-label="More entries">
         {previous ? (
-          <a href={getPostUrl(previous)}>
-            <span class="article-nav__label">Previous</span>
-            <p class="article-nav__title">{previous.data.title}</p>
+          <a href={getPostUrl(previous)} rel="prev">
+            <span class="pager__dir">Older</span>
+            <span class="pager__title">{previous.data.title}</span>
           </a>
-        ) : <span aria-hidden="true"></span>}
+        ) : (
+          <span class="pager__empty"></span>
+        )}
         {next ? (
-          <a href={getPostUrl(next)}>
-            <span class="article-nav__label">Next</span>
-            <p class="article-nav__title">{next.data.title}</p>
+          <a class="pager--next" href={getPostUrl(next)} rel="next">
+            <span class="pager__dir">Newer</span>
+            <span class="pager__title">{next.data.title}</span>
           </a>
-        ) : <span aria-hidden="true"></span>}
+        ) : (
+          <span class="pager__empty"></span>
+        )}
       </nav>
     </footer>
   </article>

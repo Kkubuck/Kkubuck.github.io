@@ -1,9 +1,9 @@
 export const SITE = {
   name: 'Kkubuck',
   title: 'Kkubuck — Computer Vision Research Notes',
-  shortTitle: 'Kkubuck Research',
+  tagline: 'Paper reviews and research notes in computer vision.',
   description:
-    'Paper reviews, implementation notes, and research logs across computer vision, segmentation, remote sensing, and open-vocabulary learning.',
+    'Paper reviews, implementation notes, and research logs on segmentation, remote sensing, and open-vocabulary learning.',
   url: 'https://kkubuck.github.io',
   author: 'Jisang Lee',
   locale: 'en_US',

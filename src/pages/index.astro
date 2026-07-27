@@ -1,79 +1,72 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SignalField from '../components/SignalField.astro';
-import ScrollNarrative from '../components/ScrollNarrative.astro';
 import PostRow from '../components/PostRow.astro';
-import { getAllPosts } from '../lib/content';
+import { getAllPosts, tagSlug } from '../lib/content';
 import { withBase } from '../lib/paths';
 import cv from '../data/cv.json';
 
 const posts = await getAllPosts();
 const papers = posts.filter((post) => post.data.kind === 'paper');
 const notes = posts.filter((post) => post.data.kind === 'note');
-const venues = new Set(papers.map((post) => post.data.venue).filter(Boolean));
-const latest = posts.slice(0, 6);
+const latest = posts.slice(0, 8);
+
+// Counted by slug so this figure matches the number shown on /tags/.
+const topics = new Set(posts.flatMap((post) => post.data.tags.map(tagSlug)).filter(Boolean)).size;
+
+const index = [
+  { href: withBase('/papers/'), value: papers.length, label: 'Paper reviews' },
+  { href: withBase('/notes/'), value: notes.length, label: 'Research notes' },
+  { href: withBase('/tags/'), value: topics, label: 'Topics' }
+];
 ---
+
 <BaseLayout>
-  <section class="hero">
-    <div class="hero__inner">
-      <div class="hero__copy">
-        <span class="eyebrow">Computer vision · research notes</span>
-        <h1>Making difficult research <span>legible.</span></h1>
-        <p class="hero__lead">Paper reviews, implementation notes, and research logs focused on segmentation, remote sensing, open-vocabulary learning, and the evidence behind model claims.</p>
-        <div class="hero__actions">
-          <a class="button button--primary" href={withBase('/papers/')}>Explore papers <span aria-hidden="true">↗</span></a>
-          <button class="button" type="button" data-search-open>Search archive <span aria-hidden="true">⌘K</span></button>
-        </div>
-        <div class="hero__status" aria-hidden="true">
-          <svg viewBox="0 0 18 28" fill="none" stroke="currentColor"><rect x="1" y="1" width="16" height="26" rx="8"></rect><path d="M9 7v5"></path></svg>
-          Scroll to inspect the system
-        </div>
+  <section class="intro">
+    <div class="container">
+      <p class="kicker">Archive · Since 2022</p>
+      <h1 class="intro__title">Reading computer vision closely.</h1>
+      <p class="intro__lede">Paper reviews, implementation notes, and research logs by {cv.profile.name}.</p>
+      <div class="actions">
+        <a class="button button--solid" href={withBase('/papers/')}>Browse papers</a>
+        <button class="button" type="button" data-search-open>Search archive</button>
       </div>
-      <div class="hero__visual"><SignalField /></div>
     </div>
   </section>
 
-  <section class="metric-strip" aria-label="Archive summary">
-    <div class="metric"><p class="metric__value">{papers.length}</p><p class="metric__label">Paper reviews</p></div>
-    <div class="metric"><p class="metric__value">{notes.length}</p><p class="metric__label">Research notes</p></div>
-    <div class="metric"><p class="metric__value">{venues.size}</p><p class="metric__label">Venues covered</p></div>
-    <div class="metric"><p class="metric__value">2022—26</p><p class="metric__label">Archive range</p></div>
-  </section>
-
-  <section class="section">
+  <section class="band">
     <div class="container">
-      <div class="section-heading" data-reveal>
-        <div><span class="eyebrow">Latest writing</span><h2>Recently reviewed and tested.</h2></div>
-        <p>The archive separates what a paper reports from what the design plausibly explains, with explicit attention to data, supervision, compute, and failure modes.</p>
+      <div class="band__head">
+        <h2>Latest</h2>
+        <a class="link--quiet" href={withBase('/papers/')}>All papers →</a>
       </div>
-      <div class="post-list">
-        {latest.map((post, index) => <PostRow post={post} index={index} />)}
-      </div>
-      <p style="margin-top: 28px"><a class="text-link" href={withBase('/papers/')}>View the complete paper archive</a></p>
+      <ul class="entry-list">
+        {latest.map((post) => <PostRow post={post} />)}
+      </ul>
     </div>
   </section>
 
-  <ScrollNarrative />
-
-  <section class="section">
+  <section class="band band--tight">
     <div class="container">
-      <div class="profile-panel" data-reveal>
-        <div class="profile-panel__copy">
-          <span class="eyebrow">Researcher</span>
-          <h2>Jisang Lee studies visual systems under real-world constraints.</h2>
-          <p>{cv.profile.summary}</p>
-          <p><a class="text-link" href={withBase('/about/')}>About this archive</a></p>
-        </div>
-        <div class="profile-panel__meta">
-          <dl class="definition-list">
-            <div><dt>Role</dt><dd>{cv.profile.role}</dd></div>
-            <div><dt>Lab</dt><dd>AIMLab</dd></div>
-            <div><dt>Base</dt><dd>{cv.profile.location}</dd></div>
-            <div><dt>Focus</dt><dd>Computer vision · Remote sensing</dd></div>
-          </dl>
-          <a class="button" href={withBase('/cv/')}>Open curriculum vitae</a>
-        </div>
+      <div class="index-grid">
+        {index.map((item) => (
+          <a class="index-tile" href={item.href}>
+            <span class="index-tile__value">{item.value}</span>
+            <span class="index-tile__label">
+              {item.label}
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </a>
+        ))}
       </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container colophon">
+      <p>{cv.profile.summary}</p>
+      <a class="link" href={withBase('/about/')}>About</a>
     </div>
   </section>
 </BaseLayout>

@@ -3,43 +3,64 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import cv from '../../data/cv.json';
 import { SITE } from '../../data/site';
 import { withBase } from '../../lib/paths';
+
+const method = [
+  { step: '01', title: 'Context', body: 'The data regime, the task boundary, and the failure that motivates the method.' },
+  { step: '02', title: 'Mechanism', body: 'Inputs, transformations, supervision, outputs. Not a list of module names.' },
+  { step: '03', title: 'Evidence', body: 'What the authors measured, separated from what the review infers.' },
+  { step: '04', title: 'Limits', body: 'Confounds, missing controls, cost, and the next experiment worth running.' }
+];
 ---
-<BaseLayout title="About" description="About Jisang Lee and the editorial system behind the Kkubuck research archive.">
-  <div class="container">
-    <header class="page-intro">
-      <div><span class="eyebrow">About the archive</span><h1>A research interface, not a paper summary factory.</h1></div>
-      <p class="page-intro__copy">This site is built to preserve the parts of a paper that remain useful after the novelty language fades: assumptions, mechanisms, evidence, and limits.</p>
-    </header>
 
-    <section class="section">
-      <div class="split">
-        <div class="stack" style="--stack-space: 30px" data-reveal>
-          <span class="eyebrow">Jisang Lee</span>
-          <h2 style="font-size: var(--step-4); max-width: 15ch">Computer vision research across sensing domains.</h2>
-          <p class="page-intro__copy">{cv.profile.summary}</p>
-          <p class="muted">Current interests include segmentation, remote sensing, medical imaging, forgery detection, foundation-model prompting, and open-vocabulary recognition.</p>
-          <div class="hero__actions">
-            <a class="button button--primary" href={withBase('/cv/')}>View CV</a>
-            <a class="button" href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          </div>
+<BaseLayout title="About" description="About Jisang Lee and how this research archive is written.">
+  <section class="page-head">
+    <div class="container">
+      <p class="kicker">About</p>
+      <h1>An archive, not a summary feed.</h1>
+      <p class="page-head__lede">
+        Reviews here keep the parts of a paper that stay useful once the novelty language fades.
+      </p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container split">
+      <div class="stack" style="--stack: 0.875rem">
+        <h2>{cv.profile.name}</h2>
+        <p class="muted">{cv.profile.summary}</p>
+        <p class="muted">
+          Current interests: segmentation, remote sensing, medical imaging, forgery detection, and
+          open-vocabulary recognition.
+        </p>
+        <div class="actions">
+          <a class="button button--solid" href={withBase('/cv/')}>Curriculum vitae</a>
+          <a class="button" href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
-        <dl class="definition-list" data-reveal>
-          <div><dt>Affiliation</dt><dd>{cv.profile.affiliation}</dd></div>
-          <div><dt>Advisor</dt><dd>{cv.profile.advisor}</dd></div>
-          <div><dt>Location</dt><dd>{cv.profile.location}</dd></div>
-          <div><dt>Contact</dt><dd><a href={`mailto:${cv.profile.email}`}>{cv.profile.email}</a></dd></div>
-        </dl>
       </div>
-    </section>
 
-    <section class="section--compact">
-      <div class="section-heading"><div><span class="eyebrow">Editorial method</span><h2>How a review earns its place here.</h2></div><p>The goal is neither exhaustive transcription nor synthetic certainty. The review should help a reader decide what to trust, reproduce, or test next.</p></div>
-      <div class="research-grid">
-        <article class="research-card"><span class="research-card__period">01 · Context</span><h2>Define the actual problem.</h2><p>State the data regime, task boundary, and practical failure that motivates the method.</p></article>
-        <article class="research-card"><span class="research-card__period">02 · Mechanism</span><h2>Describe information flow.</h2><p>Replace module-name repetition with inputs, transformations, supervision, and outputs.</p></article>
-        <article class="research-card"><span class="research-card__period">03 · Evidence</span><h2>Separate reports from inference.</h2><p>Make clear what the authors measured, what the reviewer inferred, and what remains unverified.</p></article>
-        <article class="research-card"><span class="research-card__period">04 · Limits</span><h2>Preserve uncertainty.</h2><p>Identify confounds, missing controls, deployment costs, and the next experiment that could change the conclusion.</p></article>
+      <dl class="facts">
+        <div><dt>Role</dt><dd>{cv.profile.role}</dd></div>
+        <div><dt>Lab</dt><dd>AIMLab</dd></div>
+        <div><dt>Advisor</dt><dd>{cv.profile.advisor}</dd></div>
+        <div><dt>Based in</dt><dd>{cv.profile.location}</dd></div>
+        <div><dt>Email</dt><dd><a class="link" href={`mailto:${cv.profile.email}`}>{cv.profile.email}</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <div class="band__head">
+        <h2>How a review is written</h2>
       </div>
-    </section>
-  </div>
+      <div class="note-grid">
+        {method.map((item) => (
+          <article class="note-card">
+            <p class="kicker">{item.step} · {item.title}</p>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getAllPosts, getPostPath } from '../lib/content';
+import { getAllPosts, getPostUrl } from '../lib/content';
 
 export const GET: APIRoute = async () => {
   const posts = await getAllPosts();
@@ -8,7 +8,9 @@ export const GET: APIRoute = async () => {
     summary: post.data.summary || post.data.description,
     tags: post.data.tags,
     kind: post.data.kind,
-    url: getPostPath(post),
+    // getPostUrl applies BASE_URL, so results stay clickable on a project-path
+    // deployment as well as at the domain root.
+    url: getPostUrl(post),
     date: post.data.pubDate.toISOString(),
     venue: post.data.venue
   }));

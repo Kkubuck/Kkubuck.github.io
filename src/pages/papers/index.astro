@@ -2,14 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Archive from '../../components/Archive.astro';
 import { getPostsByKind } from '../../lib/content';
+
 const posts = await getPostsByKind('paper');
 ---
-<BaseLayout title="Paper Reviews" description="Critical paper reviews across computer vision, segmentation, remote sensing, and open-vocabulary learning.">
-  <div class="container">
-    <header class="page-intro">
-      <div><span class="eyebrow">Archive · {posts.length} entries</span><h1>Paper reviews without the marketing layer.</h1></div>
-      <p class="page-intro__copy">Each review traces the problem, information flow, evidence, and limits. Use the controls below to search by title, method, venue, year, or tag.</p>
-    </header>
-    <section class="section--compact"><Archive posts={posts} kind="paper" /></section>
-  </div>
+
+<BaseLayout
+  title="Papers"
+  description="Paper reviews across computer vision: segmentation, remote sensing, and open-vocabulary learning."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="kicker">Archive · {posts.length} reviews</p>
+      <h1>Paper reviews.</h1>
+      <p class="page-head__lede">What the paper claims, how it works, and where the evidence stops.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <Archive posts={posts} kind="paper" />
+    </div>
+  </section>
 </BaseLayout>

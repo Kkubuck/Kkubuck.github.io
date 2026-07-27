@@ -14,7 +14,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "astro check && astro build && node scripts/create-legacy-redirects.mjs && node scripts/verify-build.mjs",
-    "clean": "rm -rf dist .astro"
+    "clean": "rm -rf dist .astro",
+    "package": "node scripts/package-source.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "4.0.19",

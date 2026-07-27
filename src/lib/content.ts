@@ -31,6 +31,18 @@ export function formatDate(date: Date, locale = 'en-US') {
   }).format(date);
 }
 
+/** Compact tabular form (2026.03.12) for list rails. */
+export function shortDate(date: Date) {
+  return new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'Asia/Seoul'
+  })
+    .format(date)
+    .replace(/-/g, '.');
+}
+
 export function readingTime(body = '') {
   const korean = (body.match(/[가-힣]/g) ?? []).length;
   const latinWords = (body.replace(/[가-힣]/g, ' ').match(/[\p{L}\p{N}_-]+/gu) ?? []).length;

@@ -1,22 +1,44 @@
 ---
 import { withBase } from '../lib/paths';
 ---
-<dialog class="search-dialog" data-search-dialog data-index-url={withBase('/search.json')} aria-labelledby="search-title">
-  <div class="search-dialog__header">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-    <label id="search-title" class="sr-only" for="global-search">Search all writing</label>
-    <input id="global-search" type="search" data-search-input placeholder="Search papers, notes, venues, or tags…" autocomplete="off" spellcheck="false" />
+
+<dialog
+  class="search-dialog"
+  data-search-dialog
+  data-index-url={withBase('/search.json')}
+  aria-label="Search the archive"
+>
+  <div class="search-dialog__bar">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+      <circle cx="7" cy="7" r="4.5"></circle><path d="m10.5 10.5 3 3" stroke-linecap="round"></path>
+    </svg>
+    <label class="sr-only" for="search-input">Search papers and notes</label>
+    <input
+      id="search-input"
+      type="search"
+      data-search-input
+      placeholder="Search papers and notes"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="search-results"
+      aria-autocomplete="list"
+      autocomplete="off"
+      spellcheck="false"
+    />
     <button class="icon-button" type="button" data-search-close aria-label="Close search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path>
+      </svg>
     </button>
   </div>
+
   <div class="search-dialog__body">
-    <p class="search-dialog__hint" data-search-hint>Start typing to search the complete archive.</p>
-    <p class="search-dialog__empty" data-search-empty hidden>No matching entry found.</p>
-    <ul class="search-results" data-search-results aria-live="polite"></ul>
+    <p class="search-dialog__message" data-search-message>Search titles, venues, and tags.</p>
+    <ul id="search-results" class="search-results" data-search-results role="listbox" aria-label="Results"></ul>
   </div>
-  <div class="search-dialog__footer">
-    <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate · <kbd>Enter</kbd> Open</span>
-    <span><kbd>Esc</kbd> Close</span>
+
+  <div class="search-dialog__foot">
+    <span><kbd>↑</kbd> <kbd>↓</kbd> move · <kbd>↵</kbd> open</span>
+    <span><kbd>esc</kbd> close</span>
   </div>
 </dialog>

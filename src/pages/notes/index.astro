@@ -2,14 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Archive from '../../components/Archive.astro';
 import { getPostsByKind } from '../../lib/content';
+
 const posts = await getPostsByKind('note');
 ---
-<BaseLayout title="Research Notes" description="Implementation logs, research methods, and practical notes from ongoing computer vision work.">
-  <div class="container">
-    <header class="page-intro">
-      <div><span class="eyebrow">Archive · {posts.length} entries</span><h1>Working notes from research in motion.</h1></div>
-      <p class="page-intro__copy">Implementation details, study notes, build logs, and practical checks that do not fit inside a formal paper review.</p>
-    </header>
-    <section class="section--compact"><Archive posts={posts} kind="note" /></section>
-  </div>
+
+<BaseLayout
+  title="Notes"
+  description="Implementation logs, study notes, and practical checks from ongoing computer vision work."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="kicker">Archive · {posts.length} notes</p>
+      <h1>Research notes.</h1>
+      <p class="page-head__lede">Implementation logs and working notes kept while the work was running.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <Archive posts={posts} kind="note" />
+    </div>
+  </section>
 </BaseLayout>

@@ -2,25 +2,63 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAllPosts, tagSlug, titleCaseTag } from '../../lib/content';
 import { withBase } from '../../lib/paths';
+
 const posts = await getAllPosts();
-const counts = new Map<string, number>();
-for (const post of posts) for (const tag of post.data.tags) counts.set(tag, (counts.get(tag) || 0) + 1);
-const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+type Topic = { slug: string; label: string; query: string; total: number; papers: number };
+
+/**
+ * Group by slug so that casing variants ("Lab" and "lab") collapse into one
+ * topic. Grouping by the raw string would also emit duplicate element ids.
+ */
+const topics = new Map<string, Topic>();
+
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    const slug = tagSlug(tag);
+    if (!slug) continue;
+    const topic = topics.get(slug) ?? {
+      slug,
+      label: titleCaseTag(tag),
+      query: tag,
+      total: 0,
+      papers: 0
+    };
+    topic.total += 1;
+    if (post.data.kind === 'paper') topic.papers += 1;
+    topics.set(slug, topic);
+  }
+}
+
+// Send each topic to the archive that holds most of its entries, so a
+// note-only topic never opens an empty paper list.
+const list = [...topics.values()]
+  .sort((a, b) => b.total - a.total || a.label.localeCompare(b.label))
+  .map((topic) => ({
+    ...topic,
+    href: `${withBase(topic.papers * 2 >= topic.total ? '/papers/' : '/notes/')}?q=${encodeURIComponent(topic.query)}`
+  }));
 ---
-<BaseLayout title="Tags" description="Browse the Kkubuck research archive by topic and method.">
-  <div class="container">
-    <header class="page-intro">
-      <div><span class="eyebrow">Topic index · {tags.length} tags</span><h1>Navigate by concept, method, or domain.</h1></div>
-      <p class="page-intro__copy">Tags are editorial signals rather than a rigid taxonomy. Each link opens the relevant archive with that term pre-filled.</p>
-    </header>
-    <section class="section--compact">
+
+<BaseLayout title="Topics" description="Browse the archive by topic, method, or domain.">
+  <section class="page-head">
+    <div class="container">
+      <p class="kicker">Index · {list.length} topics</p>
+      <h1>Topics.</h1>
+      <p class="page-head__lede">Each topic opens the matching archive with the term pre-filled.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
       <div class="tag-index">
-        {tags.map(([tag, count]) => (
-          <a id={`tag-${tagSlug(tag)}`} href={`${withBase('/papers/')}?q=${encodeURIComponent(tag)}`}>
-            <strong>{titleCaseTag(tag)}</strong><span>{count} {count === 1 ? 'entry' : 'entries'}</span>
+        {list.map((topic) => (
+          <a id={`tag-${topic.slug}`} href={topic.href}>
+            <strong>{topic.label}</strong>
+            <span>{topic.total}</span>
           </a>
         ))}
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </BaseLayout>

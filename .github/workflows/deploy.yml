@@ -1,7 +1,11 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
+    branches: [main]
+  # Pull requests run the same verification without publishing, so a change can
+  # be checked before it reaches the live site.
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -11,7 +15,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,6 +34,8 @@ jobs:
 
   deploy:
     needs: build
+    # Never publish from a pull request; the build job is the only gate there.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

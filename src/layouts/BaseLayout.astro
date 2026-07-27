@@ -6,13 +6,15 @@ import { SITE } from '../data/site';
 import { absoluteUrl, withBase } from '../lib/paths';
 import '../styles/global.css';
 
+// `| undefined` is required because tsconfig enables exactOptionalPropertyTypes,
+// which otherwise rejects callers that pass an explicit undefined.
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  lang?: string;
-  type?: 'website' | 'article';
-  noindex?: boolean;
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+  lang?: string | undefined;
+  type?: 'website' | 'article' | undefined;
+  noindex?: boolean | undefined;
 }
 
 const {
@@ -23,10 +25,12 @@ const {
   type = 'website',
   noindex = false
 } = Astro.props;
+
 const fullTitle = title === SITE.title ? title : `${title} — ${SITE.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site || SITE.url).toString();
 const imageUrl = absoluteUrl(image, Astro.site?.toString() || SITE.url);
 ---
+
 <!doctype html>
 <html lang={lang} data-theme="light">
   <head>
@@ -34,15 +38,19 @@ const imageUrl = absoluteUrl(image, Astro.site?.toString() || SITE.url);
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f4f5f1" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#090a0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d0e10" media="(prefers-color-scheme: dark)" />
+
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
+
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('/site.webmanifest')} />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href={withBase('/rss.xml')} />
+
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
@@ -54,27 +62,34 @@ const imageUrl = absoluteUrl(image, Astro.site?.toString() || SITE.url);
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+
     <script is:inline>
+      // Resolve the theme before first paint so the page never flashes.
       (() => {
         try {
           const stored = localStorage.getItem('kkubuck-theme');
-          const theme = stored === 'light' || stored === 'dark'
-            ? stored
-            : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
         } catch {
           document.documentElement.dataset.theme = 'light';
         }
       })();
     </script>
+
     <slot name="head" />
   </head>
+
   <body>
-    <div class="site-shell">
+    <div class="shell">
       <SiteHeader />
       <main id="main-content"><slot /></main>
       <SiteFooter />
     </div>
+
     <SearchDialog />
     <script src="../scripts/site.ts"></script>
   </body>

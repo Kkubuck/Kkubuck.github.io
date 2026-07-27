@@ -1,28 +1,66 @@
 ---
-import { NAV_ITEMS, SITE } from '../data/site';
+import { SITE } from '../data/site';
 import { withBase } from '../lib/paths';
+
 const year = new Date().getFullYear();
+
+// Annotated so every column shares one link type; an inferred union of array
+// shapes would break `.map` signature resolution under strict settings.
+type FooterLink = { href: string; label: string; external?: boolean };
+
+const columns: Array<{ label: string; links: FooterLink[] }> = [
+  {
+    label: 'Archive',
+    links: [
+      { href: withBase('/papers/'), label: 'Papers' },
+      { href: withBase('/notes/'), label: 'Notes' },
+      { href: withBase('/tags/'), label: 'Topics' }
+    ]
+  },
+  {
+    label: 'Profile',
+    links: [
+      { href: withBase('/about/'), label: 'About' },
+      { href: withBase('/projects/'), label: 'Projects' },
+      { href: withBase('/cv/'), label: 'CV' }
+    ]
+  },
+  {
+    label: 'Elsewhere',
+    links: [
+      { href: SITE.github, label: 'GitHub', external: true },
+      { href: `mailto:${SITE.email}`, label: 'Email' },
+      { href: withBase('/rss.xml'), label: 'RSS' }
+    ]
+  }
+];
 ---
+
 <footer class="site-footer">
-  <div class="site-footer__main">
-    <p class="site-footer__statement">Clear notes for difficult visual problems.</p>
-    <div class="site-footer__nav">
-      <div>
-        <p>Explore</p>
-        {NAV_ITEMS.slice(1).map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
-        <a href={withBase('/tags/')}>Tags</a>
-      </div>
-      <div>
-        <p>Connect</p>
-        <a href={SITE.github} rel="me noopener" target="_blank">GitHub ↗</a>
-        <a href={`mailto:${SITE.email}`}>Email</a>
-        <a href={withBase('/cv/')}>Curriculum vitae</a>
-        <a href={withBase('/rss.xml')}>RSS feed</a>
-      </div>
+  <div class="container site-footer__inner">
+    <div class="site-footer__about">
+      <span class="wordmark">{SITE.name}</span>
+      <p>{SITE.tagline}</p>
+    </div>
+
+    <div class="site-footer__cols">
+      {columns.map((column) => (
+        <nav aria-label={column.label}>
+          <p class="site-footer__label">{column.label}</p>
+          {column.links.map((link) => (
+            <a
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+            >{link.label}</a>
+          ))}
+        </nav>
+      ))}
     </div>
   </div>
-  <div class="site-footer__bottom">
+
+  <div class="container site-footer__legal">
     <span>© {year} {SITE.author}</span>
-    <span>Built with Astro · Deployed on GitHub Pages</span>
+    <span>Astro · GitHub Pages</span>
   </div>
 </footer>

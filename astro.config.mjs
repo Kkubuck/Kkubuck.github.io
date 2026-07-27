@@ -23,7 +23,10 @@ export default defineConfig({
     format: 'directory',
     assets: '_assets'
   },
+  // prefetchAll is required for defaultStrategy to apply to ordinary links;
+  // without it only links carrying data-astro-prefetch are considered.
   prefetch: {
+    prefetchAll: true,
     defaultStrategy: 'hover'
   },
   vite: {
