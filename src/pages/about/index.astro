@@ -3,64 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import cv from '../../data/cv.json';
 import { SITE } from '../../data/site';
 import { withBase } from '../../lib/paths';
-
-const method = [
-  { step: '01', title: 'Context', body: 'The data regime, the task boundary, and the failure that motivates the method.' },
-  { step: '02', title: 'Mechanism', body: 'Inputs, transformations, supervision, outputs. Not a list of module names.' },
-  { step: '03', title: 'Evidence', body: 'What the authors measured, separated from what the review infers.' },
-  { step: '04', title: 'Limits', body: 'Confounds, missing controls, cost, and the next experiment worth running.' }
-];
+const selected=[cv.publications.journal[0]!,cv.publications.conference[0]!];
 ---
-
-<BaseLayout title="About" description="About Jisang Lee and how this research archive is written.">
-  <section class="page-head">
-    <div class="container">
-      <p class="kicker">About</p>
-      <h1>An archive, not a summary feed.</h1>
-      <p class="page-head__lede">
-        Reviews here keep the parts of a paper that stay useful once the novelty language fades.
-      </p>
-    </div>
-  </section>
-
-  <section class="band">
-    <div class="container split">
-      <div class="stack" style="--stack: 0.875rem">
-        <h2>{cv.profile.name}</h2>
-        <p class="muted">{cv.profile.summary}</p>
-        <p class="muted">
-          Current interests: segmentation, remote sensing, medical imaging, forgery detection, and
-          open-vocabulary recognition.
-        </p>
-        <div class="actions">
-          <a class="button button--solid" href={withBase('/cv/')}>Curriculum vitae</a>
-          <a class="button" href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </div>
-
-      <dl class="facts">
-        <div><dt>Role</dt><dd>{cv.profile.role}</dd></div>
-        <div><dt>Lab</dt><dd>AIMLab</dd></div>
-        <div><dt>Advisor</dt><dd>{cv.profile.advisor}</dd></div>
-        <div><dt>Based in</dt><dd>{cv.profile.location}</dd></div>
-        <div><dt>Email</dt><dd><a class="link" href={`mailto:${cv.profile.email}`}>{cv.profile.email}</a></dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <section class="band">
-    <div class="container">
-      <div class="band__head">
-        <h2>How a review is written</h2>
-      </div>
-      <div class="note-grid">
-        {method.map((item) => (
-          <article class="note-card">
-            <p class="kicker">{item.step} · {item.title}</p>
-            <p>{item.body}</p>
-          </article>
-        ))}
-      </div>
+<BaseLayout title="About Jisang Lee" description="이지상. 한밭대학교 AIM Lab에서 위장 객체와 개방 어휘 분할을 연구합니다." lang="ko">
+  <section class="container atlas-page">
+    <div class="section-heading"><div><p class="kicker">About / Curriculum vitae</p><h1>Jisang Lee<span class="title-dot">.</span></h1><p>이지상 · M.S. researcher · Daejeon, Korea</p></div><a class="text-link" href={withBase('/cv/')}>Full CV ↗</a></div>
+    <div class="split" style="padding-top:30px;border-top:1px solid var(--rule-2)">
+      <div><h2>Computer vision</h2><p class="muted" style="margin-top:16px;max-width:560px;word-break:keep-all">한밭대학교 AIM Lab 석사과정입니다. 위장 객체와 SAR·UAV 영상처럼 시각적 단서가 약한 장면에서, 기반 모델과 언어 정보를 활용한 탐지·분할을 연구합니다.</p>
+      <div class="profile-links"><a href={cv.profile.scholar} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a><a href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={cv.profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={`mailto:${SITE.email}`}>Email ↗</a></div>
+      <div class="profile-selected">{selected.map(p=><article><p class="mono">{p.venue} · {p.date}<span class="profile-status">{p.status}</span></p><h3>{p.title}</h3><p>{p.authors}</p></article>)}</div>
+      <p class="profile-source">실적 및 심사 상태: <a href={cv.profile.source} target="_blank" rel="noopener noreferrer">공개 GitHub 프로필</a> · 2026.10.02 기준</p></div>
+      <dl class="facts"><div><dt>Education</dt><dd>M.S. Computer Engineering<br/>Hanbat National University<br/>2025.03 – Present</dd></div><div><dt>Lab / Advisor</dt><dd>AIM Lab<br/>{cv.profile.advisor}</dd></div><div><dt>Research</dt><dd>Camouflaged object segmentation<br/>Open-vocabulary vision<br/>Remote sensing</dd></div><div><dt>2026 competitions</dt><dd>2nd / 66 · Cyrillic Morphological Induction<br/>2nd / 81 · National Park Satellite Monitoring</dd></div></dl>
     </div>
   </section>
 </BaseLayout>

@@ -1,8 +1,26 @@
 [
   {
-    "title": "Paper Reviews",
-    "period": "2026 – now",
-    "summary": "This archive. Static Astro build, Markdown content, deployed from GitHub Actions.",
+    "title": "Awesome-OVRSIS",
+    "period": "2026",
+    "summary": "Open-vocabulary remote sensing segmentation 논문·데이터셋·벤치마크 모음.",
+    "url": "https://github.com/Kkubuck/Awesome-OVRSIS"
+  },
+  {
+    "title": "Paper Blog Toolkit",
+    "period": "2026",
+    "summary": "논문 PDF에서 한국어 연구 노트와 블로그 게시까지 이어지는 로컬 도구.",
+    "url": "https://github.com/Kkubuck/paper-blog-toolkit"
+  },
+  {
+    "title": "Evidence-calibrated Manuscript Editor",
+    "period": "2026",
+    "summary": "근거와 주장 범위를 맞추는 연구 원고 편집 도구.",
+    "url": "https://github.com/Kkubuck/evidence-calibrated-manuscript-editor"
+  },
+  {
+    "title": "Research Atlas",
+    "period": "2026",
+    "summary": "논문 리뷰, 읽기 목록, 주제별 연구 지도를 연결한 이 아카이브.",
     "url": "https://github.com/Kkubuck/Kkubuck.github.io"
   }
 ]

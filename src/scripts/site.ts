@@ -10,7 +10,7 @@ type SearchItem = {
   title: string;
   summary: string;
   tags: string[];
-  kind: 'paper' | 'note';
+  kind: 'paper' | 'note' | 'reference';
   url: string;
   date: string;
   venue?: string;
@@ -230,7 +230,7 @@ function initSearch(): void {
 
       const badge = document.createElement('span');
       badge.className = 'search-result__badge';
-      badge.textContent = item.kind === 'paper' ? item.venue || 'Paper' : 'Note';
+      badge.textContent = item.kind === 'reference' ? `${item.venue} · Reading` : item.kind === 'paper' ? item.venue || 'Paper' : 'Note';
       anchor.append(badge);
 
       li.append(anchor);

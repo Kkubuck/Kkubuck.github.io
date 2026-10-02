@@ -12,6 +12,8 @@ const columns: Array<{ label: string; links: FooterLink[] }> = [
   {
     label: 'Archive',
     links: [
+      { href: withBase('/research/'), label: 'Research atlas' },
+      { href: withBase('/reading/'), label: 'Reading desk' },
       { href: withBase('/papers/'), label: 'Papers' },
       { href: withBase('/notes/'), label: 'Notes' },
       { href: withBase('/tags/'), label: 'Topics' }
@@ -61,6 +63,6 @@ const columns: Array<{ label: string; links: FooterLink[] }> = [
 
   <div class="container site-footer__legal">
     <span>© {year} {SITE.author}</span>
-    <span>Astro · GitHub Pages</span>
+    <a href={withBase('/rss.xml')}>Follow via RSS ↗</a>
   </div>
 </footer>

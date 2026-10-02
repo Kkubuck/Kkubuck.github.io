@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResearchAtlas from '../../components/ResearchAtlas.astro';
+import { withBase } from '../../lib/paths';
+---
+<BaseLayout title="Research atlas" description="OVCOS를 중심으로 논문·리뷰·읽기 목록을 연결한 대화형 연구 지도." lang="ko">
+  <section class="atlas-page container">
+    <div class="section-heading"><div><p class="kicker">Research / 01</p><h1>Research atlas<span class="title-dot">.</span></h1><p>위장 객체, 언어, 그리고 분할. 논문 사이의 연결을 따라갑니다.</p></div><a class="text-link" href={withBase('/reading/')}>다음에 읽을 논문 ↗</a></div>
+    <ResearchAtlas />
+  </section>
+</BaseLayout>

@@ -5,7 +5,7 @@ import { withBase } from '../../lib/paths';
 
 // Annotated so both groups share one element type. Without it the value is a
 // union of two array types and `.map` cannot resolve a single signature.
-type Publication = { title: string; authors: string; venue: string; date: string | number };
+type Publication = { title: string; authors: string; venue: string; date: string | number; status?: string; source?: string };
 
 const publications: Array<{ heading: string; items: Publication[] }> = [
   { heading: 'Journal publications', items: cv.publications.journal },
@@ -32,10 +32,12 @@ const skillGroups = Object.entries(cv.skills).map(([group, items]) => ({
         <a class="link" href={`mailto:${cv.profile.email}`}>{cv.profile.email}</a>
       </p>
       <div class="cv__actions">
-        <a class="button button--solid" href={withBase(cv.profile.pdf)} target="_blank" rel="noopener">PDF</a>
+        <button class="button button--solid" type="button" data-print-cv>Print / Save PDF</button>
         <a class="button" href={cv.profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
       <p class="cv__updated">Updated {cv.profile.last_updated}</p>
+      <p class="profile-source">Publication status follows the <a href={cv.profile.source} target="_blank" rel="noopener noreferrer">public GitHub profile</a>. * Corresponding author.</p>
+      <p class="profile-source"><a href={withBase(cv.profile.pdf)}>Archived PDF · April 2026</a></p>
     </aside>
 
     <div>
@@ -55,20 +57,26 @@ const skillGroups = Object.entries(cv.skills).map(([group, items]) => ({
       </section>
 
       {publications.map((group) => (
-        <section class="cv-section">
+        <section class="cv-section" id={group.heading === 'Journal publications' ? 'publications' : undefined}>
           <h2>{group.heading}</h2>
           {group.items.map((item) => (
             <article class="cv-item">
               <p class="cv-item__date">{item.date}</p>
               <div class="cv-item__body">
-                <h3>{item.title}</h3>
+                <h3>{item.source ? <a href={item.source} target="_blank" rel="noopener noreferrer">{item.title}</a> : item.title}</h3>
                 <p>{item.authors}</p>
-                <p>{item.venue}</p>
+                <p>{item.venue}{item.status && item.status !== 'Published' && <span class="profile-status">{item.status}</span>}</p>
               </div>
             </article>
           ))}
         </section>
       ))}
+
+      <section class="cv-section">
+        <h2>Manuscripts under review</h2>
+        {cv.manuscripts.map(item=><article class="cv-item"><p class="cv-item__date">{item.date}</p><div class="cv-item__body"><h3>{item.title}</h3><p>{item.authors}</p><p>{item.venue}</p><p><span class="profile-status">{item.status}</span></p></div></article>)}
+        <p class="profile-source">Abbreviated titles follow the public profile. These manuscripts are not listed as accepted publications.</p>
+      </section>
 
       <section class="cv-section">
         <h2>Research experience</h2>
@@ -106,7 +114,7 @@ const skillGroups = Object.entries(cv.skills).map(([group, items]) => ({
                 JSON union to optional properties. */}
             <p class="cv-item__date">{'date' in item ? item.date : ''}</p>
             <div class="cv-item__body">
-              <h3>{item.title}</h3>
+              <h3>{'source' in item && item.source ? <a href={item.source} target="_blank" rel="noopener noreferrer">{item.title}</a> : item.title}</h3>
               <p>
                 {'detail' in item && item.detail ? `${item.category} · ${item.detail}` : item.category}
               </p>
@@ -142,3 +150,4 @@ const skillGroups = Object.entries(cv.skills).map(([group, items]) => ({
     </div>
   </div>
 </BaseLayout>
+<script>document.querySelector('[data-print-cv]')?.addEventListener('click',()=>window.print());</script>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f9f8f4"/>
+  <g fill="#367366" transform="translate(70 64)"><path d="M0 0h12v12H0zM19 0h12v12H19zM0 19h12v12H0z"/><circle cx="25" cy="25" r="6"/></g>
+  <g fill="#606c65" font-family="Arial, sans-serif" font-size="18" letter-spacing="2"><text x="123" y="87">KKUBUCK / RESEARCH NOTES</text></g>
+  <path d="M70 127H1130M70 531H1130" stroke="#d9ddd5"/>
+  <text x="67" y="278" fill="#24342c" font-family="Georgia, 'Times New Roman', serif" font-size="96">Jisang Lee.</text>
+  <text x="72" y="333" fill="#606c65" font-family="Arial, sans-serif" font-size="24">Computer vision · Segmentation · Remote sensing</text>
+  <g fill="none" stroke="#9caaa0" stroke-width="1.4" opacity=".5"><path d="m926 219-68 72 125 49 68-70-125-51 57 121-37 73-88-122M1051 270l-15 125-53-55M926 219l82-32 43 83"/></g>
+  <g stroke="#f9f8f4" stroke-width="5"><circle cx="926" cy="219" r="13" fill="#367366"/><circle cx="858" cy="291" r="9" fill="#698a9e"/><circle cx="983" cy="340" r="16" fill="#367366"/><circle cx="1051" cy="270" r="10" fill="#9c8052"/><circle cx="946" cy="413" r="9" fill="#917997"/><circle cx="1036" cy="395" r="10" fill="#a87465"/><circle cx="1008" cy="187" r="7" fill="#798895"/></g>
+  <text x="72" y="468" fill="#367366" font-family="Arial, sans-serif" font-size="18">Papers / Research atlas / Reading</text>
+  <text x="72" y="575" fill="#606c65" font-family="Arial, sans-serif" font-size="19">kkubuck.github.io</text>
+</svg>

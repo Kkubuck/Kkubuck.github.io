@@ -23,7 +23,7 @@ venue: ECCV 2024
 paperYear: 2024
 authors: Youwei Pang, Xiaoqi Zhao, Jiaming Zuo, Lihe Zhang, Huchuan Lu
 reviewedOn: '2026-07-10'
-pdfUrl: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/00786.pdf
+pdfUrl: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06409.pdf
 codeUrl: https://github.com/lartpang/OVCamo
 takeaways:
 - binary COD를 class-aware open-vocabulary segmentation으로 확장하고 이를 위한 OVCamo dataset을 만든다.

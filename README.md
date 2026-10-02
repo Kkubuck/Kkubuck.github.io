@@ -4,6 +4,10 @@ A static archive of computer-vision paper reviews, implementation notes, and res
 
 Live site: <https://kkubuck.github.io>
 
+## October 2026 refresh
+
+The site now includes a [research atlas](https://kkubuck.github.io/research/), a [reading desk](https://kkubuck.github.io/reading/) with 12 planned articles, and an updated profile/CV. The atlas connects 38 archive entries and 16 new references through six editorial themes and a reproducible PCA view of ten manually annotated research descriptors. It supports search, filters, keyboard selection, a list view, pan/zoom, JSON export and shareable state. See [research/design decisions](docs/REFRESH_2026.md) and [validation](docs/VALIDATION_2026.md).
+
 ## Design
 
 The interface is an editorial archive, not a landing page.
@@ -11,7 +15,7 @@ The interface is an editorial archive, not a landing page.
 - Warm paper background, near-monochrome ink, one deep accent used only for links, focus, and active state.
 - Hairline rules instead of cards and shadows.
 - Local font stacks only. No webfont download, no layout shift.
-- Motion is limited to colour and opacity changes under 200 ms on direct interaction. There are no scroll-triggered reveals, no parallax, and no decorative canvas.
+- Motion follows direct interaction: subtle color/opacity changes and a 600 ms atlas layout transition. Reduced motion disables layout animation. No scroll-triggered reveals, parallax, or decorative canvas.
 
 ## Mobile
 
@@ -123,8 +127,8 @@ src/
   layouts/      BaseLayout, PostLayout
   lib/          content helpers, base-path helpers
   pages/        routes, plus search.json / rss.xml / robots.txt endpoints
-  scripts/      site.ts — the only client bundle
-  styles/       global.css — the whole design system
+  scripts/      site.ts and the page-scoped atlas.ts
+  styles/       global.css and research.css
 scripts/        create-legacy-redirects.mjs, verify-build.mjs, package-source.mjs
 ```
 

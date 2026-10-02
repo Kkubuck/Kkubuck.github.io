@@ -5,6 +5,7 @@ import SearchDialog from '../components/SearchDialog.astro';
 import { SITE } from '../data/site';
 import { absoluteUrl, withBase } from '../lib/paths';
 import '../styles/global.css';
+import '../styles/research.css';
 
 // `| undefined` is required because tsconfig enables exactOptionalPropertyTypes,
 // which otherwise rejects callers that pass an explicit undefined.
@@ -40,8 +41,8 @@ const imageUrl = absoluteUrl(image, Astro.site?.toString() || SITE.url);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0d0e10" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f9f8f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171b19" media="(prefers-color-scheme: dark)" />
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />

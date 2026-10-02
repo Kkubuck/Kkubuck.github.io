@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getAllPosts, getPostUrl } from '../lib/content';
+import { additions, RESEARCH_UPDATED } from '../data/research';
+import { withBase } from '../lib/paths';
 
 export const GET: APIRoute = async () => {
   const posts = await getAllPosts();
@@ -14,7 +16,9 @@ export const GET: APIRoute = async () => {
     date: post.data.pubDate.toISOString(),
     venue: post.data.venue
   }));
-  return new Response(JSON.stringify(payload), {
+  const references = additions.map(paper => ({ title: `${paper.short} — ${paper.title}`, summary: paper.summary, tags: paper.features,
+    kind: 'reference', url: `${withBase('/research/')}?paper=${paper.id}`, date: RESEARCH_UPDATED, venue: paper.venue }));
+  return new Response(JSON.stringify([...payload, ...references]), {
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=3600' }
   });
 };

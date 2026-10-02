@@ -13,7 +13,7 @@
     "build": "astro build && node scripts/create-legacy-redirects.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "verify": "astro check && astro build && node scripts/create-legacy-redirects.mjs && node scripts/verify-build.mjs",
+    "verify": "astro check && astro build && node scripts/create-legacy-redirects.mjs && node scripts/verify-build.mjs && node --experimental-strip-types --test scripts/research.test.mjs",
     "clean": "rm -rf dist .astro",
     "package": "node scripts/package-source.mjs"
   },

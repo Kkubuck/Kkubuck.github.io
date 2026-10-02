@@ -13,8 +13,9 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 
 const EXPECTED_PAPERS = 38;
-const EXPECTED_NOTES = 27;
-const EXPECTED_RECORDS = EXPECTED_PAPERS + EXPECTED_NOTES;
+const EXPECTED_NOTES = 29;
+const EXPECTED_REFERENCES = 16;
+const EXPECTED_RECORDS = EXPECTED_PAPERS + EXPECTED_NOTES + EXPECTED_REFERENCES;
 const CSS_BUDGET = 90_000;
 const JS_BUDGET = 40_000;
 
@@ -67,6 +68,9 @@ const required = [
   'about/index.html',
   'cv/index.html',
   'tags/index.html',
+  'research/index.html',
+  'reading/index.html',
+  'research/data.json',
   '404.html',
   'search.json',
   'rss.xml',
@@ -116,7 +120,7 @@ const shell = home.match(
 if (!shell) {
   fail('Could not locate the generated site shell (header plus mobile navigation).');
 } else {
-  for (const label of ['Home', 'Papers', 'Notes', 'Projects', 'About']) {
+  for (const label of ['Home', 'Research', 'Papers', 'Reading', 'Notes', 'Projects', 'About']) {
     if (!shell[0].includes(`>${label}<`)) fail(`Navigation label missing: ${label}`);
   }
   for (const legacy of ['홈', '논문', '기록', '프로젝트', '소개', '태그']) {

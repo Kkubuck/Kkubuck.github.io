@@ -12,6 +12,8 @@ const isCurrent = (href: string) => {
 // Reachable from the footer on desktop; surfaced here so the mobile menu is
 // not a smaller version of the site with routes missing.
 const secondaryNav = [
+  { href: '/notes/', label: 'Notes' },
+  { href: '/projects/', label: 'Projects' },
   { href: '/tags/', label: 'Topics' },
   { href: '/cv/', label: 'CV' }
 ];
@@ -21,7 +23,7 @@ const secondaryNav = [
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href={withBase('/')}>{SITE.name}</a>
+    <a class="wordmark" href={withBase('/')}><svg class="brand-mark" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M1 1h7v7H1zM12 1h7v7h-7zM1 12h7v7H1z"/><circle cx="15.5" cy="15.5" r="3.5"/></svg>{SITE.name}<span class="wordmark__suffix">/ research notes</span></a>
 
     <nav class="site-nav" aria-label="Primary">
       {NAV_ITEMS.map((item) => (
@@ -30,7 +32,7 @@ const secondaryNav = [
     </nav>
 
     <div class="site-header__tools">
-      <button class="search-trigger" type="button" data-search-open>
+      <button class="search-trigger" type="button" data-search-open aria-label="Search archive">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
           <circle cx="7" cy="7" r="4.5"></circle><path d="m10.5 10.5 3 3" stroke-linecap="round"></path>
         </svg>

@@ -4,6 +4,7 @@ import type { Post } from '../lib/content';
 import { formatDate, getPostUrl, readingTime, tagSlug, titleCaseTag } from '../lib/content';
 import { withBase } from '../lib/paths';
 import BaseLayout from './BaseLayout.astro';
+import { reviewAnnotations } from '../data/research';
 
 interface Props {
   post: Post;
@@ -60,6 +61,7 @@ const sources = [
       )}
 
       <div class="article__actions">
+        {reviewAnnotations[post.data.slug] && <a class="action" href={`${withBase('/research/')}?paper=${post.data.slug}`}>연구 지도에서 보기 ↗</a>}
         {sources.map((source) => (
           <a class="action" href={source.href} target="_blank" rel="noopener noreferrer">
             {source.label}

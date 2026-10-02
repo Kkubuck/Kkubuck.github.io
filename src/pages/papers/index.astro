@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Archive from '../../components/Archive.astro';
 import { getPostsByKind } from '../../lib/content';
+import { withBase } from '../../lib/paths';
 
 const posts = await getPostsByKind('paper');
 ---
@@ -14,7 +15,7 @@ const posts = await getPostsByKind('paper');
     <div class="container">
       <p class="kicker">Archive · {posts.length} reviews</p>
       <h1>Paper reviews.</h1>
-      <p class="page-head__lede">What the paper claims, how it works, and where the evidence stops.</p>
+      <p class="page-head__lede">논문 리뷰. <a href={withBase('/research/')}>연구 지도에서 탐색 ↗</a></p>
     </div>
   </section>
 
