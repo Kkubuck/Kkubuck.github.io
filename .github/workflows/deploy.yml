@@ -9,34 +9,69 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Least privilege: only the deploy job may write to Pages.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# Pull requests: a newer push cancels the older run. main: runs queue and are
+# never cancelled, so a deployment in progress always finishes.
 concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.event_name == 'pull_request' && format('verify-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read # configure-pages reads the site's URL
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
-      - name: Install, verify, build, and upload
-        uses: withastro/action@v6
         with:
-          node-version: 24
-          package-manager: pnpm@10.13.1
-          build-cmd: pnpm run verify
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Only for a deploy: the site's real origin and base path go into the
+      # build. Pull requests build with the defaults (https://kkubuck.github.io, no base path).
+      - name: Configure Pages
+        id: pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v6
+
+      - name: Type-check, build, and verify
+        run: npm run verify
+        env:
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: out
+          # out/.nojekyll is a dotfile; without this the action leaves it out.
+          include-hidden-files: true
 
   deploy:
     needs: build
-    # Never publish from a pull request; the build job is the only gate there.
-    if: github.event_name != 'pull_request'
+    # Only main publishes. Pull requests (refs/pull/…) and manual runs on other
+    # branches stop after the build job.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,13 +1,21 @@
+# dependencies
 node_modules/
-dist/
-.astro/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env files (keep the example)
 .env
 .env.*
 !.env.example
+
+# misc
 .DS_Store
 *.log
+*.pem
 coverage/
-playwright-report/
 test-results/
-
-test-artifacts/
+playwright-report/

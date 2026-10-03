@@ -1,0 +1,140 @@
+/* Foundation: about and 404. Owner: foundation. */
+
+@layer components {
+  /* ------------------------------------------------------------------- about */
+  .about {
+    max-width: var(--measure);
+    padding-bottom: 8px;
+    font-size: var(--text-body);
+    line-height: 1.82;
+    color: var(--ink-body);
+  }
+  .about p {
+    margin: 0 0 1.2em;
+  }
+  .about a {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .about a:hover {
+    text-decoration-color: currentColor;
+  }
+  .about h2 {
+    margin: 2.4em 0 0.8em;
+    font-size: var(--text-h3);
+    line-height: 1.5;
+    font-weight: 680;
+    letter-spacing: -0.014em;
+  }
+  .about__name {
+    font-size: var(--text-lede);
+    font-weight: 650;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+  }
+  .about__name span {
+    margin-inline-start: 0.5rem;
+    font-weight: 450;
+    color: var(--ink-3);
+  }
+  .about__links {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    font-size: var(--text-md);
+  }
+  .about__links > div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+  }
+  .about__links dt {
+    color: var(--ink-3);
+    font-size: var(--text-sm);
+    padding-top: 2px;
+  }
+  .about__links dd {
+    margin: 0;
+    min-width: 0;
+  }
+  .about__pubs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .about__pubs li {
+    display: grid;
+    gap: 2px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .about__pubs li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .about__pubs strong {
+    font-size: var(--text-md);
+    line-height: 1.55;
+    font-weight: 620;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .about__pubs li > span {
+    font-size: var(--text-sm);
+    color: var(--ink-3);
+  }
+  /* `.about p` would otherwise win and glue the note to the list's last hairline. */
+  .about .about__more {
+    margin-top: 1.4em;
+    font-size: var(--text-md);
+    color: var(--ink-2);
+  }
+
+  /* --------------------------------------------------------------------- 404 */
+  .not-found {
+    padding: 96px 0 24px;
+  }
+  .not-found__code {
+    margin: 0 0 10px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .not-found__title {
+    margin: 0;
+    font-size: clamp(26px, 1.2vw + 19px, 32px);
+    line-height: 1.28;
+    font-weight: 720;
+    letter-spacing: -0.024em;
+  }
+  .not-found__text {
+    margin: 12px 0 0;
+    font-size: var(--text-md);
+    color: var(--ink-2);
+  }
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: var(--text-ui);
+    font-weight: 560;
+    color: var(--ink);
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line-2);
+    transition: background-color 0.15s;
+  }
+  .button:hover {
+    background: var(--hover);
+  }
+}

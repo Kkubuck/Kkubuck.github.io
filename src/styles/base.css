@@ -1,0 +1,176 @@
+/* Foundation: element defaults, typography rules, links, focus. Owner: foundation. */
+
+/* Pretendard's dynamic subset has no U+2011 (non-breaking hyphen), which display
+   titles use inside Latin compounds (src/lib/typography.ts). This 1 KB subset of the
+   same variable font supplies just that glyph, so it never falls back to another font. */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 45 920;
+  font-display: swap;
+  src: url('./fonts/pretendard-u2011.woff2') format('woff2-variations');
+  unicode-range: U+2011;
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink-body);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Anchored headings clear the floating dock. */
+    scroll-padding-top: 88px;
+  }
+  @media (max-width: 639px) {
+    html {
+      scroll-padding-top: 76px;
+    }
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    font-size: var(--text-body);
+    line-height: 1.82;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Korean wraps at word boundaries, not between syllables. */
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  main {
+    flex: 1;
+  }
+  /* The skip link's target is focusable (tabindex -1); it needs no ring of its own. */
+  main:focus {
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
+  /* WebKit's `pretty` breaks right after an opening parenthesis in keep-all text
+     ("Unit(" / "HMU)", "분할(" / "OVCOS)"). `font: -apple-system-body` is supported
+     by WebKit only, so Safari gets plain wrapping there. */
+  @supports (font: -apple-system-body) {
+    p,
+    li,
+    dd,
+    figcaption {
+      text-wrap: wrap;
+    }
+  }
+
+  /* A short parenthetical word kept whole (src/lib/keep-parens.tsx). */
+  .nobr {
+    white-space: nowrap;
+  }
+
+  ::selection {
+    background: var(--selection);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  kbd {
+    font-family: var(--font-mono);
+  }
+
+  time,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Focus: 2px ink ring with a paper gap, visible in both themes. */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0s !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Content links: ink with a hairline underline that darkens on hover. */
+  .ink-link {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .ink-link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -48px;
+    z-index: 100;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: var(--text-sm);
+  }
+  .skip-link:focus {
+    top: 12px;
+  }
+
+  /* The page column: 960px with a 16/32px gutter. (Not .container: Tailwind owns that name.) */
+  .wrap {
+    width: min(var(--wrap), 100% - 2 * var(--gutter));
+    margin-inline: auto;
+  }
+
+  /* Controls that only work with JS (search, theme) are hidden without it. */
+  html:not(.js) .js-only {
+    display: none !important;
+  }
+}

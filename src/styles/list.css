@@ -1,0 +1,506 @@
+/* Foundation: segmented lens, year groups, post rows, tags index, series index. Owner: foundation. */
+
+@layer components {
+  /* ------------------------------------------------------------- list pages */
+  .home {
+    padding-top: 64px;
+  }
+  .home__controls {
+    margin: 0 0 44px;
+  }
+  @media (min-width: 900px) {
+    .home__controls {
+      margin-left: 136px;
+    }
+  }
+  @media (max-width: 639px) {
+    .home {
+      padding-top: 36px;
+    }
+    .home__controls {
+      margin-bottom: 28px;
+    }
+  }
+  /* A list swapped in by a client navigation fades in; the first paint does not animate. */
+  html[data-nav] .home__list > .post-group {
+    animation: list-in 0.2s var(--ease-out) both;
+  }
+  @keyframes list-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  /* ------------------------------------------------- segmented control (lens) */
+  .seg {
+    position: relative;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 8px var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    /* Edge fades tell a phone reader the rail scrolls; set by SegmentedNav. */
+    --fade-start: 0px;
+    --fade-end: 0px;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 var(--fade-start),
+      #000 calc(100% - var(--fade-end)),
+      transparent
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
+  }
+  .seg::-webkit-scrollbar {
+    display: none;
+  }
+  .seg[data-fade~='start'] {
+    --fade-start: 28px;
+  }
+  .seg[data-fade~='end'] {
+    --fade-end: 40px;
+  }
+  .seg:not([data-fade]),
+  .seg[data-fade=''] {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .seg__rail {
+    position: relative;
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    background: var(--track);
+    box-shadow:
+      inset 0 1px 1.5px rgb(0 0 0 / 0.06),
+      inset 0 0 0 0.5px var(--line);
+    isolation: isolate;
+    white-space: nowrap;
+  }
+  .seg .tabs {
+    display: inline-flex;
+  }
+  .seg__tab {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: var(--text-ui);
+    font-weight: 560;
+    line-height: 1;
+    letter-spacing: -0.012em;
+    color: var(--ink-2);
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  a.seg__tab:hover,
+  a.seg__tab[aria-current='page'] {
+    color: var(--ink);
+  }
+  .seg__count {
+    font-size: var(--text-xs);
+    font-weight: 520;
+    letter-spacing: 0;
+    color: var(--seg-count);
+    font-variant-numeric: tabular-nums;
+  }
+  a.seg__tab:focus-visible {
+    outline-offset: -2px;
+  }
+  /* With the lens up, the focus ring is drawn on the lens (the tab is under it). */
+  .seg[data-ready] a.seg__tab[aria-current='page']:focus-visible {
+    outline: none;
+  }
+
+  /* Static pill: no JS, and the first paint before the lens is measured.
+     It is the lens at rest, drawn with the static key-light rim. */
+  .seg:not([data-ready]) a.seg__tab[aria-current='page'] {
+    background: rgb(var(--lens-rest));
+    box-shadow:
+      0 0 0 var(--g-hairline-w) var(--g-hairline),
+      inset 1px 1.5px 0 rgb(var(--g-spec) / var(--g-spec-a)),
+      inset 0 0 5px 0 rgb(var(--g-bevel)),
+      1px 1.5px 2.5px -0.5px rgb(var(--g-shadow) / calc(var(--g-shadow-a) * 0.75));
+  }
+  .seg:not([data-ready]) a.seg__tab[aria-current='page'] .seg__count {
+    color: var(--lens-count);
+  }
+
+  /* The lens: an opaque glass drop at rest; lifting, it clears toward the rail colour
+     and magnifies the cloned labels beneath it. Moves with transforms only. */
+  .seg__lens {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 60px;
+    height: 34px;
+    border-radius: 999px;
+    transform-origin: 0 0;
+    cursor: grab;
+    touch-action: pan-x pan-y;
+    will-change: transform;
+    visibility: hidden;
+    --lift: 0;
+    --lens-bg: color-mix(in srgb, rgb(var(--track-rgb)) calc(var(--lift) * 78%), rgb(var(--lens-rest)));
+  }
+  .seg[data-ready] .seg__lens {
+    visibility: visible;
+  }
+  html:not(.js) .seg__lens {
+    display: none;
+  }
+  .seg__lens:active {
+    cursor: grabbing;
+  }
+  .seg__lens.is-focus {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+  /* Lifted, the drop turns clear: sheen and inner light fade with --lift. */
+  .glass--lens .glass__fx {
+    --clear: calc(1 - 0.75 * min(var(--lift), 1));
+    background:
+      linear-gradient(
+        var(--ga),
+        rgb(var(--g-spec) / 0) 40%,
+        rgb(var(--g-spec) / calc(var(--g-sheen-a) * 0.5 * var(--clear)))
+      ),
+      var(--lens-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow:
+      inset calc(var(--nx) * -2px) calc(var(--ny) * -2px) 3px -1px rgb(var(--g-spec) / calc(var(--g-wall-a) * var(--clear))),
+      inset 0 0 5px 0 rgb(var(--g-bevel)),
+      inset calc(var(--nx) * 2px) calc(var(--ny) * 2px) 5px -2px rgb(0 0 0 / var(--g-shade-a));
+  }
+  .glass--lens .glass__shadow {
+    box-shadow:
+      0 0 0 var(--g-hairline-w) var(--g-hairline),
+      calc(var(--nx) * -1px) calc(var(--ny) * -1px + 1px + var(--lift) * 6px) calc(2.5px + var(--lift) * 12px)
+        calc(-0.5px - var(--lift) * 3px) rgb(var(--g-shadow) / calc(var(--g-shadow-a) * 0.75)),
+      0 calc(1px + var(--lift) * 2px) calc(2px + var(--lift) * 5px) calc(var(--lift) * -2px)
+        rgb(var(--g-shadow) / calc(var(--g-shadow-a) * 0.4));
+  }
+  /* The clone is clipped here, not on the lens: the lens's hairline and cast shadow
+     lie outside its box. */
+  .seg__lensInner {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .seg__clone {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-flex;
+    padding: 3px;
+    transform-origin: 0 0;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .seg__clone .seg__tab {
+    color: var(--ink);
+  }
+  .seg__clone .seg__count {
+    color: var(--lens-count);
+  }
+  /* Bevel fade: the clone fades to the lens colour in the outer ~3px, so glyphs that
+     the rim compresses never show torn strokes. Only while lifted: at rest the clone is
+     unmagnified, nothing reaches the rim, and the glass bevel and glint show. */
+  .seg__bevel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 3px 3px var(--lens-bg);
+    opacity: min(1, calc(var(--lift) * 4));
+  }
+
+  @media (max-width: 639px) {
+    .seg__tab {
+      padding: 0 13px;
+    }
+  }
+
+  /* ------------------------------------------------------------- year groups */
+  .post-group {
+    margin-bottom: 56px;
+  }
+  .post-group__year {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--text-ui);
+    line-height: 1.5;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    text-wrap: nowrap;
+  }
+  .post-group__count {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+  .post-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 900px) {
+    .post-group:not(.post-group--flat) {
+      display: grid;
+      grid-template-columns: 136px minmax(0, 1fr);
+    }
+    .post-group:not(.post-group--flat) .post-group__year {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 17px 0 0;
+      border: 0;
+    }
+  }
+
+  /* ---------------------------------------------------------------- post rows */
+  .post-item__link {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    column-gap: 28px;
+    padding: 17px 0 18px;
+  }
+  .post-item__link:focus-visible {
+    outline-offset: 4px;
+    border-radius: 10px;
+  }
+  .post-item__title {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    font-size: var(--text-body);
+    line-height: 1.5;
+    font-weight: 620;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    text-wrap: pretty;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
+  }
+  .post-item__link:hover .post-item__title {
+    text-decoration-color: var(--line-2);
+  }
+  .post-item__desc {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 5px 0 0;
+    font-size: var(--text-md);
+    line-height: 1.68;
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .post-item__meta {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0;
+    padding-top: 2px;
+    text-align: right;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--ink-3);
+  }
+  .post-item__meta time {
+    letter-spacing: 0.01em;
+    color: var(--ink-2);
+  }
+  /* The label stays inside the 104px column (every venue but "Remote Sensing 2024" fits
+     on one line): it wraps, balanced and right-aligned, rather than running left into the
+     description. Series use their short name here. */
+  .post-item__label {
+    max-width: 100%;
+    margin-top: 2px;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+  .post-item__label abbr {
+    text-decoration: none;
+  }
+  .post-group--flat .post-item__link {
+    grid-template-columns: minmax(0, 1fr) 112px;
+  }
+
+  @media (max-width: 639px) {
+    .post-group {
+      margin-bottom: 44px;
+    }
+    .post-item__link,
+    .post-group--flat .post-item__link {
+      display: flex;
+      flex-direction: column;
+      padding: 15px 0 16px;
+    }
+    .post-item__title {
+      font-size: 16.5px;
+    }
+    .post-item__desc {
+      font-size: 15px;
+    }
+    .post-item__meta {
+      flex-direction: row;
+      align-items: baseline;
+      margin-top: 8px;
+      padding: 0;
+      text-align: left;
+    }
+    .post-item__label {
+      margin: 0;
+      font-size: var(--text-sm);
+    }
+    .post-item__label::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      margin: 0 8px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.55;
+      vertical-align: middle;
+      transform: translateY(-1px);
+    }
+  }
+
+  /* ---------------------------------------------------------------- tags index */
+  .tag-cloud {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+    column-gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tag-cloud a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--text-md);
+    line-height: 1.5;
+    font-weight: 560;
+    color: var(--ink);
+    transition: color 0.15s;
+  }
+  .tag-cloud a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 0.22em;
+  }
+  .tag-cloud__count {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* -------------------------------------------------------------- series index */
+  .series-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  .series-list a {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 96px;
+    column-gap: 20px;
+    padding: 17px 0 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .series-list li:first-child a {
+    border-top: 1px solid var(--line);
+  }
+  .series-list__no {
+    padding-top: 2px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .series-list__body {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+  }
+  .series-list__body strong {
+    font-size: var(--text-body);
+    line-height: 1.5;
+    font-weight: 620;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
+  }
+  .series-list a:hover strong {
+    text-decoration-color: var(--line-2);
+  }
+  .series-list__body > span {
+    font-size: var(--text-md);
+    line-height: 1.68;
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .series-list time {
+    padding-top: 2px;
+    text-align: right;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+  @media (max-width: 639px) {
+    .series-list a {
+      grid-template-columns: 30px minmax(0, 1fr);
+      column-gap: 12px;
+    }
+    .series-list time {
+      grid-column: 2;
+      margin-top: 6px;
+      text-align: left;
+    }
+  }
+}

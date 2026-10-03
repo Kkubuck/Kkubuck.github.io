@@ -1,0 +1,287 @@
+/* Tailwind supplies the reset (preflight) and the @theme scale variables. source(none):
+   no source scanning, so ordinary words in posts ("table", "hidden", "container") never
+   become utility classes; the site styles itself in src/styles/ (.sr-only is in base.css). */
+@import 'tailwindcss' source(none);
+
+/*
+ * Kkubuck Blog — "Liquid Glass Chrome".
+ * Content is calm paper; only the chrome floating above it is glass (DESIGN.md).
+ *
+ * This file holds the design tokens. Component styles live in src/styles/,
+ * one file per owner, all inside @layer base/components so Tailwind utilities win:
+ *   base.css        element defaults, typography, links, focus (foundation)
+ *   glass.css       the glass material + light-driven rim (foundation)
+ *   shell.css       masthead, dock, footer, page headers (foundation)
+ *   list.css        segmented lens, year groups, post rows, tags, series (foundation)
+ *   pages.css       about, 404 (foundation)
+ *   overlays.css    ⌘K sheet, TOC rail/pill/sheet, code copy, theme crossfade (overlay engineer)
+ *   reading.css     post page: header, paper card, prose, code, tables, figures,
+ *                   tags, series box, pager, TOC rail (reading engineer)
+ */
+@import '../styles/base.css';
+@import '../styles/glass.css';
+@import '../styles/shell.css';
+@import '../styles/list.css';
+@import '../styles/pages.css';
+@import '../styles/overlays.css';
+@import '../styles/reading.css';
+
+/* `dark:` utilities follow the data-theme attribute set by the theme script. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* -------------------------------------------------------------------------- *
+ * Scale tokens (theme-independent). Emitted as :root variables and Tailwind
+ * utilities: text-ui, rounded-sheet, ease-spring, font-sans, …
+ * -------------------------------------------------------------------------- */
+@theme static {
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  /* D2Coding covers Korean comments and strings in code blocks where it is installed. */
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', 'D2Coding',
+    monospace;
+
+  /* Type scale (prototype DIRECTION.md). Pair each with the line-height noted. */
+  --text-2xs: 11px; /* kbd hints */
+  --text-xs: 12.5px; /* meta, counts            1.6 */
+  --text-sm: 13.5px; /* meta, captions          1.6 */
+  --text-ui: 14.5px; /* dock, tabs (weight 560) */
+  --text-md: 15.5px; /* secondary, descriptions 1.68 */
+  --text-body: 17px; /* body, list titles       1.82 / 1.5 */
+  --text-lede: 18.5px; /* post description      1.72 */
+  --text-h3: 18.5px; /* prose h3                1.5, 650 */
+  --text-h2: 23px; /* prose h2                  1.38, 700 */
+  --text-h1: clamp(27px, 1.6vw + 18px, 37px); /* post h1 1.24, 720, -0.026em */
+  --text-h1-long: clamp(25px, 1.92vw + 14.2px, 37px); /* a long post h1: 25 on phones, never above --text-h1, 37 from 1187px */
+  --text-wordmark: 20px; /* 720 / -0.035em; "Blog" 420 */
+
+  /* Radii: pills 999, content 8 / 12 / 16, sheets 24 / 26. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-tocsheet: 24px;
+  --radius-sheet: 26px;
+  --radius-pill: 999px;
+
+  /* Motion. --ease-spring ≈ 9% overshoot (TOC bar, palette highlight);
+     --ease-spring-soft ≈ 2% (dock docking, sheets opening). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: linear(
+    0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017 19.4%, 1.067, 1.089 24.7%, 1.085 27.3%, 1.063 30.6%,
+    1.006 39%, 0.991 42.3%, 0.99 46.4%, 1 56%, 1.002 64%, 1
+  );
+  --ease-spring-soft: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%,
+    1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001
+  );
+}
+
+/* Theme colours → Tailwind (bg-paper, text-ink-2, border-line, …). The values
+   switch with the theme below, so they are inlined as var() references. */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-track: var(--track);
+  --color-ink: var(--ink);
+  --color-ink-body: var(--ink-body);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-hover: var(--hover);
+}
+
+@layer base {
+  /* ------------------------------------------------------------------------ *
+   * Colour tokens: light. Monochrome — there is no accent colour. Links are
+   * ink with a hairline underline; focus is a 2px ink ring.
+   * Contrast on --paper: ink 17:1, ink-2 7.7:1, ink-3 4.9:1.
+   * ------------------------------------------------------------------------ */
+  :root {
+    color-scheme: light;
+
+    --paper: #f5f5f2; /* page */
+    --surface: #fbfbf9; /* paper card, tables, series box */
+    --sunken: #edede9; /* inline code, current item */
+    --track: #e8e8e4; /* segmented rail */
+    --ink: #16161a;
+    --ink-body: #2a2a2f;
+    --ink-2: #4d4d55;
+    --ink-3: #6a6a72;
+    --seg-count: #626269; /* tab counts on the rail: 4.9:1 on --track */
+    --line: rgb(22 22 26 / 0.085);
+    --line-2: rgb(22 22 26 / 0.15);
+    --hover: rgb(22 22 26 / 0.05);
+    --selection: rgb(22 22 26 / 0.13);
+    --scrim: rgb(14 14 16 / 0.38); /* behind modal sheets */
+
+    /* Code (Shiki dual theme maps onto these; every token ≥ 4.5:1 on --code-bg). */
+    --code-bg: #fbfbf9;
+    --code-ink: #2a2a30;
+    --t-kw: #b3245f;
+    --t-fn: #1f55c4;
+    --t-str: #2c7646;
+    --t-num: #a0520a;
+    --t-com: #72727b;
+    --t-bi: #0b6c7e;
+    --t-op: #6a6a74;
+
+    /* Glass material (see src/styles/glass.css). rgb channel triplets so alpha can vary. */
+    --g-tint: 246 246 243; /* clear glass over paper reads as paper; highlights read against it */
+    --g-tint-a: 0.72; /* dock; sheets use --g-tint-sheet */
+    --g-tint-sheet: 0.92;
+    --g-blur: 11px;
+    --g-sat: 160%;
+    --g-spec: 255 255 255; /* specular colour */
+    --g-spec-a: 1;
+    --g-hairline: rgb(18 18 26 / 0.2); /* crisp dark outer hairline of the bright-field rim */
+    --g-hairline-w: 1px;
+    --g-rim-lit: 0.55; /* internal-reflection line on the side facing the light */
+    --g-rim-far: 0.2; /* … and on the far side */
+    --g-glint-a: 1; /* glint core */
+    --g-under: 30 30 40 / 0.2; /* graphite underside of the glint: the white reads against it on paper */
+    --g-bspec-a: 0.85; /* bottom-edge specular line (no refraction) */
+    --g-back-a: 0.9; /* counter-glint on the far inner wall */
+    --g-wall-a: 0.5; /* inner wall facing the light */
+    --g-bevel: 24 24 40 / 0.13; /* bevel band just inside the rim */
+    --g-far-a: 0.035; /* body darkens slightly away from the light */
+    --g-sheen-a: 0.6; /* broad surface sheen toward the light */
+    --g-shade-a: 0.05; /* far-side thickness shade inside the body */
+    --g-shadow: 34 34 44; /* graphite micro-shadow */
+    --g-shadow-a: 0.14;
+    --lens-rest: 255 255 255; /* segmented lens at rest */
+    --lens-count: #4d4d55; /* tab count inside the lens: 8.4:1 on white */
+    --track-rgb: 232 232 228;
+
+    /* Layout */
+    --wrap: 960px;
+    --gutter: 16px;
+    --measure: 680px;
+    --dock-h: 46px;
+    --dock-top: 14px;
+  }
+
+  @media (min-width: 720px) {
+    :root {
+      --gutter: 32px;
+    }
+  }
+  @media (max-width: 639px) {
+    :root {
+      --dock-h: 44px;
+      --dock-top: 12px;
+    }
+  }
+
+  @supports not (transition-timing-function: linear(0, 1)) {
+    :root {
+      --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+      --ease-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+
+  /* ------------------------------------------------------------------------ *
+   * Colour tokens: dark. The head script always sets data-theme when JS runs;
+   * the media query covers readers without JS.
+   * ------------------------------------------------------------------------ */
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --paper: #0e0e10;
+    --surface: #141416;
+    --sunken: #18181b;
+    --track: #1c1c1f;
+    --ink: #eeeef0;
+    --ink-body: #d3d3d8;
+    --ink-2: #a8a8b0;
+    --ink-3: #8a8a93;
+    --seg-count: #92929b;
+    --line: rgb(255 255 255 / 0.075);
+    --line-2: rgb(255 255 255 / 0.13);
+    --hover: rgb(255 255 255 / 0.06);
+    --selection: rgb(255 255 255 / 0.2);
+    --scrim: rgb(0 0 0 / 0.45);
+    --code-bg: #131315;
+    --code-ink: #e1e1e6;
+    --t-kw: #ff7faa;
+    --t-fn: #8db3ff;
+    --t-str: #8ed19f;
+    --t-num: #f0b272;
+    --t-com: #84848f;
+    --t-bi: #6fcfdd;
+    --t-op: #9a9aa4;
+    --g-tint: 30 30 34;
+    --g-tint-a: 0.66;
+    --g-tint-sheet: 0.86;
+    --g-spec-a: 0.92;
+    --g-hairline: rgb(0 0 0 / 0.42); /* 1px: Firefox drops sub-pixel spreads at 1x */
+    --g-hairline-w: 1px;
+    --g-rim-lit: 0.2;
+    --g-rim-far: 0.07;
+    --g-glint-a: 0.42;
+    --g-under: 0 0 0 / 0;
+    --g-bspec-a: 0.4;
+    --g-back-a: 0.45;
+    --g-wall-a: 0.12;
+    --g-bevel: 0 0 0 / 0;
+    --g-far-a: 0;
+    --g-sheen-a: 0.07;
+    --g-shade-a: 0.32;
+    --g-shadow: 0 0 0;
+    --g-shadow-a: 0.6;
+    --lens-rest: 64 64 70;
+    --lens-count: #bdbdc4; /* 5.6:1 on the lens */
+    --track-rgb: 28 28 31;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      color-scheme: dark;
+      --paper: #0e0e10;
+      --surface: #141416;
+      --sunken: #18181b;
+      --track: #1c1c1f;
+      --ink: #eeeef0;
+      --ink-body: #d3d3d8;
+      --ink-2: #a8a8b0;
+      --ink-3: #8a8a93;
+      --seg-count: #92929b;
+      --line: rgb(255 255 255 / 0.075);
+      --line-2: rgb(255 255 255 / 0.13);
+      --hover: rgb(255 255 255 / 0.06);
+      --selection: rgb(255 255 255 / 0.2);
+      --scrim: rgb(0 0 0 / 0.45);
+      --code-bg: #131315;
+      --code-ink: #e1e1e6;
+      --t-kw: #ff7faa;
+      --t-fn: #8db3ff;
+      --t-str: #8ed19f;
+      --t-num: #f0b272;
+      --t-com: #84848f;
+      --t-bi: #6fcfdd;
+      --t-op: #9a9aa4;
+      --g-tint: 30 30 34;
+      --g-tint-a: 0.66;
+      --g-tint-sheet: 0.86;
+      --g-spec-a: 0.92;
+      --g-hairline: rgb(0 0 0 / 0.42); /* 1px: Firefox drops sub-pixel spreads at 1x */
+      --g-hairline-w: 1px;
+      --g-rim-lit: 0.2;
+      --g-rim-far: 0.07;
+      --g-glint-a: 0.42;
+      --g-under: 0 0 0 / 0;
+      --g-bspec-a: 0.4;
+      --g-back-a: 0.45;
+      --g-wall-a: 0.12;
+      --g-bevel: 0 0 0 / 0;
+      --g-far-a: 0;
+      --g-sheen-a: 0.07;
+      --g-shade-a: 0.32;
+      --g-shadow: 0 0 0;
+      --g-shadow-a: 0.6;
+      --lens-rest: 64 64 70;
+      --lens-count: #bdbdc4; /* 5.6:1 on the lens */
+      --track-rgb: 28 28 31;
+    }
+  }
+}

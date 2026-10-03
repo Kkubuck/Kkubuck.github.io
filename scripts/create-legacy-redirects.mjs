@@ -1,44 +1,60 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+/**
+ * Writes static redirect pages for every URL the blog used to have.
+ *
+ * GitHub Pages cannot send real 301s, so each old path gets a tiny HTML page
+ * with a canonical link, a meta refresh, and a script fallback. The map lives
+ * in src/data/redirects.json; add an entry there when a post's URL changes.
+ *
+ * Runs after `next build` (see the "build" script). Never overwrites a page
+ * the site builds itself.
+ */
+import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEnv, siteConfig } from './site-config.mjs';
 
-const dist = fileURLToPath(new URL('../dist/', import.meta.url));
-const manifest = JSON.parse(await readFile(new URL('../src/data/post-manifest.json', import.meta.url), 'utf8'));
+loadEnv();
+const { basePath: base, siteUrl: site } = siteConfig();
+const root = fileURLToPath(new URL('../', import.meta.url));
+const out = join(root, 'out');
+/** @type {Record<string, string>} */
+const redirects = JSON.parse(await readFile(join(root, 'src/data/redirects.json'), 'utf8'));
 
-function escapeHtml(value) {
-  return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
-}
+/** @type {Record<string, string>} */
+const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+/** @param {string} value */
+const escape = (value) => value.replace(/[&<>'"]/g, (char) => ENTITIES[char] ?? char);
 
-async function writeRedirect(relativePath, target) {
-  const file = join(dist, relativePath);
-  await mkdir(dirname(file), { recursive: true });
-  const safeTarget = escapeHtml(target);
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="description" content="This archive entry has moved to a new URL."><meta http-equiv="refresh" content="0;url=${safeTarget}"><link rel="canonical" href="https://kkubuck.github.io${safeTarget}"><title>Moved — Kkubuck</title></head><body><p>This entry moved to <a href="${safeTarget}">${safeTarget}</a>.</p><script>location.replace(${JSON.stringify(target)});</script></body></html>`;
-  await writeFile(file, html);
-}
-
-let count = 0;
-for (const item of manifest) {
-  const [year, month, day] = item.date.split('-');
-  const target = `/${item.kind === 'paper' ? 'papers' : 'notes'}/${item.slug}/`;
-  const categorySets = new Set([
-    (item.categories || []).join('/'),
-    item.categories?.[0] || '',
-    item.kind === 'paper' ? 'papers' : 'blog'
-  ].filter(Boolean));
-  for (const categories of categorySets) {
-    await writeRedirect(`${categories}/${year}/${month}/${day}/${item.slug}.html`, target);
-    count += 1;
+/** @param {string} path */
+async function exists(path) {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
   }
 }
 
-for (const [path, target] of [
-  ['blog/index.html', '/notes/'],
-  ['subprojects/index.html', '/projects/'],
-  ['publications/index.html', '/papers/']
-]) {
-  await writeRedirect(path, target);
-  count += 1;
+if (!(await exists(out))) {
+  console.error('out/ does not exist. Run `next build` first.');
+  process.exit(1);
 }
 
-console.log(`Generated ${count} legacy redirect files.`);
+let written = 0;
+let skipped = 0;
+for (const [from, to] of Object.entries(redirects)) {
+  const file = join(out, from.endsWith('/') ? `${from}index.html` : from);
+  // Never overwrite a page the site actually builds.
+  if (await exists(file)) {
+    console.warn(`Skipped ${from}: a real page already exists there.`);
+    skipped += 1;
+    continue;
+  }
+  const target = `${base}${to}`;
+  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지가 이동했습니다</title><link rel="canonical" href="${escape(site + target)}"><meta http-equiv="refresh" content="0;url=${escape(target)}"></head><body><p><a href="${escape(target)}">새 주소로 이동합니다.</a></p><script>location.replace(${JSON.stringify(target)} + location.hash);</script></body></html>`;
+  await mkdir(dirname(file), { recursive: true });
+  await writeFile(file, html);
+  written += 1;
+}
+
+console.log(`Generated ${written} redirect pages${skipped ? ` (${skipped} skipped)` : ''}.`);

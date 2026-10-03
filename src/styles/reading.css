@@ -1,0 +1,833 @@
+/* Reading: the post page (header, summary object, prose, code, tables, figures,
+ * tags, series box, pager) and the TOC rail's place in the grid. Owner: reading.
+ *
+ * Nothing here is glass. Content is calm paper: surfaces are --surface with an
+ * inset hairline, links are ink with a hairline underline, there is no accent colour.
+ * The TOC's own look (rail, active bar, pill, sheet) belongs to overlays.css; this
+ * file only puts the rail in column 2 from 1180px up.
+ */
+
+@layer components {
+  /* ------------------------------------------------------------------ layout */
+  .post {
+    padding-top: 72px;
+  }
+  .post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure));
+  }
+  .post-main {
+    grid-column: 1;
+    min-width: 0;
+  }
+  .post-layout > .toc {
+    display: none;
+  }
+  @media (min-width: 1180px) {
+    .post-layout {
+      grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+    }
+    .post-layout > .toc {
+      display: block;
+      grid-column: 2;
+      grid-row: 1;
+      padding-left: 64px;
+    }
+    .post-layout > .toc .toc__inner {
+      position: sticky;
+      top: 104px;
+      max-width: 216px;
+    }
+  }
+
+  /* Separator dot between inline items (eyebrow, meta line). */
+  .post-header__eyebrow > * + *::before,
+  .post-header__meta > * + *::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    margin: 0 9px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    vertical-align: middle;
+    transform: translateY(-1px);
+  }
+
+  /* ------------------------------------------------------------------ header */
+  .post-header {
+    margin-bottom: 40px;
+  }
+  .post-header__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 0 18px;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--ink-3);
+  }
+  .post-header__crumb {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .post-header__crumb:hover {
+    text-decoration-color: currentColor;
+  }
+  .post-header__crumb + .post-header__crumb {
+    color: var(--ink-2);
+  }
+  .post-header__venue {
+    font-variant-numeric: tabular-nums;
+  }
+  /* The title box spans the whole measure; typesetTitle() keeps "Mixed‑Scale" whole and
+     binds "A", "the", "of" to the next word, so no line ends on one. */
+  .post-header__title {
+    margin: 0;
+    font-size: var(--text-h1);
+    line-height: 1.24;
+    font-weight: 720;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    /* Balanced, as the prototype sets headings: the box spans the full measure and
+       compounds never split (U+2011), so balance only evens out the lines it already
+       has (it never adds one) and breaks at the colon of a paper title ("From Beginner
+       to Master: / A Survey for…"). Chrome and WebKit then set titles alike, and
+       WebKit's `pretty` would also break right after "(" (see base.css). */
+    text-wrap: balance;
+  }
+  /* A long title (PostHeader: over ~45em, the long English paper titles) steps down to
+     25px below the desktop width, so on a phone it sets in 4–5 lines instead of 5–7. */
+  .post-header__title[data-long] {
+    font-size: var(--text-h1-long);
+  }
+  .post-header__desc {
+    margin: 18px 0 0;
+    font-size: var(--text-lede);
+    line-height: 1.72;
+    color: var(--ink-2);
+  }
+  .post-header__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 22px 0 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .post-header__meta .ink-link {
+    color: var(--ink-2);
+  }
+
+  /* --------------------------------------- summary: paper card + 핵심 요약 */
+  /* One object: metadata and links on top, numbered takeaways below a hairline. */
+  .summary {
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .paper-card {
+    padding: 20px 22px 19px;
+  }
+  .paper-card dl {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.6;
+  }
+  .paper-card dl > div {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+  .paper-card dt {
+    padding-top: 1px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+  .paper-card dd {
+    margin: 0;
+    min-width: 0;
+    color: var(--ink);
+  }
+  .paper-card__title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .paper-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin: 12px 0 0 58px;
+    font-size: var(--text-md);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+  .paper-card__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .paper-card__links svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.7;
+  }
+  .takeaways {
+    padding: 18px 22px 16px;
+  }
+  .paper-card + .takeaways {
+    border-top: 1px solid var(--line);
+  }
+  .takeaways__title {
+    margin: 0 0 8px;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    font-weight: 650;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+  .takeaways ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: takeaway;
+  }
+  .takeaways li {
+    counter-increment: takeaway;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    padding: 5px 0;
+    font-size: 16px;
+    line-height: 1.72;
+    color: var(--ink-body);
+  }
+  .takeaways li::before {
+    content: counter(takeaway);
+    padding-top: 2px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ------------------------------------------------------------------- prose */
+  .prose {
+    font-size: var(--text-body);
+    line-height: 1.82;
+    color: var(--ink-body);
+  }
+  .summary + .prose {
+    margin-top: 48px;
+  }
+  .prose > :first-child {
+    margin-top: 0;
+  }
+  .prose p {
+    margin: 0 0 1.2em;
+  }
+  .prose strong {
+    font-weight: 650;
+    color: var(--ink);
+  }
+  .prose a {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .prose a:hover {
+    text-decoration-color: currentColor;
+  }
+  .prose :is(h2, h3, h4) {
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .prose h2 {
+    margin: 2.3em 0 0.65em;
+    font-size: var(--text-h2);
+    line-height: 1.38;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .prose h3 {
+    margin: 1.9em 0 0.5em;
+    font-size: var(--text-h3);
+    line-height: 1.5;
+    font-weight: 650;
+    letter-spacing: -0.014em;
+  }
+  .prose h4 {
+    margin: 1.6em 0 0.4em;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .prose h2 + h3 {
+    margin-top: 1.1em;
+  }
+  .prose ul,
+  .prose ol {
+    margin: 0 0 1.2em;
+    padding-left: 1.3em;
+  }
+  .prose ul {
+    list-style: disc;
+  }
+  .prose ul ul {
+    list-style-type: circle;
+  }
+  .prose ul ul ul {
+    list-style-type: square;
+  }
+  .prose ol {
+    list-style: decimal;
+  }
+  .prose li {
+    margin: 0.35em 0;
+    padding-left: 0.2em;
+  }
+  .prose li::marker {
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .prose li > :is(ul, ol) {
+    margin: 0.35em 0 0;
+  }
+  .prose li > p {
+    margin: 0 0 0.5em;
+  }
+  .prose li > p:last-child {
+    margin-bottom: 0;
+  }
+  .prose :not(pre) > code {
+    padding: 0.14em 0.38em;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    color: var(--ink);
+    background: var(--sunken);
+    box-shadow: inset 0 0 0 0.5px var(--line);
+    overflow-wrap: anywhere;
+  }
+  .prose a > code {
+    color: inherit;
+  }
+  /* Asides in the posts are notes, corrections and formulas, not pull quotes:
+     the prototype's ink rule, at body size. */
+  .prose blockquote {
+    margin: 1.6em 0;
+    padding: 2px 0 2px 20px;
+    border-left: 2px solid var(--ink);
+    color: var(--ink-2);
+  }
+  .prose blockquote p {
+    margin: 0 0 0.6em;
+  }
+  .prose blockquote > :last-child {
+    margin-bottom: 0;
+  }
+  .prose hr {
+    height: 1px;
+    margin: 3em 0;
+    border: 0;
+    background: var(--line-2);
+  }
+  .prose del {
+    color: var(--ink-3);
+  }
+  .prose img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* -------------------------------------------------------------------- code */
+  /* Shiki writes var(--t-*) colours (src/lib/code-theme.ts); the tokens switch with
+     the theme in globals.css. */
+  .code-block {
+    margin: 1.8em 0;
+    border-radius: var(--radius-md);
+    background: var(--code-bg);
+    box-shadow: inset 0 0 0 1px var(--line);
+    overflow: hidden;
+  }
+  .code-block__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 8px 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .code-block__lang {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-3);
+  }
+  .code-block__copy {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: var(--text-xs);
+    font-weight: 560;
+    color: var(--ink-3);
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+  .code-block__copy:hover {
+    background: var(--hover);
+    color: var(--ink);
+  }
+  .code-block__copy[hidden] {
+    display: none;
+  }
+  /* The inline-end padding lives on the code element (inline-block, as wide as the
+     longest line plus the padding), so it survives overflow: WebKit drops a scroll
+     container's own end padding, and the longest line would touch the edge. */
+  .code-block pre {
+    --code-pad: 20px;
+    margin: 0;
+    padding: 16px 0 18px var(--code-pad);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.75;
+    tab-size: 4;
+    color: var(--code-ink);
+    /* Scroll cue, as on tables: an edge shade only on a side with more code to see
+       (code-coloured covers scroll with the content and hide it at the ends). */
+    --shade: rgb(22 22 26 / 0.14);
+    background:
+      linear-gradient(to right, var(--code-bg) 40%, rgb(0 0 0 / 0)) left / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--code-bg) 40%, rgb(0 0 0 / 0)) right / 28px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, var(--shade), rgb(0 0 0 / 0)) left / 10px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, var(--shade), rgb(0 0 0 / 0)) right / 10px 100% no-repeat scroll,
+      var(--code-bg);
+    word-break: normal;
+    overflow-wrap: normal;
+    white-space: pre;
+  }
+  .code-block pre:focus-visible {
+    outline-offset: -2px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+  .code-block code {
+    display: inline-block;
+    vertical-align: top;
+    min-width: calc(100% - var(--code-pad));
+    padding-inline-end: var(--code-pad);
+    font-family: inherit;
+  }
+
+  /* ------------------------------------------------------------------ tables */
+  /* Booktabs: 1.5px top and bottom rules, a hairline under the head, faint row
+     hairlines, no box. The scroller is a focusable region for keyboard scrolling. */
+  .table-scroll {
+    --shade: rgb(22 22 26 / 0.16);
+    margin: 1.8em 0;
+    overflow-x: auto;
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    /* Scroll cue: an edge shade appears only on a side with more table to see
+       (the paper-coloured covers scroll with the content and hide it at the ends). */
+    background:
+      linear-gradient(to right, var(--paper) 40%, rgb(0 0 0 / 0)) left / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--paper) 40%, rgb(0 0 0 / 0)) right / 28px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, var(--shade), rgb(0 0 0 / 0)) left / 10px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, var(--shade), rgb(0 0 0 / 0)) right / 10px 100% no-repeat scroll;
+  }
+  :root[data-theme='dark'] :is(.table-scroll, .code-block pre) {
+    --shade: rgb(255 255 255 / 0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) :is(.table-scroll, .code-block pre) {
+      --shade: rgb(255 255 255 / 0.12);
+    }
+  }
+  .table-scroll:focus-visible {
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    line-height: 1.62;
+    font-variant-numeric: tabular-nums;
+  }
+  .prose th {
+    padding: 10px 14px 9px;
+    font-size: var(--text-sm);
+    font-weight: 650;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .prose th:not([align]),
+  .prose td:not([align]) {
+    text-align: start;
+  }
+  .prose td {
+    padding: 10px 14px;
+    vertical-align: top;
+    color: var(--ink-body);
+  }
+  .prose tbody tr + tr td {
+    border-top: 1px solid var(--line);
+  }
+  .prose :is(th, td):first-child {
+    padding-left: 2px;
+  }
+  .prose :is(th, td):last-child {
+    padding-right: 2px;
+  }
+  .prose :is(th, td).nowrap {
+    white-space: nowrap;
+  }
+  /* Wrapping columns keep a readable width; on phones the region scrolls instead of
+     stacking one word per line. */
+  .prose td:not(.nowrap) {
+    min-width: 8.5em;
+  }
+  /* Identifiers in cells stay whole; the scroller takes the overflow. */
+  .prose td code {
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+
+  /* ----------------------------------------------------------------- figures */
+  /* A light plate in light mode (most figures are screenshots and diagrams on white).
+     In dark mode the plate goes dark and the image is dimmed well down, so a white
+     screenshot's whites land near #c0c0bc instead of glaring; no inversion. Hover
+     lifts it a little, never to full white.
+     Images carry width/height (rehypeImageSizes): with content-box sizing the ratio
+     applies to the picture, the plate's padding is added around it, and the box is
+     reserved before a lazy image loads. */
+  .prose figure {
+    margin: 2em 0;
+  }
+  .prose figure img {
+    --plate: 20px;
+    display: block;
+    box-sizing: content-box;
+    margin-inline: auto;
+    max-width: calc(100% - 2 * var(--plate));
+    height: auto;
+    padding: var(--plate);
+    border-radius: var(--radius-md);
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .prose figcaption {
+    margin-top: 12px;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--ink-3);
+    text-align: center;
+    text-wrap: balance;
+  }
+  :root[data-theme='dark'] .prose figure img {
+    background: #1c1c20;
+    filter: brightness(0.78) contrast(0.92);
+    transition: filter 0.2s;
+  }
+  :root[data-theme='dark'] .prose figure:hover img {
+    filter: brightness(0.86) contrast(0.95);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .prose figure img {
+      background: #1c1c20;
+      filter: brightness(0.78) contrast(0.92);
+    }
+  }
+
+  /* ---------------------------------------------------------- post footer */
+  .post-foot {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  /* Tags: text only. */
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    font-weight: 520;
+  }
+  .post-tags a {
+    color: var(--ink-2);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
+    transition:
+      color 0.15s,
+      text-decoration-color 0.15s;
+  }
+  .post-tags a:hover {
+    color: var(--ink);
+    text-decoration-color: currentColor;
+  }
+
+  /* Series: every post, numbered; the current one marked. */
+  .series-box {
+    margin-top: 32px;
+    padding: 0 10px 10px;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .post-foot > .series-box:first-child {
+    margin-top: 0;
+  }
+  .series-box__head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0;
+    padding: 18px 12px 10px;
+  }
+  .series-box__head::before {
+    content: '시리즈';
+    content: '시리즈' / '';
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .series-box__name {
+    font-size: var(--text-md);
+    font-weight: 680;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .series-box__name:hover {
+    text-decoration-color: currentColor;
+  }
+  .series-box__position {
+    margin-left: auto;
+    font-size: var(--text-sm);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .series-box__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: series;
+  }
+  .series-box__list li {
+    counter-increment: series;
+    min-width: 0;
+  }
+  .series-box__list li > :is(a, span) {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    align-items: baseline;
+    padding: 7px 12px;
+    border-radius: 10px;
+    font-size: var(--text-ui);
+    line-height: 1.5;
+    color: var(--ink-2);
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+  .series-box__list li > :is(a, span)::before {
+    content: counter(series);
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .series-box__list a:hover {
+    background: var(--hover);
+    color: var(--ink);
+  }
+  .series-box__list [aria-current] {
+    font-weight: 620;
+    color: var(--ink);
+    background: var(--sunken);
+  }
+  .series-box__list [aria-current]::before {
+    color: var(--ink);
+  }
+  @media (min-width: 640px) {
+    .series-box__list--cols {
+      display: grid;
+      grid-template-rows: repeat(var(--rows, 5), auto);
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      column-gap: 4px;
+    }
+  }
+
+  /* Pager: two halves divided by hairlines, no cards. */
+  .pager {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    margin-top: 36px;
+    border-block: 1px solid var(--line);
+  }
+  .post-foot > .pager:first-child {
+    margin-top: 0;
+  }
+  .pager > * + * {
+    border-left: 1px solid var(--line);
+  }
+  .pager__link {
+    display: block;
+    min-width: 0;
+    padding: 18px 24px 20px 0;
+  }
+  .pager__link--next {
+    padding: 18px 0 20px 24px;
+    text-align: right;
+  }
+  .pager__dir {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .pager__link--next .pager__dir {
+    justify-content: flex-end;
+  }
+  .pager__dir svg {
+    width: 13px;
+    height: 13px;
+  }
+  .pager__link strong {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 6px;
+    font-size: var(--text-md);
+    line-height: 1.5;
+    font-weight: 620;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    /* Short display titles capped at two lines: balance cannot add a line, and no word is left alone. */
+    text-wrap: balance;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.15s;
+  }
+  .pager__link:hover strong {
+    text-decoration-color: currentColor;
+  }
+  .pager__link:hover .pager__dir {
+    color: var(--ink-2);
+  }
+
+  /* ------------------------------------------------------------------ phones */
+  @media (max-width: 639px) {
+    .post {
+      padding-top: 44px;
+    }
+    .post-header {
+      margin-bottom: 32px;
+    }
+    .post-header__desc {
+      font-size: var(--text-body);
+    }
+    .paper-card {
+      padding: 18px 18px 17px;
+    }
+    .paper-card dl {
+      gap: 8px;
+      font-size: 15px;
+    }
+    .paper-card dl > div {
+      grid-template-columns: 34px minmax(0, 1fr);
+      column-gap: 14px;
+    }
+    .paper-card__links {
+      margin-left: 48px;
+      font-size: 15px;
+    }
+    .takeaways {
+      padding: 16px 18px 14px;
+    }
+    .takeaways li {
+      font-size: 15.5px;
+    }
+    .summary + .prose {
+      margin-top: 40px;
+    }
+    .prose h2 {
+      font-size: 21px;
+    }
+    .code-block {
+      margin-inline: calc(var(--gutter) * -1);
+      border-radius: 0;
+      box-shadow:
+        inset 0 1px 0 var(--line),
+        inset 0 -1px 0 var(--line);
+    }
+    .code-block pre {
+      --code-pad: var(--gutter);
+    }
+    .code-block__bar {
+      padding-left: var(--gutter);
+    }
+    .prose figure img {
+      --plate: 12px;
+    }
+    .pager {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .pager > * + * {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .pager__empty {
+      display: none;
+    }
+    .pager__empty + * {
+      border-top: 0;
+    }
+    .pager__link,
+    .pager__link--next {
+      padding: 16px 0;
+      text-align: left;
+    }
+    .pager__link--next .pager__dir {
+      justify-content: flex-start;
+    }
+  }
+}

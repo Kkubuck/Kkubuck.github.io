@@ -1,13 +1,15 @@
 {
-  "name": "Jisang Lee — Computer Vision & Research Notes",
+  "name": "Kkubuck",
   "short_name": "Kkubuck",
-  "description": "Paper reviews and research notes in computer vision.",
-  "start_url": "/",
+  "description": "컴퓨터 비전 논문 리뷰와 공부 기록",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f9f8f4",
-  "theme_color": "#367366",
+  "background_color": "#f5f5f2",
+  "theme_color": "#f5f5f2",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

@@ -1,0 +1,293 @@
+/* Foundation: the glass material and its light-driven rim. Owner: foundation.
+ *
+ * Structure (rendered by <Glass> / <GlassLayers>, src/components/glass):
+ *   .glass.glass--<variant>   the object: shape, stacking context, content
+ *     .glass__light           display: contents; receives the four light properties
+ *       .glass__shadow        crisp dark outer hairline + graphite micro-shadow that leans
+ *                             away from the light                                  (below content)
+ *       .glass__fx            body: tint + backdrop blur/saturate (+ SVG refraction on
+ *                             Chromium desktop), inner light, bevel, sheen, far-side
+ *                             thickness shade                                      (below content)
+ *       .glass__glint         the glint on the shoulder facing the light: a white core over
+ *                             the outer hairline and 2px inside, a graphite underside below
+ *                             it (light mode)                                      (above content)
+ *       .glass__rim           1px rim: internal-reflection line, front glint, counter-glint,
+ *                             and (without refraction) a specular line on the bottom edge
+ *                                                                                  (above content)
+ *
+ * The light store writes four properties on .glass__light (src/components/glass/rim.ts):
+ *   --ga  outward normal at the rim point nearest the light (0deg = up, clockwise)
+ *   --gx, --gy  centre of curvature behind that point (conic centre for the glint)
+ *   --gn  nearness of the light, 0…1
+ * The content of the glass is a sibling of .glass__light, so a light frame restyles the
+ * wrapper and its four layers, never the links and buttons inside the glass.
+ * The defaults below are the key light (above the top-left): the static first-paint
+ * and no-JS rim.
+ */
+
+@property --ga {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 325deg;
+}
+@property --gx {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 23px;
+}
+@property --gy {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 23px;
+}
+@property --gn {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.2;
+}
+
+@layer components {
+  :where(.glass) {
+    position: relative;
+  }
+  .glass {
+    --rho: 23px; /* corner radius (pill: half the height) — the static rim's conic centre */
+    --g-r: 999px; /* corner radius of the shape */
+    isolation: isolate;
+    border-radius: var(--g-r);
+  }
+  .glass__light {
+    display: contents;
+    --ga: 325deg;
+    --gx: var(--rho);
+    --gy: var(--rho);
+    --gn: 0.2;
+  }
+
+  .glass__shadow,
+  .glass__fx,
+  .glass__glint,
+  .glass__rim {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--g-r);
+    pointer-events: none;
+  }
+  .glass__shadow,
+  .glass__fx {
+    z-index: -1;
+    /* unit vector toward the light, screen coordinates */
+    --nx: sin(var(--ga));
+    --ny: calc(-1 * cos(var(--ga)));
+  }
+  .glass__glint,
+  .glass__rim {
+    z-index: 2;
+  }
+
+  /* Crisp outer hairline + graphite micro-shadow (1.5–3px, leaning away from the light).
+     Never a soft cushion. */
+  .glass__shadow {
+    --len: calc(1.5px + 1.5px * var(--gn));
+    box-shadow:
+      0 0 0 var(--g-hairline-w) var(--g-hairline),
+      calc(var(--nx) * -1 * var(--len)) calc(var(--ny) * -1 * var(--len) + 1px) 2.5px -0.5px
+        rgb(var(--g-shadow) / calc(var(--g-shadow-a) * 0.75)),
+      calc(var(--nx) * -2 * var(--len)) calc(var(--ny) * -2 * var(--len) + 4px) 12px -6px
+        rgb(var(--g-shadow) / calc(var(--g-shadow-a) * 0.6));
+  }
+
+  .glass__fx {
+    background:
+      /* sheen toward the light, a touch of shade away from it */
+      linear-gradient(
+        var(--ga),
+        rgb(var(--g-spec) / 0) 30%,
+        rgb(var(--g-spec) / calc(var(--g-sheen-a) * (0.4 + 0.6 * var(--gn))))
+      ),
+      linear-gradient(calc(var(--ga) + 180deg), rgb(0 0 0 / var(--g-far-a)), rgb(0 0 0 / 0) 45%),
+      rgb(var(--g-tint) / var(--g-tint-a));
+    -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+    backdrop-filter: blur(var(--g-blur)) saturate(var(--g-sat));
+    box-shadow:
+      /* the inner wall facing the light */
+      inset calc(var(--nx) * -2.5px) calc(var(--ny) * -2.5px) 4px -1px
+        rgb(var(--g-spec) / calc(var(--g-wall-a) * (0.5 + 0.5 * var(--gn)))),
+      /* bevel: the glass edge is a touch darker than its face, so white highlights read on paper */
+      inset 0 0 6px 0 rgb(var(--g-bevel)),
+      /* thickness: the far side is darker still */
+      inset calc(var(--nx) * 3px) calc(var(--ny) * 3px) 7px -3px rgb(0 0 0 / var(--g-shade-a));
+  }
+
+  /* The rim: a 1px ring (mask) painted by two conic gradients with a fixed stop
+     structure. The ring itself is the internal-reflection line: bright on the side facing
+     the light, dimmer on the far side. The front glint is centred on --ga, seen from the
+     centre of curvature, so it slides along the near edge and tightens (--w) as the light
+     approaches. The counter-glint sits on the far inner wall, seen from the mirrored
+     centre. Each conic's branch cut lies where its colour is uniform, so no seam shows.
+     --rim-spec (none by default) adds the bottom-edge specular line of the fallback. */
+  .glass__rim {
+    --w: calc(52deg - 26deg * var(--gn));
+    --far: rgb(var(--g-spec) / var(--g-rim-far));
+    --lit: rgb(var(--g-spec) / var(--g-rim-lit));
+    --mid: rgb(var(--g-spec) / calc(var(--g-spec-a) * (0.7 + 0.2 * var(--gn))));
+    --hot: rgb(var(--g-spec) / var(--g-spec-a));
+    --back: rgb(var(--g-spec) / calc(var(--g-back-a) * (0.6 + 0.4 * var(--gn))));
+    padding: 1px;
+    background:
+      var(--rim-spec, none),
+      conic-gradient(
+        from var(--ga) at calc(100% - var(--gx)) calc(100% - var(--gy)),
+        transparent 0deg,
+        transparent calc(180deg - 1.1 * var(--w)),
+        var(--back) 180deg,
+        transparent calc(180deg + 1.1 * var(--w)),
+        transparent 360deg
+      ),
+      conic-gradient(
+        from calc(var(--ga) - 180deg) at var(--gx) var(--gy),
+        var(--far) 0deg,
+        var(--lit) calc(180deg - 2.2 * var(--w)),
+        var(--mid) calc(180deg - 0.8 * var(--w)),
+        var(--hot) calc(180deg - 0.32 * var(--w)),
+        var(--hot) calc(180deg + 0.32 * var(--w)),
+        var(--mid) calc(180deg + 0.8 * var(--w)),
+        var(--lit) calc(180deg + 2.2 * var(--w)),
+        var(--far) 360deg
+      );
+  }
+  /* The glint on the shoulder facing the light. The ring starts 1px outside the box, so
+     over its core the white replaces the dark outer hairline (a specular highlight blows
+     out the edge it sits on) and runs 2px inside; in light mode a graphite underside
+     (--g-under, the 1.5px padding band) gives the white something to read against on
+     near-white paper. Both share one angular profile, so they slide and tighten together. */
+  .glass__glint {
+    --w: calc(58deg - 28deg * var(--gn));
+    --core: rgb(var(--g-spec) / calc(var(--g-glint-a) * (0.9 + 0.1 * var(--gn))));
+    --under: rgb(var(--g-under));
+    inset: -1px;
+    border: 3px solid transparent;
+    border-radius: calc(var(--g-r) + 1px);
+    padding: 1.5px;
+    background:
+      conic-gradient(
+          from calc(var(--ga) - 180deg) at calc(var(--gx) + 1px) calc(var(--gy) + 1px),
+          transparent 0deg,
+          transparent calc(180deg - var(--w)),
+          var(--under) calc(180deg - 0.5 * var(--w)),
+          var(--under) calc(180deg + 0.5 * var(--w)),
+          transparent calc(180deg + var(--w)),
+          transparent 360deg
+        )
+        border-box padding-box no-repeat,
+      conic-gradient(
+          from calc(var(--ga) - 180deg) at calc(var(--gx) + 1px) calc(var(--gy) + 1px),
+          transparent 0deg,
+          transparent calc(180deg - var(--w)),
+          var(--core) calc(180deg - 0.4 * var(--w)),
+          var(--core) calc(180deg + 0.4 * var(--w)),
+          transparent calc(180deg + var(--w)),
+          transparent 360deg
+        )
+        border-box border-box no-repeat;
+  }
+  .glass__rim,
+  .glass__glint {
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  /* Without refraction (Safari, Firefox, phones; the TOC pill everywhere) the capsules
+     get a 1px specular line along the bottom edge, under the light's x (--gx), so the
+     material still reads as polished glass where the backdrop does not bend. */
+  :root:not(.glass-refract) :is(.glass--dock, .glass--sheet) > .glass__light > .glass__rim,
+  .glass--pill > .glass__light > .glass__rim {
+    --rim-spec: radial-gradient(
+      42% 3px at var(--gx) 100%,
+      rgb(var(--g-spec) / var(--g-bspec-a)),
+      rgb(var(--g-spec) / 0)
+    );
+  }
+
+  /* ---------------------------------------------------------------- variants */
+  .glass--dock {
+    --rho: calc(var(--dock-h) / 2);
+  }
+  .glass--pill {
+    --rho: 22px;
+  }
+  .glass--sheet {
+    --rho: var(--radius-sheet);
+    --g-r: var(--radius-sheet);
+    --g-tint-a: var(--g-tint-sheet);
+    --g-blur: 20px;
+  }
+  .glass--tocsheet {
+    --rho: var(--radius-tocsheet);
+    --g-r: var(--radius-tocsheet);
+    --g-tint-a: var(--g-tint-sheet);
+    --g-blur: 20px;
+  }
+  .glass--lens {
+    --rho: 17px;
+  }
+
+  /* ---------------------------------------------------------------- fallbacks */
+  /* Every tint rule from here on has the specificity of one class (0,1,0), so source order
+     decides and the last word goes to reduced transparency. A stronger selector here would
+     outrank the opaque override below and let the page show through a sheet. */
+
+  /* Sheets without refraction (Safari, Firefox, phones) carry a little more tint: should an
+     engine not blur the backdrop of a modal <dialog> in the top layer, the results must
+     still read cleanly over the page behind them. */
+  :where(:root:not(.glass-refract)) .glass--sheet {
+    --g-tint-a: min(1, calc(var(--g-tint-sheet) + 0.04));
+  }
+  /* No backdrop blur at all: nothing frosts the page behind, so every surface goes to at
+     least .92 (a sheet keeps its higher tint). */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+      --g-tint-a: 0.92;
+    }
+    .glass--sheet {
+      --g-tint-a: max(0.92, min(1, calc(var(--g-tint-sheet) + 0.04)));
+    }
+    .glass--tocsheet {
+      --g-tint-a: max(0.92, var(--g-tint-sheet));
+    }
+  }
+  /* Reduced transparency: opaque surfaces, rim kept. Last in source order, so it wins over
+     every tint above at equal specificity. */
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      --g-tint-a: 1;
+    }
+    .glass__fx {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
+  @media (forced-colors: active) {
+    .glass__fx {
+      background: Canvas;
+      backdrop-filter: none;
+    }
+    .glass__rim {
+      background: CanvasText;
+    }
+  }
+
+  /* Refraction filters (built by the light store) live in a zero-size SVG. */
+  .glass-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+}

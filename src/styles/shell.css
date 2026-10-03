@@ -1,0 +1,290 @@
+/* Foundation: masthead, dock, footer, page headers. Owner: foundation. */
+
+@layer components {
+  /* ---------------------------------------------------------------- masthead */
+  .site-header {
+    position: relative;
+    z-index: 40;
+  }
+  .masthead {
+    height: 74px;
+    display: flex;
+    align-items: center;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    padding: 4px 0;
+    color: var(--ink);
+    line-height: 1;
+    font-size: var(--text-wordmark);
+  }
+  .wordmark__name {
+    font-weight: 720;
+    letter-spacing: -0.035em;
+  }
+  .wordmark__suffix {
+    font-weight: 420;
+    letter-spacing: -0.02em;
+    color: var(--ink-3);
+  }
+
+  /* -------------------------------------------------------------------- dock */
+  .dock {
+    position: fixed;
+    z-index: 50;
+    top: var(--dock-top);
+    right: max(var(--gutter), calc((100% - var(--wrap)) / 2));
+    height: var(--dock-h);
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+  }
+  .dock__nav {
+    display: flex;
+    align-items: center;
+  }
+  .dock__link,
+  .dock__btn {
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: var(--text-ui);
+    font-weight: 560;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    background: transparent;
+    transition:
+      background-color 0.18s,
+      color 0.18s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .dock__link {
+    padding: 0 12px;
+  }
+  .dock__link:hover,
+  .dock__btn:hover {
+    color: var(--ink);
+    background: var(--hover);
+  }
+  .dock__link[aria-current='page'] {
+    color: var(--ink);
+  }
+  .dock__link:focus-visible,
+  .dock__btn:focus-visible,
+  .dock__mark:focus-visible {
+    outline-offset: -2px;
+    border-radius: 999px;
+  }
+  .dock__sep {
+    flex: none;
+    width: 1px;
+    height: 18px;
+    margin: 0 5px;
+    background: var(--line-2);
+  }
+
+  /* Wordmark docking: 0fr → 1fr. */
+  .dock__markwrap {
+    display: grid;
+    grid-template-columns: 0fr;
+    transition: grid-template-columns 0.55s var(--ease-spring-soft);
+  }
+  .dock__mark {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 36px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 720;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-out);
+  }
+  .dock__mark span {
+    padding: 0 10px 0 11px;
+  }
+  .dock__sep--mark {
+    width: 0;
+    margin: 0;
+    transition:
+      width 0.3s,
+      margin 0.3s;
+  }
+  .dock.is-docked .dock__markwrap {
+    grid-template-columns: 1fr;
+  }
+  .dock.is-docked .dock__mark {
+    opacity: 1;
+    transition-delay: 0.08s;
+  }
+  .dock.is-docked .dock__sep--mark {
+    width: 1px;
+    margin: 0 5px 0 1px;
+  }
+
+  .dock__search {
+    gap: 8px;
+    padding: 0 7px 0 11px;
+  }
+  .dock__search svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+  .dock__label {
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .dock__search:hover .dock__label {
+    color: var(--ink-2);
+  }
+  /* ink-2, not ink-3: the hint must hold 4.5:1 over whatever scrolls under the dock.
+     A 1px hairline: Firefox drops a 0.5px spread at 1x. */
+  .dock__search kbd {
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: var(--text-2xs);
+    font-weight: 560;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ink-2);
+    background: rgb(var(--g-spec) / 0.55);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  :root[data-theme='dark'] .dock__search kbd {
+    background: rgb(255 255 255 / 0.06);
+  }
+  .dock__theme {
+    width: 36px;
+  }
+  .dock__theme svg {
+    width: 18px;
+    height: 18px;
+  }
+  /* ThemeToggle renders both icons; show the one for the current theme. */
+  :root[data-theme='dark'] .icon-sun,
+  :root:not([data-theme='dark']) .icon-moon {
+    display: none;
+  }
+
+  @media (max-width: 639px) {
+    .masthead {
+      height: 68px;
+    }
+    .dock {
+      padding: 0 4px;
+    }
+    .dock__link {
+      padding: 0 10px;
+    }
+    .dock__search {
+      width: 36px;
+      padding: 0;
+    }
+    .dock__label,
+    .dock__search kbd {
+      display: none;
+    }
+    .dock__sep {
+      margin: 0 3px;
+    }
+  }
+  /* Narrowest phones: the docked wordmark would crowd the nav. */
+  @media (max-width: 359px) {
+    .dock__markwrap,
+    .dock__sep--mark {
+      display: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------ footer */
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin-top: 120px;
+    padding: 28px 0 56px;
+    border-top: 1px solid var(--line);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--ink-3);
+  }
+  .site-footer__brand {
+    color: var(--ink-2);
+  }
+  .site-footer__brand b {
+    margin-right: 10px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .site-footer nav {
+    display: flex;
+    gap: 20px;
+  }
+  .site-footer a:hover {
+    color: var(--ink);
+  }
+  @media (max-width: 639px) {
+    .site-footer {
+      margin-top: 88px;
+      padding-bottom: 96px; /* room for the TOC pill */
+    }
+  }
+
+  /* ------------------------------------------------------------ page headers */
+  /* Tags, tag, series and about pages. List pages (home, categories) keep their
+     heading for screen readers only: the segmented lens already says where you are. */
+  .page-header {
+    padding: 64px 0 36px;
+  }
+  .page-header__eyebrow {
+    margin: 0 0 10px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .page-header__eyebrow a:hover {
+    color: var(--ink);
+  }
+  .page-header__title {
+    margin: 0;
+    font-size: clamp(26px, 1.2vw + 19px, 32px);
+    line-height: 1.28;
+    font-weight: 720;
+    letter-spacing: -0.024em;
+  }
+  /* A bare count beside the title (tags, series), in the year gutter's count style. */
+  .page-header__row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .page-header__count {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .page-header__desc {
+    margin: 12px 0 0;
+    font-size: var(--text-md);
+    line-height: 1.68;
+    color: var(--ink-2);
+  }
+  @media (max-width: 639px) {
+    .page-header {
+      padding: 36px 0 28px;
+    }
+  }
+}

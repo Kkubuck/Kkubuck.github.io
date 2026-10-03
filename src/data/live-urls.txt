@@ -1,0 +1,159 @@
+# Every URL https://kkubuck.github.io served (HTTP 200) before the Next.js
+# rebuild, captured on 2026-10-03 by crawling the live site: its sitemap,
+# every same-site link and asset reference, and every file in the old public/.
+#
+# scripts/verify-build.mjs fails when one of these no longer resolves in out/
+# (as a page, a redirect stub from src/data/redirects.json, or a file), so a
+# shared link, a search result or an old og:image never turns into a 404.
+#
+# Some entries exist only for that reason:
+# - /assets/img/og-card.* is the old og:image URL; it now serves the current card.
+# - /assets/project/*, the old /assets/img/*.png illustrations and the Tistory
+#   screenshots replaced by text in the rewritten posts are kept byte-for-byte.
+# - /research/data.json is a frozen snapshot of the removed research map's data.
+#
+# Never delete a line to make the check pass; add a redirect or keep the file.
+#
+# Removed on purpose (these 404 by design):
+# - /assets/files/CV_jisanglee.pdf: the old CV had wrong degree dates, a phone
+#   number and a GPA the owner does not want published. /cv/ still redirects
+#   to /about/.
+/
+/404.html
+/about/
+/apple-touch-icon.png
+/assets/img/adaptive.png
+/assets/img/grape.png
+/assets/img/koreaSunset.jpg
+/assets/img/modal.png
+/assets/img/og-card.png
+/assets/img/og-card.svg
+/assets/img/portfolio.png
+/assets/img/publications.png
+/assets/img/research-pictogram.svg
+/assets/img/smile.png
+/assets/img/tistory/21/image-01.png
+/assets/img/tistory/21/image-02.png
+/assets/img/tistory/22/image-01.png
+/assets/img/tistory/22/image-02.png
+/assets/img/tistory/23/image-01.png
+/assets/img/tistory/23/image-02.png
+/assets/img/tistory/23/image-03.png
+/assets/img/tistory/23/image-04.png
+/assets/img/tistory/23/image-05.png
+/assets/img/tistory/25/image-01.png
+/assets/img/tistory/25/image-02.png
+/assets/img/tistory/25/image-03.png
+/assets/img/tistory/26/image-01.png
+/assets/img/tistory/26/image-02.png
+/assets/img/tistory/27/image-01.png
+/assets/img/tistory/27/image-02.png
+/assets/img/tistory/29/image-01.png
+/assets/img/tistory/29/image-02.png
+/assets/img/tistory/29/image-03.png
+/assets/img/tistory/30/image-01.png
+/assets/img/tistory/31/image-01.png
+/assets/img/tistory/32/image-01.png
+/assets/img/tistory/33/image-01.png
+/assets/img/tistory/34/image-01.png
+/assets/img/tistory/36/image-01.png
+/assets/img/tistory/36/image-02.png
+/assets/img/tistory/36/image-03.png
+/assets/img/tistory/36/image-04.png
+/assets/img/tistory/36/image-05.png
+/assets/img/tistory/36/image-06.png
+/assets/img/tistory/36/image-07.png
+/assets/img/tistory/36/image-08.png
+/assets/img/tistory/36/image-09.png
+/assets/img/tistory/36/image-10.png
+/assets/img/tistory/36/image-11.png
+/assets/img/tistory/36/image-12.png
+/assets/img/tistory/36/image-13.png
+/assets/project/home.png
+/assets/project/koreaSunset.jpg
+/assets/project/portfolio.png
+/assets/project/tags.png
+/cv/
+/favicon.svg
+/icon-192.png
+/icon-512.png
+/notes/
+/notes/ovcos-comparison-protocol/
+/notes/ovcos-reading-map-2026/
+/notes/paper-review-toolkit-build-notes/
+/notes/tistory-10/
+/notes/tistory-11/
+/notes/tistory-12/
+/notes/tistory-13/
+/notes/tistory-14/
+/notes/tistory-15/
+/notes/tistory-16/
+/notes/tistory-17/
+/notes/tistory-18/
+/notes/tistory-19/
+/notes/tistory-20/
+/notes/tistory-21/
+/notes/tistory-22/
+/notes/tistory-23/
+/notes/tistory-25/
+/notes/tistory-26/
+/notes/tistory-27/
+/notes/tistory-29/
+/notes/tistory-30/
+/notes/tistory-31/
+/notes/tistory-32/
+/notes/tistory-33/
+/notes/tistory-34/
+/notes/tistory-35/
+/notes/tistory-36/
+/notes/tistory-41/
+/papers/
+/papers/adaptive-refinement-arm-cod/
+/papers/cod-benchmarks-guide/
+/papers/dcnet-cis-cvpr2023/
+/papers/ease-environment-aware-unsupervised-cod/
+/papers/escnet-edge-semantic-cod/
+/papers/fdcod-cvpr2022/
+/papers/feder-cod-cvpr2023/
+/papers/fsel-cod-eccv2024/
+/papers/fspnet-transformer-cod-cvpr2023/
+/papers/implicit-motion-vcod-cvpr2022/
+/papers/joint-sod-cod-cvpr2021/
+/papers/just-a-hint-point-supervised-cod-eccv2024/
+/papers/making-and-breaking-of-camouflage-iccv2023/
+/papers/mm-sam-camouflaged-scene-segmentation/
+/papers/mutual-graph-learning-cod-cvpr2021/
+/papers/noisy-pseudo-label-cod-eccv2024/
+/papers/ovcos-ovcoser-eccv2024/
+/papers/pfnet-distraction-mining-cvpr2021/
+/papers/rank-camouflaged-objects-cvpr2021/
+/papers/rise-unsupervised-cod/
+/papers/sam-dsa-rgbd-cod/
+/papers/seeing-the-unseen-suclip/
+/papers/segmar-cvpr2022/
+/papers/source-free-depth-pop-out-iccv2023/
+/papers/srrnet-video-camouflaged-objects/
+/papers/tistory-37/
+/papers/tistory-38/
+/papers/tistory-39/
+/papers/tistory-40/
+/papers/tistory-42/
+/papers/tistory-43/
+/papers/tistory-44/
+/papers/tsp-sam-vcod-cvpr2024/
+/papers/ucod-dpl-dynamic-pseudo-label-learning/
+/papers/ugtr-cod-iccv2021/
+/papers/uscnet-unconstrained-scenes/
+/papers/vscode-generalist-cod-cvpr2024/
+/papers/zoomnet-cvpr2022/
+/projects/
+/reading/
+/research/
+/research/data.json
+/robots.txt
+/rss.xml
+/search.json
+/site.webmanifest
+/sitemap-0.xml
+/sitemap-index.xml
+/tags/
