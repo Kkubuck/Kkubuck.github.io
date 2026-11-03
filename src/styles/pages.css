@@ -60,30 +60,44 @@
     margin: 0;
     min-width: 0;
   }
-  .about__pubs {
+  /* Papers and projects: title, one-line summary, then venue or role with links. */
+  .about__list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .about__pubs li {
+  .about__list li {
     display: grid;
-    gap: 2px;
-    padding: 12px 0;
+    gap: 3px;
+    padding: 14px 0;
     border-top: 1px solid var(--line);
   }
-  .about__pubs li:last-child {
+  .about__list li:last-child {
     border-bottom: 1px solid var(--line);
   }
-  .about__pubs strong {
+  .about__list strong {
     font-size: var(--text-md);
     line-height: 1.55;
     font-weight: 620;
     color: var(--ink);
     text-wrap: balance;
   }
-  .about__pubs li > span {
+  /* `.about p` would otherwise put a paragraph gap inside the row. */
+  .about .about__list p {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.68;
+    color: var(--ink-2);
+  }
+  .about__list li > span {
     font-size: var(--text-sm);
     color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .about .about__lead {
+    margin: 0 0 0.8em;
+    font-size: var(--text-md);
+    color: var(--ink-2);
   }
   /* `.about p` would otherwise win and glue the note to the list's last hairline. */
   .about .about__more {

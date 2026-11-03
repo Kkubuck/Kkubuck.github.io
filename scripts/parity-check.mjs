@@ -143,7 +143,7 @@ const CORRECTIONS = [
   })),
   {
     from: '컴퓨터 비전 논문 리뷰와 공부 기록. 위장 객체 탐지, 개방 어휘 분할, 원격 탐사 논문을 주로 읽습니다.',
-    to: '컴퓨터 비전 논문 리뷰와 공부 기록',
+    to: '컴퓨터 비전 연구와 공부 기록',
     why: 'Site description (home/404 meta, RSS channel) is the og card’s line, without the intro sentence the owner dropped.'
   }
 ];

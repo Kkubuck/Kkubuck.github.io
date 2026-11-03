@@ -1,7 +1,7 @@
 {
   "name": "Kkubuck",
   "short_name": "Kkubuck",
-  "description": "컴퓨터 비전 논문 리뷰와 공부 기록",
+  "description": "컴퓨터 비전 연구와 공부 기록",
   "lang": "ko",
   "start_url": "./",
   "scope": "./",

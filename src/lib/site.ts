@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Kkubuck',
   title: 'Kkubuck',
   // Meta/og/RSS description only; the home page itself shows no tagline. Same words as the og card and manifest.
-  description: '컴퓨터 비전 논문 리뷰와 공부 기록',
+  description: '컴퓨터 비전 연구와 공부 기록',
   url: 'https://kkubuck.github.io',
   author: '이지상',
   authorEn: 'Jisang Lee',
@@ -23,11 +23,6 @@ export const NAV = [
 ] as const;
 
 export const CATEGORIES = [
-  {
-    id: 'paper-review',
-    label: '논문 리뷰',
-    description: '읽은 논문을 문제, 방법, 실험, 한계 순서로 정리합니다.'
-  },
   {
     id: 'research-note',
     label: '연구 노트',

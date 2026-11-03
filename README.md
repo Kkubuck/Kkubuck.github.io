@@ -1,8 +1,8 @@
 # Kkubuck Blog
 
-<https://kkubuck.github.io>의 소스입니다. 컴퓨터 비전 논문 리뷰와 공부 기록을 올리는 블로그이고, Markdown 파일로 글을 쓰면 GitHub Actions가 정적 사이트로 빌드해 GitHub Pages에 올립니다.
+<https://kkubuck.github.io>의 소스입니다. 컴퓨터 비전 연구와 공부 기록을 올리는 블로그이고, Markdown 파일로 글을 쓰면 GitHub Actions가 정적 사이트로 빌드해 GitHub Pages에 올립니다.
 
-- 홈: 카테고리 탭(전체 · 논문 리뷰 · 연구 노트 · 공부 · 코딩 테스트)과 연도별 글 목록. 소개 문구 없이 `Kkubuck Blog` 워드마크만 둡니다.
+- 홈: 카테고리 탭(전체 · 연구 노트 · 공부 · 코딩 테스트)과 연도별 글 목록. 소개 문구 없이 `Kkubuck Blog` 워드마크만 둡니다.
 - 글: 논문 정보 카드와 핵심 요약, 본문, 목차, 태그, 시리즈 목록, 이전·다음 글.
 - 그 밖에: 태그·시리즈 페이지, 소개 페이지, ⌘K 검색, 라이트·다크 테마, RSS, 사이트맵, 예전 주소 리다이렉트.
 - 디자인: 본문은 차분한 종이, 그 위에 떠 있는 메뉴(독), 카테고리 렌즈, 검색 창, 모바일 목차만 유리로 만들고 빛 반사를 넣었습니다. 자세한 내용은 [DESIGN.md](DESIGN.md)에 있습니다.
@@ -34,7 +34,7 @@ npm run dev        # http://localhost:3000
 글은 `content/posts/` 아래에 Markdown 파일 하나로 씁니다. **파일 이름이 곧 주소**입니다.
 
 ```
-content/posts/zoomnet-cvpr2022.md  →  https://kkubuck.github.io/posts/zoomnet-cvpr2022/
+content/posts/ds-stack.md  →  https://kkubuck.github.io/posts/ds-stack/
 ```
 
 파일 이름은 소문자 영어, 숫자, 하이픈으로 짓습니다. 한 번 올린 글의 파일 이름을 바꾸면 주소가 바뀌므로, 바꿔야 한다면 [옛 주소](#옛-주소) 항목대로 리다이렉트를 추가하세요.
@@ -49,13 +49,13 @@ title: 'Zoom in and Out: A Mixed-Scale Triplet Network for Camouflaged Object De
 description: 목록, 검색 결과, 공유 카드와 글 머리에 보이는 한두 문장
 pubDate: 2026-03-12 09:00:00 +0900
 updatedDate: 2026-03-20 10:00:00 +0900    # 선택
-category: paper-review                     # paper-review | research-note | study | coding-test
+category: research-note                    # research-note | study | coding-test
 series: data-structures                    # 선택. data-structures | hongong-ml
 tags: [cod, multi-scale, uncertainty]      # 선택
 takeaways:                                 # 선택. 글 위의 '핵심 요약'
   - 첫 번째 요점
   - 두 번째 요점
-paper:                                     # 선택. 논문 리뷰의 논문 정보 카드
+paper:                                     # 선택. 글 위의 논문 정보 카드
   title: 'Zoom in and Out: A Mixed-Scale Triplet Network for Camouflaged Object Detection'
   authors: Youwei Pang, Xiaoqi Zhao, Tian-Zhu Xiang, Lihe Zhang, Huchuan Lu
   venue: CVPR 2022
@@ -76,7 +76,7 @@ draft: true                                # 선택. true면 게시하지 않음
 | `description` | 필수 | 목록의 두 줄 설명, 검색 결과, 공유 카드(og), RSS, 글 제목 아래 리드 문단에 쓰입니다. |
 | `pubDate` | 필수 | 게시 시각. `2026-03-12 09:00:00 +0900` 형식. 목록 순서와 연도 묶음, 시리즈 순서가 이 값으로 정해집니다(서울 시간 기준). |
 | `updatedDate` | 선택 | 고친 날. 사이트맵, RSS, 공유 메타데이터에만 쓰이고 화면에는 나오지 않습니다. |
-| `category` | 필수 | `paper-review`(논문 리뷰), `research-note`(연구 노트), `study`(공부), `coding-test`(코딩 테스트) 중 하나. |
+| `category` | 필수 | `research-note`(연구 노트), `study`(공부), `coding-test`(코딩 테스트) 중 하나. |
 | `series` | 선택 | `data-structures`(자료구조), `hongong-ml`(혼자 공부하는 머신러닝 + 딥러닝). 글 아래 시리즈 목록에 오래된 글부터 순서대로 나옵니다. |
 | `tags` | 선택 | 소문자 영어, 단어는 하이픈으로 잇습니다. 태그 주소는 `/tags/<태그>/`이고 글 아래에 `#cod`처럼 글자로만 표시됩니다. |
 | `takeaways` | 선택 | 글 위 `핵심 요약`에 번호를 붙여 보여 줍니다. |

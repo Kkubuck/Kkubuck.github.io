@@ -158,7 +158,6 @@ const required = [
   '404.html',
   'about/index.html',
   'tags/index.html',
-  'category/paper-review/index.html',
   'category/research-note/index.html',
   'category/study/index.html',
   'category/coding-test/index.html',

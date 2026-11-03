@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guide for coding agents and developers working on this repository: the source of <https://kkubuck.github.io>, a Korean computer-vision blog (paper reviews and study notes) by 이지상 (Jisang Lee, GitHub `Kkubuck`). It is a Next.js 16 App Router site exported as static HTML and deployed to GitHub Pages by GitHub Actions.
+Guide for coding agents and developers working on this repository: the source of <https://kkubuck.github.io>, a Korean computer-vision blog (research and study notes) by 이지상 (Jisang Lee, GitHub `Kkubuck`). It is a Next.js 16 App Router site exported as static HTML and deployed to GitHub Pages by GitHub Actions.
 
 Read [DESIGN.md](DESIGN.md) before touching anything visual. The owner-facing guide (writing posts, deploying) is [README.md](README.md), in Korean.
 

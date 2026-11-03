@@ -10,7 +10,6 @@
 # - /assets/img/og-card.* is the old og:image URL; it now serves the current card.
 # - /assets/project/*, the old /assets/img/*.png illustrations and the Tistory
 #   screenshots replaced by text in the rewritten posts are kept byte-for-byte.
-# - /research/data.json is a frozen snapshot of the removed research map's data.
 #
 # Never delete a line to make the check pass; add a redirect or keep the file.
 #
@@ -18,6 +17,9 @@
 # - /assets/files/CV_jisanglee.pdf: the old CV had wrong degree dates, a phone
 #   number and a GPA the owner does not want published. /cv/ still redirects
 #   to /about/.
+# - /research/data.json: a frozen snapshot of the removed research map (paper
+#   review summaries and the OVCOS map). The owner removed the paper reviews
+#   and OVCOS posts on 2026-11-03, and this file with them.
 /
 /404.html
 /about/
@@ -149,7 +151,6 @@
 /projects/
 /reading/
 /research/
-/research/data.json
 /robots.txt
 /rss.xml
 /search.json
