@@ -47,7 +47,7 @@ const PUBLICATIONS: Entry[] = [
     title:
       'Uncertainty-Guided Structural Routing and Consensus-Aware Re-Ranking for Open-Vocabulary Camouflaged Object Segmentation',
     summary: '마스크 분할과 범주 인식을 분리하고, 구조 사전 정보와 합의 기반 재순위화로 각각을 안정화합니다.',
-    meta: 'ACCV · 2026',
+    meta: 'ACCV · 2026 · 공동 제1저자',
     links: [{ label: '코드', href: 'https://github.com/Kkubuck/IDS-SAM' }]
   },
   {
