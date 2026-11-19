@@ -32,7 +32,8 @@ const PUBLICATIONS: Entry[] = [
   {
     title: 'SARR-Net: Sensor-Aware Relation Routing for Multispectral Camouflaged Object Detection',
     summary: '다중분광 영상의 파장 간 대비를 센서별 관계로 정리해 위장 객체의 전경과 경계를 복원합니다.',
-    meta: 'IEEE Transactions on Multimedia · 2026 · 게재 승인'
+    meta: 'IEEE Transactions on Multimedia · 2026 · 게재 승인',
+    links: [{ label: '코드', href: 'https://github.com/Kkubuck/SARR-Net' }]
   },
   {
     title: 'HFGF-DINOv3: High-Frequency Guided Fusion and Phase-Aware Loss for Camouflaged Object Detection',
